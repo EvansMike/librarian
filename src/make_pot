@@ -1,0 +1,9 @@
+#!/bin/sh
+# Create po files for internationalisation
+# see: http://faq.pygtk.org/index.py?file=faq22.002.htp&req=edit
+mkdir po
+intltool-extract --type=gettext/glade ui/librarian.glade
+intltool-extract --type=gettext/glade ui/edit_book.glade
+intltool-extract --type=gettext/glade ui/gui.glade
+intltool-extract --type=gettext/glade ui/borrowers.glade
+xgettext -k_ -kN_ -o po/messages.pot *.py ui/*.*.h

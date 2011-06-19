@@ -1,0 +1,10 @@
+To translate this program into your language edit the appropriate po file.
+To update the po file with new strings do:
+msgmerge -U cy.po messages.pot
+
+
+FOR THE PROGRAMMER
+- The *.po files contain human readable entrys, they have to be prepared for usage by the real application:
+
+mkdir -p locale/de/LC_MESSAGES/
+msgfmt de.po -o locale/de/LC_MESSAGES/myapp.mo

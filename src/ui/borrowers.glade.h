@@ -1,0 +1,9 @@
+char *s = N_("ADD");
+char *s = N_("Borrowers.");
+char *s = N_("CANCEL");
+char *s = N_("Contact:");
+char *s = N_("How to contact the borrower.");
+char *s = N_("Name of a new borrower.");
+char *s = N_("Name:");
+char *s = N_("Notes:");
+char *s = N_("Other notes.");

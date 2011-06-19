@@ -1,0 +1,253 @@
+# English translations for PACKAGE package.
+# Copyright (C) 2011 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#  <mikee@saxicola.co.uk>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-06-14 18:38+0100\n"
+"PO-Revision-Date: 2011-04-18 14:35+0100\n"
+"Last-Translator:  <mikee@saxicola.co.uk>\n"
+"Language-Team: English (British)\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: add_edit.py:84 borrowers.py:40 guiscan.py:67
+msgid "No database connection.  Check "
+msgstr "No database connection.  Check "
+
+#: add_edit.py:122
+msgid "No Book found for this ISBN!"
+msgstr "No Book found for this ISBN!"
+
+#: add_edit.py:235
+msgid " Book has been inserted."
+msgstr " Book has been inserted."
+
+#: add_edit.py:243
+msgid " Book has been updated."
+msgstr " Book has been updated."
+
+#: add_edit.py:252
+msgid " Book has been removed."
+msgstr " Book has been removed."
+
+#: add_edit.py:282
+msgid "Book has been marked as borrowed."
+msgstr "Book has been marked as borrowed."
+
+#: add_edit.py:285
+msgid "Book has been NOT marked as borrowed."
+msgstr "Book has been NOT marked as borrowed."
+
+#: add_edit.py:299
+msgid "Book has been marked as returned."
+msgstr "Book has been marked as returned."
+
+#: add_edit.py:300
+#, fuzzy
+msgid "Book has been NOT marked as returned."
+msgstr "Book has been marked as returned."
+
+#: guiscan.py:74
+msgid "To begin press scan."
+msgstr "To begin press scan."
+
+#: guiscan.py:115
+msgid "Dodgy scan, retry?"
+msgstr "Dodgy scan, retry?"
+
+#: guiscan.py:122
+msgid ""
+"\n"
+"\n"
+"You already have "
+msgstr ""
+"\n"
+"\n"
+"You already have "
+
+#: guiscan.py:140
+msgid ""
+"\n"
+"\n"
+"You removed this book."
+msgstr ""
+"\n"
+"\n"
+"You removed this book."
+
+#: guiscan.py:143
+msgid ""
+"\n"
+"\n"
+"Could not remove book!"
+msgstr ""
+"\n"
+"\n"
+"Could not remove book!"
+
+#: guiscan.py:158
+msgid ""
+"\n"
+"\n"
+"You added this book."
+msgstr ""
+"\n"
+"\n"
+"You added this book."
+
+#: librarian.py:49
+msgid "GTK Not Availible"
+msgstr "GTK Not Availible"
+
+#: ui/borrowers.glade.h:1 ui/gui.glade.h:1
+msgid "ADD"
+msgstr "ADD"
+
+#: ui/borrowers.glade.h:2
+msgid "Borrowers."
+msgstr "Borrowers."
+
+#: ui/borrowers.glade.h:3
+msgid "CANCEL"
+msgstr "CANCEL"
+
+#: ui/borrowers.glade.h:4
+msgid "Contact:"
+msgstr "Contact:"
+
+#: ui/borrowers.glade.h:5
+msgid "How to contact the borrower."
+msgstr "How to contact the borrower."
+
+#: ui/borrowers.glade.h:6
+msgid "Name of a new borrower."
+msgstr "Name of a new borrower."
+
+#: ui/borrowers.glade.h:7
+msgid "Name:"
+msgstr "Name:"
+
+#: ui/borrowers.glade.h:8
+msgid "Notes:"
+msgstr "Notes:"
+
+#: ui/borrowers.glade.h:9
+msgid "Other notes."
+msgstr "Other notes."
+
+#: ui/edit_book.glade.h:1
+msgid "Abstract"
+msgstr "Abstract"
+
+#: ui/edit_book.glade.h:2
+msgid "Author"
+msgstr "Author"
+
+#: ui/edit_book.glade.h:3
+msgid "Borrowed?"
+msgstr "Borrowed?"
+
+#: ui/edit_book.glade.h:4
+#, fuzzy
+msgid "Borrower Details"
+msgstr "Borrowers."
+
+#: ui/edit_book.glade.h:5 ui/gui.glade.h:3
+msgid "CLOSE"
+msgstr "CLOSE"
+
+#: ui/edit_book.glade.h:6
+msgid "City"
+msgstr "City"
+
+#: ui/edit_book.glade.h:7
+#, fuzzy
+msgid "Copies:"
+msgstr "Copies"
+
+#: ui/edit_book.glade.h:8
+msgid "Date:"
+msgstr ""
+
+#: ui/edit_book.glade.h:9
+msgid "Edit Book"
+msgstr "Edit Book"
+
+#: ui/edit_book.glade.h:10
+msgid "Editing"
+msgstr "Editing"
+
+#: ui/edit_book.glade.h:11
+msgid "ISBN"
+msgstr "ISBN"
+
+#: ui/edit_book.glade.h:12
+msgid "ISBN SEARCH"
+msgstr "ISBN SEARCH"
+
+#: ui/edit_book.glade.h:13
+msgid "Publisher"
+msgstr "Publisher"
+
+#: ui/edit_book.glade.h:14 ui/gui.glade.h:5
+msgid "REMOVE"
+msgstr "REMOVE"
+
+#: ui/edit_book.glade.h:15
+msgid "Title"
+msgstr "Title"
+
+#: ui/edit_book.glade.h:16
+msgid "Type"
+msgstr "Type"
+
+#: ui/edit_book.glade.h:17
+msgid "UPDATE"
+msgstr "UPDATE"
+
+#: ui/edit_book.glade.h:18
+msgid "Year"
+msgstr "Year"
+
+#: ui/gui.glade.h:2
+msgid "Book Scanner"
+msgstr "Book Scanner"
+
+#: ui/gui.glade.h:4
+msgid "ISBN DECODER"
+msgstr "ISBN DECODER"
+
+#: ui/gui.glade.h:6
+msgid "SCAN"
+msgstr "SCAN"
+
+#: ui/librarian.glade.h:1
+msgid "ALL BOOKS"
+msgstr "ALL BOOKS"
+
+#: ui/librarian.glade.h:2
+msgid "Hello World"
+msgstr "Hello World"
+
+#: ui/librarian.glade.h:3
+msgid "LOANED BOOKS"
+msgstr "LOANED BOOKS"
+
+#: ui/librarian.glade.h:4
+msgid "QUERY"
+msgstr "QUERY"
+
+#: ui/librarian.glade.h:5
+msgid "QUIT"
+msgstr "QUIT"
+
+#: ui/librarian.glade.h:6
+msgid "SCAN NEW"
+msgstr "SCAN NEW"

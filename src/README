@@ -1,0 +1,8 @@
+README FIRST
+
+To get a list of borrowed books:
+SELECT o_date, title, author, borrowers.name
+  FROM borrows, borrowers, books
+  where borrows.borrower = borrowers.id
+  and books.id = borrows.book
+  and borrows.i_date IS NULL;

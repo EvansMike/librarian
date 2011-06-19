@@ -1,0 +1,246 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-06-18 00:36+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: add_edit.py:84 borrowers.py:40 guiscan.py:67
+msgid "No database connection.  Check "
+msgstr ""
+
+#: add_edit.py:122
+msgid "No Book found for this ISBN!"
+msgstr ""
+
+#: add_edit.py:235
+msgid " Book has been inserted."
+msgstr ""
+
+#: add_edit.py:243
+msgid " Book has been updated."
+msgstr ""
+
+#: add_edit.py:252
+msgid " Book has been removed."
+msgstr ""
+
+#: add_edit.py:282
+msgid "Book has been marked as borrowed."
+msgstr ""
+
+#: add_edit.py:285
+msgid "Book has been NOT marked as borrowed."
+msgstr ""
+
+#: add_edit.py:299
+msgid "Book has been marked as returned."
+msgstr ""
+
+#: add_edit.py:300
+msgid "Book has been NOT marked as returned."
+msgstr ""
+
+#: guiscan.py:74
+msgid "To begin press scan."
+msgstr ""
+
+#: guiscan.py:115
+msgid "Dodgy scan, retry?"
+msgstr ""
+
+#: guiscan.py:122
+msgid ""
+"\n"
+"\n"
+"You already have "
+msgstr ""
+
+#: guiscan.py:140
+msgid ""
+"\n"
+"\n"
+"You removed this book."
+msgstr ""
+
+#: guiscan.py:143
+msgid ""
+"\n"
+"\n"
+"Could not remove book!"
+msgstr ""
+
+#: guiscan.py:158
+msgid ""
+"\n"
+"\n"
+"You added this book."
+msgstr ""
+
+#: librarian.py:49
+msgid "GTK Not Availible"
+msgstr ""
+
+#: librarian.py:65
+msgid "Version: "
+msgstr ""
+
+#: librarian.py:80 ui/edit_book.glade.h:2
+msgid "Author"
+msgstr ""
+
+#: librarian.py:87 ui/edit_book.glade.h:15
+msgid "Title"
+msgstr ""
+
+#: load_config.py:40
+msgid "No config file found. Please edit "
+msgstr ""
+
+#: ui/borrowers.glade.h:1 ui/gui.glade.h:1
+msgid "ADD"
+msgstr ""
+
+#: ui/borrowers.glade.h:2
+msgid "Borrowers."
+msgstr ""
+
+#: ui/borrowers.glade.h:3
+msgid "CANCEL"
+msgstr ""
+
+#: ui/borrowers.glade.h:4
+msgid "Contact:"
+msgstr ""
+
+#: ui/borrowers.glade.h:5
+msgid "How to contact the borrower."
+msgstr ""
+
+#: ui/borrowers.glade.h:6
+msgid "Name of a new borrower."
+msgstr ""
+
+#: ui/borrowers.glade.h:7
+msgid "Name:"
+msgstr ""
+
+#: ui/borrowers.glade.h:8
+msgid "Notes:"
+msgstr ""
+
+#: ui/borrowers.glade.h:9
+msgid "Other notes."
+msgstr ""
+
+#: ui/edit_book.glade.h:1
+msgid "Abstract"
+msgstr ""
+
+#: ui/edit_book.glade.h:3
+msgid "Borrowed?"
+msgstr ""
+
+#: ui/edit_book.glade.h:4
+msgid "Borrower Details"
+msgstr ""
+
+#: ui/edit_book.glade.h:5 ui/gui.glade.h:3
+msgid "CLOSE"
+msgstr ""
+
+#: ui/edit_book.glade.h:6
+msgid "City"
+msgstr ""
+
+#: ui/edit_book.glade.h:7
+msgid "Copies:"
+msgstr ""
+
+#: ui/edit_book.glade.h:8
+msgid "Date:"
+msgstr ""
+
+#: ui/edit_book.glade.h:9
+msgid "Edit Book"
+msgstr ""
+
+#: ui/edit_book.glade.h:10
+msgid "Editing"
+msgstr ""
+
+#: ui/edit_book.glade.h:11
+msgid "ISBN"
+msgstr ""
+
+#: ui/edit_book.glade.h:12
+msgid "ISBN SEARCH"
+msgstr ""
+
+#: ui/edit_book.glade.h:13
+msgid "Publisher"
+msgstr ""
+
+#: ui/edit_book.glade.h:14 ui/gui.glade.h:5
+msgid "REMOVE"
+msgstr ""
+
+#: ui/edit_book.glade.h:16
+msgid "Type"
+msgstr ""
+
+#: ui/edit_book.glade.h:17
+msgid "UPDATE"
+msgstr ""
+
+#: ui/edit_book.glade.h:18
+msgid "Year"
+msgstr ""
+
+#: ui/gui.glade.h:2
+msgid "Book Scanner"
+msgstr ""
+
+#: ui/gui.glade.h:4
+msgid "ISBN DECODER"
+msgstr ""
+
+#: ui/gui.glade.h:6
+msgid "SCAN"
+msgstr ""
+
+#: ui/librarian.glade.h:1
+msgid "ALL BOOKS"
+msgstr ""
+
+#: ui/librarian.glade.h:2
+msgid "Hello World"
+msgstr ""
+
+#: ui/librarian.glade.h:3
+msgid "LOANED BOOKS"
+msgstr ""
+
+#: ui/librarian.glade.h:4
+msgid "QUERY"
+msgstr ""
+
+#: ui/librarian.glade.h:5
+msgid "QUIT"
+msgstr ""
+
+#: ui/librarian.glade.h:6
+msgid "SCAN NEW"
+msgstr ""

@@ -1,0 +1,301 @@
+<?xml version="1.0"?>
+<interface>
+  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkAction" id="action1"/>
+  <object class="GtkListStore" id="liststore1">
+    <columns>
+      <!-- column-name isbn -->
+      <column type="gchararray"/>
+      <!-- column-name author -->
+      <column type="gchararray"/>
+      <!-- column-name title -->
+      <column type="gchararray"/>
+      <!-- column-name abstract -->
+      <column type="gchararray"/>
+      <!-- column-name publisher -->
+      <column type="gchararray"/>
+      <!-- column-name city -->
+      <column type="gchararray"/>
+      <!-- column-name year -->
+      <column type="gchararray"/>
+      <!-- column-name id -->
+      <column type="gint"/>
+      <!-- column-name copies -->
+      <column type="gint"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes"></col>
+        <col id="1" translatable="yes"></col>
+        <col id="2" translatable="yes"></col>
+        <col id="3" translatable="yes"></col>
+        <col id="4" translatable="yes"></col>
+        <col id="5" translatable="yes"></col>
+        <col id="6" translatable="yes"></col>
+        <col id="7">0</col>
+        <col id="8">0</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"></col>
+        <col id="1" translatable="yes"></col>
+        <col id="2" translatable="yes"></col>
+        <col id="3" translatable="yes"></col>
+        <col id="4" translatable="yes"></col>
+        <col id="5" translatable="yes"></col>
+        <col id="6" translatable="yes"></col>
+        <col id="7">0</col>
+        <col id="8">0</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"></col>
+        <col id="1" translatable="yes"></col>
+        <col id="2" translatable="yes"></col>
+        <col id="3" translatable="yes"></col>
+        <col id="4" translatable="yes"></col>
+        <col id="5" translatable="yes"></col>
+        <col id="6" translatable="yes"></col>
+        <col id="7">0</col>
+        <col id="8">0</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"></col>
+        <col id="1" translatable="yes"></col>
+        <col id="2" translatable="yes"></col>
+        <col id="3" translatable="yes"></col>
+        <col id="4" translatable="yes"></col>
+        <col id="5" translatable="yes"></col>
+        <col id="6" translatable="yes"></col>
+        <col id="7">0</col>
+        <col id="8">0</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"></col>
+        <col id="1" translatable="yes"></col>
+        <col id="2" translatable="yes"></col>
+        <col id="3" translatable="yes"></col>
+        <col id="4" translatable="yes"></col>
+        <col id="5" translatable="yes"></col>
+        <col id="6" translatable="yes"></col>
+        <col id="7">0</col>
+        <col id="8">0</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"></col>
+        <col id="1" translatable="yes"></col>
+        <col id="2" translatable="yes"></col>
+        <col id="3" translatable="yes"></col>
+        <col id="4" translatable="yes"></col>
+        <col id="5" translatable="yes"></col>
+        <col id="6" translatable="yes"></col>
+        <col id="7">0</col>
+        <col id="8">0</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"></col>
+        <col id="1" translatable="yes"></col>
+        <col id="2" translatable="yes"></col>
+        <col id="3" translatable="yes"></col>
+        <col id="4" translatable="yes"></col>
+        <col id="5" translatable="yes"></col>
+        <col id="6" translatable="yes"></col>
+        <col id="7">0</col>
+        <col id="8">0</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"></col>
+        <col id="1" translatable="yes"></col>
+        <col id="2" translatable="yes"></col>
+        <col id="3" translatable="yes"></col>
+        <col id="4" translatable="yes"></col>
+        <col id="5" translatable="yes"></col>
+        <col id="6" translatable="yes"></col>
+        <col id="7">0</col>
+        <col id="8">0</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"></col>
+        <col id="1" translatable="yes"></col>
+        <col id="2" translatable="yes"></col>
+        <col id="3" translatable="yes"></col>
+        <col id="4" translatable="yes"></col>
+        <col id="5" translatable="yes"></col>
+        <col id="6" translatable="yes"></col>
+        <col id="7">0</col>
+        <col id="8">0</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkWindow" id="window1">
+    <property name="width_request">800</property>
+    <property name="height_request">400</property>
+    <property name="visible">True</property>
+    <property name="window_position">center</property>
+    <property name="gravity">center</property>
+    <signal name="destroy" handler="gtk_main_quit"/>
+    <child>
+      <object class="GtkVBox" id="vbox1">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkFixed" id="fixed1">
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolbar" id="toolbar1">
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="hbox1">
+            <property name="visible">True</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkVBox" id="vbox2">
+                <property name="width_request">130</property>
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkButton" id="button1">
+                    <property name="label" translatable="yes">ALL BOOKS</property>
+                    <property name="width_request">80</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="on_button1_clicked"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button2">
+                    <property name="label" translatable="yes">LOANED BOOKS</property>
+                    <property name="width_request">80</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="on_button2_clicked"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button3">
+                    <property name="label" translatable="yes">SCAN NEW</property>
+                    <property name="width_request">80</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="on_button3_clicked"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button4">
+                    <property name="label" translatable="yes">QUERY</property>
+                    <property name="width_request">80</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="on_button4_clicked"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_quit">
+                    <property name="label" translatable="yes">QUIT</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="gtk_main_quit"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolledwindow1">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">automatic</property>
+                <property name="vscrollbar_policy">automatic</property>
+                <child>
+                  <object class="GtkTreeView" id="treeview1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="model">liststore1</property>
+                    <property name="search_column">0</property>
+                    <property name="enable_grid_lines">horizontal</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkStatusbar" id="statusbar1">
+            <property name="visible">True</property>
+            <property name="spacing">2</property>
+            <child>
+              <object class="GtkLabel" id="status1">
+                <property name="visible">True</property>
+                <property name="xalign">0.10000000149011612</property>
+                <property name="label" translatable="yes">Hello World</property>
+                <property name="single_line_mode">True</property>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
