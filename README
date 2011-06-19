@@ -1,0 +1,5 @@
+You need python plus various modules for this.  See the files for required Python modules.  I should write a depends file.  Requires a mysql database.  Perhaps a sqlite database would be better.  I need to write a db schema create script.
+
+I use this to track my books.  Only works with linux as is.  Scanning is done using a webcam and zbarcam.
+
+Bugs they are many and many things TODO.
