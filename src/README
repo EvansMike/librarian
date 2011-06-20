@@ -1,6 +1,12 @@
 README FIRST
 
-To get a list of borrowed books:
+See INSTALL for install instructions.
+
+A small warning  Everytime you scan a book a qrcode is generated and place in the directory above the current directoryYou may not want this behaviour.  It's trivial to delete/move the created codes however.  I should put a config option for this behaviour or place the qrcodes somewhere else.  It seemed like a good idea at the time but I admit to never using the qrcode for anything. :)
+
+
+NOTES:
+To get a list of borrowed books from mysql:
 SELECT o_date, title, author, borrowers.name
   FROM borrows, borrowers, books
   where borrows.borrower = borrowers.id
