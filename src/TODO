@@ -1,3 +1,2 @@
 Added new books do not show up in the book window.  Reload books drom DB after adding new books.
-Record loan date, return date and status in a separate table.  Enable some means of querying the table for details.
 
