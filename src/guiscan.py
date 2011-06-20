@@ -121,7 +121,9 @@ class scanner:
     if count > 0:
       buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
     self.text_view.set_buffer(buff)
-
+	'''
+	Although kinda fun to produce QR codes it's seems pretty pointless for this app, so
+	I'm commenting it out.
     # Do the QR thang
     qr = qrencode.encode('ISBN:'+ bar + ' TITLE:' + str(nn.title) + ' AUTHORS:' + str(nn.authors))
     # Rescale using the size and add a 1 px border
@@ -130,7 +132,7 @@ class scanner:
     img = qr[2]
     img.save('../ISBN:' + bar + '.png', 'png')
     self.qr_img.set_from_file('../ISBN:' + bar + '.png')
-
+    '''
   def on_button_remove_clicked(self, widget):
     # Remove a scanned book from the database.  Why?
     print "You removed this book."
