@@ -242,6 +242,8 @@
                   <object class="GtkEntry" id="entry9">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text" translatable="yes">Available copies of this book.</property>
                     <property name="editable">False</property>
                     <property name="invisible_char">&#x25CF;</property>
                     <property name="width_chars">5</property>
@@ -265,6 +267,8 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text" translatable="yes">Checked if displayed borrower has this book.</property>
                 <property name="xalign">1</property>
                 <property name="draw_indicator">True</property>
                 <signal name="toggled" handler="on_checkbutton1_toggled"/>
@@ -279,6 +283,8 @@
             <child>
               <object class="GtkComboBoxEntry" id="comboboxentry1">
                 <property name="visible">True</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text" translatable="yes">List of borrowers.</property>
                 <property name="model">liststore1</property>
                 <signal name="changed" handler="on_comboboxentry1_changed"/>
               </object>
@@ -303,6 +309,8 @@
               <object class="GtkEntry" id="b_date">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text" translatable="yes">Date of lending to borrower.</property>
                 <property name="invisible_char">&#x25CF;</property>
               </object>
               <packing>
@@ -336,6 +344,8 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text" translatable="yes">Search on ISBN number.</property>
                 <signal name="clicked" handler="isbn_lookup"/>
               </object>
               <packing>
@@ -348,6 +358,8 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text" translatable="yes">Removes book from database.</property>
                 <signal name="clicked" handler="on_button_remove_clicked"/>
               </object>
               <packing>
@@ -362,6 +374,8 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text" translatable="yes">Update any changes.</property>
                 <signal name="clicked" handler="on_button_update_clicked"/>
               </object>
               <packing>
@@ -376,6 +390,8 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text" translatable="yes">Closing before update loses any changes.</property>
                 <signal name="clicked" handler="on_destroy"/>
               </object>
               <packing>
@@ -389,6 +405,9 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text" translatable="yes">This does NOT remove the book, just clears the
+ entry to allow a new book to be entered manually.</property>
                 <signal name="clicked" handler="on_button_clear_clicked"/>
               </object>
               <packing>
