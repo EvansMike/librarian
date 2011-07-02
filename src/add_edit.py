@@ -230,6 +230,7 @@ class add_edit:
       book_data = book.title + book.authors + book.isbn + book.abstract + book.year + book.publisher + book.city
       logging.info(book_data)
       if book_data == '': return # Do nothing if no data
+      if not isdigit(book.year): book.year = 0 #DB query fix for empty date field.
       self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies) \
       VALUES(%s, %s, %s,%s,%s,%s,%s,%s);", \
       (book.title, book.authors, book.isbn, book.abstract,book.year,book.publisher,book.city, 1))
