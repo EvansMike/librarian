@@ -228,10 +228,11 @@ class add_edit:
     if result == 0: # If no book in DB, add it
     # Make sure we don't add an empty book.  We could also use this to check for changes if we have a copy of the original data.
       book_data = book.title + book.authors + book.isbn + book.abstract + book.year + book.publisher + book.city
+      logging.info(book_data)
       if book_data == '': return # Do nothing if no data
-      self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city) \
-      VALUES(%s, %s, %s,%s,%s,%s,%s);", \
-      (book.title, book.authors, book.isbn, book.abstract,book.year,book.publisher,book.city))
+      self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies) \
+      VALUES(%s, %s, %s,%s,%s,%s,%s,%s);", \
+      (book.title, book.authors, book.isbn, book.abstract,book.year,book.publisher,book.city, 1))
       self.status.set_text(_(" Book has been inserted."))
 
     elif  self.orig_book.compare(book) != 0:

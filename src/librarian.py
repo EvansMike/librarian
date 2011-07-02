@@ -36,7 +36,7 @@ _ = gettext.gettext
 logger = logging.getLogger("librarian")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
 
-version = "0.0.3"
+version = "0.0.4"
 
 try:
   import pygtk
@@ -163,16 +163,19 @@ class librarian:
 
 
   def on_button4_clicked(self, widget):
+	from add_edit import add_edit
 	## Get a book for editing.  SHOULD be devolved to add_edit !!
 	foo,iter = self.treeview.get_selection().get_selected()
 	#logging.info(iter)
 	if iter:
 		# Get the data
 		bid = self.booklist.get_value(iter,7) # id better perhaps?
-		from add_edit import add_edit
 		adder = add_edit()
 		#logging.info(adder)
 		adder.populate(bid)
+		adder.display()
+	else:
+		adder = add_edit()
 		adder.display()
 	self.get_book_list(1) # All books
 
