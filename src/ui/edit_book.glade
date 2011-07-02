@@ -328,7 +328,7 @@
         <child>
           <object class="GtkTable" id="table1">
             <property name="visible">True</property>
-            <property name="n_columns">4</property>
+            <property name="n_columns">5</property>
             <property name="column_spacing">40</property>
             <child>
               <object class="GtkButton" id="button_isbn">
@@ -377,6 +377,19 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <signal name="clicked" handler="on_destroy"/>
+              </object>
+              <packing>
+                <property name="left_attach">4</property>
+                <property name="right_attach">5</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_clear">
+                <property name="label" translatable="yes">CLEAR</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_button_clear_clicked"/>
               </object>
               <packing>
                 <property name="left_attach">3</property>

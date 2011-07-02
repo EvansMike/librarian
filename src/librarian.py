@@ -177,7 +177,7 @@ class librarian:
 	else:
 		adder = add_edit()
 		adder.display()
-	self.get_book_list(1) # All books
+	self.get_book_list(1) # Repopulate book list.
 
 	def printer(self):
 		''' Print the currently displayed list. self.treeview'''

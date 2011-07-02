@@ -268,6 +268,19 @@ class add_edit:
     else:
        self.lent.set_active(True)
 
+
+  def on_button_clear_clicked(self, widget):
+    ''' Clear all the edit boxes '''
+    self.isbn.set_text('')
+    self.author.set_text('')
+    self.title.set_text('')
+    self.abstract.set_text('')
+    self.publisher.set_text('')
+    self.city.set_text('')
+    self.year.set_text('')
+    self.copies.set_text('')
+
+
   def on_checkbutton1_toggled(self, widget):
     #logging.info(widget)
     # Get widget state
