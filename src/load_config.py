@@ -49,10 +49,10 @@ class load_config:
       f.write('[database]\nUSER = username\nPASSWD = password\nDB = db_name\nDBHOST = hostname')
       '''
       [database]
-      USER = mikee
-      PASSWD = logger
-      DB = tlogger
-      DBHOST = saxicola
+      USER = 
+      PASSWD = 
+      DB = 
+      DBHOST = 
       '''
       #f.close()
       os.fchmod(f.fileno(),stat.S_IREAD|stat.S_IWRITE)
