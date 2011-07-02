@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-18 00:36+0100\n"
+"POT-Creation-Date: 2011-07-02 14:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,31 +25,31 @@ msgstr ""
 msgid "No Book found for this ISBN!"
 msgstr ""
 
-#: add_edit.py:235
+#: add_edit.py:237
 msgid " Book has been inserted."
 msgstr ""
 
-#: add_edit.py:243
+#: add_edit.py:245
 msgid " Book has been updated."
 msgstr ""
 
-#: add_edit.py:252
+#: add_edit.py:254
 msgid " Book has been removed."
 msgstr ""
 
-#: add_edit.py:282
+#: add_edit.py:297
 msgid "Book has been marked as borrowed."
 msgstr ""
 
-#: add_edit.py:285
+#: add_edit.py:300
 msgid "Book has been NOT marked as borrowed."
 msgstr ""
 
-#: add_edit.py:299
+#: add_edit.py:314
 msgid "Book has been marked as returned."
 msgstr ""
 
-#: add_edit.py:300
+#: add_edit.py:315
 msgid "Book has been NOT marked as returned."
 msgstr ""
 
@@ -68,21 +68,21 @@ msgid ""
 "You already have "
 msgstr ""
 
-#: guiscan.py:140
+#: guiscan.py:142
 msgid ""
 "\n"
 "\n"
 "You removed this book."
 msgstr ""
 
-#: guiscan.py:143
+#: guiscan.py:145
 msgid ""
 "\n"
 "\n"
 "Could not remove book!"
 msgstr ""
 
-#: guiscan.py:158
+#: guiscan.py:160
 msgid ""
 "\n"
 "\n"
@@ -101,7 +101,7 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: librarian.py:87 ui/edit_book.glade.h:15
+#: librarian.py:87 ui/edit_book.glade.h:25
 msgid "Title"
 msgstr ""
 
@@ -150,62 +150,104 @@ msgid "Abstract"
 msgstr ""
 
 #: ui/edit_book.glade.h:3
-msgid "Borrowed?"
+msgid "Available copies of this book."
 msgstr ""
 
 #: ui/edit_book.glade.h:4
+msgid "Borrowed?"
+msgstr ""
+
+#: ui/edit_book.glade.h:5
 msgid "Borrower Details"
 msgstr ""
 
-#: ui/edit_book.glade.h:5 ui/gui.glade.h:3
+#: ui/edit_book.glade.h:6
+msgid "CLEAR"
+msgstr ""
+
+#: ui/edit_book.glade.h:7 ui/gui.glade.h:3
 msgid "CLOSE"
 msgstr ""
 
-#: ui/edit_book.glade.h:6
-msgid "City"
-msgstr ""
-
-#: ui/edit_book.glade.h:7
-msgid "Copies:"
-msgstr ""
-
 #: ui/edit_book.glade.h:8
-msgid "Date:"
+msgid "Checked if displayed borrower has this book."
 msgstr ""
 
 #: ui/edit_book.glade.h:9
-msgid "Edit Book"
+msgid "City"
 msgstr ""
 
 #: ui/edit_book.glade.h:10
-msgid "Editing"
+msgid "Closing before update loses any changes."
 msgstr ""
 
 #: ui/edit_book.glade.h:11
-msgid "ISBN"
+msgid "Copies:"
 msgstr ""
 
 #: ui/edit_book.glade.h:12
-msgid "ISBN SEARCH"
+msgid "Date of lending to borrower."
 msgstr ""
 
 #: ui/edit_book.glade.h:13
-msgid "Publisher"
+msgid "Date:"
 msgstr ""
 
-#: ui/edit_book.glade.h:14 ui/gui.glade.h:5
-msgid "REMOVE"
+#: ui/edit_book.glade.h:14
+msgid "Edit Book"
+msgstr ""
+
+#: ui/edit_book.glade.h:15
+msgid "Editing"
 msgstr ""
 
 #: ui/edit_book.glade.h:16
-msgid "Type"
+msgid "ISBN"
 msgstr ""
 
 #: ui/edit_book.glade.h:17
-msgid "UPDATE"
+msgid "ISBN SEARCH"
 msgstr ""
 
 #: ui/edit_book.glade.h:18
+msgid "List of borrowers."
+msgstr ""
+
+#: ui/edit_book.glade.h:19
+msgid "Publisher"
+msgstr ""
+
+#: ui/edit_book.glade.h:20 ui/gui.glade.h:5
+msgid "REMOVE"
+msgstr ""
+
+#: ui/edit_book.glade.h:21
+msgid "Removes book from database."
+msgstr ""
+
+#: ui/edit_book.glade.h:22
+msgid "Search on ISBN number."
+msgstr ""
+
+#: ui/edit_book.glade.h:23
+msgid ""
+"This does NOT remove the book, just clears the\n"
+" entry to allow a new book to be entered manually."
+msgstr ""
+
+#: ui/edit_book.glade.h:26
+msgid "Type"
+msgstr ""
+
+#: ui/edit_book.glade.h:27
+msgid "UPDATE"
+msgstr ""
+
+#: ui/edit_book.glade.h:28
+msgid "Update any changes."
+msgstr ""
+
+#: ui/edit_book.glade.h:29
 msgid "Year"
 msgstr ""
 
