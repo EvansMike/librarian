@@ -156,7 +156,7 @@ class scanner:
     if result == 0 :
       #first insert the author into the authors table, But! We need to test if already there!!
       a_first = str.split(str(self.bibrecord.authors))[0].replace('[','').replace(']','')
-      a_second = str.split(str(self.bibrecord.authors))[1].replace('[','').replace(']','')
+      a_second = str.split(str(self.bibrecord.authors))[-1].replace('[','').replace(']','')
       self.cur.execute("SELECT DISTINCT* FROM authors WHERE name_first=%s AND name_second=%s;",[a_first, a_second])
       result = self.cur.fetchall()
       #logger.info(len(result))
