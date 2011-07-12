@@ -1,8 +1,17 @@
+This is all based on a Linux system.
+
 To use just copy everything here into a new directory and run librarian.py.
+Create a database then run:
+mysql -p $DB_NAME < librarian.db
+Omit the -p if you don't use a DB password.  Change $DB_NAME.
 
-The languages part is not implemented although a sample welsh file exists.  See http://faq.pygtk.org/index.py?file=faq22.002.htp&req=edit for more info about implementing your language and hoe to correctly install.
+An empty config filel will be created when run for the first time, edit
+this to reflect your database settings.
 
-The setup.py file doesn't work if you want an application install, it installes the modules in your python path which is probabaly not what you want.
+The languages part is not implemented although a sample welsh file exists.
+See http://faq.pygtk.org/index.py?file=faq22.002.htp&req=edit for more info
+about implementing your language and how to correctly install.
+
 
 TODO:
-	I need to create a database setup script.
+	DONE: I need to create a database setup script.
