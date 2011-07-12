@@ -121,8 +121,10 @@ class librarian:
 			result = cur.fetchall()
 			#print result
 			for row in result:
-				name=row['author'].strip('[').strip(']')
-				name = name.split()
+				if row['author'] != None:
+					name=row['author'].strip('[').strip(']')
+					name = name.split()
+				else: name = ''
 				if len(name) > 0 :
 					author = []
 					author.append(name[-1]) # Last part
