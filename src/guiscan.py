@@ -9,7 +9,9 @@ biblio.webquery
 # TODO we don't always get a title and author from a single lookup
 # need to test this and try alternate lookup.
 # TODO Needs a live internet connection!  No good for portable apps. without wireless.
-# Need a db update app.
+#   Need a db update app.
+#   Change author name parsing.  Also parse to authors table for future normalisation.
+#     Biblio lookup returns a list of authors.
 
 import zbar
 import webbrowser
@@ -103,7 +105,7 @@ class scanner:
         self.bibrecord = nn
         print nn.id
         print nn.title
-        print nn.authors[0]
+        print nn.authors
         print nn.abstract
         print nn.type
         print nn.publisher
@@ -150,10 +152,26 @@ class scanner:
     #TODO Check if exists and increment copy counter if so.
     #try:
     result = self.cur.execute ("SELECT * FROM books WHERE isbn = %s;",str(self.bibrecord.id))
-    logging.info(result)
+    #logging.info(result)
     if result == 0 :
-      self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies) VALUES(%s, %s, %s,%s,%s,%s,%s,%s);", \
-    (str(self.bibrecord.title), str(self.bibrecord.authors), str(self.bibrecord.id), str(self.bibrecord.abstract),str(self.bibrecord.year),str(self.bibrecord.publisher),str(self.bibrecord.city),1))
+      #first insert the author into the authors table, But! We need to test if already there!!
+      a_first = str.split(str(self.bibrecord.authors))[0].replace('[','').replace(']','')
+      a_second = str.split(str(self.bibrecord.authors))[1].replace('[','').replace(']','')
+      self.cur.execute("SELECT DISTINCT* FROM authors WHERE name_first=%s AND name_second=%s;",[a_first, a_second])
+      result = self.cur.fetchall()
+      #logger.info(len(result))
+      author_id = 0
+      if len(result) == 0:
+        self.cur.execute("INSERT INTO authors(name_first, name_second) values(%s,%s);", \
+          [a_first,  a_second])
+        self.cur.execute("SELECT DISTINCT* FROM authors WHERE name_first=%s AND name_second=%s;",[a_first, a_second])
+        result = self.cur.fetchall()
+        author_id = result[0][0]
+      else:
+        author_id = result[0][0]
+      self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies, author_id) VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s);", \
+    (str(self.bibrecord.title), str(self.bibrecord.authors), str(self.bibrecord.id), str(self.bibrecord.abstract),str(self.bibrecord.year),str(self.bibrecord.publisher),str(self.bibrecord.city),1,author_id))
+
     else:
       self.cur.execute("UPDATE books set copies = copies+1 WHERE isbn = %s;",str(self.bibrecord.id))
     buff = self.text_view.get_buffer()
