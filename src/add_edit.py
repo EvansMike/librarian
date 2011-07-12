@@ -16,7 +16,7 @@
   MA 02110-1301, USA.
 
 A GUI to edit a single book.
-TODO: Add logic for new new borrows table.
+TODO:
   Fix logic for borrowers list and checkbox.  If borrowed, ONLY the borrower
   should appear in the list and the checkbox should ALWAYS reflect correct status.
 '''
@@ -236,7 +236,7 @@ class add_edit:
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
       self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies) \
       VALUES(%s, %s, %s,%s,%s,%s,%s,%s);", \
-      (book.title, book.authors, book.isbn, book.abstract,book.year,book.publisher,book.city, 1))
+        (book.title, book.authors, book.isbn, book.abstract,book.year,book.publisher,book.city, 1))
       self.status.set_text(_(" Book has been inserted."))
 
     # If a change has been made...
@@ -244,7 +244,7 @@ class add_edit:
       logging.info("Somthing changed so an update is needed")
       self.update_book()
       self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
-      (book.title, book.authors, book.abstract,book.year,book.publisher,book.city, book.mtype, book.id))
+        (book.title, book.authors, book.abstract,book.year,book.publisher,book.city, book.mtype, book.id))
       self.db.commit()
       self.status.set_text(_(" Book has been updated."))
       self.mybook = copy.copy(self.orig_book)
@@ -301,7 +301,8 @@ class add_edit:
         self.status.set_text(_("Book has been marked as borrowed."))
         self.orig_book.copies -= 1
       else:
-        self.status.set_text(_("Book has been NOT marked as borrowed."))
+        pass
+        #self.status.set_text(_("Book has been NOT marked as borrowed."))
         #self.lent.set_active(False)
       self.lent_date.set_text(str(self.o_date))
 
