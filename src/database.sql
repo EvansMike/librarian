@@ -23,10 +23,11 @@ DROP TABLE IF EXISTS `authors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `authors` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `names` text,
-  UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name_first` text,
+  `name_second` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,8 +51,9 @@ CREATE TABLE `books` (
   `copies` int(11) DEFAULT NULL,
   `year` int(11) DEFAULT NULL,
   `mtype` text,
+  `author_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=304 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=312 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,4 +126,4 @@ CREATE TABLE `mtype` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-12 13:05:02
+-- Dump completed on 2011-07-12 16:38:22
