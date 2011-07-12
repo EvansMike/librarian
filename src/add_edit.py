@@ -146,6 +146,7 @@ class add_edit:
       if row['publisher'] != None: self.publisher.set_text(row['publisher'])
       if row['city'] != None: self.city.set_text(row['city'])
       if row['year'] != None: self.year.set_text(str(row['year']))
+      self.mtype.set_text(str(row['mtype']))
       self.copies.set_text(str(row['copies']))
 
       # Populate a book object
@@ -159,6 +160,7 @@ class add_edit:
       self.orig_book.year = row['year']
       self.orig_book.copies = row['copies']
       self.orig_book.where = row['location']
+      self.orig_book.mtype = row['mtype']
 
       self.mybook = copy.copy(self.orig_book)
 
@@ -204,10 +206,11 @@ class add_edit:
     self.mybook.title=self.title.get_text()
     self.mybook.authors=self.author.get_text()
     self.mybook.abstract=self.abstract.get_text()
-    #self.mybook.mtype=self.mtype.get_text()
+    self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city=self.city.get_text()
-    self.mybook.year=self.year.get_text()
+    self.mybook.mtype=self.mtype.get_text()
+    if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
 
     #logging.info(self.mybook.year)
     # Is the book on loan and to whome?
@@ -223,7 +226,7 @@ class add_edit:
   def update_db(self):
     book = self.mybook
     #logging.info(self.orig_book.compare(book))
-    result = self.cur.execute ("SELECT * FROM books WHERE isbn = %s;",book.isbn)
+    result = self.cur.execute ("SELECT * FROM books WHERE id = %s;",book.id)
     #logging.info(result)
     if result == 0: # If no book in DB, add it
     # Make sure we don't add an empty book.  We could also use this to check for changes if we have a copy of the original data.
@@ -236,11 +239,12 @@ class add_edit:
       (book.title, book.authors, book.isbn, book.abstract,book.year,book.publisher,book.city, 1))
       self.status.set_text(_(" Book has been inserted."))
 
+    # If a change has been made...
     elif  self.orig_book.compare(book) != 0:
       logging.info("Somthing changed so an update is needed")
       self.update_book()
-      self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, year = %s, publisher = %s, city = %s WHERE isbn = %s", \
-      (book.title, book.authors, book.abstract,book.year,book.publisher,book.city, book.isbn))
+      self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
+      (book.title, book.authors, book.abstract,book.year,book.publisher,book.city, book.mtype, book.id))
       self.db.commit()
       self.status.set_text(_(" Book has been updated."))
       self.mybook = copy.copy(self.orig_book)
