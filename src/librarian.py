@@ -36,7 +36,7 @@ _ = gettext.gettext
 logger = logging.getLogger("librarian")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
 
-version = "0.0.4"
+version = "0.0.5"
 
 try:
   import pygtk
@@ -83,6 +83,7 @@ class librarian:
 	column.set_resizable(True)
 	column.set_visible(True)
 	self.treeview.append_column(column)
+	column.set_sort_column_id(1)
 
 	column = gtk.TreeViewColumn(_('Title'), gtk.CellRendererText(), text=2)
 	column.set_clickable(True)
