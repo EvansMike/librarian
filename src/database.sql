@@ -19,6 +19,7 @@
 -- Table structure for table `authors`
 --
 
+DROP TABLE IF EXISTS `authors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `authors` (
@@ -32,6 +33,7 @@ CREATE TABLE `authors` (
 -- Table structure for table `books`
 --
 
+DROP TABLE IF EXISTS `books`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `books` (
@@ -47,14 +49,16 @@ CREATE TABLE `books` (
   `abstract` text,
   `copies` int(11) DEFAULT NULL,
   `year` int(11) DEFAULT NULL,
+  `mtype` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=298 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=304 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `borrowers`
 --
 
+DROP TABLE IF EXISTS `borrowers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `borrowers` (
@@ -63,13 +67,14 @@ CREATE TABLE `borrowers` (
   `contact` text,
   `notes` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `borrows`
 --
 
+DROP TABLE IF EXISTS `borrows`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `borrows` (
@@ -79,13 +84,14 @@ CREATE TABLE `borrows` (
   `book` int(11) NOT NULL,
   `borrower` int(11) NOT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=87 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `locations`
 --
 
+DROP TABLE IF EXISTS `locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `locations` (
@@ -99,6 +105,7 @@ CREATE TABLE `locations` (
 -- Table structure for table `mtype`
 --
 
+DROP TABLE IF EXISTS `mtype`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mtype` (
@@ -117,4 +124,4 @@ CREATE TABLE `mtype` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-20 19:41:08
+-- Dump completed on 2011-07-12 13:05:02
