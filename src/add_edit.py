@@ -139,13 +139,13 @@ class add_edit:
     #logging.info(result)
     for row in result:
       # Populate GUI
-      self.isbn.set_text(row['isbn'])
-      self.author.set_text(row['author'])
+      if row['isbn'] != None: self.isbn.set_text(row['isbn'])
+      if row['author'] != None: self.author.set_text(row['author'])
       self.title.set_text(row['title'])
       self.abstract.set_text(row['abstract'])
-      self.publisher.set_text(row['publisher'])
-      self.city.set_text(row['city'])
-      self.year.set_text(str(row['year']))
+      if row['publisher'] != None: self.publisher.set_text(row['publisher'])
+      if row['city'] != None: self.city.set_text(row['city'])
+      if row['year'] != None: self.year.set_text(str(row['year']))
       self.copies.set_text(str(row['copies']))
 
       # Populate a book object
@@ -230,7 +230,7 @@ class add_edit:
       book_data = book.title + book.authors + book.isbn + book.abstract + book.year + book.publisher + book.city
       logging.info(book_data)
       if book_data == '': return # Do nothing if no data
-      if not isdigit(book.year): book.year = 0 #DB query fix for empty date field.
+      if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
       self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies) \
       VALUES(%s, %s, %s,%s,%s,%s,%s,%s);", \
       (book.title, book.authors, book.isbn, book.abstract,book.year,book.publisher,book.city, 1))
