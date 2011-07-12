@@ -173,7 +173,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <signal name="clicked" handler="on_button1_clicked"/>
+                    <signal name="clicked" handler="on_button_all_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -188,7 +188,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <signal name="clicked" handler="on_button2_clicked"/>
+                    <signal name="clicked" handler="on_button_loaned_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -203,7 +203,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <signal name="clicked" handler="on_button3_clicked"/>
+                    <signal name="clicked" handler="on_button_scan_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -218,7 +218,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <signal name="clicked" handler="on_button4_clicked"/>
+                    <signal name="clicked" handler="on_button_query_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>

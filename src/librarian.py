@@ -147,15 +147,15 @@ class librarian:
 			item = self.booklist.iter_next(item)
 		print books
 		'''
-  def on_button1_clicked(self, widget):
+  def on_button_all_clicked(self, widget):
 	# Display all books
 	self.get_book_list(1)
 
-  def on_button2_clicked(self, widget):
+  def on_button_loaned_clicked(self, widget):
 	# Display all books on loan
 	self.get_book_list(BORROWED)
 
-  def on_button3_clicked(self, widget):
+  def on_button_scan_clicked(self, widget):
 	# Open the scan thang
 	logging.info("Do the scan thang")
 	from guiscan import scanner
@@ -164,7 +164,7 @@ class librarian:
 	self.get_book_list(ALL) # All books
 
 
-  def on_button4_clicked(self, widget):
+  def on_button_query_clicked(self, widget):
 	from add_edit import add_edit
 	## Get a book for editing.  SHOULD be devolved to add_edit !!
 	foo,iter = self.treeview.get_selection().get_selected()
