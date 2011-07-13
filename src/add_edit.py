@@ -169,7 +169,7 @@ class add_edit:
     result = self.cur.fetchall()
     for row in result:
       self.lentlist.append([row[0], row[1], row[2]])
-      self.lent_select.append_text(row[1])
+      #self.lent_select.append_text(row[1])
       self.borrowers += 1
     #Get borrows for this book up to the # of copies
     # NB. Need to track copies available for borrowing
@@ -182,7 +182,7 @@ class add_edit:
       book_id = row[3]
       self.o_date = row[1]
     if bid != 0:
-      logging.info(bid)
+      #logging.info(bid)
       if self.orig_book.id == book_id:
         self.orig_book.copies -=1
         self.copies.set_text(str(self.orig_book.copies))
@@ -231,20 +231,22 @@ class add_edit:
     if result == 0: # If no book in DB, add it
     # Make sure we don't add an empty book.  We could also use this to check for changes if we have a copy of the original data.
       book_data = book.title + book.authors + book.isbn + book.abstract + book.year + book.publisher + book.city
-      logging.info(book_data)
+      #logging.info(book_data)
       if book_data == '': return # Do nothing if no data
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
-      self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies) \
-      VALUES(%s, %s, %s,%s,%s,%s,%s,%s);", \
-        (book.title, book.authors, book.isbn, book.abstract,book.year,book.publisher,book.city, 1))
+      self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies, mtype) \
+      VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s);", \
+        (book.title, book.authors, book.isbn, book.abstract,book.year,book.publisher,book.city, 1,book.mtype))
+      self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
       self.status.set_text(_(" Book has been inserted."))
 
     # If a change has been made...
     elif  self.orig_book.compare(book) != 0:
-      logging.info("Somthing changed so an update is needed")
+      #logging.info("Something changed so an update is needed")
       self.update_book()
       self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
         (book.title, book.authors, book.abstract,book.year,book.publisher,book.city, book.mtype, book.id))
+      self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
       self.db.commit()
       self.status.set_text(_(" Book has been updated."))
       self.mybook = copy.copy(self.orig_book)
