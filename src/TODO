@@ -1,6 +1,10 @@
 Make a borrower input interface.
 
-Normalise the database.
+Don't Normalise the database!  Further thought and several blogs indicate
+that normalising too much in this case is incorrect.  See:
+http://lemire.me/blog/archives/2010/11/29/why-do-we-need-database-joins
+Although I have put the authors in a separatte table I've not split into
+first, second name etc.  So semi normalised then.
 
 Much more.
 

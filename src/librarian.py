@@ -15,7 +15,7 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
   MA 02110-1301, USA.
 
-A complete home book collection manager.
+A (in)complete home book collection manager.
 '''
 
 import MySQLdb
@@ -123,7 +123,8 @@ class librarian:
 			#print result
 			for row in result:
 				if row['author'] != None:
-					name=row['author'].strip('[').strip(']')
+					name=row['author']
+					#.strip('[').strip(']')
 					name = name.split()
 				else: name = ''
 				if len(name) > 0 :

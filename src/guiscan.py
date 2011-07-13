@@ -154,21 +154,12 @@ class scanner:
     result = self.cur.execute ("SELECT * FROM books WHERE isbn = %s;",str(self.bibrecord.id))
     #logging.info(result)
     if result == 0 :
-      #first insert the author into the authors table, But! We need to test if already there!!
-      a_first = str.split(str(self.bibrecord.authors))[0].replace('[','').replace(']','')
-      a_second = str.split(str(self.bibrecord.authors))[-1].replace('[','').replace(']','')
-      self.cur.execute("SELECT DISTINCT* FROM authors WHERE name_first=%s AND name_second=%s;",[a_first, a_second])
+      # Insert the author into the authors table
+      a_name = str(self.bibrecord.authors).replace('[','').replace(']','')
+      self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [a_name])
+      self.cur.execute("SELECT * FROM authors WHERE name=%s;",[a_name])
       result = self.cur.fetchall()
-      #logger.info(len(result))
-      author_id = 0
-      if len(result) == 0:
-        self.cur.execute("INSERT INTO authors(name_first, name_second) values(%s,%s);", \
-          [a_first,  a_second])
-        self.cur.execute("SELECT DISTINCT* FROM authors WHERE name_first=%s AND name_second=%s;",[a_first, a_second])
-        result = self.cur.fetchall()
-        author_id = result[0][0]
-      else:
-        author_id = result[0][0]
+      author_id = result[0][0]
       self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies, author_id) VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s);", \
     (str(self.bibrecord.title), str(self.bibrecord.authors), str(self.bibrecord.id), str(self.bibrecord.abstract),str(self.bibrecord.year),str(self.bibrecord.publisher),str(self.bibrecord.city),1,author_id))
 
