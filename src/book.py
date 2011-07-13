@@ -4,21 +4,22 @@
 class book:
   ''' Define book properties here '''
   def __init__(self):
-    self.id = 0
+    self.id = ''
     self.isbn = ''
     self.authors = ''
     self.title = ''
     self.publisher = ''
     self.abstract = ''
-    self.mtype = 'book' # Always = book?
+    self.mtype = ''
     self.year = ''
     self.city = ''
     self.copies = 0
     self.where = 0
 
   def print_book(self):
-    ## Print book details.
-    print self.isbn, self.authors, self.title
+    ## Return some book details as a string for printing.  Mostly a debug thing.
+    bookstring = self.isbn + "\n" + self.authors + "\n" + self.title
+    return bookstring
 
   def add_details(self,details_list):
     ''' A simple interface to add all details in one go.  Obviously order
@@ -50,11 +51,36 @@ class book:
     error += (self.publisher != book.publisher)
     error += (self.abstract != book.abstract)
     error += (self.mtype != book.mtype)
-    #error += (self.year != book.year) # Why is this always different
+    #error += (self.year != book.year)
     error += (self.city != book.city)
     error += (self.mtype != book.mtype)
     return error
 
 
+  def webquery(self,isbn):
+    import book
+    from biblio.webquery.xisbn import XisbnQuery
+    import biblio.webquery
+    a = XisbnQuery()
+    try:
+      abook = a.query_bibdata_by_isbn(isbn)
+      nn = abook.pop()
+      self.id=nn.id
+      self.isbn=nn.id
+      self.title=nn.title
+      self.authors=(str(nn.authors)).replace('[','').replace(']','')
+      self.abstract=(nn.abstract)
+      self.mtype=nn.type
+      self.publisher=(nn.publisher)
+      self.city=(nn.city)
+      self.year=(nn.year)
+    except:
+      return 1
 
+# Test harness
+if __name__ == "__main__":
+  abook = book()
+  #abook.webquery("0752272225")
+  #abook.webquery("075227222")
+  #abook.print_book()
 

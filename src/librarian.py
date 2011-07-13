@@ -178,6 +178,7 @@ class librarian:
 		#logging.info(adder)
 		adder.populate(bid)
 		adder.display()
+
 	else:
 		adder = add_edit()
 		adder.display()

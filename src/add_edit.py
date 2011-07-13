@@ -100,23 +100,22 @@ class add_edit:
 
   def isbn_lookup(self,widget):
     ''' Lookup the book on XisbnQuery
-    returns biblio.webquery.bibrecord.BibRecord
-    update the database and close the window
+      returns biblio.webquery.bibrecord.BibRecord
+      update the database and close the window
     '''
-    a = XisbnQuery()
     try:
-      abook = a.query_bibdata_by_isbn(self.isbn.get_text())
-      nn = abook.pop()
-      self.isbn.set_text(nn.id)
-      self.title.set_text(nn.title)
-      self.author.set_text(str(nn.authors))
-      self.abstract.set_text(nn.abstract)
-      self.mtype.set_text(nn.type)
-      self.publisher.set_text(nn.publisher)
-      self.city.set_text(nn.city)
-      self.year.set_text(nn.year)
+      logger.info(self.isbn.get_text())
+      self.mybook.webquery(self.isbn.get_text())
+      self.isbn.set_text(self.mybook.isbn)
+      self.title.set_text(self.mybook.title)
+      self.author.set_text(str(self.mybook.authors))
+      self.abstract.set_text(self.mybook.abstract)
+      self.mtype.set_text(self.mybook.mtype)
+      self.publisher.set_text(self.mybook.publisher)
+      self.city.set_text(self.mybook.city)
+      self.year.set_text(self.mybook.year)
     except:
-      logging.info_("No book found")
+      logging.info(_("No book found"))
       d = gtk.Dialog()
       d.add_buttons(gtk.STOCK_OK, 1)
       label = gtk.Label(_('No Book found for this ISBN!'))
@@ -125,7 +124,6 @@ class add_edit:
       d.run()
       d.destroy()
 
-    self.update_book()
 
   def populate_borrowers(self):
     ''' Get borrowers and fill in the list'''
@@ -190,14 +188,7 @@ class add_edit:
       self.lent_select.set_active(bid - 1)
       self.lent_date.set_text(str(self.o_date))
     else: self.lent_select.set_active(0)
-    '''
-    if self.orig_book.where == 0:
-      self.lent.set_active(False)
-      self.lentlist.append([0, '', ''])
-    else:
-      self.lent.set_active(True)
-    del cur
-    '''
+
 
 
   def update_book(self):
@@ -224,7 +215,7 @@ class add_edit:
 
 
   def update_db(self):
-    book = self.mybook
+    book = copy.copy(self.mybook)
     #logging.info(self.orig_book.compare(book))
     result = self.cur.execute ("SELECT * FROM books WHERE id = %s;",book.id)
     #logging.info(result)
@@ -250,6 +241,7 @@ class add_edit:
       self.db.commit()
       self.status.set_text(_(" Book has been updated."))
       self.mybook = copy.copy(self.orig_book)
+    del book
 
   def on_button_remove_clicked(self, widget):
     ''' Remove selected book from database '''

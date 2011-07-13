@@ -24,6 +24,7 @@ import ConfigParser
 import logging
 import load_config
 import gettext
+import book
 
 _ = gettext.gettext
 
@@ -54,6 +55,7 @@ db_host = config.db_host
 class scanner:
   ''' Scanner class. Scans books, queries isbndb and adds book to database, or CSV'''
   def __init__(self):
+    self.abook = book.book()
     qr_img = ""
     vid_dev = "/dev/video0" # Need to scan for this and make it work in windows?
     builder = gtk.Builder()
@@ -62,7 +64,6 @@ class scanner:
     builder.connect_signals(self)
     self.text_view = builder.get_object("textview1")
     self.qr_img = builder.get_object("image1")
-    self.bibrecord = biblio.webquery.bibrecord.BibRecord
     try:
       self.db = MySQLdb.connect(db=db_base,  passwd = db_pass);
     except:
@@ -99,26 +100,16 @@ class scanner:
       for symbol in self.proc.results:
         bar = symbol.data
         logging.info(bar)
-        a = XisbnQuery()
-        book = a.query_bibdata_by_isbn(bar) # TODO: Make work for CDs and DVDs
-        nn = book.pop()
-        self.bibrecord = nn
-        print nn.id
-        print nn.title
-        print nn.authors
-        print nn.abstract
-        print nn.type
-        print nn.publisher
-        print nn.city
-        print nn.year
-        logging.info(nn.authors)
-        buff.set_text( str(nn.id) + "\n" + str(nn.title) +  "\n" + str(nn.authors[0]))
+        self.abook.webquery(bar)
+        #self.abook.print_book()
+        buff.set_text(self.abook.print_book())
     except:
+      #logging.info(self.abook.print_book())
       buff.set_text (_("Dodgy scan, retry?"))
       self.text_view.set_buffer(buff)
       return
     # DONE Check if exists and increment book count if so.
-    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;",str(nn.id))
+    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;",str(self.abook.isbn))
     count = self.cur.fetchone()[0]
     if count > 0:
       buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
@@ -140,7 +131,7 @@ class scanner:
     print "You removed this book."
     buff = self.text_view.get_buffer()
     try:
-      self.cur.execute("DELETE FROM books WHERE isbn = %s;", str(self.bibrecord.id))
+      self.cur.execute("DELETE FROM books WHERE isbn = %s;", str(self.abook.isbn))
       buff.insert_at_cursor (_( "\n\nYou removed this book."))
       self.text_view.set_buffer(buff)
     except:
@@ -151,28 +142,25 @@ class scanner:
 
     #TODO Check if exists and increment copy counter if so.
     #try:
-    result = self.cur.execute ("SELECT * FROM books WHERE isbn = %s;",str(self.bibrecord.id))
+    result = self.cur.execute ("SELECT * FROM books WHERE isbn = %s;",str(self.abook.isbn))
     #logging.info(result)
     if result == 0 :
       # Insert the author into the authors table
-      a_name = str(self.bibrecord.authors).replace('[','').replace(']','')
+      a_name = str(self.abook.authors)
       self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [a_name])
       self.cur.execute("SELECT * FROM authors WHERE name=%s;",[a_name])
       result = self.cur.fetchall()
       author_id = result[0][0]
       self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies, author_id) VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s);", \
-    (str(self.bibrecord.title), str(self.bibrecord.authors).replace('[','').replace(']',''), str(self.bibrecord.id), str(self.bibrecord.abstract),str(self.bibrecord.year),str(self.bibrecord.publisher),str(self.bibrecord.city),1,author_id))
+    (str(self.abook.title), str(self.abook.authors), str(self.abook.id), str(self.abook.abstract),str(self.abook.year),str(self.abook.publisher),str(self.abook.city),1,author_id))
 
     else:
-      self.cur.execute("UPDATE books set copies = copies+1 WHERE isbn = %s;",str(self.bibrecord.id))
+      self.cur.execute("UPDATE books set copies = copies+1 WHERE isbn = %s;",str(self.abook.id))
     buff = self.text_view.get_buffer()
     buff.insert_at_cursor(_( "\n\nYou added this book."))
     self.text_view.set_buffer(buff)
     print "You added this book."
-    #except:
-    #  buff = self.text_view.get_buffer()
-    #  buff.insert_at_cursor( "\n\nBook add failed for some reason.")
-    # print "Book add failed."
+
 
   def append_text(self, text):
     pass
