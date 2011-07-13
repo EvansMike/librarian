@@ -283,7 +283,7 @@ class add_edit:
   def on_checkbutton1_toggled(self, widget):
     #logging.info(widget)
     # Get widget state
-    # Set book as borrowed or not with borrower as key
+    # Set book as borrowed or not with borrower as key.  What if I have two copies and they get borrowed?
     if self.lent.get_active(): # Checked
       foo = self.lent_select.get_active()
       bid = self.lentlist[foo][0]
