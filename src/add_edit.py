@@ -236,7 +236,7 @@ class add_edit:
       #logging.info("Something changed so an update is needed")
       self.update_book()
       self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
-        (book.title, book.authors, book.abstract,book.year,book.publisher,book.city, book.mtype, book.id))
+        (book.title, book.authors, book.abstract,book.year,book.publisher,book.city, book.mtype, book.isbn))
       self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
       self.db.commit()
       self.status.set_text(_(" Book has been updated."))
@@ -245,10 +245,10 @@ class add_edit:
 
   def on_button_remove_clicked(self, widget):
     ''' Remove selected book from database '''
-    return
-    self.update_book()
     #logging.info(str(self.mybook.id) + " about to be removed.")
-    self.cur.execute("UPDATE books set copies = copies-1 WHERE isbn = %s;",self.mybook.id)
+    self.cur.execute("UPDATE books set copies = copies-1 WHERE isbn = %s;",self.mybook.isbn)
+    # When copies = 0 remove from database
+    self.cur.execute("delete from books where copies=0;")
     self.status.set_text (_(" Book has been removed."))
     self.db.commit()
 
