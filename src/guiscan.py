@@ -161,7 +161,7 @@ class scanner:
       result = self.cur.fetchall()
       author_id = result[0][0]
       self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies, author_id) VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s);", \
-    (str(self.bibrecord.title), str(self.bibrecord.authors), str(self.bibrecord.id), str(self.bibrecord.abstract),str(self.bibrecord.year),str(self.bibrecord.publisher),str(self.bibrecord.city),1,author_id))
+    (str(self.bibrecord.title), str(self.bibrecord.authors).replace('[','').replace(']',''), str(self.bibrecord.id), str(self.bibrecord.abstract),str(self.bibrecord.year),str(self.bibrecord.publisher),str(self.bibrecord.city),1,author_id))
 
     else:
       self.cur.execute("UPDATE books set copies = copies+1 WHERE isbn = %s;",str(self.bibrecord.id))
