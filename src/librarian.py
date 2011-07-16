@@ -27,6 +27,7 @@ import book
 import locale
 import gettext
 import popen2
+import version
 
 locale.setlocale(locale.LC_ALL, '')
 APP = 'librarian'
@@ -36,7 +37,7 @@ _ = gettext.gettext
 logger = logging.getLogger("librarian")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
 
-version = "0.0.5"
+__version__ = "1.0.0"
 
 try:
   import pygtk
@@ -62,7 +63,7 @@ NULL, ALL, BORROWED = range(3)
 ################## START librarian #####################################
 class librarian:
   def __init__(self):
-	print _("Version: "),version
+	print _("Version: "),__version__
 	builder = gtk.Builder()
 	builder.add_from_file("ui/librarian.glade")
 	builder.connect_signals(self)
@@ -92,7 +93,7 @@ class librarian:
 	column.set_sort_column_id(2)
 
 	self.get_book_list(1)
-	self.status1.set_text("Version:" + version)
+	self.status1.set_text("Version:" + __version__)
 
 	self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
 

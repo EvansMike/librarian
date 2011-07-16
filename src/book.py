@@ -80,7 +80,7 @@ class book:
 # Test harness
 if __name__ == "__main__":
   abook = book()
-  #abook.webquery("0752272225")
+  abook.webquery("0752272225")
   #abook.webquery("075227222")
-  #abook.print_book()
-
+  print abook.print_book()
+  del abook
