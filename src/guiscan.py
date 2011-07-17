@@ -141,10 +141,11 @@ class scanner:
   def on_button_add_clicked(self, widget):
 
     #TODO Check if exists and increment copy counter if so.
-    #try:
-    result = self.cur.execute ("SELECT * FROM books WHERE isbn = %s;",str(self.abook.isbn))
-    #logging.info(result)
-    if result == 0 :
+    # Arguably I could have used "ON DUPLICATE KEY", using the isbn as the key,
+    # here but it may happen that several books will have empty isbn values
+    # for instance, books printed before ISBN was invented.
+    result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",str(self.abook.isbn))
+    if self.cur.fetchone()[0] == 0:
       # Insert the author into the authors table
       a_name = str(self.abook.authors)
       self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [a_name])
