@@ -57,7 +57,7 @@ class scanner:
   def __init__(self):
     self.abook = book.book()
     qr_img = ""
-    vid_dev = "/dev/video0" # Need to scan for this and make it work in windows?
+    #vid_dev = "/dev/video0" # Need to scan for this and make it work in windows?
     builder = gtk.Builder()
     builder.add_from_file("ui/gui.glade")
     self.window = builder.get_object("window1")
@@ -73,7 +73,7 @@ class scanner:
     if self.db:
       self.cur = self.db.cursor()
 
-    scanner = zbar.Processor()
+    #scanner = zbar.Processor()
     buff = self.text_view.get_buffer()
     buff.set_text(_("To begin press scan."))
     self.text_view.set_buffer(buff)
@@ -84,7 +84,7 @@ class scanner:
     # configure the Processor
     self.proc.parse_config('enable')
     # initialize the Processor
-    self.proc.init(self.device)
+    #self.proc.init(self.device)
     gtk.main()
 
 
@@ -102,7 +102,6 @@ class scanner:
         bar = symbol.data
         logging.info(bar)
         self.abook.webquery(bar)
-        #self.abook.print_book()
         buff.set_text(self.abook.print_book())
     except:
       #logging.info(self.abook.print_book())
@@ -118,8 +117,11 @@ class scanner:
 		  buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
 		self.text_view.set_buffer(buff)
     except:
-		pass
+      pass
+    del buff
 
+
+  def make_qr_code():
     '''
     Although kinda fun to produce QR codes it's seems pretty pointless for this app, so
     I'm commenting it out.
@@ -132,6 +134,8 @@ class scanner:
     img.save('../ISBN:' + bar + '.png', 'png')
     self.qr_img.set_from_file('../ISBN:' + bar + '.png')
     '''
+
+
   def on_button_remove_clicked(self, widget):
     # Remove a scanned book from the database.  Why?
     print "You removed this book."
@@ -184,6 +188,7 @@ class scanner:
       quit(0)
     else:
       self.window.hide()
+      del self
     pass
 ################## END scanner class ###################################
 
