@@ -1,5 +1,49 @@
-You need python plus various modules for this.  See the files for required Python modules.  I should write a depends file.  Requires a mysql database.  Perhaps a sqlite database would be better.  I need to write a db schema create script.
+README FIRST
 
-I use this to track my books.  Only works with linux as is.  Scanning is done using a webcam and zbarcam.
+Requires some flavour of linux and Python.
 
-Bugs they are many and many things TODO.
+This is a simple application to catalogue your library using the ISBN barcode
+and the zbarcam application with n ordinary webcam.
+The scan triggers a lookup on the database and the book details are downloaded
+then commited to the local database.
+
+It uses MySQL.  The database config file is created if none exists.  Use database.sql
+to create the database, like:
+mysql -p books < database.sql
+te database name (books in the example above) can be anything as long as the
+config file matches.  If the config file contains a password take care to make
+it secure from prying eyes.
+
+Requires biblio and zbar.  If you want qrcode then also needs qrencode. :)
+
+Currently borrowers have to manually inserted into the database on the command line.
+I will fix this if I get asked or I can be arsed.
+
+See INSTALL for install instructions.
+
+A small warning  Everytime you scan a book a qrcode is generated and place
+in the directory above the current directory You may not want this behaviour.
+It's trivial to delete/move the created codes however.  I should put a
+config option for this behaviour or place the qrcodes somewhere else.
+It seemed like a good idea at the time but I admit to never have used the qrcodes for anything. :)
+PS. Now removed this 'feature'.  If you want it then modify the source code in add-edit.py
+I could write a script to create all of the QRCodes from the DB info if at
+some time I change my mind and decide I need them after all.
+
+Older books without bar codes can be manually input via the Query/Edit book
+interface.  It's a bit od a pain though of you have lots of books.  You'd have
+to be a perfectionist/anal/OCD to want to do this.
+
+
+
+DB NOTES:
+To get a list of borrowed books from mysql:
+SELECT o_date, title, author, borrowers.name
+  FROM borrows, borrowers, books
+  where borrows.borrower = borrowers.id
+  and books.id = borrows.book
+  and borrows.i_date IS NULL;
+
+To insert a borrower in the mysql shell:
+insert into borrowers(name) values ('Borrower Name');
+It's just a text field, the id is auto incremented.
