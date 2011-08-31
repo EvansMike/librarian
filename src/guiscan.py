@@ -64,10 +64,11 @@ class scanner:
     builder.connect_signals(self)
     self.text_view = builder.get_object("textview1")
     self.qr_img = builder.get_object("image1")
+    self.cur = None
     try:
-      self.db = MySQLdb.connect(db=db_base,  passwd = db_pass);
+      self.db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass);
     except:
-      print (_("No database connection.  Check ")) + config_file
+      print (_("No database connection.  Check config file"))
       self.db = False
     if self.db:
       self.cur = self.db.cursor()
@@ -109,11 +110,16 @@ class scanner:
       self.text_view.set_buffer(buff)
       return
     # DONE Check if exists and increment book count if so.
-    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;",str(self.abook.isbn))
-    count = self.cur.fetchone()[0]
-    if count > 0:
-      buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
-    self.text_view.set_buffer(buff)
+
+    try:
+		self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;",str(self.abook.isbn))
+		count = self.cur.fetchone()[0]
+		if count > 0:
+		  buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
+		self.text_view.set_buffer(buff)
+    except:
+		pass
+
     '''
     Although kinda fun to produce QR codes it's seems pretty pointless for this app, so
     I'm commenting it out.
