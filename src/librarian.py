@@ -163,12 +163,11 @@ class librarian:
 
   def on_button_scan_clicked(self, widget):
     # Open the scan thang
-    logging.info("Do the scan thang")
+    #logging.info("Do the scan thang")
     from guiscan import scanner
     s = scanner()
     #scanner.on_button_scan_clicked(s)
     self.get_book_list(ALL) # All books
-    del s, scanner
 
 
   def on_button_query_clicked(self, widget):

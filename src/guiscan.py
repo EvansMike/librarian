@@ -73,32 +73,29 @@ class scanner:
     if self.db:
       self.cur = self.db.cursor()
 
-    #scanner = zbar.Processor()
-    buff = self.text_view.get_buffer()
-    buff.set_text(_("To begin press scan."))
-    self.text_view.set_buffer(buff)
-    try: self.device = '/dev/video0'
-    except:self.device = '/dev/video1'
-    # create a Processor
-    self.proc = zbar.Processor()
-    # configure the Processor
-    self.proc.parse_config('enable')
-    # initialize the Processor
-    #self.proc.init(self.device)
-    gtk.main()
+
 
 
   def on_button_scan_clicked(self, widget):
     buff = self.text_view.get_buffer()
+    buff.set_text(_("To begin press scan."))
+    self.text_view.set_buffer(buff)
+    try: device = '/dev/video0'
+    except:device = '/dev/video1'
+    # create a Processor
+    proc = zbar.Processor()
+    # configure the Processor
+    proc.parse_config('enable')
+    buff = self.text_view.get_buffer()
     # enable the preview window
-    self.proc.init(self.device)
-    self.proc.visible = True
+    proc.init(device)
+    proc.visible = True
     # read at least one barcode (or until window closed)
-    self.proc.process_one()
+    proc.process_one()
     # hide the preview window
-    self.proc.visible = False
+    proc.visible = False
     try:
-      for symbol in self.proc.results:
+      for symbol in proc.results:
         bar = symbol.data
         logging.info(bar)
         self.abook.webquery(bar)
@@ -197,5 +194,5 @@ class scanner:
 # we start here.
 if __name__ == "__main__":
 	app = scanner()
-	#gtk.main()
+	gtk.main()
 
