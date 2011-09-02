@@ -254,7 +254,6 @@ class add_edit:
     self.status.set_text (_(" Book has been removed."))
     self.db.commit()
 
-# BROKEN for when there are no borrowers
   def on_comboboxentry1_changed(self,widget):
     ''' Do things when selection is changed
     Need to check if the selected borrower has the book and set the checkbutton status to suit '''
@@ -285,7 +284,6 @@ class add_edit:
 
   def on_checkbutton1_toggled(self, widget):
     if not self.lentlist.get_iter_first():
-      self.lent.set_active(not self.lent_select.get_active()) # reverse the toggle
       return
     #logging.info(widget)
     # Get widget state
