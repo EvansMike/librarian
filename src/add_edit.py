@@ -284,6 +284,9 @@ class add_edit:
 
 
   def on_checkbutton1_toggled(self, widget):
+    if not self.lentlist.get_iter_first():
+      self.lent.set_active(not self.lent_select.get_active()) # reverse the toggle
+      return
     #logging.info(widget)
     # Get widget state
     # Set book as borrowed or not with borrower as key.  What if I have two copies and they get borrowed?
