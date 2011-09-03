@@ -2,8 +2,12 @@ README FIRST
 
 Requires some flavour of linux and Python.
 
+I wanted to catalog all my books using gtheir barcodes as input and track who
+borrows my books.  That's all.  I looked online for a program that would
+do just that and couldn't find any, so wrote this.
+
 This is a simple application to catalogue your library using the ISBN barcode
-and the zbarcam application with n ordinary webcam.
+and the zbarcam application with an ordinary webcam.
 The scan triggers a lookup on the database and the book details are downloaded
 then commited to the local database.
 
