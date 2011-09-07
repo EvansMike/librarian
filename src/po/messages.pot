@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-02 14:28+0100\n"
+"POT-Creation-Date: 2011-09-07 21:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,91 +17,95 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: add_edit.py:84 borrowers.py:40 guiscan.py:67
+#: add_edit.py:87 borrowers.py:40
 msgid "No database connection.  Check "
 msgstr ""
 
-#: add_edit.py:122
+#: add_edit.py:121
+msgid "No book found"
+msgstr ""
+
+#: add_edit.py:124
 msgid "No Book found for this ISBN!"
 msgstr ""
 
-#: add_edit.py:237
+#: add_edit.py:236
 msgid " Book has been inserted."
 msgstr ""
 
-#: add_edit.py:245
+#: add_edit.py:248
 msgid " Book has been updated."
 msgstr ""
 
-#: add_edit.py:254
+#: add_edit.py:258
 msgid " Book has been removed."
 msgstr ""
 
-#: add_edit.py:297
+#: add_edit.py:307
 msgid "Book has been marked as borrowed."
 msgstr ""
 
-#: add_edit.py:300
-msgid "Book has been NOT marked as borrowed."
-msgstr ""
-
-#: add_edit.py:314
+#: add_edit.py:325
 msgid "Book has been marked as returned."
 msgstr ""
 
-#: add_edit.py:315
+#: add_edit.py:326
 msgid "Book has been NOT marked as returned."
 msgstr ""
 
-#: guiscan.py:74
+#: guiscan.py:72
+msgid "No database connection.  Check config file"
+msgstr ""
+
+#: guiscan.py:82
 msgid "To begin press scan."
 msgstr ""
 
-#: guiscan.py:115
+#: guiscan.py:106
 msgid "Dodgy scan, retry?"
 msgstr ""
 
-#: guiscan.py:122
+#: guiscan.py:117
 msgid ""
 "\n"
 "\n"
 "You already have "
 msgstr ""
 
-#: guiscan.py:142
+#: guiscan.py:145
 msgid ""
 "\n"
 "\n"
 "You removed this book."
 msgstr ""
 
-#: guiscan.py:145
+#: guiscan.py:148
 msgid ""
 "\n"
 "\n"
 "Could not remove book!"
 msgstr ""
 
-#: guiscan.py:160
+#: guiscan.py:172
 msgid ""
 "\n"
 "\n"
 "You added this book."
 msgstr ""
 
-#: librarian.py:49
+#: librarian.py:48
 msgid "GTK Not Availible"
 msgstr ""
 
-#: librarian.py:65
+#: librarian.py:66
 msgid "Version: "
 msgstr ""
 
-#: librarian.py:80 ui/edit_book.glade.h:2
+#: librarian.py:81 ui/edit_book.glade.h:2
 msgid "Author"
 msgstr ""
 
-#: librarian.py:87 ui/edit_book.glade.h:25
+#: librarian.py:89 ui/edit_book.glade.h:25
 msgid "Title"
 msgstr ""
 
