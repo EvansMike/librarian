@@ -171,7 +171,8 @@ class add_edit:
       self.borrowers += 1
     #Get borrows for this book up to the # of copies
     # NB. Need to track copies available for borrowing
-    self.cur.execute("SELECT * FROM borrows where book = %s AND i_date IS NULL AND o_date IS NOT NULL LIMIT %s;",
+    self.cur.execute("SELECT * FROM borrows where book = %s AND i_date IS NULL \
+        AND o_date IS NOT NULL LIMIT %s;",
           [self.orig_book.id,self.orig_book.copies])
     result = self.cur.fetchall()
     bid = 0
@@ -220,14 +221,17 @@ class add_edit:
     result = self.cur.execute ("SELECT * FROM books WHERE id = %s;",book.id)
     #logging.info(result)
     if result == 0: # If no book in DB, add it
-    # Make sure we don't add an empty book.  We could also use this to check for changes if we have a copy of the original data.
-      book_data = book.title + book.authors + book.isbn + book.abstract + book.year + book.publisher + book.city
+    # Make sure we don't add an empty book.  We could also use this to
+    #check for changes if we have a copy of the original data.
+      book_data = book.title + book.authors + book.isbn + book.abstract \
+      + book.year + book.publisher + book.city
       #logging.info(book_data)
       if book_data == '': return # Do nothing if no data
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
       self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies, mtype) \
       VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s);", \
-        (book.title, book.authors, book.isbn, book.abstract,book.year,book.publisher,book.city, 1,book.mtype))
+        (book.title, book.authors, book.isbn, book.abstract,book.year,
+            book.publisher,book.city, 1,book.mtype))
       self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
       self.status.set_text(_(" Book has been inserted."))
 
@@ -235,8 +239,10 @@ class add_edit:
     elif  self.orig_book.compare(book) != 0:
       #logging.info("Something changed so an update is needed")
       self.update_book()
-      self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
-        (book.title, book.authors, book.abstract,book.year,book.publisher,book.city, book.mtype, book.id))
+      self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \
+          year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
+        (book.title, book.authors, book.abstract,book.year,book.publisher,
+        book.city, book.mtype, book.id))
       logger.info(book.mtype)
       self.db.commit()
       self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
@@ -256,12 +262,14 @@ class add_edit:
 
   def on_comboboxentry1_changed(self,widget):
     ''' Do things when selection is changed
-    Need to check if the selected borrower has the book and set the checkbutton status to suit '''
+    Need to check if the selected borrower has the book and set the
+    checkbutton status to suit '''
     if not self.lentlist.get_iter_first(): return # If we can't iterate then the list is empty
     foo = self.lent_select.get_active()
     bid = self.lentlist[foo][0]
     # Get list of borrows for this book
-    result = self.cur.execute("SELECT * FROM borrows where borrows.book = %s AND borrower = %s AND i_date IS NULL AND o_date IS NOT NULL;" ,
+    result = self.cur.execute("SELECT * FROM borrows where \
+      borrows.book = %s AND borrower = %s AND i_date IS NULL AND o_date IS NOT NULL;" ,
         [self.mybook.id,bid])
     #logging.info(result)
     if result == 0:
@@ -287,13 +295,16 @@ class add_edit:
       return
     #logging.info(widget)
     # Get widget state
-    # Set book as borrowed or not with borrower as key.  What if I have two copies and they get borrowed?
+    # Set book as borrowed or not with borrower as key.
+    # What if I have two copies and they get borrowed?
     if self.lent.get_active(): # Checked
       foo = self.lent_select.get_active()
       bid = self.lentlist[foo][0]
       #logging.info(bid)
       if bid != 0 and self.mybook.id != 0 and self.orig_book.copies > 0:
-        self.cur.execute("INSERT INTO borrows(book, borrower, o_date) SELECT %s, %s, now() FROM DUAL WHERE NOT EXISTS(SELECT 1 FROM borrows WHERE book = %s AND borrower = %s AND i_date IS NULL);",
+        self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
+            SELECT %s, %s, now() FROM DUAL WHERE NOT EXISTS \
+            (SELECT 1 FROM borrows WHERE book = %s AND borrower = %s AND i_date IS NULL);",
             [self.mybook.id, bid,self.mybook.id, bid])
         self.db.commit()
         self.status.set_text(_("Book has been marked as borrowed."))
@@ -309,7 +320,8 @@ class add_edit:
       foo = self.lent_select.get_active()
       bid = self.lentlist[foo][0]
       if bid != 0:
-        result = self.cur.execute("UPDATE borrows SET i_date = NOW() WHERE book = %s AND borrower = %s AND i_date IS NULL",
+        result = self.cur.execute("UPDATE borrows SET i_date = NOW() \
+          WHERE book = %s AND borrower = %s AND i_date IS NULL",
           [self.mybook.id, bid])
         self.db.commit()
         if result:
