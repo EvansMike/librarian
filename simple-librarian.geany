@@ -5,6 +5,7 @@ indent_type=0
 indent_hard_tab_width=4
 detect_indent=true
 indent_mode=2
+detect_indent_width=false
 
 [project]
 name=simple-librarian
@@ -16,12 +17,13 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=0
-FILE_NAME_0=3981;Python;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/add_edit.py;0;2
-FILE_NAME_1=4808;Python;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/librarian.py;0;2
-FILE_NAME_2=17;None;0;16;0;1;0;/home/mikee/Projects/simple-librarian/.git/hooks/post-commit;0;2
-FILE_NAME_3=978;Sh;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/get_schema.sh;0;2
-FILE_NAME_4=361;None;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/TODO;0;2
-FILE_NAME_5=0;None;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/README;0;2
-FILE_NAME_6=532;Python;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/book.py;0;2
-FILE_NAME_7=4785;Python;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/guiscan.py;0;2
+current_page=5
+FILE_NAME_0=777;Python;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/librarian.py;0;2
+FILE_NAME_1=424;None;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/TODO;0;2
+FILE_NAME_2=304;None;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/README;0;2
+FILE_NAME_3=10528;Python;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/add_edit.py;0;2
+FILE_NAME_4=3518;Python;0;16;0;1;0;/home/mikee/Projects/simple-librarian/src/guiscan.py;0;2
+FILE_NAME_5=0;Python;0;16;0;1;0;/home/mikee/Projects/gramps/src/gui/editors/editperson.py;0;2
+
+[VTE]
+last_dir=/home/mikee
