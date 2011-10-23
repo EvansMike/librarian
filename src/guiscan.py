@@ -94,11 +94,17 @@ class scanner:
     proc.process_one()
     # hide the preview window
     proc.visible = False
+    logging.info(proc.results)
     try:
       for symbol in proc.results:
         bar = symbol.data
         logging.info(bar)
         self.abook.webquery(bar)
+        logging.info(len(self.abook.print_book()))
+        if len(self.abook.print_book()) <= 3:
+          buff.set_text (_("No data returned, retry?"))
+          self.text_view.set_buffer(buff)
+        logging.info(self.abook.print_book())
         buff.set_text(self.abook.print_book())
     except:
       #logging.info(self.abook.print_book())
