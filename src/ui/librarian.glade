@@ -168,11 +168,12 @@
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkButton" id="button1">
-                    <property name="label" translatable="yes">ALL BOOKS</property>
+                    <property name="label" translatable="yes">_ALL BOOKS</property>
                     <property name="width_request">80</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_all_clicked"/>
                   </object>
                   <packing>
@@ -183,11 +184,12 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="button2">
-                    <property name="label" translatable="yes">LOANED BOOKS</property>
+                    <property name="label" translatable="yes">_LOANED BOOKS</property>
                     <property name="width_request">80</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_loaned_clicked"/>
                   </object>
                   <packing>
@@ -198,11 +200,12 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="button3">
-                    <property name="label" translatable="yes">SCAN NEW</property>
+                    <property name="label" translatable="yes">_SCAN NEW</property>
                     <property name="width_request">80</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_scan_clicked"/>
                   </object>
                   <packing>
@@ -213,11 +216,12 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="button4">
-                    <property name="label" translatable="yes">QUERY</property>
+                    <property name="label" translatable="yes">Q_UERY</property>
                     <property name="width_request">80</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_query_clicked"/>
                   </object>
                   <packing>
@@ -227,17 +231,34 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button_quit">
-                    <property name="label" translatable="yes">QUIT</property>
+                  <object class="GtkButton" id="button_print">
+                    <property name="label" translatable="yes">_PRINT</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <signal name="clicked" handler="gtk_main_quit"/>
+                    <property name="use_underline">True</property>
+                    <signal name="clicked" handler="on_button_print_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
                     <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_quit">
+                    <property name="label" translatable="yes">_QUIT</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_underline">True</property>
+                    <property name="yalign">0.49000000953674316</property>
+                    <signal name="clicked" handler="gtk_main_quit"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
               </object>
