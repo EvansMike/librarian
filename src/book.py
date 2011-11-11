@@ -1,5 +1,11 @@
 #!/bin/env python
 # Define a book object
+# TODO: No longer sure about storing the number oc copies of a book as
+# that would prevent me from storing the scanned (or when I bought) the
+# book.
+
+
+import datetime
 
 class book:
   ''' Define book properties here '''
@@ -15,6 +21,7 @@ class book:
     self.city = ''
     self.copies = 0
     self.where = 0
+    self.add_date = datetime.date.today()
 
   def print_book(self):
     ## Return some book details as a string for printing.  Mostly a debug thing.
@@ -82,5 +89,6 @@ if __name__ == "__main__":
   abook = book()
   abook.webquery("0752272225")
   #abook.webquery("075227222")
-  print abook.print_book()
+  #print abook.print_book()
+  print abook.__dict__
   del abook
