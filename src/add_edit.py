@@ -33,6 +33,7 @@ import book
 import load_config
 import copy
 import gettext
+import datetime
 
 
 _ = gettext.gettext
@@ -160,7 +161,11 @@ class add_edit:
       self.orig_book.copies = row['copies']
       self.orig_book.where = row['location']
       self.orig_book.mtype = row['mtype']
-      self.orig_book.add_date = row['add_date']
+      if row['add_date'] != "":
+        self.orig_book.add_date = row['add_date']
+      else:
+        # Dunno?  datetime.date.today() perhaps?
+        pass
 
       self.mybook = copy.copy(self.orig_book)
 
@@ -191,7 +196,7 @@ class add_edit:
       self.lent_select.set_active(bid - 1)
       self.lent_date.set_text(str(self.o_date))
     else:
-      self.lentlist.prepend("", "", "")
+      self.lentlist.prepend([0, "", ""])
       self.lent_select.set_active(0)
 
 
