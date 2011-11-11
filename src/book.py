@@ -47,6 +47,7 @@ class book:
       self.copies = details_list[8]
       self.where = details_list[9]
     except: return -1
+    return 0
 
   def compare(self, book):
     ''' Determine if two books differ.  Return 0 if same and number of
