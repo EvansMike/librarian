@@ -188,7 +188,9 @@ class add_edit:
       # Set active to current borrower.
       self.lent_select.set_active(bid - 1)
       self.lent_date.set_text(str(self.o_date))
-    else: self.lent_select.set_active(0)
+    else:
+      self.lentlist.prepend("", "", "")
+      self.lent_select.set_active(0)
 
 
 
