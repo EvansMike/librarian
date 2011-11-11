@@ -27,6 +27,7 @@ import book
 import locale
 import gettext
 import popen2
+import lib_print
 
 locale.setlocale(locale.LC_ALL, '')
 APP = 'librarian'
@@ -36,7 +37,7 @@ _ = gettext.gettext
 logger = logging.getLogger("librarian")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
 
-__version__ = "20110902"
+__version__ = "20111026"
 
 try:
   import pygtk
@@ -98,8 +99,12 @@ class librarian:
 
     gtk.main()
 
-  def print_books(self):
-    '''Print the book list to printer'''
+  def on_button_print_clicked(self, widget):
+    '''Print the entire book list to printer, via a tmp file.
+    Should print currently displayed window list
+    Maybe mark borrowed books somehow?'''
+    spool = "/tmp/lib_print"
+    tmp = open(spool, 'w')
     model = self.booklist
     myiter = model.get_iter_first()
     if myiter is not None:
@@ -107,9 +112,15 @@ class librarian:
       while str(myiter) != 'None':
         myiter = model.iter_next(myiter)
         if myiter is not None:
-          mm = (model.get_value(myiter,0)) + ", " +(model.get_value(myiter, 1))+ ", " +(model.get_value(myiter, 2))
-          print mm
-
+          mm = (model.get_value(myiter,0)) + ", " +(model.get_value(myiter, 1))+ ": " +(model.get_value(myiter, 2))
+          #print mm
+          tmp.write(mm)
+          tmp.write("\n")
+    tmp.close()
+    return
+    aprinter =  printer()
+    aprinter.print_strings(spool)
+    os.remove(spool)
 
   def get_book_list(self, selection):
     #print selection
@@ -188,12 +199,6 @@ class librarian:
       adder.display()
     self.get_book_list(1) # Repopulate book list.
 
-  def printer(self):
-    ''' Print the currently displayed list. self.treeview'''
-    # Simple sample print command
-    #popen2.popen4("lpr -P [printer] " + output_file)
-
-    pass
 
 
   def gtk_main_quit(self, widget):
