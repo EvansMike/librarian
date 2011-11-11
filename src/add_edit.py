@@ -67,6 +67,7 @@ class add_edit:
     self.lentlist = builder.get_object("liststore1")
     self.lent_select = builder.get_object("comboboxentry1")
     self.where = ""
+    self.add_date = False # builder.get_object("comboboxentry1") #To be added to GUI
     self.mybook = book.book()
     self.orig_book = book.book()
     self.status = builder.get_object("label_status")
@@ -159,6 +160,7 @@ class add_edit:
       self.orig_book.copies = row['copies']
       self.orig_book.where = row['location']
       self.orig_book.mtype = row['mtype']
+      self.orig_book.add_date = row['add_date']
 
       self.mybook = copy.copy(self.orig_book)
 
@@ -204,6 +206,7 @@ class add_edit:
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city=self.city.get_text()
     self.mybook.mtype=self.mtype.get_text()
+    #self.mybook.add_date=self.add_date.get_text() #TODO
     if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
 
     #logging.info(self.mybook.year)
@@ -230,10 +233,11 @@ class add_edit:
       #logging.info(book_data)
       if book_data == '': return # Do nothing if no data
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
-      self.cur.execute("INSERT INTO books(title, author, isbn,abstract, year, publisher, city, copies, mtype) \
-      VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s);", \
+      self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
+      year, publisher, city, copies, mtype, add_date) \
+      VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
         (book.title, book.authors, book.isbn, book.abstract,book.year,
-            book.publisher,book.city, 1,book.mtype))
+            book.publisher,book.city, 1,book.mtype, book.add_date))
       self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
       self.status.set_text(_(" Book has been inserted."))
 
