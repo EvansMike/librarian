@@ -38,7 +38,7 @@ _ = gettext.gettext
 logger = logging.getLogger("librarian")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
 
-__version__ = "20111026"
+__version__ = "20111111"
 
 try:
   import pygtk
