@@ -16,6 +16,7 @@
   MA 02110-1301, USA.
 
 A (in)complete home book collection manager.
+Could do with extending to cover e-books, CDs and DVDs perhaps?
 '''
 
 import MySQLdb
@@ -103,7 +104,7 @@ class librarian:
     '''Print the entire book list to printer, via a tmp file.
     Should print currently displayed window list
     Maybe mark borrowed books somehow?'''
-    spool = "/tmp/lib_print"
+    spool = "/tmp/lib_print" # Linux specific so far.
     tmp = open(spool, 'w')
     model = self.booklist
     myiter = model.get_iter_first()
