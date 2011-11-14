@@ -19,7 +19,9 @@ logging.basicConfig(format='%(module)s: %(levelname)s:%(message)s: LINE %(lineno
 
 
 class load_config:
-  # Load the config data for use by applications
+  ''' Load the config data for use by applications.
+  If a config file is not found it writes a stub file to the current dir
+  and informs the user to about filling the config fields.'''
   db_user = "foo"
   def __init__(self):
 
@@ -31,6 +33,7 @@ class load_config:
       self.db_pass = config.get('database','PASSWD')
       self.db_base = config.get('database','DB')
       self.db_host = config.get('database','DBHOST')
+      self.calibre_db = config.get('calibre','CALIBRE_DB')
     except:
       print "Cannot read config file, exiting.\n"
       # Print a blank config file and inform the luser
@@ -46,17 +49,19 @@ class load_config:
 
       f = open(config_file,"w")
       # Write a dummy config file if one doesn't exist
-      f.write('[database]\nUSER = username\nPASSWD = password\nDB = db_name\nDBHOST = hostname')
+      f.write('[database]\nUSER = username\nPASSWD = password\nDB = db_name\nDBHOST = hostname\n\
+      \n# Define relative path to Calibre database, Users home dir will be\
+      automatically determined.\n[calibre]\nCALIBRE_DB\n')
       '''
       [database]
-      USER = 
-      PASSWD = 
-      DB = 
-      DBHOST = 
+      USER =
+      PASSWD =
+      DB =
+      DBHOST =
       '''
       #f.close()
       os.fchmod(f.fileno(),stat.S_IREAD|stat.S_IWRITE)
-      f.close()      
+      f.close()
       del f
 
 
