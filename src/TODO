@@ -6,7 +6,7 @@ http://lemire.me/blog/archives/2010/11/29/why-do-we-need-database-joins
 Although I have put the authors in a separatte table I've not split into
 first, second name etc.  So semi normalised then.
 
-Make it work with DVDs as well.
+Make it work with CDs, DVDs and possibly Calibre's e-books as well.
 
 Finish internationalisation.
 

@@ -1,6 +1,7 @@
-char *s = N_("ALL BOOKS");
 char *s = N_("Hello World");
-char *s = N_("LOANED BOOKS");
-char *s = N_("QUERY");
-char *s = N_("QUIT");
-char *s = N_("SCAN NEW");
+char *s = N_("Q_UERY");
+char *s = N_("_ALL BOOKS");
+char *s = N_("_LOANED BOOKS");
+char *s = N_("_PRINT");
+char *s = N_("_QUIT");
+char *s = N_("_SCAN NEW");
