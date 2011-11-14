@@ -21,7 +21,7 @@ Could do with extending to cover e-books, CDs and DVDs perhaps?
 
 import MySQLdb
 import MySQLdb.cursors
-import sys
+import sys,os
 import load_config
 import logging
 import book
@@ -37,6 +37,10 @@ _ = gettext.gettext
 
 logger = logging.getLogger("librarian")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
+
+# Get system platform
+plat = sys.platform
+
 
 __version__ = "20111111"
 
@@ -92,7 +96,13 @@ class librarian:
     column.set_resizable(True)
     self.treeview.append_column(column)
     column.set_sort_column_id(2)
-
+    '''
+    column = gtk.TreeViewColumn(_('Medium'), gtk.CellRendererText(), text=3)
+    column.set_clickable(True)
+    column.set_resizable(True)
+    column.set_sort_column_id(3)
+    self.treeview.append_column(column)
+    '''
     self.get_book_list(1)
     self.status1.set_text("Version:" + __version__)
 
@@ -103,25 +113,29 @@ class librarian:
   def on_button_print_clicked(self, widget):
     '''Print the entire book list to printer, via a tmp file.
     Should print currently displayed window list
-    Maybe mark borrowed books somehow?'''
-    spool = "/tmp/lib_print" # Linux specific so far.
-    tmp = open(spool, 'w')
-    model = self.booklist
-    myiter = model.get_iter_first()
-    if myiter is not None:
-      mm = (model.get_value(myiter, 0)) + (model.get_value(myiter, 1)) +(model.get_value(myiter, 2))
-      while str(myiter) != 'None':
-        myiter = model.iter_next(myiter)
-        if myiter is not None:
-          mm = (model.get_value(myiter,0)) + ", " +(model.get_value(myiter, 1))+ ": " +(model.get_value(myiter, 2))
-          #print mm
-          tmp.write(mm)
-          tmp.write("\n")
-    tmp.close()
-    return
-    aprinter =  printer()
-    aprinter.print_strings(spool)
-    os.remove(spool)
+    Maybe mark borrowed books somehow?
+    This will likely be system specific
+
+    '''
+    if plat == "linux2":
+      spool = "/tmp/lib_print" # Linux specific so far.
+      tmp = open(spool, 'w')
+      model = self.booklist
+      myiter = model.get_iter_first()
+      if myiter is not None:
+        mm = (model.get_value(myiter, 0)) + (model.get_value(myiter, 1)) +(model.get_value(myiter, 2))
+        while str(myiter) != 'None':
+          myiter = model.iter_next(myiter)
+          if myiter is not None:
+            mm = (model.get_value(myiter,0)) + ", " +(model.get_value(myiter, 1))+ ": " +(model.get_value(myiter, 2))
+            #print mm
+            tmp.write(mm)
+            tmp.write("\n")
+      tmp.close()
+      return # Don't actully print as we're still testing this
+      aprinter =  printer()
+      aprinter.print_strings(spool)
+      os.remove(spool)
 
   def get_book_list(self, selection):
     #print selection
@@ -130,7 +144,6 @@ class librarian:
       command = "SELECT * FROM books WHERE copies > 0 order by author;"
       self.status1.value = "All Books"
     elif selection == BORROWED:
-      #command = "SELECT * FROM books where location IS NOT NULL AND location != 0 AND copies > 0 ORDER BY isbn;"
       command = "select * from books, borrows where books.id = borrows.book and i_date is null;"
     else:
       return
