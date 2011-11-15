@@ -18,6 +18,7 @@
 '''
 '''
 Add and edit borrowers.
+TODO: Do the edit part.
 '''
 import gtk
 import MySQLdb
@@ -26,12 +27,14 @@ import gettext
 import logging
 import load_config
 
+
 APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
 
-logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: %(levelname)s:%(message)s: LINE %(lineno)d', level=logging.DEBUG)
+#logging.disable(logging.INFO) # Uncomment to disable info messages
+
 
 config = load_config.load_config()
 db_user = config.db_user
@@ -53,9 +56,12 @@ class borrowers:
 
     try:
         self.db = MySQLdb.connect(host = db_host, db=db_base,  passwd = db_pass);
-    except:
-      print _("No database connection.  Check ") + config_file
+    except: # Message and quit
+      import messages
+      messages.pop_info(_("No database connection.  Check config file"))
+      #print _("No database connection.  Check ") + config_file
       self.db = False
+      quit()
     if self.db:
       self.cur = self.db.cursor()
 
