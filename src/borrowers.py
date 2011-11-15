@@ -64,7 +64,7 @@ class borrowers:
       quit()
     if self.db:
       self.cur = self.db.cursor()
-
+    self.on_button_print_clicked(None)
     gtk.main()
     self.window.show
 
@@ -80,6 +80,39 @@ class borrowers:
     else:
       logging.info("Nothing to add.")
       self.status.set_text("Nothing to add.")
+
+  def on_button_print_clicked(self,widget):
+    ''' Create a pdf of the current users.  Optionally open the default
+    reader for viewing and printing of the document '''
+    import time, os
+    from reportlab.lib.enums import TA_LEFT
+    from reportlab.lib.pagesizes import A4
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.units import mm
+    filename = "borrowers.pdf"
+    doc = SimpleDocTemplate(filename,pagesize=A4,
+                            rightMargin=72,leftMargin=72,
+                            topMargin=72,bottomMargin=18)
+    Story=[]
+    styles=getSampleStyleSheet()
+    styles.add(ParagraphStyle(name='Justify', alignment=TA_LEFT))
+    Story.append(Paragraph("Book Borrowers and their Books", styles["Normal"]))
+    Story.append(Spacer(1, 12))
+
+    ptext = ''
+    Story.append(Paragraph(ptext, styles["Justify"]))
+    Story.append(Spacer(1, 12))
+
+    doc.build(Story)
+
+    # Open a reader
+    if os.name == "nt": # Windoze
+      os.filestart(filename)
+    elif os.name == "posix": # Linux
+      os.system("/usr/bin/gnome-open " + filename)
+
+
 
 
 
@@ -104,5 +137,5 @@ class borrowers:
 
 # we start here.
 if __name__ == "__main__":
-	app = borrowers()
-
+  app = borrowers()
+  app.on_button_print_clicked(None)
