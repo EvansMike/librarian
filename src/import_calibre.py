@@ -26,8 +26,8 @@ APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
 
-logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
-
+logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.INFO)
+logging.disable(logging.INFO)
 
 class calibre_import:
   ''' Do the import and insert the data into the list.
@@ -58,7 +58,7 @@ class calibre_import:
     for row in c:
       self.booklist.append(['', row[0], row[1],
         '', '', '', '0',
-        0, 0])
+        0, 0, 'e-book'])
 
     return self.booklist
 
@@ -66,6 +66,7 @@ if __name__ == "__main__":
   app = calibre_import()
   booklist = []
   booklist = app.insert_data(booklist)
+  quit()
   for row in booklist:
     print row
 
