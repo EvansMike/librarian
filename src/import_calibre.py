@@ -16,17 +16,16 @@ plat = sys.platform
 if plat == "darwin":
   pass # plat = "mac"
 elif plat== "win32":
-  pass #plat = "windows"
+  HOME_DIR = os.getenv('HOME')
 elif plat == "linux2":
   HOME_DIR = os.getenv('HOME')
-  pass #linuxStuff()
+  pass
 
 locale.setlocale(locale.LC_ALL, '')
 APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
 
-logger = logging.getLogger("librarian")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
 
 
@@ -46,28 +45,27 @@ class calibre_import:
 
     pass
 
-  def insert_data(self, booklist):
-    '''Insert the data into a booklist and return the list.
-
-    Parameters:
-    booklist -- a GTKListStore object.
-
-    '''
-
+  def insert_data(self, booklist = []):
+    self.booklist = booklist
     conn = sqlite3.connect(self.calibre_base)
     c = conn.cursor()
-    ''' Example safe query
-    t = (symbol,)
-    c.execute('select * from books where symbol=?', t)
-    '''
-    '''
+    # Get author title pair.
     c.execute('select name, title from authors, books, books_authors_link \
-    where books_authors_link.book=books_authors_link.author;')
-    '''
+    where  books.id=books_authors_link.author \
+    AND authors.id=books_authors_link.book \
+    ;')
+    # Insert data into booklist
     for row in c:
-      print row
+      self.booklist.append(['', row[0], row[1],
+        '', '', '', '0',
+        0, 0])
 
+    return self.booklist
 
 if __name__ == "__main__":
   app = calibre_import()
-  app.insert_data(None)
+  booklist = []
+  booklist = app.insert_data(booklist)
+  for row in booklist:
+    print row
+

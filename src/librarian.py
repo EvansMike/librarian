@@ -159,6 +159,7 @@ class librarian:
       result = cur.fetchall()
       #print result
       for row in result:
+        # Deal with rearranging author names to last, first
         if row['author'] != None:
           name=row['author']
           #.strip('[').strip(']')
@@ -176,6 +177,11 @@ class librarian:
         self.booklist.append([row['isbn'], author, row['title'],
         row['abstract'], row['publisher'], row['city'], str(row['year']),
         row['id'], row['copies']])
+
+    # Now get the e-books
+    import import_calibre
+    e_books = import_calibre.calibre_import()
+    self.booklist = e_books.insert_data(self.booklist)
 
 
   def on_button_all_clicked(self, widget):
