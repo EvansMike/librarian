@@ -37,7 +37,7 @@ _ = gettext.gettext
 
 #logger = logging.getLogger("librarian")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
-logging.disable(logging.INFO)
+#logging.disable(logging.INFO)
 
 # Get system platform
 plat = sys.platform
@@ -129,27 +129,37 @@ class librarian:
     from reportlab.lib.units import mm
     filename = "booklist.pdf"
     doc = SimpleDocTemplate(filename,pagesize=A4,
-                            rightMargin=72,leftMargin=72,
-                            topMargin=72,bottomMargin=18)
+                            rightMargin=10,leftMargin=20,
+                            topMargin=40,bottomMargin=18)
     Story=[]
-
+    data = []
     styles=getSampleStyleSheet()
+    text = Paragraph("long line",styles['Normal'])
     styles.add(ParagraphStyle(name='Justify', alignment=TA_LEFT))
-    Story.append(Paragraph("Book Listing", styles["Normal"]))
-    Story.append(Spacer(1, 12))
+    #Story.append(Paragraph("Book Listing", styles["Normal"]))
+    #Story.append(Spacer(1, 12))
     model = self.booklist
     myiter = model.get_iter_first()
     if myiter is not None:
-      mm = (model.get_value(myiter, 0)) + (model.get_value(myiter, 1)) +(model.get_value(myiter, 2))
+      #mm = (model.get_value(myiter, 0)) + (model.get_value(myiter, 1)) +(model.get_value(myiter, 2))
       while str(myiter) != 'None':
+        row = []
         myiter = model.iter_next(myiter)
         if myiter is not None:
-          mm = (model.get_value(myiter,9)) + ":\t" + (model.get_value(myiter, 1))+ ":\t" +(model.get_value(myiter, 2))
-          Story.append(Paragraph(mm, styles["Justify"]))
+          row.append(Paragraph(model.get_value(myiter, 9),styles["Normal"]))
+          row.append(Paragraph(model.get_value(myiter, 1),styles["Normal"]))
+          row.append(Paragraph(model.get_value(myiter, 2),styles["Normal"]))
+          mm = (model.get_value(myiter,9)) + ":  " + (model.get_value(myiter, 1))+ ":  " +(model.get_value(myiter, 2))
+          #Story.append(Paragraph(mm, styles["Justify"]))
+        #logging.info(row)
+        data.append(row)
+      t=Table(data,[40,150,350])
+      t.hAlign='LEFT' # Move WHOLE TABLE to the left, defaults to CENTRE
+      t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP')])) # Apples to CELLS
+      Story.append(t)
+      doc.build(Story)
 
-    doc.build(Story)
-
-    # Open a reader
+    # Open a reader for viewing and printing
     if os.name == "nt": # Windoze.  Not tested, I don't have Windoze :)
       os.filestart(filename)
     elif os.name == "posix": # Linux
