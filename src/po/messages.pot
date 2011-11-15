@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-11 17:12+0000\n"
+"POT-Creation-Date: 2011-11-15 13:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,23 +97,35 @@ msgid ""
 "You added this book."
 msgstr ""
 
-#: librarian.py:51
+#: librarian.py:56
 msgid "GTK Not Availible"
 msgstr ""
 
-#: librarian.py:67
+#: librarian.py:74
 msgid "Version: "
 msgstr ""
 
-#: librarian.py:82 ui/edit_book.glade.h:2
+#: librarian.py:90
+msgid "Medium"
+msgstr ""
+
+#: librarian.py:97 ui/edit_book.glade.h:2
 msgid "Author"
 msgstr ""
 
-#: librarian.py:90 ui/edit_book.glade.h:25
+#: librarian.py:105 ui/edit_book.glade.h:25
 msgid "Title"
 msgstr ""
 
-#: load_config.py:40
+#: librarian.py:160
+msgid "No database connection.  Check the config file."
+msgstr ""
+
+#: librarian.py:223
+msgid "Cannot query e-books.  Please use calibre."
+msgstr ""
+
+#: load_config.py:36 messages.py:33
 msgid "No config file found. Please edit "
 msgstr ""
 
