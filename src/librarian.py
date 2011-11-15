@@ -29,14 +29,15 @@ import locale
 import gettext
 import popen2
 import lib_print
-
+import messages
 locale.setlocale(locale.LC_ALL, '')
 APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
 
-logger = logging.getLogger("librarian")
+#logger = logging.getLogger("librarian")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
+logging.disable(logging.INFO)
 
 # Get system platform
 plat = sys.platform
@@ -58,10 +59,12 @@ except:
 # Read the config file
 
 config = load_config.load_config()
-db_user = config.db_user
-db_pass = config.db_pass
-db_base = config.db_base
-db_host = config.db_host
+try:
+  db_user = config.db_user
+  db_pass = config.db_pass
+  db_base = config.db_base
+  db_host = config.db_host
+except: quit()
 
 NULL, ALL, BORROWED = range(3)
 
@@ -83,6 +86,14 @@ class librarian:
     column.set_sort_column_id(0)
     self.treeview.append_column(column)
     '''
+
+    column = gtk.TreeViewColumn(_('Medium'), gtk.CellRendererText(), text=9)
+    column.set_clickable(True)
+    column.set_resizable(True)
+    column.set_sort_column_id(3)
+    column.sizing = gtk.TREE_VIEW_COLUMN_AUTOSIZE
+    self.treeview.append_column(column)
+
     column = gtk.TreeViewColumn(_('Author'), gtk.CellRendererText(), text=1)
     column.set_clickable(True)
     column.set_sort_indicator(True)
@@ -96,13 +107,8 @@ class librarian:
     column.set_resizable(True)
     self.treeview.append_column(column)
     column.set_sort_column_id(2)
-    '''
-    column = gtk.TreeViewColumn(_('Medium'), gtk.CellRendererText(), text=3)
-    column.set_clickable(True)
-    column.set_resizable(True)
-    column.set_sort_column_id(3)
-    self.treeview.append_column(column)
-    '''
+
+
     self.get_book_list(1)
     self.status1.set_text("Version:" + __version__)
 
@@ -147,11 +153,13 @@ class librarian:
       command = "select * from books, borrows where books.id = borrows.book and i_date is null;"
     else:
       return
-    #try:
-    db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
-    #except:
-    #  print "No database connection.  Check some stuff"
-    #  db = False
+    try:
+      db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
+    except:
+      print "No database connection.  Check some stuff"
+      messages.pop_info(_("No database connection.  Check the config file."))
+      db = False
+      quit()
 
     if db:
       cur = db.cursor(MySQLdb.cursors.DictCursor)
@@ -176,7 +184,7 @@ class librarian:
         #logging.info(author)
         self.booklist.append([row['isbn'], author, row['title'],
         row['abstract'], row['publisher'], row['city'], str(row['year']),
-        row['id'], row['copies']])
+        row['id'], row['copies'], row['mtype']])
 
     # Now get the e-books
     import import_calibre
@@ -208,7 +216,12 @@ class librarian:
     #logging.info(iter)
     if iter:
       # Get the data
-      bid = self.booklist.get_value(iter,7) # id better perhaps?
+      bid = self.booklist.get_value(iter,7)
+      # If it's an e-book then we do nothing
+      if bid == 0:
+        import messages
+        messages.pop_info(_('Cannot query e-books.  Please use calibre.' ))
+        return
       adder = add_edit()
       #logging.info(adder)
       adder.populate(bid)
