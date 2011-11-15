@@ -121,27 +121,41 @@ class librarian:
     Should print currently displayed window list
     Maybe mark borrowed books somehow?
     This will likely be system specific
-
     '''
-    if plat == "linux2":
-      spool = "/tmp/lib_print" # Linux specific so far.
-      tmp = open(spool, 'w')
-      model = self.booklist
-      myiter = model.get_iter_first()
-      if myiter is not None:
-        mm = (model.get_value(myiter, 0)) + (model.get_value(myiter, 1)) +(model.get_value(myiter, 2))
-        while str(myiter) != 'None':
-          myiter = model.iter_next(myiter)
-          if myiter is not None:
-            mm = (model.get_value(myiter,0)) + ", " +(model.get_value(myiter, 1))+ ": " +(model.get_value(myiter, 2))
-            #print mm
-            tmp.write(mm)
-            tmp.write("\n")
-      tmp.close()
-      return # Don't actully print as we're still testing this
-      aprinter =  printer()
-      aprinter.print_strings(spool)
-      os.remove(spool)
+    from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT
+    from reportlab.lib.pagesizes import A4
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.units import mm
+    filename = "booklist.pdf"
+    doc = SimpleDocTemplate(filename,pagesize=A4,
+                            rightMargin=72,leftMargin=72,
+                            topMargin=72,bottomMargin=18)
+    Story=[]
+
+    styles=getSampleStyleSheet()
+    styles.add(ParagraphStyle(name='Justify', alignment=TA_LEFT))
+    Story.append(Paragraph("Book Listing", styles["Normal"]))
+    Story.append(Spacer(1, 12))
+    model = self.booklist
+    myiter = model.get_iter_first()
+    if myiter is not None:
+      mm = (model.get_value(myiter, 0)) + (model.get_value(myiter, 1)) +(model.get_value(myiter, 2))
+      while str(myiter) != 'None':
+        myiter = model.iter_next(myiter)
+        if myiter is not None:
+          mm = (model.get_value(myiter,9)) + ":\t" + (model.get_value(myiter, 1))+ ":\t" +(model.get_value(myiter, 2))
+          Story.append(Paragraph(mm, styles["Justify"]))
+
+    doc.build(Story)
+
+    # Open a reader
+    if os.name == "nt": # Windoze.  Not tested, I don't have Windoze :)
+      os.filestart(filename)
+    elif os.name == "posix": # Linux
+      os.system("/usr/bin/xdg-open " + filename)
+
+
 
   def get_book_list(self, selection):
     #print selection
