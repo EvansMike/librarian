@@ -133,7 +133,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="button_print">
-                    <property name="label" translatable="yes">_PRINT</property>
+                    <property name="label" translatable="yes">PRINT _LIST</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
