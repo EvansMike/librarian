@@ -295,6 +295,20 @@
               </packing>
             </child>
             <child>
+              <object class="GtkButton" id="button_new_user">
+                <property name="label" translatable="yes">Add</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Add a new borrower, or edit the 
+currently selected one</property>
+                <signal name="clicked" handler="on_button_new_user_clicked"/>
+              </object>
+              <packing>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkLabel" id="label10">
                 <property name="visible">True</property>
                 <property name="xalign">1</property>
@@ -302,7 +316,7 @@
               </object>
               <packing>
                 <property name="padding">7</property>
-                <property name="position">3</property>
+                <property name="position">4</property>
               </packing>
             </child>
             <child>
@@ -315,8 +329,11 @@
               </object>
               <packing>
                 <property name="padding">10</property>
-                <property name="position">4</property>
+                <property name="position">5</property>
               </packing>
+            </child>
+            <child>
+              <placeholder/>
             </child>
           </object>
           <packing>
