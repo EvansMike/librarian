@@ -68,8 +68,13 @@ except: quit()
 
 NULL, ALL, BORROWED = range(3)
 
-################## START librarian #####################################
+
 class librarian:
+  '''
+  A simple book tracking program that uses a webcam to scan the barcodes
+  to add books.  It also tracks borrowers and can include your e-books
+  in the listings.  It doesn't track the "borrowing" of e-books. :)
+  '''
   def __init__(self):
     print _("Version: "),__version__
     builder = gtk.Builder()
@@ -177,10 +182,11 @@ class librarian:
     if selection == ALL:
       command = "SELECT * FROM books WHERE copies > 0 order by author;"
       self.status1.value = "All Books"
-      # Now get the e-books
+      # First get the e-books
       import import_calibre
       e_books = import_calibre.calibre_import()
-      self.booklist = e_books.insert_data(self.booklist)
+      self.booklist = e_books.insert_data2(self.booklist)
+    #
     elif selection == BORROWED:
       command = "select * from books, borrows where books.id = borrows.book and i_date is null;"
     else:
@@ -189,11 +195,11 @@ class librarian:
       db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
     except:
       print "No database connection.  Check some stuff"
-      messages.pop_info(_("No database connection.  Check the config file."))
-      db = False
-      quit()
+      messages.pop_info(_("A database connection failed.  Check the config file."))
+      #db = False
+      #quit()
 
-    if db:
+    try:
       cur = db.cursor(MySQLdb.cursors.DictCursor)
       cur.execute(command)
       result = cur.fetchall()
@@ -217,7 +223,8 @@ class librarian:
         self.booklist.append([row['isbn'], author, row['title'],
         row['abstract'], row['publisher'], row['city'], str(row['year']),
         row['id'], row['copies'], row['mtype']])
-
+    except:
+      pass
 
 
 

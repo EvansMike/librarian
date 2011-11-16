@@ -52,14 +52,24 @@ class calibre_import:
 
   '''
   def __init__(self):
-    # Read the config file
-    config = load_config.load_config()
-    self.calibre_base = HOME_DIR + "/" + config.calibre_db
-    logging.info(self.calibre_base)
+
     pass
 
 
   def insert_data(self, booklist = []):
+    ''' Directly use the database to get book list.
+
+    Parameters:
+    booklist -- The gtk.liststore into which the books will be added
+
+    '''
+    # Read the config file
+    try:
+      config = load_config.load_config()
+      self.calibre_base = HOME_DIR + "/" + config.calibre_db
+      logging.info(self.calibre_base)
+    except:
+      return
     self.booklist = booklist
     conn = sqlite3.connect(self.calibre_base)
     c = conn.cursor()
@@ -80,6 +90,9 @@ class calibre_import:
     portable and avoids user having to set dabase paths.  It does seem to
     be slower however.
 
+    Parameters:
+    booklist -- The gtk.liststore into which the books will be added
+
     '''
     import commands
     self.booklist = booklist
@@ -88,7 +101,7 @@ class calibre_import:
       print (_("You don't appear to have Calibre installed, or it's not in your PATH."))
       return
     book_list = book_string.split("\n")
-    print book_list
+    #print book_list
     for  line in book_list:
       if str((line.split("\t")[0])).isdigit():
         #print line.split("\t")[2],  line.split("\t")[1]

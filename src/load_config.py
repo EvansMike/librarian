@@ -40,8 +40,10 @@ class load_config:
   ''' Load the config data for use by applications.
   If a config file is not found it writes a stub file to the current dir
   and informs the user to about filling the config fields.'''
-  db_user = "foo"
   def __init__(self):
+    self._do_it()
+
+  def _do_it(self):
     config_file = "db_conf.cfg"
     config = ConfigParser.ConfigParser()
     config.read(config_file)
