@@ -122,6 +122,7 @@ class calibre_import:
     return self.booklist
 
 if __name__ == "__main__":
+  ''' Simple test harness'''
   app = calibre_import()
   booklist = []
   booklist = app.insert_data2(booklist)
