@@ -173,6 +173,10 @@ class librarian:
     if selection == ALL:
       command = "SELECT * FROM books WHERE copies > 0 order by author;"
       self.status1.value = "All Books"
+      # Now get the e-books
+      import import_calibre
+      e_books = import_calibre.calibre_import()
+      self.booklist = e_books.insert_data(self.booklist)
     elif selection == BORROWED:
       command = "select * from books, borrows where books.id = borrows.book and i_date is null;"
     else:
@@ -210,10 +214,7 @@ class librarian:
         row['abstract'], row['publisher'], row['city'], str(row['year']),
         row['id'], row['copies'], row['mtype']])
 
-    # Now get the e-books
-    import import_calibre
-    e_books = import_calibre.calibre_import()
-    self.booklist = e_books.insert_data(self.booklist)
+
 
 
   def on_button_all_clicked(self, widget):
