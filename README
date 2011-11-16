@@ -1,9 +1,21 @@
 README FIRST
 
 Requires some flavour of linux and Python.
+Also requires the python packages:
+biblio
+zbar
+If you want qrcode then also needs qrencode
+gtk
+sqlite3
+reportlab
+
+
+I wanted to catalog all my books using gtheir barcodes as input and track who
+borrows my books.  That's all.  I looked online for a program that would
+do just that and couldn't find any, so wrote this.
 
 This is a simple application to catalogue your library using the ISBN barcode
-and the zbarcam application with n ordinary webcam.
+and the zbarcam application with an ordinary webcam.
 The scan triggers a lookup on the database and the book details are downloaded
 then commited to the local database.
 
@@ -14,10 +26,10 @@ te database name (books in the example above) can be anything as long as the
 config file matches.  If the config file contains a password take care to make
 it secure from prying eyes.
 
-Requires biblio and zbar.  If you want qrcode then also needs qrencode. :)
+
 
 Currently borrowers have to manually inserted into the database on the command line.
-I will fix this if I get asked or I can be arsed.
+I will fix this if I get asked or I can be motivated.
 
 See INSTALL for install instructions.
 
@@ -31,8 +43,7 @@ I could write a script to create all of the QRCodes from the DB info if at
 some time I change my mind and decide I need them after all.
 
 Older books without bar codes can be manually input via the Query/Edit book
-interface.  It's a bit od a pain though of you have lots of books.  You'd have
-to be a perfectionist/anal/OCD to want to do this.
+interface.  It's a bit od a pain though if you have lots of books.
 
 
 
@@ -46,4 +57,5 @@ SELECT o_date, title, author, borrowers.name
 
 To insert a borrower in the mysql shell:
 insert into borrowers(name) values ('Borrower Name');
-It's just a text field, the id is auto incremented.
+It's just a text field, the id is auto incremented.  Obviously there should be a
+nice user friendly GUI for this. :)
