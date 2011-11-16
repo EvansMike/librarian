@@ -1,6 +1,12 @@
 README FIRST
 
 Requires some flavour of linux and Python.
+Also requires the python modules:
+MySQLdb
+gtk
+sqlite3
+reportlab
+
 
 I wanted to catalog all my books using gtheir barcodes as input and track who
 borrows my books.  That's all.  I looked online for a program that would
