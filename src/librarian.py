@@ -90,7 +90,7 @@ class librarian:
     column = gtk.TreeViewColumn(_('Medium'), gtk.CellRendererText(), text=9)
     column.set_clickable(True)
     column.set_resizable(True)
-    column.set_sort_column_id(3)
+    column.set_sort_column_id(9)
     column.sizing = gtk.TREE_VIEW_COLUMN_AUTOSIZE
     self.treeview.append_column(column)
 
