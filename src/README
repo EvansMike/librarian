@@ -2,7 +2,9 @@ README FIRST
 
 Requires some flavour of linux and Python.
 Also requires the python packages:
-MySQLdb
+biblio
+zbar
+If you want qrcode then also needs qrencode
 gtk
 sqlite3
 reportlab
@@ -24,7 +26,7 @@ te database name (books in the example above) can be anything as long as the
 config file matches.  If the config file contains a password take care to make
 it secure from prying eyes.
 
-Requires biblio and zbar.  If you want qrcode then also needs qrencode. :)
+
 
 Currently borrowers have to manually inserted into the database on the command line.
 I will fix this if I get asked or I can be motivated.
