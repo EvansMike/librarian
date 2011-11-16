@@ -67,6 +67,7 @@ class add_edit:
     self.lent = builder.get_object("checkbutton1")
     self.lentlist = builder.get_object("liststore1")
     self.lent_select = builder.get_object("comboboxentry1")
+    self.add_button = builder.get_object("button_new_user") # Add a new user or edit
     self.where = ""
     self.add_date = False # builder.get_object("comboboxentry1") #To be added to GUI
     self.mybook = book.book()
@@ -278,6 +279,11 @@ class add_edit:
     if not self.lentlist.get_iter_first(): return # If we can't iterate then the list is empty
     foo = self.lent_select.get_active()
     bid = self.lentlist[foo][0]
+    logging.info(bid)
+    if bid > 0:
+      self.add_button.set_label("Edit")
+    else:
+      self.add_button.set_label("Add")
     # Get list of borrows for this book
     result = self.cur.execute("SELECT * FROM borrows where \
       borrows.book = %s AND borrower = %s AND i_date IS NULL AND o_date IS NOT NULL;" ,
@@ -341,6 +347,22 @@ class add_edit:
         else: self.status.set_text(_("Book has been NOT marked as returned."))
     self.copies.set_text(str(self.orig_book.copies))
 
+  def on_button_new_user_clicked(self, widget):
+    ''' Add a new borrower to the database.  Need to update dropdown
+    when we finish this function.  We should be able to read the contents
+    of comboboxentry1(self.lent_select) and use that as a user name.
+
+    '''
+
+    #foo = self.lent_select.get_entry()
+    #logger.info(foo)
+    import borrowers
+
+    foo = self.lent_select.get_active()
+    bid = self.lentlist[foo][0]
+    borrowers.borrowers(bid)
+    # Update with new data
+    self.populate(self.orig_book.id)
 
 ############## END add_edit class ######################################
 # For testing or stand alone

@@ -43,8 +43,8 @@ db_base = config.db_base
 db_host = config.db_host
 
 
-class borrowers:
-  def __init__(self):
+class borrowers():
+  def __init__(self,bid = 0):
     builder = gtk.Builder()
     builder.add_from_file("ui/borrowers.glade")
     self.window = builder.get_object("window1")
@@ -52,7 +52,10 @@ class borrowers:
     self.contact = builder.get_object("entry2")
     self.notes = builder.get_object("entry3")
     self.status = builder.get_object("status_label")
+    self.button_cancel = builder.get_object("button_cancel")
     builder.connect_signals(self)
+    self.bid = bid
+
 
     try:
         self.db = MySQLdb.connect(host = db_host, db=db_base,  passwd = db_pass);
@@ -63,10 +66,28 @@ class borrowers:
       self.db = False
       quit()
     if self.db:
+      #self.cur = self.db.cursor(MySQLdb.cursors.DictCursor) # better cursor type, Use it next time.
       self.cur = self.db.cursor()
-    self.on_button_print_clicked(None)
+    self.populate()
+    #self.on_button_print_clicked(None)
     gtk.main()
     self.window.show
+
+
+  def populate(self):
+    '''If we are passed a bid > 0 populate the dialog.
+
+    '''
+    logging.info(self.bid)
+    if self.bid > 0:
+      self.cur.execute("SELECT * from borrowers where id = %s;",self.bid)
+      result = self.cur.fetchall()
+      logging.info(result[0])
+      self.name.set_text(result[0][1])
+      self.contact.set_text(result[0][2])
+      self.notes.set_text(str(result[0][3]))
+
+
 
   def on_button_add_clicked(self, widget):
     ''' Add a borrower to the database.
@@ -75,13 +96,18 @@ class borrowers:
     logging.info("Added a borrower")
     logging.info(self.name.get_text())
     if len(self.name.get_text()) > 0:
-      self.cur.execute("INSERT INTO borrowers(ame.contact) VALUES(%s,%s);",
-          (self.name.get_text(),self.contact.get_text()))
+      if self.bid == 0:
+        self.cur.execute("INSERT INTO borrowers(name,contact,notes) VALUES(%s,%s,%s);",
+          (self.name.get_text(),self.contact.get_text(), self.notes.get_text()))
+      else:
+         self.cur.execute("UPDATE borrowers set name=%s, contact=%s ,notes=%s where id = %s;",
+          (self.name.get_text(),self.contact.get_text(), self.notes.get_text(), self.bid))
       self.db.commit()
       self.status.set_text("Added a borrower.")
     else:
       logging.info("Nothing to add.")
       self.status.set_text("Nothing to add.")
+    self.button_cancel.set_label("CLOSE")
 
   def on_button_print_clicked(self,widget):
     ''' Create a pdf of the current users.  Optionally open the default
@@ -122,7 +148,7 @@ class borrowers:
       gtk.main_quit()
       quit(0)
     else:
-      del db, cur
+      #del db, cur
       self.window.hide()
 
 
