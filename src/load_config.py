@@ -68,7 +68,10 @@ class load_config:
       self.db_pass = config.get('database','PASSWD')
       self.db_base = config.get('database','DB')
       self.db_host = config.get('database','DBHOST')
-      self.calibre_db = config.get('calibre','CALIBRE_DB')
+      try:
+        self.calibre_db = config.get('calibre','CALIBRE_DB')
+      except:
+        pass
 
 
 
