@@ -1,7 +1,7 @@
 README FIRST
 
 Requires some flavour of linux and Python.
-Also requires the python modules:
+Also requires the python packages:
 MySQLdb
 gtk
 sqlite3

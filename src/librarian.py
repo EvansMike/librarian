@@ -122,11 +122,15 @@ class librarian:
     Maybe mark borrowed books somehow?
     This will likely be system specific
     '''
-    from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT
-    from reportlab.lib.pagesizes import A4
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib.units import mm
+    try:
+      from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT
+      from reportlab.lib.pagesizes import A4
+      from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
+      from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+      from reportlab.lib.units import mm
+    except ImportError, e:
+      messages.pop_info(e)
+      return
     filename = "booklist.pdf"
     doc = SimpleDocTemplate(filename,pagesize=A4,
                             rightMargin=10,leftMargin=20,

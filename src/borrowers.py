@@ -20,12 +20,16 @@
 Add and edit borrowers.
 TODO: Do the edit part.
 '''
-import gtk
-import MySQLdb
-import ConfigParser
-import gettext
-import logging
-import load_config
+try:
+  import gtk
+  import MySQLdb
+  import ConfigParser
+  import gettext
+  import logging
+  import load_config
+except  ImportError, e:
+  print e
+  quit()
 
 
 APP = 'librarian'
@@ -114,12 +118,18 @@ class borrowers():
     reader for viewing and printing of the document
 
     '''
-    import time, os
-    from reportlab.lib.enums import TA_LEFT
-    from reportlab.lib.pagesizes import A4
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib.units import mm
+    try:
+      import time, os
+      from reportlab.lib.enums import TA_LEFT
+      from reportlab.lib.pagesizes import A4
+      from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
+      from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+      from reportlab.lib.units import mm
+    except ImportError, e:
+      print e
+      messages.pop_info(e):
+      return
+
     filename = "borrowers.pdf"
     doc = SimpleDocTemplate(filename,pagesize=A4,
                             rightMargin=72,leftMargin=72,
