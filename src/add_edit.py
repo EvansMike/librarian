@@ -281,9 +281,9 @@ class add_edit:
     bid = self.lentlist[foo][0]
     logging.info(bid)
     if bid > 0:
-      self.add_button.set_label("Edit")
+      self.add_button.set_label(_("Edit"))
     else:
-      self.add_button.set_label("Add")
+      self.add_button.set_label(_("Add"))
     # Get list of borrows for this book
     result = self.cur.execute("SELECT * FROM borrows where \
       borrows.book = %s AND borrower = %s AND i_date IS NULL AND o_date IS NOT NULL;" ,

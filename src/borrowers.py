@@ -107,7 +107,7 @@ class borrowers():
     else:
       logging.info("Nothing to add.")
       self.status.set_text("Nothing to add.")
-    self.button_cancel.set_label("CLOSE")
+    self.button_cancel.set_label(_("CLOSE"))
 
   def on_button_print_clicked(self,widget):
     ''' Create a pdf of the current users.  Optionally open the default
