@@ -16,8 +16,9 @@
   MA 02110-1301, USA.
 '''
 '''
-Import e-books from calibre database avoiding duplicates
-Run with calibre-debug -e import_calibre.py
+This just queries the calibre sqlite db file directly.
+It may be better to use the "calibredb list" command, this would avoid
+needing the set up paths to file etc.
 '''
 import sys, os
 import sqlite3
@@ -57,9 +58,6 @@ class calibre_import:
     logging.info(self.calibre_base)
     pass
 
-  def read_db(self):
-
-    pass
 
   def insert_data(self, booklist = []):
     self.booklist = booklist
@@ -73,16 +71,36 @@ class calibre_import:
     # Insert data into booklist
     for row in c:
       self.booklist.append(['', row[0], row[1],
-        '', '', '', '0',
-        0, 0, 'e-book'])
+        '', '', '', '0', 0, 0, 'e-book'])
 
+    return self.booklist
+
+  def insert_data2(self, booklist = []):
+    ''' Use "calibredb list" command to get book list.  May make it more
+    portable and avoids user having to set dabase paths.  It does seem to
+    be slower however.
+
+    '''
+    import commands
+    self.booklist = booklist
+    try:  book_string = commands.getoutput("calibredb list --separator=\"\t\"")
+    except: # Calibre not installed perhaps.
+      print (_("You don't appear to have Calibre installed, or it's not in your PATH."))
+      return
+    book_list = book_string.split("\n")
+    print book_list
+    for  line in book_list:
+      if str((line.split("\t")[0])).isdigit():
+        #print line.split("\t")[2],  line.split("\t")[1]
+        self.booklist.append(['', str(line.split("\t")[1]).strip(),str(line.split("\t")[2]).strip() ,
+        '', '', '', '0', 0, 0, 'e-book'])
     return self.booklist
 
 if __name__ == "__main__":
   app = calibre_import()
   booklist = []
-  booklist = app.insert_data(booklist)
-  quit()
+  booklist = app.insert_data2(booklist)
+  #quit()
   for row in booklist:
     print row
 
