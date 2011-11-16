@@ -43,7 +43,7 @@ gettext.textdomain(APP)
 _ = gettext.gettext
 
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.INFO)
-logging.disable(logging.INFO)
+#logging.disable(logging.INFO)
 
 class calibre_import:
   ''' Do the import and insert the data into the list.
