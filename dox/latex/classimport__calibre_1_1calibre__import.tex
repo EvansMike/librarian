@@ -1,0 +1,78 @@
+\hypertarget{classimport__calibre_1_1calibre__import}{
+\section{import\_\-calibre::calibre\_\-import Class Reference}
+\label{classimport__calibre_1_1calibre__import}\index{import\_\-calibre::calibre\_\-import@{import\_\-calibre::calibre\_\-import}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classimport__calibre_1_1calibre__import_a9b82d00f229c13d2bbeabc643b5730ef}{
+def {\bfseries \_\-\_\-init\_\-\_\-}}
+\label{classimport__calibre_1_1calibre__import_a9b82d00f229c13d2bbeabc643b5730ef}
+
+\item 
+def \hyperlink{classimport__calibre_1_1calibre__import_ae57170f369aeb52fcd6f507fdb698487}{insert\_\-data}
+\item 
+def \hyperlink{classimport__calibre_1_1calibre__import_a4af0c966182597de5b9cb1555f2cdcba}{insert\_\-data2}
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classimport__calibre_1_1calibre__import_af13c5043fd4e94f7e2da5fcc75ca8872}{
+{\bfseries calibre\_\-base}}
+\label{classimport__calibre_1_1calibre__import_af13c5043fd4e94f7e2da5fcc75ca8872}
+
+\item 
+\hypertarget{classimport__calibre_1_1calibre__import_a5acd4bfb20651ac9ec249b65cefab43b}{
+{\bfseries booklist}}
+\label{classimport__calibre_1_1calibre__import_a5acd4bfb20651ac9ec249b65cefab43b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Do the import and insert the data into the list.
+Called from librarian.py
+
+\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\hypertarget{classimport__calibre_1_1calibre__import_ae57170f369aeb52fcd6f507fdb698487}{
+\index{import\_\-calibre::calibre\_\-import@{import\_\-calibre::calibre\_\-import}!insert\_\-data@{insert\_\-data}}
+\index{insert\_\-data@{insert\_\-data}!import_calibre::calibre_import@{import\_\-calibre::calibre\_\-import}}
+\subsubsection[{insert\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}def import\_\-calibre::calibre\_\-import::insert\_\-data (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{booklist = {\ttfamily \mbox{[}\mbox{]}}}
+\end{DoxyParamCaption}
+)}}
+\label{classimport__calibre_1_1calibre__import_ae57170f369aeb52fcd6f507fdb698487}
+\begin{DoxyVerb}Directly use the database to get book list.
+
+Parameters:
+booklist -- The gtk.liststore into which the books will be added
+
+\end{DoxyVerb}
+ \hypertarget{classimport__calibre_1_1calibre__import_a4af0c966182597de5b9cb1555f2cdcba}{
+\index{import\_\-calibre::calibre\_\-import@{import\_\-calibre::calibre\_\-import}!insert\_\-data2@{insert\_\-data2}}
+\index{insert\_\-data2@{insert\_\-data2}!import_calibre::calibre_import@{import\_\-calibre::calibre\_\-import}}
+\subsubsection[{insert\_\-data2}]{\setlength{\rightskip}{0pt plus 5cm}def import\_\-calibre::calibre\_\-import::insert\_\-data2 (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{booklist = {\ttfamily \mbox{[}\mbox{]}}}
+\end{DoxyParamCaption}
+)}}
+\label{classimport__calibre_1_1calibre__import_a4af0c966182597de5b9cb1555f2cdcba}
+\begin{DoxyVerb}Use "calibredb list" command to get book list.  May make it more
+portable and avoids user having to set dabase paths.  It does seem to
+be slower however.
+
+Parameters:
+booklist -- The gtk.liststore into which the books will be added
+
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+import\_\-calibre.py\end{DoxyCompactItemize}

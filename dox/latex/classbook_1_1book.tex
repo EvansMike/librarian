@@ -1,0 +1,129 @@
+\hypertarget{classbook_1_1book}{
+\section{book::book Class Reference}
+\label{classbook_1_1book}\index{book::book@{book::book}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classbook_1_1book_a01b7bc300f7a18aea7036fffd3f02736}{
+def {\bfseries \_\-\_\-init\_\-\_\-}}
+\label{classbook_1_1book_a01b7bc300f7a18aea7036fffd3f02736}
+
+\item 
+\hypertarget{classbook_1_1book_a015476bb498fdf9c2287fbfc3b4a955c}{
+def {\bfseries print\_\-book}}
+\label{classbook_1_1book_a015476bb498fdf9c2287fbfc3b4a955c}
+
+\item 
+def \hyperlink{classbook_1_1book_ac8ad8a373612f3b1ab7d47fb3b1b0995}{add\_\-details}
+\item 
+def \hyperlink{classbook_1_1book_a3d5a58243105ee5a8477a90a89c78b80}{compare}
+\item 
+\hypertarget{classbook_1_1book_a31375753e289f44942fbe454c6a076fd}{
+def {\bfseries webquery}}
+\label{classbook_1_1book_a31375753e289f44942fbe454c6a076fd}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classbook_1_1book_ac5f46a66b5b6fc113a3cc05f34aa5c72}{
+{\bfseries id}}
+\label{classbook_1_1book_ac5f46a66b5b6fc113a3cc05f34aa5c72}
+
+\item 
+\hypertarget{classbook_1_1book_a7d2637573e769ace99fb9cc0fa38fb18}{
+{\bfseries isbn}}
+\label{classbook_1_1book_a7d2637573e769ace99fb9cc0fa38fb18}
+
+\item 
+\hypertarget{classbook_1_1book_af3fa57683673b5cb78052f7fcb5508ef}{
+{\bfseries authors}}
+\label{classbook_1_1book_af3fa57683673b5cb78052f7fcb5508ef}
+
+\item 
+\hypertarget{classbook_1_1book_a9a794fc30041f86cbe1177c2c92f898f}{
+{\bfseries title}}
+\label{classbook_1_1book_a9a794fc30041f86cbe1177c2c92f898f}
+
+\item 
+\hypertarget{classbook_1_1book_a3a61a4b3ff4b91565b0dfb6595c10023}{
+{\bfseries publisher}}
+\label{classbook_1_1book_a3a61a4b3ff4b91565b0dfb6595c10023}
+
+\item 
+\hypertarget{classbook_1_1book_ab50c5f4d4cabd90b2ecde370c5859785}{
+{\bfseries abstract}}
+\label{classbook_1_1book_ab50c5f4d4cabd90b2ecde370c5859785}
+
+\item 
+\hypertarget{classbook_1_1book_a862afd272cf7af1ed8a714cefdf2e0d3}{
+{\bfseries mtype}}
+\label{classbook_1_1book_a862afd272cf7af1ed8a714cefdf2e0d3}
+
+\item 
+\hypertarget{classbook_1_1book_a3f76c70464b4a4dbe7f543fb068f0e3f}{
+{\bfseries year}}
+\label{classbook_1_1book_a3f76c70464b4a4dbe7f543fb068f0e3f}
+
+\item 
+\hypertarget{classbook_1_1book_a17c368b99f2fd9279919085be512e449}{
+{\bfseries city}}
+\label{classbook_1_1book_a17c368b99f2fd9279919085be512e449}
+
+\item 
+\hypertarget{classbook_1_1book_a65fd6b2613f34319ae9130ee04a24774}{
+{\bfseries copies}}
+\label{classbook_1_1book_a65fd6b2613f34319ae9130ee04a24774}
+
+\item 
+\hypertarget{classbook_1_1book_aea99666b520d254b756b795bcd8d0caf}{
+{\bfseries where}}
+\label{classbook_1_1book_aea99666b520d254b756b795bcd8d0caf}
+
+\item 
+\hypertarget{classbook_1_1book_a44401a1744d70beb1c320ac575c6a12b}{
+{\bfseries add\_\-date}}
+\label{classbook_1_1book_a44401a1744d70beb1c320ac575c6a12b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Define book properties here \end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\hypertarget{classbook_1_1book_ac8ad8a373612f3b1ab7d47fb3b1b0995}{
+\index{book::book@{book::book}!add\_\-details@{add\_\-details}}
+\index{add\_\-details@{add\_\-details}!book::book@{book::book}}
+\subsubsection[{add\_\-details}]{\setlength{\rightskip}{0pt plus 5cm}def book::book::add\_\-details (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{details\_\-list}
+\end{DoxyParamCaption}
+)}}
+\label{classbook_1_1book_ac8ad8a373612f3b1ab7d47fb3b1b0995}
+\begin{DoxyVerb}A simple interface to add all details in one go.  Obviously order
+of the elements is important! id and copies are determined by the
+database after insertion.  The order is:
+isbn, authors, title, abstract, mtype, publisher, year, city
+Empty fields are allowed.
+\end{DoxyVerb}
+ \hypertarget{classbook_1_1book_a3d5a58243105ee5a8477a90a89c78b80}{
+\index{book::book@{book::book}!compare@{compare}}
+\index{compare@{compare}!book::book@{book::book}}
+\subsubsection[{compare}]{\setlength{\rightskip}{0pt plus 5cm}def book::book::compare (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{book}
+\end{DoxyParamCaption}
+)}}
+\label{classbook_1_1book_a3d5a58243105ee5a8477a90a89c78b80}
+\begin{DoxyVerb}Determine if two books differ.  Return 0 if same and number of
+differences if different. \end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+book.py\end{DoxyCompactItemize}
