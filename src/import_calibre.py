@@ -80,6 +80,12 @@ class calibre_import:
     ;')
     # Insert data into booklist
     for row in c:
+      name = row[0]
+      author = []
+      author.append(name[-1]) # Last part
+      author.append(", ") # Decoration
+      author.append(' '.join(name[0:-1])) # All except last part adding a space between them
+      author = ''.join(author) # Join all elements into a string
       self.booklist.append(['', row[0], row[1],
         '', '', '', '0', 0, 0, 'e-book'])
 
@@ -101,11 +107,17 @@ class calibre_import:
       print (_("You don't appear to have Calibre installed, or it's not in your PATH."))
       return
     book_list = book_string.split("\n")
-    #print book_list
     for  line in book_list:
       if str((line.split("\t")[0])).isdigit():
-        #print line.split("\t")[2],  line.split("\t")[1]
-        self.booklist.append(['', str(line.split("\t")[1]).strip(),str(line.split("\t")[2]).strip() ,
+        name = str(line.split("\t")[2])
+        name = str(line.split("\t")[2]).strip().split()
+        logging.info(name)
+        author = []
+        author.append(name[-1]) # Last part
+        author.append(", ") # Decoration
+        author.append(' '.join(name[0:-1])) # All except last part adding a space between them
+        author = ''.join(author) # Join all elements into a string
+        self.booklist.append(['', author ,str(line.split("\t")[1]).strip() ,
         '', '', '', '0', 0, 0, 'e-book'])
     return self.booklist
 
