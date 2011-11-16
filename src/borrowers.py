@@ -69,7 +69,9 @@ class borrowers:
     self.window.show
 
   def on_button_add_clicked(self, widget):
-    ''' Add a borrower to the database. '''
+    ''' Add a borrower to the database.
+
+    '''
     logging.info("Added a borrower")
     logging.info(self.name.get_text())
     if len(self.name.get_text()) > 0:
@@ -83,7 +85,9 @@ class borrowers:
 
   def on_button_print_clicked(self,widget):
     ''' Create a pdf of the current users.  Optionally open the default
-    reader for viewing and printing of the document '''
+    reader for viewing and printing of the document
+
+    '''
     import time, os
     from reportlab.lib.enums import TA_LEFT
     from reportlab.lib.pagesizes import A4
@@ -110,10 +114,7 @@ class borrowers:
     if os.name == "nt": # Windoze
       os.filestart(filename)
     elif os.name == "posix": # Linux
-      os.system("/usr/bin/gnome-open " + filename)
-
-
-
+      os.system("/usr/bin/xdg-open " + filename)
 
 
   def button_cancel_clicked(self, widget):
@@ -138,4 +139,4 @@ class borrowers:
 # we start here.
 if __name__ == "__main__":
   app = borrowers()
-  app.on_button_print_clicked(None)
+  #app.on_button_print_clicked(None)
