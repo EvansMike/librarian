@@ -111,7 +111,7 @@ class calibre_import:
       if str((line.split("\t")[0])).isdigit():
         name = str(line.split("\t")[2])
         name = str(line.split("\t")[2]).strip().split()
-        logging.info(name)
+        #logging.info(name)
         author = []
         author.append(name[-1]) # Last part
         author.append(", ") # Decoration
