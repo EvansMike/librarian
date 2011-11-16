@@ -47,8 +47,10 @@ db_pass = config.db_pass
 db_base = config.db_base
 db_host = config.db_host
 
-##################BEGIN add_edit class #################################
+
 class add_edit:
+  ''' Interface to manipulate book details.
+  '''
   def __init__(self):
     self.borrowers = 0
     builder = gtk.Builder()
