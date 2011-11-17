@@ -84,7 +84,11 @@ tuple {\bfseries buff} = self.text\_\-view.get\_\-buffer()}
 \subsection{Detailed Description}
 BEGIN scanner class \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#. 
 
-\begin{DoxyVerb}Scanner class. Scans books, queries isbndb and adds book to database, or CSV\end{DoxyVerb}
+\begin{DoxyVerb}Scanner class. Scans books, queries isbndb and adds book to database,
+or CSV.  This will work stand alone hence the separate database query
+and inserts that don't rely on librarian.py.
+
+\end{DoxyVerb}
  
 
 \subsection{Member Function Documentation}
@@ -93,21 +97,18 @@ BEGIN scanner class \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 \index{make\_\-qr\_\-code@{make\_\-qr\_\-code}!guiscan::scanner@{guiscan::scanner}}
 \subsubsection[{make\_\-qr\_\-code}]{\setlength{\rightskip}{0pt plus 5cm}def guiscan::scanner::make\_\-qr\_\-code (
 \begin{DoxyParamCaption}
-{}
+\item[{}]{self}
 \end{DoxyParamCaption}
 )}}
 \label{classguiscan_1_1scanner_a99a34b9d6414b7e32662581b02a703a2}
 \begin{DoxyVerb}
-Although kinda fun to produce QR codes it's seems pretty pointless for this app, so
-I'm commenting it out.
-# Do the QR thang
-qr = qrencode.encode('ISBN:'+ bar + ' TITLE:' + str(nn.title) + ' AUTHORS:' + str(nn.authors))
-# Rescale using the size and add a 1 px border
-size = qr[1]
-qr = qrencode.encode_scaled('ISBN:'+ bar + ' TITLE:' + str(nn.title) + ' AUTHORS:' + str(nn.authors), (size*3)+2)
-img = qr[2]
-img.save('../ISBN:' + bar + '.png', 'png')
-self.qr_img.set_from_file('../ISBN:' + bar + '.png')
+Make a QR code for the book.  This could be useful somewhere I guess.
+It contains the ISBN, title and Authors of the book.
+Maybe it should contain the owner name , yes YOU, just in case you ever need
+to split up you and your parter's books.  You know why that might be
+needed.
+TODO. Maybe print the ISBN too.
+  Change output dir
 \end{DoxyVerb}
  \hypertarget{classguiscan_1_1scanner_af48fc927b531df3991648cbca7ba715a}{
 \index{guiscan::scanner@{guiscan::scanner}!on\_\-button\_\-add\_\-clicked@{on\_\-button\_\-add\_\-clicked}}
@@ -151,7 +152,7 @@ result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = 
 \end{DoxyParamCaption}
 )}}
 \label{classguiscan_1_1scanner_a3985b7e8a7c583f1855ffefb09f614dd}
-\begin{DoxyVerb}Do the scan, query the database and store the result in a book.
+\begin{DoxyVerb}Do the scan, query the database and store the results.
 
 \end{DoxyVerb}
  

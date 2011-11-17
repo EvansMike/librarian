@@ -48,6 +48,8 @@ _ = gettext.gettext
 logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: %(levelname)s:%(message)s: LINE %(lineno)d', level=logging.DEBUG)
 
+# Do we produce a QR code?
+QR_CODE = False
 
 try:
 	import pygtk
@@ -70,7 +72,11 @@ db_host = config.db_host
 
 ################## BEGIN scanner class #################################
 class scanner:
-  ''' Scanner class. Scans books, queries isbndb and adds book to database, or CSV'''
+  ''' Scanner class. Scans books, queries isbndb and adds book to database,
+  or CSV.  This will work stand alone hence the separate database query
+  and inserts that don't rely on librarian.py.
+
+  '''
   def __init__(self):
     self.abook = book.book()
     qr_img = ""
@@ -94,16 +100,13 @@ class scanner:
 
 
   def on_button_scan_clicked(self, widget):
-    ''' Do the scan, query the database and store the result in a book.
+    ''' Do the scan, query the database and store the results.
 
     '''
     buff = self.text_view.get_buffer()
     buff.set_text(_("To begin press scan."))
     self.text_view.set_buffer(buff)
-    try: device = '/dev/video0'
-    except:
-      device = '/dev/video1'
-
+    device = '/dev/video0'
     # create a Processor
     proc = zbar.Processor()
     # configure the Processor
@@ -151,19 +154,35 @@ class scanner:
     del buff
 
 
-  def make_qr_code():
+  def make_qr_code(self):
     '''
-    Although kinda fun to produce QR codes it's seems pretty pointless for this app, so
-    I'm commenting it out.
-    # Do the QR thang
-    qr = qrencode.encode('ISBN:'+ bar + ' TITLE:' + str(nn.title) + ' AUTHORS:' + str(nn.authors))
-    # Rescale using the size and add a 1 px border
-    size = qr[1]
-    qr = qrencode.encode_scaled('ISBN:'+ bar + ' TITLE:' + str(nn.title) + ' AUTHORS:' + str(nn.authors), (size*3)+2)
-    img = qr[2]
-    img.save('../ISBN:' + bar + '.png', 'png')
-    self.qr_img.set_from_file('../ISBN:' + bar + '.png')
+    Make a QR code for the book.  This could be useful somewhere I guess.
+    It contains the ISBN, title and Authors of the book.
+    Maybe it should contain the owner name , yes YOU, just in case you ever need
+    to split up you and your parter's books.  You know why that might be
+    needed.
+    TODO. Maybe print the ISBN too.
+          Change output dir
     '''
+    if QR_CODE:
+      import getpass
+      user = getpass.getuser()
+      # Do the QR thang
+      qr = qrencode.encode('ISBN:'+ str(self.abook.id) + \
+      ' TITLE:' + str(self.abook.title) + \
+      ' AUTHORS:' + str(self.abook.authors + \
+      " OWNER: " + user))
+      # Rescale using the size and add a 1 px border
+      size = qr[1]
+      qr = qrencode.encode_scaled('ISBN:'+ str(self.abook.id)\
+        + ' TITLE:' +  str(self.abook.title)\
+        + ' AUTHORS:' + str(self.abook.authors) \
+        + " OWNER: " + user, (size*3)+2)
+      img = qr[2]
+      img.save('../ISBN:' + str(self.abook.id) + '.png', 'png')
+      # Display it in the GUI
+      self.qr_img.set_from_file('../ISBN:' + str(self.abook.id) + '.png')
+
 
 
   def on_button_remove_clicked(self, widget):
@@ -212,6 +231,7 @@ class scanner:
     buff = self.text_view.get_buffer()
     buff.insert_at_cursor(_( "\n\nYou added this book."))
     self.text_view.set_buffer(buff)
+    self.make_qr_code()
     print "You added this book."
 
 

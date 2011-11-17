@@ -111,7 +111,11 @@ tuple&#160;</td><td class="memItemRight" valign="bottom"><b>buff</b> = self.text
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>BEGIN scanner class #################################. </p>
-<div class="fragment"><pre class="fragment">Scanner class. Scans books, queries isbndb and adds book to database, or CSV</pre></div> </div><hr/><h2>Member Function Documentation</h2>
+<div class="fragment"><pre class="fragment">Scanner class. Scans books, queries isbndb and adds book to database,
+or CSV.  This will work stand alone hence the separate database query
+and inserts that don't rely on librarian.py.
+
+</pre></div> </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a99a34b9d6414b7e32662581b02a703a2"></a><!-- doxytag: member="guiscan::scanner::make_qr_code" ref="a99a34b9d6414b7e32662581b02a703a2" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -119,23 +123,21 @@ tuple&#160;</td><td class="memItemRight" valign="bottom"><b>buff</b> = self.text
         <tr>
           <td class="memname">def guiscan::scanner::make_qr_code </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 <div class="fragment"><pre class="fragment">
-Although kinda fun to produce QR codes it's seems pretty pointless for this app, so
-I'm commenting it out.
-# Do the QR thang
-qr = qrencode.encode('ISBN:'+ bar + ' TITLE:' + str(nn.title) + ' AUTHORS:' + str(nn.authors))
-# Rescale using the size and add a 1 px border
-size = qr[1]
-qr = qrencode.encode_scaled('ISBN:'+ bar + ' TITLE:' + str(nn.title) + ' AUTHORS:' + str(nn.authors), (size*3)+2)
-img = qr[2]
-img.save('../ISBN:' + bar + '.png', 'png')
-self.qr_img.set_from_file('../ISBN:' + bar + '.png')
+Make a QR code for the book.  This could be useful somewhere I guess.
+It contains the ISBN, title and Authors of the book.
+Maybe it should contain the owner name , yes YOU, just in case you ever need
+to split up you and your parter's books.  You know why that might be
+needed.
+TODO. Maybe print the ISBN too.
+  Change output dir
 </pre></div> 
 </div>
 </div>
@@ -227,7 +229,7 @@ result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = 
       </table>
 </div>
 <div class="memdoc">
-<div class="fragment"><pre class="fragment">Do the scan, query the database and store the result in a book.
+<div class="fragment"><pre class="fragment">Do the scan, query the database and store the results.
 
 </pre></div> 
 </div>
