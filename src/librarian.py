@@ -78,7 +78,7 @@ class splashScreen():
     self.window.add(main_vbox)
     hbox = gtk.HBox(False, 0)
     self.image = gtk.Image()
-    self.image.set_from_file("barcode_scanner.jpg")
+    self.image.set_from_file("librarian.jpg")
     self.image.show()
     self.lbl = gtk.Label("Loading data...")
     self.lbl.set_alignment(0.5, 0.5)
