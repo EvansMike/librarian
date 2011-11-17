@@ -68,6 +68,24 @@ except: quit()
 
 NULL, ALL, BORROWED = range(3)
 
+class splashScreen():
+  def __init__(self):
+    #DONT connect 'destroy' event here!
+    self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    self.window.set_title('THE LIBRARIAN')
+    self.window.set_position(gtk.WIN_POS_CENTER)
+    main_vbox = gtk.VBox(False, 2)
+    self.window.add(main_vbox)
+    hbox = gtk.HBox(False, 0)
+    self.image = gtk.Image()
+    self.image.set_from_file("barcode_scanner.jpg")
+    self.image.show()
+    self.lbl = gtk.Label("Loading data...")
+    self.lbl.set_alignment(0.5, 0.5)
+    main_vbox.pack_start(self.image, True, True)
+    main_vbox.pack_start(self.lbl, True, True)
+    self.window.show_all()
+
 
 class librarian:
   '''
@@ -119,7 +137,7 @@ class librarian:
 
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
 
-    gtk.main()
+    #gtk.main()
 
   def on_button_print_clicked(self, widget):
     '''Print the entire book list to printer, via a tmp file.
@@ -290,5 +308,13 @@ class printer:
 ###################### END printer #####################################
 
 if __name__ == "__main__":
+  splScr = splashScreen()
+  #If you don't do this, the splash screen will show, but wont render it's contents
+  while gtk.events_pending():
+    gtk.main_iteration()
+  #Here you can do all that nasty things that take some time.
+  #sleep(3)
   app = librarian()
+  splScr.window.destroy()
+  gtk.main()
 
