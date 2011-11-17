@@ -51,12 +51,14 @@ class load_config:
       print "Cannot read config file, exiting.\n"
       # Pop up a message
       import messages
-      messages.pop_info(_('No config file found. Please edit ') + config_file)
+      messages.pop_info(_('No config file found.\nA template file file has\
+       been written to disk. Please edit ') + config_file + _('to contain \
+       the correct login details for you databases.'))
 
       f = open(config_file,"w")
       # Write a dummy config file if one doesn't exist
       f.write('[database]\nUSER = username\nPASSWD = password\nDB = db_name\nDBHOST = hostname\n\
-      \n# Define relative path to Calibre database, Users home dir will be\
+      \n# Optional: Define path to Calibre database, Users home dir will be\
       automatically determined.\n[calibre]\nCALIBRE_DB = calibre_db\n')
       os.fchmod(f.fileno(),stat.S_IREAD|stat.S_IWRITE)
       f.close()
@@ -73,14 +75,6 @@ class load_config:
       except:
         pass
 
-
-
-  def print_config(self):
-    '''Print the config data to stout.  Take care not to divulge secret data!'''
-    print self.db_user
-    print self.db_pass
-    print self.db_base
-    print self.db_host
 
 # For testing
 if __name__ == "__main__":
