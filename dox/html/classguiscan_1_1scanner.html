@@ -80,13 +80,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a24bf6dd8edd117579f128998757654a0"></a><!-- doxytag: member="guiscan::scanner::__init__" ref="a24bf6dd8edd117579f128998757654a0" args="" -->
 def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3985b7e8a7c583f1855ffefb09f614dd"></a><!-- doxytag: member="guiscan::scanner::on_button_scan_clicked" ref="a3985b7e8a7c583f1855ffefb09f614dd" args="" -->
-def&#160;</td><td class="memItemRight" valign="bottom"><b>on_button_scan_clicked</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classguiscan_1_1scanner.html#a3985b7e8a7c583f1855ffefb09f614dd">on_button_scan_clicked</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classguiscan_1_1scanner.html#a99a34b9d6414b7e32662581b02a703a2">make_qr_code</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed3d81af22db6558f5039b08209667cb"></a><!-- doxytag: member="guiscan::scanner::on_button_remove_clicked" ref="aed3d81af22db6558f5039b08209667cb" args="" -->
-def&#160;</td><td class="memItemRight" valign="bottom"><b>on_button_remove_clicked</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af48fc927b531df3991648cbca7ba715a"></a><!-- doxytag: member="guiscan::scanner::on_button_add_clicked" ref="af48fc927b531df3991648cbca7ba715a" args="" -->
-def&#160;</td><td class="memItemRight" valign="bottom"><b>on_button_add_clicked</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classguiscan_1_1scanner.html#aed3d81af22db6558f5039b08209667cb">on_button_remove_clicked</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classguiscan_1_1scanner.html#af48fc927b531df3991648cbca7ba715a">on_button_add_clicked</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7fb4a3b65f7f4cb165dd5700d31c128"></a><!-- doxytag: member="guiscan::scanner::append_text" ref="ac7fb4a3b65f7f4cb165dd5700d31c128" args="" -->
 def&#160;</td><td class="memItemRight" valign="bottom"><b>append_text</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01865857f839cf3e5bcd8f8b74bd418e"></a><!-- doxytag: member="guiscan::scanner::get_book_data" ref="a01865857f839cf3e5bcd8f8b74bd418e" args="" -->
@@ -139,6 +136,99 @@ qr = qrencode.encode_scaled('ISBN:'+ bar + ' TITLE:' + str(nn.title) + ' AUTHORS
 img = qr[2]
 img.save('../ISBN:' + bar + '.png', 'png')
 self.qr_img.set_from_file('../ISBN:' + bar + '.png')
+</pre></div> 
+</div>
+</div>
+<a class="anchor" id="af48fc927b531df3991648cbca7ba715a"></a><!-- doxytag: member="guiscan::scanner::on_button_add_clicked" ref="af48fc927b531df3991648cbca7ba715a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def guiscan::scanner::on_button_add_clicked </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>widget</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<div class="fragment"><pre class="fragment">
+Add a book to the database.
+DONE Check if exists and increment copy counter if so.
+Arguably I could have used "ON DUPLICATE KEY", using the isbn as the key,
+here but it may happen that several books will have empty isbn values
+for instance, books printed before ISBN was invented.
+result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
+ str(self.abook.isbn))
+</pre></div> 
+</div>
+</div>
+<a class="anchor" id="aed3d81af22db6558f5039b08209667cb"></a><!-- doxytag: member="guiscan::scanner::on_button_remove_clicked" ref="aed3d81af22db6558f5039b08209667cb" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def guiscan::scanner::on_button_remove_clicked </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>widget</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<div class="fragment"><pre class="fragment">Remove a book from the database.
+
+</pre></div> 
+</div>
+</div>
+<a class="anchor" id="a3985b7e8a7c583f1855ffefb09f614dd"></a><!-- doxytag: member="guiscan::scanner::on_button_scan_clicked" ref="a3985b7e8a7c583f1855ffefb09f614dd" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def guiscan::scanner::on_button_scan_clicked </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>widget</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<div class="fragment"><pre class="fragment">Do the scan, query the database and store the result in a book.
+
 </pre></div> 
 </div>
 </div>

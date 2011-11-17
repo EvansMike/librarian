@@ -15,22 +15,13 @@ def {\bfseries \_\-\_\-init\_\-\_\-}}
 \label{classguiscan_1_1scanner_a24bf6dd8edd117579f128998757654a0}
 
 \item 
-\hypertarget{classguiscan_1_1scanner_a3985b7e8a7c583f1855ffefb09f614dd}{
-def {\bfseries on\_\-button\_\-scan\_\-clicked}}
-\label{classguiscan_1_1scanner_a3985b7e8a7c583f1855ffefb09f614dd}
-
+def \hyperlink{classguiscan_1_1scanner_a3985b7e8a7c583f1855ffefb09f614dd}{on\_\-button\_\-scan\_\-clicked}
 \item 
 def \hyperlink{classguiscan_1_1scanner_a99a34b9d6414b7e32662581b02a703a2}{make\_\-qr\_\-code}
 \item 
-\hypertarget{classguiscan_1_1scanner_aed3d81af22db6558f5039b08209667cb}{
-def {\bfseries on\_\-button\_\-remove\_\-clicked}}
-\label{classguiscan_1_1scanner_aed3d81af22db6558f5039b08209667cb}
-
+def \hyperlink{classguiscan_1_1scanner_aed3d81af22db6558f5039b08209667cb}{on\_\-button\_\-remove\_\-clicked}
 \item 
-\hypertarget{classguiscan_1_1scanner_af48fc927b531df3991648cbca7ba715a}{
-def {\bfseries on\_\-button\_\-add\_\-clicked}}
-\label{classguiscan_1_1scanner_af48fc927b531df3991648cbca7ba715a}
-
+def \hyperlink{classguiscan_1_1scanner_af48fc927b531df3991648cbca7ba715a}{on\_\-button\_\-add\_\-clicked}
 \item 
 \hypertarget{classguiscan_1_1scanner_ac7fb4a3b65f7f4cb165dd5700d31c128}{
 def {\bfseries append\_\-text}}
@@ -117,6 +108,51 @@ qr = qrencode.encode_scaled('ISBN:'+ bar + ' TITLE:' + str(nn.title) + ' AUTHORS
 img = qr[2]
 img.save('../ISBN:' + bar + '.png', 'png')
 self.qr_img.set_from_file('../ISBN:' + bar + '.png')
+\end{DoxyVerb}
+ \hypertarget{classguiscan_1_1scanner_af48fc927b531df3991648cbca7ba715a}{
+\index{guiscan::scanner@{guiscan::scanner}!on\_\-button\_\-add\_\-clicked@{on\_\-button\_\-add\_\-clicked}}
+\index{on\_\-button\_\-add\_\-clicked@{on\_\-button\_\-add\_\-clicked}!guiscan::scanner@{guiscan::scanner}}
+\subsubsection[{on\_\-button\_\-add\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def guiscan::scanner::on\_\-button\_\-add\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classguiscan_1_1scanner_af48fc927b531df3991648cbca7ba715a}
+\begin{DoxyVerb}
+Add a book to the database.
+DONE Check if exists and increment copy counter if so.
+Arguably I could have used "ON DUPLICATE KEY", using the isbn as the key,
+here but it may happen that several books will have empty isbn values
+for instance, books printed before ISBN was invented.
+result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
+ str(self.abook.isbn))
+\end{DoxyVerb}
+ \hypertarget{classguiscan_1_1scanner_aed3d81af22db6558f5039b08209667cb}{
+\index{guiscan::scanner@{guiscan::scanner}!on\_\-button\_\-remove\_\-clicked@{on\_\-button\_\-remove\_\-clicked}}
+\index{on\_\-button\_\-remove\_\-clicked@{on\_\-button\_\-remove\_\-clicked}!guiscan::scanner@{guiscan::scanner}}
+\subsubsection[{on\_\-button\_\-remove\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def guiscan::scanner::on\_\-button\_\-remove\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classguiscan_1_1scanner_aed3d81af22db6558f5039b08209667cb}
+\begin{DoxyVerb}Remove a book from the database.
+
+\end{DoxyVerb}
+ \hypertarget{classguiscan_1_1scanner_a3985b7e8a7c583f1855ffefb09f614dd}{
+\index{guiscan::scanner@{guiscan::scanner}!on\_\-button\_\-scan\_\-clicked@{on\_\-button\_\-scan\_\-clicked}}
+\index{on\_\-button\_\-scan\_\-clicked@{on\_\-button\_\-scan\_\-clicked}!guiscan::scanner@{guiscan::scanner}}
+\subsubsection[{on\_\-button\_\-scan\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def guiscan::scanner::on\_\-button\_\-scan\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classguiscan_1_1scanner_a3985b7e8a7c583f1855ffefb09f614dd}
+\begin{DoxyVerb}Do the scan, query the database and store the result in a book.
+
 \end{DoxyVerb}
  
 

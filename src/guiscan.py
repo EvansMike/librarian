@@ -94,21 +94,31 @@ class scanner:
 
 
   def on_button_scan_clicked(self, widget):
+    ''' Do the scan, query the database and store the result in a book.
+
+    '''
     buff = self.text_view.get_buffer()
     buff.set_text(_("To begin press scan."))
     self.text_view.set_buffer(buff)
     try: device = '/dev/video0'
-    except:device = '/dev/video1'
+    except:
+      device = '/dev/video1'
+
     # create a Processor
     proc = zbar.Processor()
     # configure the Processor
     proc.parse_config('enable')
     buff = self.text_view.get_buffer()
     # enable the preview window
-    proc.init(device)
+    try: proc.init(device)
+    except:
+      buff.set_text (_("No camera present!"))
+      self.text_view.set_buffer(buff)
+      return
     proc.visible = True
     # read at least one barcode (or until window closed)
     proc.process_one()
+
     # hide the preview window
     proc.visible = False
     logging.info(proc.results)
@@ -157,6 +167,9 @@ class scanner:
 
 
   def on_button_remove_clicked(self, widget):
+    '''Remove a book from the database.
+
+    '''
     # Remove a scanned book from the database.  Why?
     print "You removed this book."
     buff = self.text_view.get_buffer()
@@ -169,13 +182,15 @@ class scanner:
       self.text_view.set_buffer(buff)
 
   def on_button_add_clicked(self, widget):
-
-    # DONE Check if exists and increment copy counter if so.
-    # Arguably I could have used "ON DUPLICATE KEY", using the isbn as the key,
-    # here but it may happen that several books will have empty isbn values
-    # for instance, books printed before ISBN was invented.
-    # result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
-    #      str(self.abook.isbn))
+    '''
+    Add a book to the database.
+    DONE Check if exists and increment copy counter if so.
+    Arguably I could have used "ON DUPLICATE KEY", using the isbn as the key,
+    here but it may happen that several books will have empty isbn values
+    for instance, books printed before ISBN was invented.
+    result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
+         str(self.abook.isbn))
+    '''
     #if self.cur.fetchone()[0] == 0:
       # Insert the author into the authors table
     a_name = str(self.abook.authors)
