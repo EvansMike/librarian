@@ -127,7 +127,7 @@ class borrowers():
       from reportlab.lib.units import mm
     except ImportError, e:
       print e
-      messages.pop_info(e):
+      messages.pop_info(e)
       return
 
     filename = "borrowers.pdf"
