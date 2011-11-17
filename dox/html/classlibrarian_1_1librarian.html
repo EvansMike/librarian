@@ -77,16 +77,11 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a38767385296af734d843625e880b0f8c"></a><!-- doxytag: member="librarian::librarian::__init__" ref="a38767385296af734d843625e880b0f8c" args="" -->
 def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#a8d9587a840f943752194b2c8b61f18a3">on_button_print_clicked</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1b5a6a4ddf9b300601f1cdc6737ecd4"></a><!-- doxytag: member="librarian::librarian::get_book_list" ref="af1b5a6a4ddf9b300601f1cdc6737ecd4" args="" -->
-def&#160;</td><td class="memItemRight" valign="bottom"><b>get_book_list</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fb611e38bedeac2295e1ecb2b8aa2cc"></a><!-- doxytag: member="librarian::librarian::on_button_all_clicked" ref="a7fb611e38bedeac2295e1ecb2b8aa2cc" args="" -->
-def&#160;</td><td class="memItemRight" valign="bottom"><b>on_button_all_clicked</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7bb690bc8c84830399479b6f47eef8b0"></a><!-- doxytag: member="librarian::librarian::on_button_loaned_clicked" ref="a7bb690bc8c84830399479b6f47eef8b0" args="" -->
-def&#160;</td><td class="memItemRight" valign="bottom"><b>on_button_loaned_clicked</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad44a8c5d7a8ccb8d2c75e13eccb276b1"></a><!-- doxytag: member="librarian::librarian::on_button_scan_clicked" ref="ad44a8c5d7a8ccb8d2c75e13eccb276b1" args="" -->
-def&#160;</td><td class="memItemRight" valign="bottom"><b>on_button_scan_clicked</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af71bf023c78a90863f2505562ad95d95"></a><!-- doxytag: member="librarian::librarian::on_button_query_clicked" ref="af71bf023c78a90863f2505562ad95d95" args="" -->
-def&#160;</td><td class="memItemRight" valign="bottom"><b>on_button_query_clicked</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#af1b5a6a4ddf9b300601f1cdc6737ecd4">get_book_list</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#a7fb611e38bedeac2295e1ecb2b8aa2cc">on_button_all_clicked</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#a7bb690bc8c84830399479b6f47eef8b0">on_button_loaned_clicked</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#ad44a8c5d7a8ccb8d2c75e13eccb276b1">on_button_scan_clicked</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#af71bf023c78a90863f2505562ad95d95">on_button_query_clicked</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa904a6cfbe8a124965f9e2c148f64227"></a><!-- doxytag: member="librarian::librarian::gtk_main_quit" ref="aa904a6cfbe8a124965f9e2c148f64227" args="" -->
 def&#160;</td><td class="memItemRight" valign="bottom"><b>gtk_main_quit</b></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
@@ -104,6 +99,96 @@ A simple book tracking program that uses a webcam to scan the barcodes
 to add books.  It also tracks borrowers and can include your e-books
 in the listings.  It doesn't track the "borrowing" of e-books. :)
 </pre></div> </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="af1b5a6a4ddf9b300601f1cdc6737ecd4"></a><!-- doxytag: member="librarian::librarian::get_book_list" ref="af1b5a6a4ddf9b300601f1cdc6737ecd4" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def librarian::librarian::get_book_list </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>selection</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<div class="fragment"><pre class="fragment">Get the book lists from the databases.
+
+Params:
+selection -- BORRORWED or ALL Which set to get.
+
+</pre></div> 
+</div>
+</div>
+<a class="anchor" id="a7fb611e38bedeac2295e1ecb2b8aa2cc"></a><!-- doxytag: member="librarian::librarian::on_button_all_clicked" ref="a7fb611e38bedeac2295e1ecb2b8aa2cc" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def librarian::librarian::on_button_all_clicked </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>widget</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<div class="fragment"><pre class="fragment">Display all the books
+
+</pre></div> 
+</div>
+</div>
+<a class="anchor" id="a7bb690bc8c84830399479b6f47eef8b0"></a><!-- doxytag: member="librarian::librarian::on_button_loaned_clicked" ref="a7bb690bc8c84830399479b6f47eef8b0" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def librarian::librarian::on_button_loaned_clicked </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>widget</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<div class="fragment"><pre class="fragment">Display the loaned out books
+
+</pre></div> 
+</div>
+</div>
 <a class="anchor" id="a8d9587a840f943752194b2c8b61f18a3"></a><!-- doxytag: member="librarian::librarian::on_button_print_clicked" ref="a8d9587a840f943752194b2c8b61f18a3" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -135,6 +220,64 @@ This will likely be system specific
 </pre></div> 
 </div>
 </div>
+<a class="anchor" id="af71bf023c78a90863f2505562ad95d95"></a><!-- doxytag: member="librarian::librarian::on_button_query_clicked" ref="af71bf023c78a90863f2505562ad95d95" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def librarian::librarian::on_button_query_clicked </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>widget</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<div class="fragment"><pre class="fragment">Open the query dialog.
+
+</pre></div> 
+</div>
+</div>
+<a class="anchor" id="ad44a8c5d7a8ccb8d2c75e13eccb276b1"></a><!-- doxytag: member="librarian::librarian::on_button_scan_clicked" ref="ad44a8c5d7a8ccb8d2c75e13eccb276b1" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def librarian::librarian::on_button_scan_clicked </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>widget</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<div class="fragment"><pre class="fragment">Open the scanning dialog.
+
+</pre></div> 
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>librarian.py</li>
 </ul>
@@ -153,7 +296,7 @@ This will likely be system specific
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Nov 16 2011 for Simple Librarian by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Nov 17 2011 for Simple Librarian by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

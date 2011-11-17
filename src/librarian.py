@@ -86,7 +86,6 @@ class splashScreen():
     main_vbox.pack_start(self.lbl, True, True)
     self.window.show_all()
 
-
 class librarian:
   '''
   A simple book tracking program that uses a webcam to scan the barcodes
@@ -195,6 +194,12 @@ class librarian:
 
 
   def get_book_list(self, selection):
+    ''' Get the book lists from the databases.
+
+    Params:
+    selection -- BORRORWED or ALL Which set to get.
+
+    '''
     #print selection
     self.booklist.clear()
     if selection == ALL:
@@ -247,14 +252,23 @@ class librarian:
 
 
   def on_button_all_clicked(self, widget):
+    '''Display all the books
+
+    '''
     # Display all books
     self.get_book_list(1)
 
   def on_button_loaned_clicked(self, widget):
+    '''Display the loaned out books
+
+    '''
     # Display all books on loan
     self.get_book_list(BORROWED)
 
   def on_button_scan_clicked(self, widget):
+    '''Open the scanning dialog.
+
+    '''
     # Open the scan thang
     #logging.info("Do the scan thang")
     from guiscan import scanner
@@ -264,6 +278,9 @@ class librarian:
 
 
   def on_button_query_clicked(self, widget):
+    '''Open the query dialog.
+
+    '''
     from add_edit import add_edit
     ## Get a book for editing.  SHOULD be devolved to add_edit !!
     foo,iter = self.treeview.get_selection().get_selected()
@@ -296,16 +313,7 @@ class librarian:
 
 
 #################### END librarian #####################################
-#################### START printer #####################################
-class printer:
-  ''' Print the currently displayed book list.
-  This could be a save to file, as html or pdf too I guess.
-  '''
-  def format(self):
-    pass
 
-
-###################### END printer #####################################
 
 if __name__ == "__main__":
   splScr = splashScreen()
