@@ -139,7 +139,7 @@ class librarian:
     #gtk.main()
 
   def on_button_print_clicked(self, widget):
-    '''Print the entire book list to printer, via a tmp file.
+    '''Print the entire book list to pdf then opes the default pdf viewer.
     Should print currently displayed window list
     Maybe mark borrowed books somehow?
     This will likely be system specific
@@ -211,7 +211,8 @@ class librarian:
       self.booklist = e_books.insert_data2(self.booklist)
     #
     elif selection == BORROWED:
-      command = "select * from books, borrows where books.id = borrows.book and i_date is null;"
+      command = "select * from books, borrows where books.id = borrows.book \
+                      and i_date is null;"
     else:
       return
     try:
@@ -317,11 +318,9 @@ class librarian:
 
 if __name__ == "__main__":
   splScr = splashScreen()
-  #If you don't do this, the splash screen will show, but wont render it's contents
   while gtk.events_pending():
     gtk.main_iteration()
-  #Here you can do all that nasty things that take some time.
-  #sleep(3)
+
   app = librarian()
   splScr.window.destroy()
   gtk.main()
