@@ -130,7 +130,7 @@ class scanner:
         bar = symbol.data
         logging.info(bar)
         self.abook.webquery(bar)
-        logging.info(len(self.abook.print_book()))
+        logging.info((self.abook.print_book()))
         if len(self.abook.print_book()) <= 3:
           buff.set_text (_("No data returned, retry?"))
           self.text_view.set_buffer(buff)
@@ -218,12 +218,12 @@ class scanner:
     result = self.cur.fetchall()
     author_id = result[0][0]
     self.cur.execute("INSERT INTO books\
-    (title, author, isbn,abstract, year, publisher, city, copies, author_id, add_date)\
-    VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
+    (title, author, isbn,abstract, year, publisher, city, copies, author_id, add_date,mtype)\
+    VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s);", \
   (str(self.abook.title), str(self.abook.authors), str(self.abook.id),
         str(self.abook.abstract),str(self.abook.year),
         str(self.abook.publisher),str(self.abook.city),1,author_id,
-        datetime.date.today()))
+        datetime.date.today(), "Paperback"))
     '''
     else:
       self.cur.execute("UPDATE books set copies = copies+1 WHERE isbn = %s;",str(self.abook.id))
