@@ -116,7 +116,6 @@ class borrowers():
   def on_button_print_clicked(self,widget):
     ''' Create a pdf of the current users.  Optionally open the default
     reader for viewing and printing of the document.
-    TODO: Add the select statement and stuff.
 
     '''
     try:

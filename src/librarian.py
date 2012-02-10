@@ -140,7 +140,7 @@ class librarian:
 
   def on_button_print_clicked(self, widget):
     '''Print the entire book list to pdf then opes the default pdf viewer.
-    Should print currently displayed window list
+    TODO: Should print currently displayed window list
     Maybe mark borrowed books somehow?
     This will likely be system specific
     '''
