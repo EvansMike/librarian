@@ -1,6 +1,6 @@
 README FIRST
 
- 
+
 Requires some flavour of linux and Python.  Windows user will have to figure
 out how it works themselves.
 Also requires the python packages:
@@ -15,7 +15,7 @@ reportlab
 I wanted to catalog all my books using their barcodes as input and track who
 borrows my books.  That's all.  I looked online for a program that would
 do just that and couldn't find any that supported barcode input.  The idea
-of typing in book details didnlt appeal, so wrote this.
+of typing in book details didn't appeal, so wrote this.
 
 This is a simple application to catalogue your library using the ISBN barcode
 and the zbarcam application with an ordinary webcam.
