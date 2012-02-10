@@ -43,7 +43,7 @@ logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message
 plat = sys.platform
 
 
-__version__ = "20111111"
+__version__ = "20120110"
 
 try:
   import pygtk
@@ -302,7 +302,10 @@ class librarian:
       adder.display()
     self.get_book_list(1) # Repopulate book list.
 
-
+  def treeview1_row_activated_cb(self, widget, path, col):
+    self.on_button_query_clicked(None)
+    
+    
 
   def gtk_main_quit(self, widget):
     # Quit when we destroy the GUI
