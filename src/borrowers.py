@@ -115,7 +115,8 @@ class borrowers():
 
   def on_button_print_clicked(self,widget):
     ''' Create a pdf of the current users.  Optionally open the default
-    reader for viewing and printing of the document
+    reader for viewing and printing of the document.
+    TODO: Add the select statement and stuff.
 
     '''
     try:
@@ -129,7 +130,8 @@ class borrowers():
       print e
       messages.pop_info(e)
       return
-
+    
+    
     filename = "borrowers.pdf"
     doc = SimpleDocTemplate(filename,pagesize=A4,
                             rightMargin=72,leftMargin=72,
@@ -143,7 +145,16 @@ class borrowers():
     ptext = ''
     Story.append(Paragraph(ptext, styles["Justify"]))
     Story.append(Spacer(1, 12))
-
+    # Get the data
+    self.cur.execute("SELECT title, author, name, o_date FROM books, \
+        borrows, borrowers WHERE books.id = borrows.book \
+        AND borrows.borrower=borrowers.id AND i_date is null \
+        ORDER BY o_date;")
+    result = self.cur.fetchall()
+    for row in result:
+      ptext = row[2] + " -- " + row[1] + " -- " + row[0] + " -- Borrowed: " + row[3].strftime('%Y %b %d')
+      Story.append(Paragraph(ptext, styles["Normal"]))
+    
     doc.build(Story)
 
     # Open a reader
