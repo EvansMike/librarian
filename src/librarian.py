@@ -167,7 +167,6 @@ class librarian:
     model = self.booklist
     myiter = model.get_iter_first()
     if myiter is not None:
-      #mm = (model.get_value(myiter, 0)) + (model.get_value(myiter, 1)) +(model.get_value(myiter, 2))
       while str(myiter) != 'None':
         row = []
         myiter = model.iter_next(myiter)
@@ -176,7 +175,6 @@ class librarian:
           row.append(Paragraph(model.get_value(myiter, 1),styles["Normal"]))
           row.append(Paragraph(model.get_value(myiter, 2),styles["Normal"]))
           mm = (model.get_value(myiter,9)) + ":  " + (model.get_value(myiter, 1))+ ":  " +(model.get_value(myiter, 2))
-          #Story.append(Paragraph(mm, styles["Justify"]))
         #logging.info(row)
         data.append(row)
       t=Table(data,[40,150,350])
