@@ -1,4 +1,7 @@
 char *s = N_("Abstract");
+char *s = N_("Add");
+char *s = N_("Add a new borrower, or edit the \n"
+             "currently selected one");
 char *s = N_("Author");
 char *s = N_("Available copies of this book.");
 char *s = N_("Borrowed?");
