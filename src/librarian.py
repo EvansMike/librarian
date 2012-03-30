@@ -132,6 +132,11 @@ class librarian:
     self.treeview.append_column(column)
     column.set_sort_column_id(2)
 
+    column = gtk.TreeViewColumn(_('Rating'), gtk.CellRendererText(), text=3)
+    column.set_clickable(True)
+    column.set_resizable(True)
+    self.treeview.append_column(column)
+    column.set_sort_column_id(3)
 
     self.get_book_list(1)
     self.status1.set_text("Version:" + __version__)
@@ -200,6 +205,7 @@ class librarian:
     selection -- BORRORWED or ALL Which set to get.
 
     '''
+    #TODO: Get and insert ratings
     #print selection
     self.booklist.clear()
     if selection == ALL:
