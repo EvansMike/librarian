@@ -17,6 +17,8 @@
   MA 02110-1301, USA.
 '''
 
+# TODO: Make this read and write to some user specific location, hiddedn in $HOME perhaps?
+
 import sys
 import ConfigParser
 import logging
@@ -48,18 +50,31 @@ class load_config:
     config = ConfigParser.ConfigParser()
     config.read(config_file)
     if not config.sections():
-      print "Cannot read config file, exiting.\n"
+      #print "Cannot read config file, exiting.\n"
       # Pop up a message
       import messages
-      messages.pop_info(_('No config file found.\nA template file file has\
-       been written to disk. Please edit ') + config_file + _('to contain \
-       the correct login details for you databases.'))
+      messages.pop_info(_('No config file found.\nA template file file has been written to disk.\nPlease edit ') 
+        + config_file + _('to contain the correct login details for your databases.'))
 
       f = open(config_file,"w")
       # Write a dummy config file if one doesn't exist
+      '''
+      #The python way, but it converts everything to LOWER case!  I don't want that.
+      parser = ConfigParser.SafeConfigParser()
+      parser.add_section('database')
+      parser.add_section('calibre')
+      parser.set('database', 'USER', 'username')
+      parser.set('database', 'PASSWD', 'password')
+      parser.set('database', 'DB', 'db_name')
+      parser.set('calibre', '# Optional: Define path to Calibre database, Users home dir will be automatically determined.', '')
+      parser.set('calibre', 'CALIBRE_DB', 'calibre_db')
+      parser.write(f)
+      '''
+      # The dirty way.  Preserves case.  Probably not cross OS safe.
       f.write('[database]\nUSER = username\nPASSWD = password\nDB = db_name\nDBHOST = hostname\n\
       \n# Optional: Define path to Calibre database, Users home dir will be\
       automatically determined.\n[calibre]\nCALIBRE_DB = calibre_db\n')
+      # Set access mode to owner only
       os.fchmod(f.fileno(),stat.S_IREAD|stat.S_IWRITE)
       f.close()
       del f
