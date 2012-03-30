@@ -43,9 +43,9 @@ class load_config:
   If a config file is not found it writes a stub file to the current dir
   and informs the user to about filling the config fields.'''
   def __init__(self):
-    self._do_it()
+    self.get_config()
 
-  def _do_it(self):
+  def get_config(self):
     config_file = "db_conf.cfg"
     config = ConfigParser.ConfigParser()
     config.read(config_file)

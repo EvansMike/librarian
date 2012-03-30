@@ -23,6 +23,7 @@ import MySQLdb
 import MySQLdb.cursors
 import sys,os
 import load_config
+import gconf_config
 import logging
 import book
 import locale
@@ -43,7 +44,7 @@ logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message
 plat = sys.platform
 
 
-__version__ = "20120110"
+__version__ = "20120330"
 
 try:
   import pygtk
@@ -58,7 +59,8 @@ except:
 
 # Read the config file
 
-config = load_config.load_config()
+#config = load_config.load_config() # For file based config
+config = gconf_config.gconf_config() # For gconf config.
 try:
   db_user = config.db_user
   db_pass = config.db_pass
