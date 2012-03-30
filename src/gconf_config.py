@@ -112,7 +112,7 @@ class gconf_config():
       self.db_host = self.client.get('/apps/librarian/DBHOST').to_string()
       self.db_base = self.client.get('/apps/librarian/DBASE').to_string()
       self.calibre_db = self.client.get('/apps/librarian/CALIBRE_DB').to_string()
-    except: # Could'nt find the config settings
+    except: # Couldn't find the config settings
       print "\nCannot find setup data.  Writing default values.\n"
       print "You will need to run the config thingy.\n"
       #TODO: Pop up a config window here

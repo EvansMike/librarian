@@ -17,8 +17,6 @@
   MA 02110-1301, USA.
 '''
 
-# TODO: Make this read and write to some user specific location, hiddedn in $HOME perhaps?
-
 import sys
 import ConfigParser
 import logging
