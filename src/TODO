@@ -1,13 +1,22 @@
-Make a borrower input interface.
-
-Don't Normalise the database!  Further thought and several blogs indicate
-that normalising too much in this case is incorrect.  See:
-http://lemire.me/blog/archives/2010/11/29/why-do-we-need-database-joins
-Although I have put the authors in a separatte table I've not split into
-first, second name etc.  So semi normalised then.
-
-Make it work with CDs, DVDs and possibly Calibre's e-books as well.
-
-Finish internationalisation.
-
-Add a scanned date. DONE
+add_edit.py:TODO:
+add_edit.py:    #self.mybook.add_date=self.add_date.get_text() #TODO
+Binary file add_edit.pyc matches
+book.py:# TODO: No longer sure about storing the number oc copies of a book as
+borrowers.py:TODO: Do the edit part.
+Doxyfile:# The GENERATE_TODOLIST tag can be used to enable (YES) or
+Doxyfile:GENERATE_TODOLIST      = YES
+gconf_config.py:#TODO: Gconf schema, maybe?
+gconf_config.py:    #else: self.test_config() # TODO: Write setup dialog.
+gconf_config.py:    TODO: Obvioslsy users will not be expected to edit these values in their gconf tree.
+gconf_config.py:    TODO: Write a config interface.'''
+gconf_config.py:      #TODO: Pop up a config window here
+gconf_config.py:      self.test_config() # TODO: remove when pop up window done.
+Binary file gconf_config.pyc matches
+guiscan.py:# TODO we don't always get a title and author from a single lookup
+guiscan.py:# TODO Needs a live internet connection!  No good for portable apps. without wireless.
+guiscan.py:    TODO. Maybe print the ISBN too.
+Binary file guiscan.pyc matches
+INSTALL:TODO:
+librarian.py:    TODO: Should print currently displayed window list
+librarian.py:    TODO: Maybe mark borrowed books somehow?
+load_config.py:# TODO: Make this read and write to some user specific location, hiddedn in $HOME perhaps?
