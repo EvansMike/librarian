@@ -37,9 +37,9 @@ import biblio.webquery
 import qrencode
 import MySQLdb
 import sys
-import ConfigParser
+#import ConfigParser
 import logging
-import load_config
+import gconf_config
 import gettext
 import book
 import datetime
@@ -63,7 +63,8 @@ except:
 	print_("GTK Not Availible")
 	sys.exit(1)
 
-config = load_config.load_config()
+#config = gconf_config.load_config()
+config = gconf_config.gconf_config()
 db_user = config.db_user
 db_pass = config.db_pass
 db_base = config.db_base
@@ -150,11 +151,14 @@ class scanner:
         else:
           buff.set_text (_("No DVDs.\n Searching for CDs\n"))
           self.text_view.set_buffer(buff)
-          # Do CD search.
-        return
+          cd_search = amazonlookup.CDlookup()
+          if cd_search.lookup(bar) != 1:
+            buff.set_text (_("CD Found\n"))
+            self.text_view.set_buffer(buff)
+        #return
         
     # DONE Check if exists and increment book count if so.
-    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;",str(self.abook.isbn))
+    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;",bar)
     count = self.cur.fetchone()[0]
     if count > 0:
       buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
