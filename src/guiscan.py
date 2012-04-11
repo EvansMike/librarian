@@ -28,6 +28,7 @@ biblio.webquery
 #   Need a db update app.
 #   Change author name parsing.  Also parse to authors table for future normalisation.
 #     Biblio lookup returns a list of authors.
+# TODO: Add DVD and CDDB lookup
 
 import zbar
 import webbrowser
@@ -49,7 +50,7 @@ logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: %(levelname)s:%(message)s: LINE %(lineno)d', level=logging.DEBUG)
 
 # Do we produce a QR code?
-QR_CODE = False
+QR_CODE = True
 
 try:
 	import pygtk
@@ -125,6 +126,7 @@ class scanner:
     # hide the preview window
     proc.visible = False
     logging.info(proc.results)
+    # Here we need to define some method search for DVDs and CDs
     try:
       for symbol in proc.results:
         bar = symbol.data
@@ -163,25 +165,41 @@ class scanner:
     needed.
     TODO. Maybe print the ISBN too.
           Change output dir
+    TODO: Store images in the DB
     '''
     if QR_CODE:
       import getpass
       user = getpass.getuser()
       # Do the QR thang
-      qr = qrencode.encode('ISBN:'+ str(self.abook.id) + \
-      ' TITLE:' + str(self.abook.title) + \
-      ' AUTHORS:' + str(self.abook.authors + \
-      " OWNER: " + user))
-      # Rescale using the size and add a 1 px border
-      size = qr[1]
-      qr = qrencode.encode_scaled('ISBN:'+ str(self.abook.id)\
+      qr_data = 'ISBN:'+ str(self.abook.id)\
         + ' TITLE:' +  str(self.abook.title)\
         + ' AUTHORS:' + str(self.abook.authors) \
-        + " OWNER: " + user, (size*3)+2)
+        + " OWNER: " + user
+      qr = qrencode.encode(qr_data)
+      # Rescale using the size and add a 1 px border
+      size = qr[1]
+
+      qr = qrencode.encode_scaled(qr_data, (size*3)+2)
       img = qr[2]
-      img.save('../ISBN:' + str(self.abook.id) + '.png', 'png')
+      self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = %s;","ISBN: "+str(self.abook.id))
+      count = self.cur.fetchone()[0]
+      if count == 0:
+        sql = 'INSERT INTO qrcodes(caption,img) VALUES(%s,%s)' # But how to get them back out again?  See below.
+        args = ("ISBN: " + str(self.abook.id), img, )
+        self.cur.execute (sql, args)
+        self.db.commit()
+      img.save('tmp.png', 'png')
       # Display it in the GUI
-      self.qr_img.set_from_file('../ISBN:' + str(self.abook.id) + '.png')
+      #self.qr_img.set_from_image(img) # may need to be gtk.image
+      self.qr_img.set_from_file('tmp.png') # fix this, I don't like using tmp files
+      
+      '''
+      Example data extraction code
+      cursor.execute("SELECT Data FROM Images LIMIT 1")
+      fout = open('image.png','wb')
+      fout.write(cursor.fetchone()[0])
+      fout.close()
+      '''
 
 
 
