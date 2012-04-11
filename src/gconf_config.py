@@ -134,7 +134,7 @@ class gconf_config():
       #TODO: Pop up a config window here
       self.test_config() # TODO: remove when pop up window done.
       self.get_config()
-      raise
+      #raise
       
     
      
