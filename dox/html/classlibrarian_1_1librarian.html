@@ -28,6 +28,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -82,6 +83,8 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#a7bb690bc8c84830399479b6f47eef8b0">on_button_loaned_clicked</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#ad44a8c5d7a8ccb8d2c75e13eccb276b1">on_button_scan_clicked</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#af71bf023c78a90863f2505562ad95d95">on_button_query_clicked</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af63e0d742fc6a1d82c9097c4c3c7f5c2"></a><!-- doxytag: member="librarian::librarian::treeview1_row_activated_cb" ref="af63e0d742fc6a1d82c9097c4c3c7f5c2" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>treeview1_row_activated_cb</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa904a6cfbe8a124965f9e2c148f64227"></a><!-- doxytag: member="librarian::librarian::gtk_main_quit" ref="aa904a6cfbe8a124965f9e2c148f64227" args="" -->
 def&#160;</td><td class="memItemRight" valign="bottom"><b>gtk_main_quit</b></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
@@ -213,9 +216,9 @@ selection -- BORRORWED or ALL Which set to get.
       </table>
 </div>
 <div class="memdoc">
-<div class="fragment"><pre class="fragment">Print the entire book list to printer, via a tmp file.
-Should print currently displayed window list
-Maybe mark borrowed books somehow?
+<div class="fragment"><pre class="fragment">Print the entire book list to pdf then opes the default pdf viewer.
+TODO: Should print currently displayed window list
+TODO: Maybe mark borrowed books somehow?
 This will likely be system specific
 </pre></div> 
 </div>
@@ -287,7 +290,7 @@ This will likely be system specific
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -296,7 +299,7 @@ This will likely be system specific
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Nov 17 2011 for Simple Librarian by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Apr 11 2012 for Simple Librarian by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

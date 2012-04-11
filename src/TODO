@@ -1,6 +1,11 @@
 add_edit.py:TODO:
 add_edit.py:    #self.mybook.add_date=self.add_date.get_text() #TODO
-Binary file add_edit.pyc matches
+amazonlookup.py:  TODO: Handle cases where no data are returned.
+amazonlookup.py:  TODO: Get track listing
+amazonlookup.py:  TODO: Handle cases where no data are returned.
+amazonlookup.py:  TODO: Get track listing
+amazonlookup.py:  TODO: Handle cases where no data are returned.
+Binary file amazonlookup.pyc matches
 book.py:# TODO: No longer sure about storing the number oc copies of a book as
 borrowers.py:TODO: Do the edit part.
 Doxyfile:# The GENERATE_TODOLIST tag can be used to enable (YES) or
@@ -14,9 +19,11 @@ gconf_config.py:      self.test_config() # TODO: remove when pop up window done.
 Binary file gconf_config.pyc matches
 guiscan.py:# TODO we don't always get a title and author from a single lookup
 guiscan.py:# TODO Needs a live internet connection!  No good for portable apps. without wireless.
+guiscan.py:# TODO: Add DVD and CDDB lookup
 guiscan.py:    TODO. Maybe print the ISBN too.
-Binary file guiscan.pyc matches
+guiscan.py:    TODO: Store images in the DB
 INSTALL:TODO:
 librarian.py:    TODO: Should print currently displayed window list
 librarian.py:    TODO: Maybe mark borrowed books somehow?
-load_config.py:# TODO: Make this read and write to some user specific location, hiddedn in $HOME perhaps?
+librarian.py:    #TODO: Get and insert ratings
+README:else use gconf-editor, but this is isn't exactly (l)user friendly.  TODO, 

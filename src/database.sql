@@ -112,3 +112,10 @@ CREATE TABLE `rating` (
   `rating` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+create table qrcodes (
+  `idpic` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, 
+  `caption` VARCHAR(45) NOT NULL, 
+  `img` LONGBLOB NOT NULL, PRIMARY KEY(`idpic`) 
+  ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
