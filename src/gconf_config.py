@@ -87,21 +87,29 @@ class gconf_config():
     passwd_schema = gconf.Schema()
     dbhost_schema = gconf.Schema()
     dbase_schema = gconf.Schema()
+    az_aws_key = gconf.Schema()
+    az_secret_key = gconf.Schema()
     
     user_schema.set_owner("librarian")
     passwd_schema.set_owner("librarian")
     dbhost_schema.set_owner("librarian")
     dbase_schema.set_owner("librarian")
+    az_aws_key.set_owner("librarian")
+    az_secret_key.set_owner("librarian")
     
     user_schema.set_type("string")
     passwd_schema.set_type("string")
     dbhost_schema.set_type("string")
     dbase_schema.set_type("string")
+    az_aws_key.set_type("string")
+    az_secret_key.set_type("string")
 
     self.client.set_schema("/schemas/apps/librarian/USER",user_schema)
     self.client.set_schema("/schemas/apps/librarian/PASSWD",passwd_schema)
     self.client.set_schema("/schemas/apps/librarian/DBHOST",dbhost_schema)
     self.client.set_schema("/schemas/apps/librarian/DBASE",dbase_schema)
+    self.client.set_schema("/schemas/apps/librarian/AZKEY",az_aws_key)
+    self.client.set_schema("/schemas/apps/librarian/AZSKEY",az_secret_key)
     
     
   def get_config(self):
@@ -118,6 +126,7 @@ class gconf_config():
       #TODO: Pop up a config window here
       self.test_config() # TODO: remove when pop up window done.
       self.get_config()
+      raise
       
     
      
