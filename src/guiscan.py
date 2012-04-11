@@ -230,34 +230,30 @@ class scanner:
 
   def on_button_add_clicked(self, widget):
     '''
-    Add a book to the database.
+    Add a book, DVD or CD to the database.
     DONE Check if exists and increment copy counter if so.
     Arguably I could have used "ON DUPLICATE KEY", using the isbn as the key,
     here but it may happen that several books will have empty isbn values
     for instance, books printed before ISBN was invented.
     result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
          str(self.abook.isbn))
+    TODO: Also insert DVDs and CDs, I guess, re-use some of the fields.
     '''
-    #if self.cur.fetchone()[0] == 0:
-      # Insert the author into the authors table
     a_name = str(self.abook.authors)
     self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [a_name])
     self.cur.execute("SELECT * FROM authors WHERE name=%s;",[a_name])
     result = self.cur.fetchall()
     author_id = result[0][0]
-    self.cur.execute("INSERT INTO books\
-    (title, author, isbn,abstract, year, publisher, city, copies, author_id, add_date,mtype)\
-    VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s);", \
-  (str(self.abook.title), str(self.abook.authors), str(self.abook.id),
+    values = (str(self.abook.title), str(self.abook.authors), str(self.abook.id),
         str(self.abook.abstract),str(self.abook.year),
         str(self.abook.publisher),str(self.abook.city),1,author_id,
-        datetime.date.today(), "Paperback"))
-    '''
-    else:
-      self.cur.execute("UPDATE books set copies = copies+1 WHERE isbn = %s;",str(self.abook.id))
-    '''
+        datetime.date.today(), "Book")
+    self.cur.execute("INSERT INTO books\
+    (title, author, isbn,abstract, year, publisher, city, copies, author_id, add_date,mtype)\
+    VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s);", values)
+
     buff = self.text_view.get_buffer()
-    buff.insert_at_cursor(_( "\n\nYou added this book."))
+    buff.insert_at_cursor(_( "\n\nYou added this " + "book" + "."))
     self.text_view.set_buffer(buff)
     self.make_qr_code()
     print "You added this book."

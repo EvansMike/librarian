@@ -65,7 +65,9 @@ class DVDlookup:
       print self.Director
       print self.Actor
       print self.ProductGroup
-    
+
+#################### END DVDlookup CLASS ###############################
+
 class CDlookup():
   ''' Get CD data from Amazon.
   TODO: Get track listing
@@ -97,9 +99,9 @@ class CDlookup():
       print self.Manufacturer
       print self.ProductGroup
 
-    
+#################### END CDlookup CLASS ###############################  
 class Booklookup():
-  ''' Get CD data from Amazon.
+  ''' Get Book data from Amazon.
   TODO: Get track listing
   TODO: Handle cases where no data are returned.
   
@@ -129,7 +131,7 @@ class Booklookup():
       print self.Manufacturer
       print self.ProductGroup    
 
-    
+#################### END Booklookup CLASS ###############################     
     
 # Test malarky
 if __name__ == "__main__":
