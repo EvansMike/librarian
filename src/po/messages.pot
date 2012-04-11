@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-10 15:32+0000\n"
+"POT-Creation-Date: 2012-04-11 16:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Book has been NOT marked as returned."
 msgstr ""
 
-#: borrowers.py:68 guiscan.py:94
+#: borrowers.py:68 guiscan.py:95
 msgid "No database connection.  Check config file"
 msgstr ""
 
@@ -69,44 +69,54 @@ msgstr ""
 msgid "CLOSE"
 msgstr ""
 
-#: guiscan.py:107
+#: guiscan.py:108
 msgid "To begin press scan."
 msgstr ""
 
-#: guiscan.py:118
+#: guiscan.py:119
 msgid "No camera present!"
 msgstr ""
 
-#: guiscan.py:135
+#: guiscan.py:139
 msgid "No data returned, retry?"
 msgstr ""
 
-#: guiscan.py:141
-msgid "Dodgy scan, retry?"
+#: guiscan.py:142
+msgid "Searching for DVDs\n"
 msgstr ""
 
-#: guiscan.py:150
+#: guiscan.py:147
+msgid "Found DVD\n"
+msgstr ""
+
+#: guiscan.py:151
+msgid ""
+"No DVDs.\n"
+" Searching for CDs\n"
+msgstr ""
+
+#: guiscan.py:160
 msgid ""
 "\n"
 "\n"
 "You already have "
 msgstr ""
 
-#: guiscan.py:197
+#: guiscan.py:221
 msgid ""
 "\n"
 "\n"
 "You removed this book."
 msgstr ""
 
-#: guiscan.py:200
+#: guiscan.py:224
 msgid ""
 "\n"
 "\n"
 "Could not remove book!"
 msgstr ""
 
-#: guiscan.py:232
+#: guiscan.py:256
 msgid ""
 "\n"
 "\n"
@@ -117,42 +127,47 @@ msgstr ""
 msgid "You don't appear to have Calibre installed, or it's not in your PATH."
 msgstr ""
 
-#: librarian.py:56
+#: librarian.py:57
 msgid "GTK Not Availible"
 msgstr ""
 
-#: librarian.py:96
+#: librarian.py:98
 msgid "Version: "
 msgstr ""
 
-#: librarian.py:112
+#: librarian.py:114
 msgid "Medium"
 msgstr ""
 
-#: librarian.py:119 ui/edit_book.glade.h:5
+#: librarian.py:121 ui/edit_book.glade.h:5
 msgid "Author"
 msgstr ""
 
-#: librarian.py:127 ui/edit_book.glade.h:28
+#: librarian.py:129 ui/edit_book.glade.h:28
 msgid "Title"
 msgstr ""
 
-#: librarian.py:220
+#: librarian.py:135
+msgid "Rating"
+msgstr ""
+
+#: librarian.py:228
 msgid "A database connection failed.  Check the config file."
 msgstr ""
 
-#: librarian.py:293
+#: librarian.py:301
 msgid "Cannot query e-books.  Please use calibre."
 msgstr ""
 
 #: load_config.py:54
 msgid ""
 "No config file found.\n"
-"A template file file has       been written to disk. Please edit "
+"A template file file has been written to disk.\n"
+"Please edit "
 msgstr ""
 
 #: load_config.py:55
-msgid "to contain        the correct login details for you databases."
+msgid "to contain the correct login details for your databases."
 msgstr ""
 
 #: messages.py:33

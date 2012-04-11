@@ -126,33 +126,39 @@ class scanner:
     # hide the preview window
     proc.visible = False
     logging.info(proc.results)
-    # Here we need to define some method search for DVDs and CDs
-    try:
-      for symbol in proc.results:
-        bar = symbol.data
-        logging.info(bar)
-        self.abook.webquery(bar)
-        logging.info((self.abook.print_book()))
-        if len(self.abook.print_book()) <= 3:
-          buff.set_text (_("No data returned, retry?"))
-          self.text_view.set_buffer(buff)
+    
+
+    for symbol in proc.results:
+      bar = symbol.data
+      logging.info(bar)
+      if self.abook.webquery(bar) != 1:
         logging.info(self.abook.print_book())
         buff.set_text(self.abook.print_book())
-    except:
-      #logging.info(self.abook.print_book())
-      buff.set_text (_("Dodgy scan, retry?"))
-      self.text_view.set_buffer(buff)
-      return
+        return
+      else: # Try for a DVD lookup
+        buff.set_text (_("No data returned, retry?"))
+        self.text_view.set_buffer(buff)
+        #logging.info(self.abook.print_book())
+        buff.set_text (_("Searching for DVDs\n"))
+        self.text_view.set_buffer(buff)
+        import amazonlookup
+        dvd_search = amazonlookup.DVDlookup()
+        if dvd_search.lookup(bar) != 1:
+          buff.set_text (_("Found DVD\n"))
+          buff.set_text(dvd_search.title)
+          self.text_view.set_buffer(buff)
+        else:
+          buff.set_text (_("No DVDs.\n Searching for CDs\n"))
+          self.text_view.set_buffer(buff)
+          # Do CD search.
+        return
+        
     # DONE Check if exists and increment book count if so.
-
-    try:
-		self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;",str(self.abook.isbn))
-		count = self.cur.fetchone()[0]
-		if count > 0:
-		  buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
-		self.text_view.set_buffer(buff)
-    except:
-      pass
+    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;",str(self.abook.isbn))
+    count = self.cur.fetchone()[0]
+    if count > 0:
+      buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
+    self.text_view.set_buffer(buff)
     del buff
 
 
@@ -171,8 +177,8 @@ class scanner:
       import getpass
       user = getpass.getuser()
       # Do the QR thang
-      qr_data = 'ISBN:'+ str(self.abook.id)\
-        + ' TITLE:' +  str(self.abook.title)\
+      qr_data = 'ISBN:'+ str(self.abook.id) \
+        + ' TITLE:' +  str(self.abook.title) \
         + ' AUTHORS:' + str(self.abook.authors) \
         + " OWNER: " + user
       qr = qrencode.encode(qr_data)
@@ -188,10 +194,10 @@ class scanner:
         args = ("ISBN: " + str(self.abook.id), img, )
         self.cur.execute (sql, args)
         self.db.commit()
-      img.save('tmp.png', 'png')
+      #img.save('tmp.png', 'png')
       # Display it in the GUI
       #self.qr_img.set_from_image(img) # may need to be gtk.image
-      self.qr_img.set_from_file('tmp.png') # fix this, I don't like using tmp files
+      #self.qr_img.set_from_file('tmp.png') # fix this, I don't like using tmp files
       
       '''
       Example data extraction code

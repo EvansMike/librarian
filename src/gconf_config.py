@@ -28,6 +28,7 @@ import os, stat
 import gettext
 import locale
 import gconf
+import base64 # For trivial password hiding
 
 
 locale.setlocale(locale.LC_ALL, '')
@@ -73,6 +74,10 @@ class gconf_config():
       self.client.set('/apps/librarian/DBASE',gvalue_str)
       gvalue_str.set_string('Calibre_Library/metadata.db')
       self.client.set('/apps/librarian/CALIBRE_DB',gvalue_str)
+      gvalue_str.set_string('aws_key')
+      self.client.set('/apps/librarian/AZKEY',gvalue_str)
+      gvalue_str.set_string('az_secret_key')
+      self.client.set('/apps/librarian/AXSKEY',gvalue_str)
     
     if self.client.dir_exists("/apps/librarian") == False: 
       print "Cannot create gconf entries!"
@@ -117,9 +122,12 @@ class gconf_config():
     try:
       self.db_user = self.client.get('/apps/librarian/USER').to_string()
       self.db_pass = self.client.get('/apps/librarian/PASSWD').to_string()
+      #self.db_pass = base64.b64decode(self.client.get('/apps/librarian/PASSWD').to_string()) #Need to implement GUI first.
       self.db_host = self.client.get('/apps/librarian/DBHOST').to_string()
       self.db_base = self.client.get('/apps/librarian/DBASE').to_string()
       self.calibre_db = self.client.get('/apps/librarian/CALIBRE_DB').to_string()
+      self.db_base = self.client.get('/apps/librarian/AZKEY').to_string()
+      self.db_base = self.client.get('/apps/librarian/AZSKEY').to_string()
     except: # Couldn't find the config settings
       print "\nCannot find setup data.  Writing default values.\n"
       print "You will need to run the config thingy.\n"
@@ -142,7 +150,6 @@ class gconf_config():
 # test harness.  Write and read some default config values.
 if __name__ == "__main__":
   app = gconf_config()
-  #state = app.test_config()
   #if state: app.print_config()
   app.create_schema()
   #state = app.test_config()
