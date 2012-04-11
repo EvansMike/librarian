@@ -1,22 +1,24 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk+" version="2.20"/>
-  <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="window1">
     <property name="visible">True</property>
+    <property name="can_focus">False</property>
     <property name="title" translatable="yes">Book Scanner</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="destroy_with_parent">True</property>
-    <signal name="destroy" handler="gtk_main_quit"/>
+    <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
     <child>
       <object class="GtkFixed" id="fixed1">
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <child>
           <object class="GtkImage" id="image1">
             <property name="width_request">140</property>
             <property name="height_request">140</property>
             <property name="visible">True</property>
+            <property name="can_focus">False</property>
           </object>
           <packing>
             <property name="x">271</property>
@@ -41,6 +43,7 @@
             <property name="width_request">227</property>
             <property name="height_request">25</property>
             <property name="visible">True</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">ISBN DECODER</property>
             <attributes>
               <attribute name="weight" value="bold"/>
@@ -56,6 +59,7 @@
             <property name="width_request">449</property>
             <property name="height_request">30</property>
             <property name="visible">True</property>
+            <property name="can_focus">False</property>
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkButton" id="button_add">
@@ -64,10 +68,14 @@
                 <property name="height_request">43</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="has_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_button_scan_clicked"/>
+                <property name="use_action_appearance">False</property>
+                <signal name="clicked" handler="on_button_scan_clicked" swapped="no"/>
               </object>
               <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -79,9 +87,12 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_button_add_clicked"/>
+                <property name="use_action_appearance">False</property>
+                <signal name="clicked" handler="on_button_add_clicked" swapped="no"/>
               </object>
               <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -93,9 +104,12 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_button_remove_clicked"/>
+                <property name="use_action_appearance">False</property>
+                <signal name="clicked" handler="on_button_remove_clicked" swapped="no"/>
               </object>
               <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
                 <property name="position">2</property>
               </packing>
             </child>
@@ -107,9 +121,12 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="gtk_main_quit"/>
+                <property name="use_action_appearance">False</property>
+                <signal name="clicked" handler="gtk_main_quit" swapped="no"/>
               </object>
               <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
                 <property name="position">3</property>
               </packing>
             </child>
