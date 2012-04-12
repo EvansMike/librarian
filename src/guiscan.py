@@ -145,16 +145,27 @@ class scanner:
         import amazonlookup
         dvd_search = amazonlookup.DVDlookup()
         if dvd_search.lookup(bar) != 1:
-          buff.set_text (_("Found DVD\n"))
-          buff.set_text(dvd_search.title)
+          buff.insert_at_cursor (_("Found DVD:\n"))
+          buff.insert_at_cursor(str(dvd_search.Title) + "\n")
+          buff.insert_at_cursor(str(dvd_search.Director))
           self.text_view.set_buffer(buff)
-        else:
+          self.abook.title = str(dvd_search.Title)
+          self.abook.authors = str(dvd_search.Director) # This isn't perfect and maybe I should use K-V pairs?
+          self.abook.mtype = str(dvd_search.ProductGroup)
+          self.abook.year = 0 # Should be available but ...
+        else: # Do a CD search
           buff.set_text (_("No DVDs.\n Searching for CDs\n"))
           self.text_view.set_buffer(buff)
-          cd_search = amazonlookup.CDlookup()
+          cd_search = amazonlookup.CDlookup() # Should be able to get more data from freedb.org
           if cd_search.lookup(bar) != 1:
-            buff.set_text (_("CD Found\n"))
+            buff.insert_at_cursor(_("CD Found:\n"))
             self.text_view.set_buffer(buff)
+            buff.insert_at_cursor(str(cd_search.Title) + "\n")
+            buff.insert_at_cursor(str(cd_search.Artist))
+            self.abook.title = str(cd_search.Title)
+            self.abook.authors = str(cd_search.Artist)
+            self.abook.mtype = str(cd_search.ProductGroup)
+            self.abook.year = 0 # Should be available but ... 
         #return
         
     # DONE Check if exists and increment book count if so.
@@ -247,16 +258,16 @@ class scanner:
     values = (str(self.abook.title), str(self.abook.authors), str(self.abook.id),
         str(self.abook.abstract),str(self.abook.year),
         str(self.abook.publisher),str(self.abook.city),1,author_id,
-        datetime.date.today(), "Book")
+        datetime.date.today(), str(self.abook.mtype))
     self.cur.execute("INSERT INTO books\
     (title, author, isbn,abstract, year, publisher, city, copies, author_id, add_date,mtype)\
     VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s);", values)
 
     buff = self.text_view.get_buffer()
-    buff.insert_at_cursor(_( "\n\nYou added this " + "book" + "."))
+    buff.insert_at_cursor(_( "\n\nYou added this " + str(self.abook.mtype) + ".\n"))
     self.text_view.set_buffer(buff)
     self.make_qr_code()
-    print "You added this book."
+    print "You added this", str(self.abook.mtype)
 
 
   def append_text(self, text):
