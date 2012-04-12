@@ -152,6 +152,7 @@ class scanner:
           self.abook.title = str(dvd_search.Title)
           self.abook.authors = str(dvd_search.Director) # This isn't perfect and maybe I should use K-V pairs?
           self.abook.mtype = str(dvd_search.ProductGroup)
+          self.abook.id = str(bar)
           self.abook.year = 0 # Should be available but ...
         else: # Do a CD search
           buff.set_text (_("No DVDs.\n Searching for CDs\n"))
@@ -165,6 +166,7 @@ class scanner:
             self.abook.title = str(cd_search.Title)
             self.abook.authors = str(cd_search.Artist)
             self.abook.mtype = str(cd_search.ProductGroup)
+            self.ab0ok.id = str(bar)
             self.abook.year = 0 # Should be available but ... 
         #return
         

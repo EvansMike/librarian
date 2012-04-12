@@ -68,3 +68,10 @@ if it isn't to revert to file based config.  Needs a GUI to setup stuff though,
 else use gconf-editor, but this is isn't exactly (l)user friendly.  TODO, 
 write the setup GUI.
 
+Update:  2012-04-12 
+You can now scan DVDs and CDs provided you have a Amazon web
+services account.  http://aws.amazon.com to sign up.  As far as I know, low
+useage will attract no charge, likely to be most domestic users. Setting up
+gconf for user password stuff is up to you for the moment.  I will add a GUI.
+NOTE:  Passwords are stored as plain text in gconf.  This is not good and
+some encryption method should (will) be used when the config GUI is written.
