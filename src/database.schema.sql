@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.21, for Linux (i686)
+-- MySQL dump 10.13  Distrib 5.5.22, for Linux (i686)
 --
 -- Host: localhost    Database: books
 -- ------------------------------------------------------
--- Server version	5.5.21-log
+-- Server version	5.5.22-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,7 +26,7 @@ CREATE TABLE `authors` (
   `name` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`(50))
-) ENGINE=MyISAM AUTO_INCREMENT=219 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=222 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,7 +54,7 @@ CREATE TABLE `books` (
   `sale_status` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=661 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=684 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,10 +97,11 @@ CREATE TABLE `borrows` (
 CREATE TABLE `cd_tracks` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cdid` int(10) unsigned NOT NULL,
+  `tracknum` int(11) NOT NULL,
   `trackname` varchar(45) NOT NULL,
   `tracklen` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +199,7 @@ CREATE TABLE `qrcodes` (
   `caption` varchar(45) NOT NULL,
   `img` longblob NOT NULL,
   PRIMARY KEY (`idpic`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,4 +223,4 @@ CREATE TABLE `rating` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-04-13  9:51:56
+-- Dump completed on 2012-04-19 13:57:32

@@ -158,7 +158,7 @@ class scanner:
           buff.set_text (_("No DVDs.\n Searching for CDs\n"))
           self.text_view.set_buffer(buff)
           cd_search = amazonlookup.CDlookup() # Should be able to get more data from freedb.org
-          if cd_search.lookup(bar) != 1:
+          if cd_search.lookup(bar) != 1 and cd_search.Title != '' :
             buff.insert_at_cursor(_("CD Found:\n"))
             self.text_view.set_buffer(buff)
             buff.insert_at_cursor(str(cd_search.Title) + "\n")
@@ -166,7 +166,7 @@ class scanner:
             self.abook.title = str(cd_search.Title)
             self.abook.authors = str(cd_search.Artist)
             self.abook.mtype = str(cd_search.ProductGroup)
-            self.ab0ok.id = str(bar)
+            self.abook.id = str(bar)
             self.abook.year = 0 # Should be available but ... 
         #return
         
@@ -188,7 +188,7 @@ class scanner:
     needed.
     TODO. Maybe print the ISBN too.
           Change output dir
-    TODO: Store images in the DB
+    DONE: Store images in the DB
     '''
     if QR_CODE:
       import getpass
@@ -240,6 +240,25 @@ class scanner:
     except:
       buff.insert_at_cursor (_( "\n\nCould not remove book!"))
       self.text_view.set_buffer(buff)
+  
+  def get_cd_tracks(self):
+    ''' Get the cd details and store then in the DB.  We can use book class
+    for rest of details.
+    
+    '''
+    import freebase_lookup
+    cd_data = freebase_lookup.freebase_cd()
+    year = ''
+    artist = ''
+    album = ''
+    alid = cd_data.get_album_id(self.abook.authors, self.abook.title)
+    tracks = cd_data.get_tracks(alid) # Returns a dictionary
+    album = '' # TODO: Do this maybe as we can get the album date here
+    
+    for track in tracks: ## DEBUG: remove me later ##
+      print track
+    
+    return tracks # Dictionary e.g. {'index': 12, 'length': 214.773, 'name': 'The Kick Inside'}
 
   def on_button_add_clicked(self, widget):
     '''
@@ -250,9 +269,11 @@ class scanner:
     for instance, books printed before ISBN was invented.
     result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
          str(self.abook.isbn))
-    TODO: Also insert DVDs and CDs, I guess, re-use some of the fields.
+    DONE: Also insert DVDs and CDs, I guess, re-use some of the fields.
+    TODO: Get and store the track listing for CDs
     '''
     a_name = str(self.abook.authors)
+    a_mtype = str(self.abook.mtype)
     self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [a_name])
     self.cur.execute("SELECT * FROM authors WHERE name=%s;",[a_name])
     result = self.cur.fetchall()
@@ -264,7 +285,20 @@ class scanner:
     self.cur.execute("INSERT INTO books\
     (title, author, isbn,abstract, year, publisher, city, copies, author_id, add_date,mtype)\
     VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s);", values)
-
+    self.db.commit()
+    
+    # Get and insert the track listing
+    if str(self.abook.mtype) == 'Music': 
+      self.cur.execute("SELECT id FROM books WHERE title=%s AND author=%s LIMIT 1;",\
+            [str(self.abook.title), str(self.abook.authors)])
+      res = self.cur.fetchall()
+      cdid = res[0][0]
+      tracks = self.get_cd_tracks()
+      for track in tracks:
+        self.cur.execute("INSERT INTO cd_tracks(cdid,tracknum,trackname,tracklen) \
+            VALUES(%s,%s,%s,%s);", \
+            [cdid, track['index'],track['name'],str(track['length'])])
+        self.db.commit()
     buff = self.text_view.get_buffer()
     buff.insert_at_cursor(_( "\n\nYou added this " + str(self.abook.mtype) + ".\n"))
     self.text_view.set_buffer(buff)
