@@ -8,7 +8,7 @@ database.table exists with the same name it will NOT be overwritten.  I'd
 still recommend making a backup first though.  It may be the only one you'll
 ever make and you'll thank me one day. :)
 
-An empty config filel will be created when run for the first time, edit
+An empty config file will be created when run for the first time, edit
 this to reflect your database settings.
 
 The languages part is not implemented although a sample welsh file exists.

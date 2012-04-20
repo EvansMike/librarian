@@ -251,7 +251,10 @@ class scanner:
     year = ''
     artist = ''
     album = ''
-    alid = cd_data.get_album_id(self.abook.authors, self.abook.title)
+    al_dat = cd_data.get_album_id(self.abook.authors, self.abook.title)
+    alid = al_dat[0]
+    self.abook.year = int(al_dat[1].strip('[] ')) # Global(ish)
+    logging.info(self.abook.year)
     tracks = cd_data.get_tracks(alid) # Returns a dictionary
     album = '' # TODO: Do this maybe as we can get the album date here
     
@@ -279,7 +282,7 @@ class scanner:
     result = self.cur.fetchall()
     author_id = result[0][0]
     values = (str(self.abook.title), str(self.abook.authors), str(self.abook.id),
-        str(self.abook.abstract),str(self.abook.year),
+        str(self.abook.abstract),self.abook.year,
         str(self.abook.publisher),str(self.abook.city),1,author_id,
         datetime.date.today(), str(self.abook.mtype))
     self.cur.execute("INSERT INTO books\
@@ -298,7 +301,9 @@ class scanner:
         self.cur.execute("INSERT INTO cd_tracks(cdid,tracknum,trackname,tracklen) \
             VALUES(%s,%s,%s,%s);", \
             [cdid, track['index'],track['name'],str(track['length'])])
-        self.db.commit()
+        #self.db.commit()
+      self.cur.execute("UPDATE books SET year = %s WHERE id = %s",[self.abook.year, cdid])
+      self.db.commit()
     buff = self.text_view.get_buffer()
     buff.insert_at_cursor(_( "\n\nYou added this " + str(self.abook.mtype) + ".\n"))
     self.text_view.set_buffer(buff)

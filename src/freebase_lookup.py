@@ -67,7 +67,7 @@ class freebase_cd:
         print "%s - %s" % (name.encode('iso-8859-1','ignore'), date)       # Print name and date.
         #self.get_tracks(str(name), str(album_id))
 
-    return album_id
+    return album_id, date
     
     
   def get_tracks(self, alid):
@@ -114,7 +114,7 @@ class freebase_cd:
     Do a test query and make sure result is correct    
     
     '''
-    alid = self.get_album_id("Kate Bush", "The Kick Inside")
+    alid = self.get_album_id("Kate Bush", "The Kick Inside")[0]
     tracks = self.get_tracks(alid)
     for track in tracks:
       print track
