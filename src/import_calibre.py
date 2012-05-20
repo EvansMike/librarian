@@ -90,6 +90,31 @@ class calibre_import:
         '', '', '', '0', 0, 0, 'e-book'])
 
     return self.booklist
+  
+  def search_calbre(self, needle[], booklist = []):
+    ''' Search the calibre database on the parameters given.
+    TODO: Finish me
+    '''
+    mybooklist = booklist
+     try:
+      config = load_config.load_config()
+      self.calibre_base = HOME_DIR + "/" + config.calibre_db
+      logging.info(self.calibre_base)
+    except:
+      return
+    self.booklist = booklist
+    conn = sqlite3.connect(self.calibre_base)
+    c = conn.cursor()
+    # Get author title pair.
+    c.execute('select name, title from authors, books, books_authors_link \
+    where  books.id=books_authors_link.author \
+    AND authors.id=books_authors_link.book \
+    ;')
+    # Insert data into booklist
+    for row in c:
+      self.booklist.append(['', row[0], row[1],
+        '', '', '', '0', 0, 0, 'e-book'])
+    return mybooklist
 
   def insert_data2(self, booklist = []):
     ''' Use "calibredb list" command to get book list.  May make it more
