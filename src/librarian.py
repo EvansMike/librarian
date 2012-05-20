@@ -151,8 +151,7 @@ class librarian:
 
   def on_button_print_clicked(self, widget):
     '''Print the entire book list to pdf then opes the default pdf viewer.
-    TODO: Should print currently displayed window list
-    TODO: Maybe mark borrowed books somehow?
+    TODO: Auto width columns
     This will likely be system specific
     '''
     try:
@@ -180,15 +179,15 @@ class librarian:
     if myiter is not None:
       while str(myiter) != 'None':
         row = []
-        myiter = model.iter_next(myiter)
         if myiter is not None:
           row.append(Paragraph(model.get_value(myiter, 9),styles["Normal"]))
           row.append(Paragraph(model.get_value(myiter, 1),styles["Normal"]))
           row.append(Paragraph(model.get_value(myiter, 2),styles["Normal"]))
           mm = (model.get_value(myiter,9)) + ":  " + (model.get_value(myiter, 1))+ ":  " +(model.get_value(myiter, 2))
-        #logging.info(row)
+          #logging.info(row)
+          myiter = model.iter_next(myiter)
         data.append(row)
-      t=Table(data,[40,150,350])
+      t=Table(data,[50,150,350])
       t.hAlign='LEFT' # Move WHOLE TABLE to the left, defaults to CENTRE
       t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP')])) # Apples to CELLS
       Story.append(t)
@@ -320,7 +319,6 @@ class librarian:
   def on_button_search_clicked(self, widget):
     ''' Get the search string from enytry_searchm query the DB and display 
     the result.
-    TODO: Include e-books.
     
     '''
     search_string = self.search_string.get_text()
