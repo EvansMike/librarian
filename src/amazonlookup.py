@@ -37,7 +37,6 @@ BOOK_EAN = '9780596001704' # Sample book EAN
 class DVDlookup:
   '''
   Get DVD data from Amazon.
-  TODO: Handle cases where no data are returned.
   '''
   def __init__(self):
     # Get the keys from gconf, or some secret location
@@ -70,8 +69,6 @@ class DVDlookup:
 
 class CDlookup():
   ''' Get CD data from Amazon.
-  TODO: Get track listing
-  TODO: Handle cases where no data are returned.
   
   '''
   def __init__(self):
@@ -102,8 +99,6 @@ class CDlookup():
 #################### END CDlookup CLASS ###############################  
 class Booklookup():
   ''' Get Book data from Amazon.
-  TODO: Get track listing
-  TODO: Handle cases where no data are returned.
   
   '''
   def __init__(self):

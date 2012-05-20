@@ -216,8 +216,8 @@ class librarian:
       command = "SELECT * FROM books WHERE copies > 0 order by author;"
       self.status1.value = "All Books"
       # First get the e-books
-      import import_calibre
-      e_books = import_calibre.calibre_import()
+      import calibre
+      e_books = calibre.calibre()
       self.booklist = e_books.insert_data2(self.booklist)
     #
     elif selection == BORROWED:
@@ -324,6 +324,7 @@ class librarian:
     
     '''
     search_string = self.search_string.get_text()
+    if search_string == "": return
     try:
       db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
     except:
@@ -339,6 +340,11 @@ class librarian:
         row['abstract'], row['publisher'], row['city'], str(row['year']),
         row['id'], row['copies'], row['mtype']])
     db.close()
+    # Now search the calibre database.
+    import calibre
+    search = calibre.calibre()
+    search.search_calibre(search_string, self.booklist) # search and add to booklist
+    
     return
 
   def treeview1_row_activated_cb(self, widget, path, col):

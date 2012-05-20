@@ -4,11 +4,6 @@ INSTALL[36m:[m19[36m:[m[1;31mTODO[m:
 README[36m:[m68[36m:[melse use gconf-editor, but this is isn't exactly (l)user friendly.  [1;31mTODO[m, 
 add_edit.py[36m:[m19[36m:[m[1;31mTODO[m:
 add_edit.py[36m:[m217[36m:[m    #self.mybook.add_date=self.add_date.get_text() #[1;31mTODO[m
-amazonlookup.py[36m:[m40[36m:[m  [1;31mTODO[m: Handle cases where no data are returned.
-amazonlookup.py[36m:[m73[36m:[m  [1;31mTODO[m: Get track listing
-amazonlookup.py[36m:[m74[36m:[m  [1;31mTODO[m: Handle cases where no data are returned.
-amazonlookup.py[36m:[m105[36m:[m  [1;31mTODO[m: Get track listing
-amazonlookup.py[36m:[m106[36m:[m  [1;31mTODO[m: Handle cases where no data are returned.
 book.py[36m:[m19[36m:[m# [1;31mTODO[m: No longer sure about storing the number oc copies of a book as
 borrowers.py[36m:[m21[36m:[m[1;31mTODO[m: Do the edit part.
 configurator.py[36m:[m60[36m:[m    [1;31mTODO[m: We shouldn't destroy existing settings however.
@@ -20,11 +15,8 @@ gconf_config.py[36m:[m134[36m:[m      #[1;31mTODO[m: Pop up a config windo
 gconf_config.py[36m:[m135[36m:[m      self.test_config() # [1;31mTODO[m: remove when pop up window done.
 guiscan.py[36m:[m25[36m:[m# [1;31mTODO[m we don't always get a title and author from a single lookup
 guiscan.py[36m:[m27[36m:[m# [1;31mTODO[m Needs a live internet connection!  No good for portable apps. without wireless.
-guiscan.py[36m:[m31[36m:[m# [1;31mTODO[m: Add DVD and CDDB lookup
-guiscan.py[36m:[m189[36m:[m    [1;31mTODO[m. Maybe print the ISBN too.
-guiscan.py[36m:[m259[36m:[m    album = '' # [1;31mTODO[m: Do this maybe as we can get the album date here
-guiscan.py[36m:[m276[36m:[m    [1;31mTODO[m: Get and store the track listing for CDs
-import_calibre.py[36m:[m96[36m:[m    [1;31mTODO[m: Finish me
+guiscan.py[36m:[m188[36m:[m    [1;31mTODO[m. Maybe print the ISBN too.
+guiscan.py[36m:[m258[36m:[m    album = '' # [1;31mTODO[m: Do this maybe as we can get the album date here
 librarian.py[36m:[m154[36m:[m    [1;31mTODO[m: Should print currently displayed window list
 librarian.py[36m:[m155[36m:[m    [1;31mTODO[m: Maybe mark borrowed books somehow?
 librarian.py[36m:[m212[36m:[m    #[1;31mTODO[m: Get and insert ratings

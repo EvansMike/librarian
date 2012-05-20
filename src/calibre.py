@@ -46,7 +46,7 @@ _ = gettext.gettext
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.INFO)
 #logging.disable(logging.INFO)
 
-class calibre_import:
+class calibre:
   ''' Do the import and insert the data into the list.
   Called from librarian.py
 
@@ -91,28 +91,41 @@ class calibre_import:
 
     return self.booklist
   
-  def search_calbre(self, needle[], booklist = []):
+  def search_calibre(self, needle, booklist = []):
     ''' Search the calibre database on the parameters given.
-    TODO: Finish me
+    The DB is searched twice for title and name.  Adding an OR clause to 
+    the search made te query v e r y   s l o w to execute.  Much 
+    quicker to do two searches.
     '''
+    import string
     mybooklist = booklist
-     try:
+    try:
       config = load_config.load_config()
       self.calibre_base = HOME_DIR + "/" + config.calibre_db
-      logging.info(self.calibre_base)
+      #logging.info(self.calibre_base)
     except:
       return
     self.booklist = booklist
     conn = sqlite3.connect(self.calibre_base)
     c = conn.cursor()
-    # Get author title pair.
-    c.execute('select name, title from authors, books, books_authors_link \
+    # Get author title pair for ALL the e-books.
+    query = "select name, title from authors, books, books_authors_link \
     where  books.id=books_authors_link.author \
     AND authors.id=books_authors_link.book \
-    ;')
+    AND title LIKE '%%%s%%';"  % (needle)
+    c.execute(query)
     # Insert data into booklist
     for row in c:
-      self.booklist.append(['', row[0], row[1],
+        mybooklist.append(['', row[0], row[1], \
+        '', '', '', '0', 0, 0, 'e-book'])
+    query = "select name, title from authors, books, books_authors_link \
+    where  books.id=books_authors_link.author \
+    AND authors.id=books_authors_link.book \
+    AND name LIKE '%%%s%%';"  % (needle)
+    c.execute(query)
+    # Insert data into booklist
+    for row in c:
+        mybooklist.append(['', row[0], row[1], \
         '', '', '', '0', 0, 0, 'e-book'])
     return mybooklist
 

@@ -28,7 +28,6 @@ biblio.webquery
 #   Need a db update app.
 #   Change author name parsing.  Also parse to authors table for future normalisation.
 #     Biblio lookup returns a list of authors.
-# TODO: Add DVD and CDDB lookup
 
 import zbar
 import webbrowser
@@ -266,14 +265,11 @@ class scanner:
   def on_button_add_clicked(self, widget):
     '''
     Add a book, DVD or CD to the database.
-    DONE Check if exists and increment copy counter if so.
     Arguably I could have used "ON DUPLICATE KEY", using the isbn as the key,
     here but it may happen that several books will have empty isbn values
     for instance, books printed before ISBN was invented.
     result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
          str(self.abook.isbn))
-    DONE: Also insert DVDs and CDs, I guess, re-use some of the fields.
-    TODO: Get and store the track listing for CDs
     '''
     a_name = str(self.abook.authors)
     a_mtype = str(self.abook.mtype)
