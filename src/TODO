@@ -1,32 +1,30 @@
-add_edit.py:TODO:
-add_edit.py:    #self.mybook.add_date=self.add_date.get_text() #TODO
-Binary file add_edit.pyc matches
-amazonlookup.py:  TODO: Handle cases where no data are returned.
-amazonlookup.py:  TODO: Get track listing
-amazonlookup.py:  TODO: Handle cases where no data are returned.
-amazonlookup.py:  TODO: Get track listing
-amazonlookup.py:  TODO: Handle cases where no data are returned.
-Binary file amazonlookup.pyc matches
-book.py:# TODO: No longer sure about storing the number oc copies of a book as
-borrowers.py:TODO: Do the edit part.
 Doxyfile:# The GENERATE_TODOLIST tag can be used to enable (YES) or
 Doxyfile:GENERATE_TODOLIST      = YES
+INSTALL:TODO:
+README:else use gconf-editor, but this is isn't exactly (l)user friendly.  TODO, 
+add_edit.py:TODO:
+add_edit.py:    #self.mybook.add_date=self.add_date.get_text() #TODO
+amazonlookup.py:  TODO: Handle cases where no data are returned.
+amazonlookup.py:  TODO: Get track listing
+amazonlookup.py:  TODO: Handle cases where no data are returned.
+amazonlookup.py:  TODO: Get track listing
+amazonlookup.py:  TODO: Handle cases where no data are returned.
+book.py:# TODO: No longer sure about storing the number oc copies of a book as
+borrowers.py:TODO: Do the edit part.
+configurator.py:    TODO: We shouldn't destroy existing settings however.
 gconf_config.py:#TODO: Gconf schema, maybe?
 gconf_config.py:    #else: self.test_config() # TODO: Write setup dialog.
 gconf_config.py:    TODO: Obvioslsy users will not be expected to edit these values in their gconf tree.
 gconf_config.py:    TODO: Write a config interface.'''
 gconf_config.py:      #TODO: Pop up a config window here
 gconf_config.py:      self.test_config() # TODO: remove when pop up window done.
-Binary file gconf_config.pyc matches
 guiscan.py:# TODO we don't always get a title and author from a single lookup
 guiscan.py:# TODO Needs a live internet connection!  No good for portable apps. without wireless.
 guiscan.py:# TODO: Add DVD and CDDB lookup
 guiscan.py:    TODO. Maybe print the ISBN too.
-guiscan.py:    TODO: Store images in the DB
-guiscan.py:    TODO: Also insert DVDs and CDs, I guess, re-use some of the fields.
-Binary file guiscan.pyc matches
-INSTALL:TODO:
+guiscan.py:    album = '' # TODO: Do this maybe as we can get the album date here
+guiscan.py:    TODO: Get and store the track listing for CDs
 librarian.py:    TODO: Should print currently displayed window list
 librarian.py:    TODO: Maybe mark borrowed books somehow?
 librarian.py:    #TODO: Get and insert ratings
-README:else use gconf-editor, but this is isn't exactly (l)user friendly.  TODO, 
+librarian.py:    TODO: Include e-books.
