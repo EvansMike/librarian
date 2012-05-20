@@ -123,22 +123,23 @@ class librarian:
     column.set_sort_indicator(True)
     column.set_resizable(True)
     column.set_visible(True)
-    self.treeview.append_column(column)
     column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE) 
     column.set_sort_column_id(1)
+    self.treeview.append_column(column)
 
     column = gtk.TreeViewColumn(_('Title'), gtk.CellRendererText(), text=2)
     column.set_clickable(True)
     column.set_resizable(True)
-    self.treeview.append_column(column)
     column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
     column.set_sort_column_id(2)
-
+    self.treeview.append_column(column)
+    
     column = gtk.TreeViewColumn(_('Rating'), gtk.CellRendererText(), text=3)
     column.set_clickable(True)
     column.set_resizable(True)
-    self.treeview.append_column(column)
+    column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
     column.set_sort_column_id(3)
+    self.treeview.append_column(column)
 
     self.get_book_list(1)
     self.status1.set_text("Version:" + __version__)
@@ -354,7 +355,7 @@ class librarian:
 
 #################### END librarian #####################################
 
-
+''' Run main if called directly.'''
 if __name__ == "__main__":
   splScr = splashScreen()
   while gtk.events_pending():
