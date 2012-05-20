@@ -44,7 +44,7 @@ logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message
 plat = sys.platform
 
 
-__version__ = "20120411"
+__version__ = "20120520"
 
 try:
   import pygtk
@@ -124,12 +124,14 @@ class librarian:
     column.set_resizable(True)
     column.set_visible(True)
     self.treeview.append_column(column)
+    column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE) 
     column.set_sort_column_id(1)
 
     column = gtk.TreeViewColumn(_('Title'), gtk.CellRendererText(), text=2)
     column.set_clickable(True)
     column.set_resizable(True)
     self.treeview.append_column(column)
+    column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
     column.set_sort_column_id(2)
 
     column = gtk.TreeViewColumn(_('Rating'), gtk.CellRendererText(), text=3)
@@ -140,6 +142,7 @@ class librarian:
 
     self.get_book_list(1)
     self.status1.set_text("Version:" + __version__)
+    self.search_string = builder.get_object("entry_search")
 
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
 
@@ -255,6 +258,9 @@ class librarian:
         row['id'], row['copies'], row['mtype']])
     except:
       pass
+    finally:
+      db.close()
+      
 
 
 
@@ -309,6 +315,30 @@ class librarian:
       adder = add_edit()
       adder.display()
     self.get_book_list(1) # Repopulate book list.
+    
+  def on_button_search_clicked(self, widget):
+    ''' Get the search string from enytry_searchm query the DB and display 
+    the result.
+    TODO: Include e-books.
+    
+    '''
+    search_string = self.search_string.get_text()
+    try:
+      db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
+    except:
+      messages.pop_info(_("A database connection failed.  Check the config file."))
+    
+    cur = db.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * FROM books WHERE title LIKE %s OR author LIKE %s", \
+        [('%%%s%%' % search_string), ('%%%s%%' % search_string)])
+    result = cur.fetchall()
+    self.booklist.clear()
+    for row in result: # Fill in the thnigs
+      self.booklist.append([row['isbn'], row['author'], row['title'],
+        row['abstract'], row['publisher'], row['city'], str(row['year']),
+        row['id'], row['copies'], row['mtype']])
+    db.close()
+    return
 
   def treeview1_row_activated_cb(self, widget, path, col):
     self.on_button_query_clicked(None)
