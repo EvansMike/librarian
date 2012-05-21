@@ -101,6 +101,7 @@ class librarian:
     builder.connect_signals(self)
 
     self.treeview  = builder.get_object('treeview1')
+    #self.treeview.set_fixed_height_mode(True)
     self.booklist = builder.get_object("liststore1")
     self.status1 = builder.get_object("status1")
     '''

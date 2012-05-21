@@ -75,6 +75,7 @@ useage will attract no charge, likely to be most domestic users.
 CD lookup uses Amazon to get CD data from the barcode, if it's not in
 Amazon's database this will fail.  Not sure what other databases there are 
 for CD case barcodes.
+Perhaps an application to add CD's as they are played usgin freedb?
 
 Setting up gconf for user password stuff is up to you for the moment.  
 I will add a GUI. NOTE:  Passwords are stored as plain text in gconf.  
