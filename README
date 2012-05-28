@@ -27,8 +27,8 @@ Use database.sql to populate the database, like:
 mysql -p books < database.sql
 You have to create the database first using your favourite method/tool.
 The database name (books in the example above) can be anything as long as the
-config file matches.  If the config file contains a password so take care to make
-it secure from prying eyes.
+config file matches.  If the config file contains a password so take care to 
+make it secure from prying eyes.
 
 See INSTALL for install instructions.
 
@@ -37,10 +37,11 @@ A small warning  Everytime you scan a book a qrcode is generated and place
 in the directory above the current directory You may not want this behaviour.
 It's trivial to delete/move the created codes however.  I should put a
 config option for this behaviour or place the qrcodes somewhere else.
-It seemed like a good idea at the time but I admit to never have used the qrcodes for anything. :)
-PS. Now removed this 'feature'.  If you want it then modify the source code in guiscan.py
-I could write a script to create all of the QRCodes from the DB info if at
-some time I change my mind and decide I need them after all.
+It seemed like a good idea at the time but I admit to never have used the 
+qrcodes for anything. :)
+PS. Now removed this 'feature'.  If you want it then modify the source code in 
+guiscan.py.  I could write a script to create all of the QRCodes from the DB 
+info if at some time I change my mind and decide I need them after all.
 END OBSOLETE
 
 Older books without bar codes can be manually input via the Query/Edit book
@@ -61,7 +62,8 @@ It's just a text field, the id is auto incremented.
 Obviously there should be a nice user friendly GUI for this. :)
 Update: There is now.
 
-Update: The config data are now using gconf.  This is (very) marginally more secure
+Update: The config data are now using gconf.  This is (very) marginally more 
+secure
 but more importantly is not sensitive to config file location, providing
 gconf is installed on target system.  So go ahead, install it.  Edit the source
 if it isn't to revert to file based config.  Needs a GUI to setup stuff though,
@@ -74,8 +76,8 @@ services account.  http://aws.amazon.com to sign up.  As far as I know, low
 useage will attract no charge, likely to be most domestic users.
 CD lookup uses Amazon to get CD data from the barcode, if it's not in
 Amazon's database this will fail.  Not sure what other databases there are 
-for CD case barcodes.
-Perhaps an application to add CD's as they are played usgin freedb?
+for CD case barcodes.  Perhaps an application to add CD's as they are played 
+using freedb?
 
 Setting up gconf for user password stuff is up to you for the moment.  
 I will add a GUI. NOTE:  Passwords are stored as plain text in gconf.  
