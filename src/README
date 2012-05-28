@@ -38,7 +38,7 @@ in the directory above the current directory You may not want this behaviour.
 It's trivial to delete/move the created codes however.  I should put a
 config option for this behaviour or place the qrcodes somewhere else.
 It seemed like a good idea at the time but I admit to never have used the qrcodes for anything. :)
-PS. Now removed this 'feature'.  If you want it then modify the source code in add-edit.py
+PS. Now removed this 'feature'.  If you want it then modify the source code in guiscan.py
 I could write a script to create all of the QRCodes from the DB info if at
 some time I change my mind and decide I need them after all.
 END OBSOLETE
