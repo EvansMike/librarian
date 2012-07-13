@@ -132,7 +132,35 @@ class add_edit:
 
   def populate_borrowers(self):
     ''' Get borrowers and fill in the list'''
-
+    #Populate borrowers combo box etc.
+    self.cur.execute ("SELECT * FROM  borrowers;")
+    result = self.cur.fetchall()
+    for row in result:
+      self.lentlist.append([row[0], row[1], row[2]])
+      #self.lent_select.append_text(row[1])
+      self.borrowers += 1
+    #Get borrows for this book up to the # of copies
+    # NB. Need to track copies available for borrowing
+    self.cur.execute("SELECT * FROM borrows where book = %s AND i_date IS NULL \
+        AND o_date IS NOT NULL LIMIT %s;",
+          [self.orig_book.id,self.orig_book.copies])
+    result = self.cur.fetchall()
+    bid = 0
+    for row in result:
+      bid = row[4]
+      book_id = row[3]
+      self.o_date = row[1]
+    if bid != 0:
+      #logging.info(bid)
+      if self.orig_book.id == book_id:
+        self.orig_book.copies -=1
+        self.copies.set_text(str(self.orig_book.copies))
+      # Set active to current borrower.
+      self.lent_select.set_active(bid - 1)
+      self.lent_date.set_text(str(self.o_date))
+    else:
+      self.lentlist.prepend([0, "", ""])
+      self.lent_select.set_active(0)
     pass
 
   def populate(self,book_id):
@@ -171,36 +199,8 @@ class add_edit:
         pass
 
       self.mybook = copy.copy(self.orig_book)
+    populate_borrowers()
 
-    #Populate borrowers combo box etc.
-    self.cur.execute ("SELECT * FROM  borrowers;")
-    result = self.cur.fetchall()
-    for row in result:
-      self.lentlist.append([row[0], row[1], row[2]])
-      #self.lent_select.append_text(row[1])
-      self.borrowers += 1
-    #Get borrows for this book up to the # of copies
-    # NB. Need to track copies available for borrowing
-    self.cur.execute("SELECT * FROM borrows where book = %s AND i_date IS NULL \
-        AND o_date IS NOT NULL LIMIT %s;",
-          [self.orig_book.id,self.orig_book.copies])
-    result = self.cur.fetchall()
-    bid = 0
-    for row in result:
-      bid = row[4]
-      book_id = row[3]
-      self.o_date = row[1]
-    if bid != 0:
-      #logging.info(bid)
-      if self.orig_book.id == book_id:
-        self.orig_book.copies -=1
-        self.copies.set_text(str(self.orig_book.copies))
-      # Set active to current borrower.
-      self.lent_select.set_active(bid - 1)
-      self.lent_date.set_text(str(self.o_date))
-    else:
-      self.lentlist.prepend([0, "", ""])
-      self.lent_select.set_active(0)
 
 
 
@@ -363,7 +363,8 @@ class add_edit:
     foo = self.lent_select.get_active()
     bid = self.lentlist[foo][0]
     borrowers.borrowers(bid)
-    # Update with new data
+    # Update with new data # Never gets run!!
+    logger.info("Want to update here.")
     self.populate(self.orig_book.id)
 
 ############## END add_edit class ######################################
