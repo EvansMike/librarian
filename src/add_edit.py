@@ -199,7 +199,7 @@ class add_edit:
         pass
 
       self.mybook = copy.copy(self.orig_book)
-    populate_borrowers()
+    self.populate_borrowers()
 
 
 
