@@ -135,6 +135,7 @@ class add_edit:
     #Populate borrowers combo box etc.
     self.cur.execute ("SELECT * FROM  borrowers;")
     result = self.cur.fetchall()
+    self.lentlist.clear()
     for row in result:
       self.lentlist.append([row[0], row[1], row[2]])
       #self.lent_select.append_text(row[1])
@@ -281,7 +282,7 @@ class add_edit:
     if not self.lentlist.get_iter_first(): return # If we can't iterate then the list is empty
     foo = self.lent_select.get_active()
     bid = self.lentlist[foo][0]
-    logging.info(bid)
+    #logging.info(bid)
     if bid > 0:
       self.add_button.set_label(_("Edit"))
     else:
@@ -358,14 +359,15 @@ class add_edit:
 
     #foo = self.lent_select.get_entry()
     #logger.info(foo)
-    import borrowers
+    import borrowers3
 
     foo = self.lent_select.get_active()
     bid = self.lentlist[foo][0]
-    borrowers.borrowers(bid)
+    adder = borrowers3.borrowers(bid)
+    adder.run()
     # Update with new data # Never gets run!!
     logger.info("Want to update here.")
-    self.populate(self.orig_book.id)
+    self.populate_borrowers()
 
 ############## END add_edit class ######################################
 # For testing or stand alone
