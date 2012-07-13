@@ -81,7 +81,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkVBox" id="box2">
+          <object class="GtkHBox" id="box2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
@@ -118,7 +118,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkVBox" id="box4">
+          <object class="GtkHBox" id="box4">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
@@ -155,7 +155,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkVBox" id="box5">
+          <object class="GtkHBox" id="box5">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>

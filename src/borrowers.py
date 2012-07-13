@@ -19,6 +19,7 @@
 '''
 Add and edit borrowers.
 TODO: Do the edit part.
+TODO: Need to re-write this as a dialog
 '''
 try:
   import gtk
@@ -50,8 +51,9 @@ db_host = config.db_host
 class borrowers():
   def __init__(self,bid = 0):
     builder = gtk.Builder()
-    builder.add_from_file("ui/borrowers.glade")
-    self.window = builder.get_object("window1")
+    builder.add_from_file("ui/borrower_dialog.glade")
+    #self.window = builder.get_object("window1")
+    self.window = builder.get_object("dialog1")
     self.name = builder.get_object("entry1")
     self.contact = builder.get_object("entry2")
     self.notes = builder.get_object("entry3")
@@ -59,7 +61,6 @@ class borrowers():
     self.button_cancel = builder.get_object("button_cancel")
     builder.connect_signals(self)
     self.bid = bid
-
 
     try:
         self.db = MySQLdb.connect(host = db_host, db=db_base,  passwd = db_pass);
@@ -74,10 +75,13 @@ class borrowers():
       self.cur = self.db.cursor()
     self.populate()
     #self.on_button_print_clicked(None)
-    gtk.main()
-    self.window.show
+    #gtk.main()
+    #self.window.show()
 
-
+  def run(self):
+    self.window.run()
+    self.window.destroy()
+    
   def populate(self):
     '''If we are passed a bid > 0 populate the dialog.
 
@@ -181,8 +185,10 @@ class borrowers():
       del db, cur
       self.window.hide()
 
-
+ 
+  
 # we start here.
 if __name__ == "__main__":
   app = borrowers()
+  app.run()
   #app.on_button_print_clicked(None)

@@ -359,12 +359,13 @@ class add_edit:
 
     #foo = self.lent_select.get_entry()
     #logger.info(foo)
-    import borrowers3
+    import borrowers
 
     foo = self.lent_select.get_active()
     bid = self.lentlist[foo][0]
-    adder = borrowers3.borrowers(bid)
+    adder = borrowers.borrowers(bid)
     adder.run()
+    #adder.destroy()
     # Update with new data # Never gets run!!
     logger.info("Want to update here.")
     self.populate_borrowers()
