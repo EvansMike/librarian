@@ -207,13 +207,14 @@ class librarian:
     elif os.name == "posix": # Linux
       os.system("/usr/bin/xdg-open " + filename)
 
-  def order_authors(self, result):
+  def fill_booklist(self, result):
     ''' 
     Authors names are stored in regular text, we want so get them by
     family,first name order.  This iterates through the result and
     and appends to the liststore with the author names re-ordered.
     
     '''
+    self.booklist.clear()
     for row in result:
       # Deal with rearranging author names to last, first
       if row['author'] != None:
@@ -243,7 +244,7 @@ class librarian:
     '''
     db_query = sql()
     result = {}
-    self.booklist.clear()
+    #self.booklist.clear()
     if selection == ALL:
       result = db_query.get_all_books()
       import calibre
@@ -253,7 +254,7 @@ class librarian:
     elif selection == BORROWED:
       result = db_query.get_borrowed_books()
       
-    self.order_authors(result)'
+    self.fill_booklist(result)
 
 
 
@@ -314,28 +315,15 @@ class librarian:
     the result.
     
     '''
+    db_query = sql()
     search_string = self.search_string.get_text()
     if search_string == "": return
-    try:
-      db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
-    except:
-      messages.pop_info(_("A database connection failed.  Check the config file."))
-    
-    cur = db.cursor(MySQLdb.cursors.DictCursor)
-    cur.execute("SELECT * FROM books WHERE title LIKE %s OR author LIKE %s", \
-        [('%%%s%%' % search_string), ('%%%s%%' % search_string)])
-    result = cur.fetchall()
-    self.booklist.clear()
-    for row in result: # Fill in the thnigs
-      self.booklist.append([row['isbn'], row['author'], row['title'],
-        row['abstract'], row['publisher'], row['city'], str(row['year']),
-        row['id'], row['copies'], row['mtype']])
-    db.close()
+    result = db_query.search_books(search_string)
+    self.fill_booklist(result)
     # Now search the calibre database.
     import calibre
     search = calibre.calibre()
     search.search_calibre(search_string, self.booklist) # search and add to booklist
-    
     return
 
   def treeview1_row_activated_cb(self, widget, path, col):
