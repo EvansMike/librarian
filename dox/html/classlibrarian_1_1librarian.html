@@ -28,7 +28,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -83,6 +82,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#a7bb690bc8c84830399479b6f47eef8b0">on_button_loaned_clicked</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#ad44a8c5d7a8ccb8d2c75e13eccb276b1">on_button_scan_clicked</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#af71bf023c78a90863f2505562ad95d95">on_button_query_clicked</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlibrarian_1_1librarian.html#ad83fd954fc9f028244d1ea3dbb96e0f9">on_button_search_clicked</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af63e0d742fc6a1d82c9097c4c3c7f5c2"></a><!-- doxytag: member="librarian::librarian::treeview1_row_activated_cb" ref="af63e0d742fc6a1d82c9097c4c3c7f5c2" args="" -->
 def&#160;</td><td class="memItemRight" valign="bottom"><b>treeview1_row_activated_cb</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa904a6cfbe8a124965f9e2c148f64227"></a><!-- doxytag: member="librarian::librarian::gtk_main_quit" ref="aa904a6cfbe8a124965f9e2c148f64227" args="" -->
@@ -95,6 +95,8 @@ Public Attributes</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>booklist</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61d3be0b3ed7deafe20920ba3251ad60"></a><!-- doxytag: member="librarian::librarian::status1" ref="a61d3be0b3ed7deafe20920ba3251ad60" args="" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>status1</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51db0360df10027019aac65883b41724"></a><!-- doxytag: member="librarian::librarian::search_string" ref="a51db0360df10027019aac65883b41724" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>search_string</b></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><div class="fragment"><pre class="fragment">
@@ -217,8 +219,7 @@ selection -- BORRORWED or ALL Which set to get.
 </div>
 <div class="memdoc">
 <div class="fragment"><pre class="fragment">Print the entire book list to pdf then opes the default pdf viewer.
-TODO: Should print currently displayed window list
-TODO: Maybe mark borrowed books somehow?
+TODO: Auto width columns
 This will likely be system specific
 </pre></div> 
 </div>
@@ -281,6 +282,36 @@ This will likely be system specific
 </pre></div> 
 </div>
 </div>
+<a class="anchor" id="ad83fd954fc9f028244d1ea3dbb96e0f9"></a><!-- doxytag: member="librarian::librarian::on_button_search_clicked" ref="ad83fd954fc9f028244d1ea3dbb96e0f9" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def librarian::librarian::on_button_search_clicked </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>widget</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<div class="fragment"><pre class="fragment">Get the search string from enytry_searchm query the DB and display 
+the result.
+
+</pre></div> 
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>librarian.py</li>
 </ul>
@@ -290,7 +321,7 @@ This will likely be system specific
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -299,7 +330,7 @@ This will likely be system specific
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Apr 11 2012 for Simple Librarian by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jul 14 2012 for Simple Librarian by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

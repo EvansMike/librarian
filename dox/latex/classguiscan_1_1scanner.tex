@@ -21,6 +21,8 @@ def \hyperlink{classguiscan_1_1scanner_a99a34b9d6414b7e32662581b02a703a2}{make\_
 \item 
 def \hyperlink{classguiscan_1_1scanner_aed3d81af22db6558f5039b08209667cb}{on\_\-button\_\-remove\_\-clicked}
 \item 
+def \hyperlink{classguiscan_1_1scanner_add6ce80a7c6564e35bd607212c477ec2}{get\_\-cd\_\-tracks}
+\item 
 def \hyperlink{classguiscan_1_1scanner_af48fc927b531df3991648cbca7ba715a}{on\_\-button\_\-add\_\-clicked}
 \item 
 \hypertarget{classguiscan_1_1scanner_ac7fb4a3b65f7f4cb165dd5700d31c128}{
@@ -71,14 +73,6 @@ def {\bfseries gtk\_\-main\_\-quit}}
 \label{classguiscan_1_1scanner_a9c21bae12617cad3ca1fde0f3c75fad0}
 
 \end{DoxyCompactItemize}
-\subsection*{Static Public Attributes}
-\begin{DoxyCompactItemize}
-\item 
-\hypertarget{classguiscan_1_1scanner_a2f502cfc2dc0eba0ad36ba2473be3a40}{
-tuple {\bfseries buff} = self.text\_\-view.get\_\-buffer()}
-\label{classguiscan_1_1scanner_a2f502cfc2dc0eba0ad36ba2473be3a40}
-
-\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -92,7 +86,20 @@ and inserts that don't rely on librarian.py.
  
 
 \subsection{Member Function Documentation}
-\hypertarget{classguiscan_1_1scanner_a99a34b9d6414b7e32662581b02a703a2}{
+\hypertarget{classguiscan_1_1scanner_add6ce80a7c6564e35bd607212c477ec2}{
+\index{guiscan::scanner@{guiscan::scanner}!get\_\-cd\_\-tracks@{get\_\-cd\_\-tracks}}
+\index{get\_\-cd\_\-tracks@{get\_\-cd\_\-tracks}!guiscan::scanner@{guiscan::scanner}}
+\subsubsection[{get\_\-cd\_\-tracks}]{\setlength{\rightskip}{0pt plus 5cm}def guiscan::scanner::get\_\-cd\_\-tracks (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}
+\label{classguiscan_1_1scanner_add6ce80a7c6564e35bd607212c477ec2}
+\begin{DoxyVerb}Get the cd details and store then in the DB.  We can use book class
+for rest of details.
+
+\end{DoxyVerb}
+ \hypertarget{classguiscan_1_1scanner_a99a34b9d6414b7e32662581b02a703a2}{
 \index{guiscan::scanner@{guiscan::scanner}!make\_\-qr\_\-code@{make\_\-qr\_\-code}}
 \index{make\_\-qr\_\-code@{make\_\-qr\_\-code}!guiscan::scanner@{guiscan::scanner}}
 \subsubsection[{make\_\-qr\_\-code}]{\setlength{\rightskip}{0pt plus 5cm}def guiscan::scanner::make\_\-qr\_\-code (
@@ -109,7 +116,7 @@ to split up you and your parter's books.  You know why that might be
 needed.
 TODO. Maybe print the ISBN too.
   Change output dir
-TODO: Store images in the DB
+DONE: Store images in the DB
 \end{DoxyVerb}
  \hypertarget{classguiscan_1_1scanner_af48fc927b531df3991648cbca7ba715a}{
 \index{guiscan::scanner@{guiscan::scanner}!on\_\-button\_\-add\_\-clicked@{on\_\-button\_\-add\_\-clicked}}
@@ -122,8 +129,7 @@ TODO: Store images in the DB
 )}}
 \label{classguiscan_1_1scanner_af48fc927b531df3991648cbca7ba715a}
 \begin{DoxyVerb}
-Add a book to the database.
-DONE Check if exists and increment copy counter if so.
+Add a book, DVD or CD to the database.
 Arguably I could have used "ON DUPLICATE KEY", using the isbn as the key,
 here but it may happen that several books will have empty isbn values
 for instance, books printed before ISBN was invented.

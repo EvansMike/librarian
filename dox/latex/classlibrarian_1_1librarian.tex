@@ -22,6 +22,8 @@ def \hyperlink{classlibrarian_1_1librarian_ad44a8c5d7a8ccb8d2c75e13eccb276b1}{on
 \item 
 def \hyperlink{classlibrarian_1_1librarian_af71bf023c78a90863f2505562ad95d95}{on\_\-button\_\-query\_\-clicked}
 \item 
+def \hyperlink{classlibrarian_1_1librarian_ad83fd954fc9f028244d1ea3dbb96e0f9}{on\_\-button\_\-search\_\-clicked}
+\item 
 \hypertarget{classlibrarian_1_1librarian_af63e0d742fc6a1d82c9097c4c3c7f5c2}{
 def {\bfseries treeview1\_\-row\_\-activated\_\-cb}}
 \label{classlibrarian_1_1librarian_af63e0d742fc6a1d82c9097c4c3c7f5c2}
@@ -48,6 +50,11 @@ def {\bfseries gtk\_\-main\_\-quit}}
 \hypertarget{classlibrarian_1_1librarian_a61d3be0b3ed7deafe20920ba3251ad60}{
 {\bfseries status1}}
 \label{classlibrarian_1_1librarian_a61d3be0b3ed7deafe20920ba3251ad60}
+
+\item 
+\hypertarget{classlibrarian_1_1librarian_a51db0360df10027019aac65883b41724}{
+{\bfseries search\_\-string}}
+\label{classlibrarian_1_1librarian_a51db0360df10027019aac65883b41724}
 
 \end{DoxyCompactItemize}
 
@@ -114,8 +121,7 @@ selection -- BORRORWED or ALL Which set to get.
 )}}
 \label{classlibrarian_1_1librarian_a8d9587a840f943752194b2c8b61f18a3}
 \begin{DoxyVerb}Print the entire book list to pdf then opes the default pdf viewer.
-TODO: Should print currently displayed window list
-TODO: Maybe mark borrowed books somehow?
+TODO: Auto width columns
 This will likely be system specific
 \end{DoxyVerb}
  \hypertarget{classlibrarian_1_1librarian_af71bf023c78a90863f2505562ad95d95}{
@@ -142,6 +148,20 @@ This will likely be system specific
 )}}
 \label{classlibrarian_1_1librarian_ad44a8c5d7a8ccb8d2c75e13eccb276b1}
 \begin{DoxyVerb}Open the scanning dialog.
+
+\end{DoxyVerb}
+ \hypertarget{classlibrarian_1_1librarian_ad83fd954fc9f028244d1ea3dbb96e0f9}{
+\index{librarian::librarian@{librarian::librarian}!on\_\-button\_\-search\_\-clicked@{on\_\-button\_\-search\_\-clicked}}
+\index{on\_\-button\_\-search\_\-clicked@{on\_\-button\_\-search\_\-clicked}!librarian::librarian@{librarian::librarian}}
+\subsubsection[{on\_\-button\_\-search\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def librarian::librarian::on\_\-button\_\-search\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classlibrarian_1_1librarian_ad83fd954fc9f028244d1ea3dbb96e0f9}
+\begin{DoxyVerb}Get the search string from enytry_searchm query the DB and display 
+the result.
 
 \end{DoxyVerb}
  

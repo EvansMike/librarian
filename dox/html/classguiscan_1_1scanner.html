@@ -28,7 +28,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -65,8 +64,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a>  </div>
+<a href="#pub-attribs">Public Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">guiscan::scanner Class Reference</div>  </div>
 </div>
@@ -84,6 +82,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classguiscan_1_1scanner.html#a3985b7e8a7c583f1855ffefb09f614dd">on_button_scan_clicked</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classguiscan_1_1scanner.html#a99a34b9d6414b7e32662581b02a703a2">make_qr_code</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classguiscan_1_1scanner.html#aed3d81af22db6558f5039b08209667cb">on_button_remove_clicked</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classguiscan_1_1scanner.html#add6ce80a7c6564e35bd607212c477ec2">get_cd_tracks</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classguiscan_1_1scanner.html#af48fc927b531df3991648cbca7ba715a">on_button_add_clicked</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7fb4a3b65f7f4cb165dd5700d31c128"></a><!-- doxytag: member="guiscan::scanner::append_text" ref="ac7fb4a3b65f7f4cb165dd5700d31c128" args="" -->
 def&#160;</td><td class="memItemRight" valign="bottom"><b>append_text</b></td></tr>
@@ -105,10 +104,6 @@ Public Attributes</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>cur</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9c21bae12617cad3ca1fde0f3c75fad0"></a><!-- doxytag: member="guiscan::scanner::db" ref="a9c21bae12617cad3ca1fde0f3c75fad0" args="" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>db</b></td></tr>
-<tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f502cfc2dc0eba0ad36ba2473be3a40"></a><!-- doxytag: member="guiscan::scanner::buff" ref="a2f502cfc2dc0eba0ad36ba2473be3a40" args="" -->
-tuple&#160;</td><td class="memItemRight" valign="bottom"><b>buff</b> = self.text_view.get_buffer()</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>BEGIN scanner class #################################. </p>
@@ -117,6 +112,26 @@ or CSV.  This will work stand alone hence the separate database query
 and inserts that don't rely on librarian.py.
 
 </pre></div> </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="add6ce80a7c6564e35bd607212c477ec2"></a><!-- doxytag: member="guiscan::scanner::get_cd_tracks" ref="add6ce80a7c6564e35bd607212c477ec2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def guiscan::scanner::get_cd_tracks </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<div class="fragment"><pre class="fragment">Get the cd details and store then in the DB.  We can use book class
+for rest of details.
+
+</pre></div> 
+</div>
+</div>
 <a class="anchor" id="a99a34b9d6414b7e32662581b02a703a2"></a><!-- doxytag: member="guiscan::scanner::make_qr_code" ref="a99a34b9d6414b7e32662581b02a703a2" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -139,7 +154,7 @@ to split up you and your parter's books.  You know why that might be
 needed.
 TODO. Maybe print the ISBN too.
   Change output dir
-TODO: Store images in the DB
+DONE: Store images in the DB
 </pre></div> 
 </div>
 </div>
@@ -168,8 +183,7 @@ TODO: Store images in the DB
 </div>
 <div class="memdoc">
 <div class="fragment"><pre class="fragment">
-Add a book to the database.
-DONE Check if exists and increment copy counter if so.
+Add a book, DVD or CD to the database.
 Arguably I could have used "ON DUPLICATE KEY", using the isbn as the key,
 here but it may happen that several books will have empty isbn values
 for instance, books printed before ISBN was invented.
@@ -245,7 +259,7 @@ result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = 
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -254,7 +268,7 @@ result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = 
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Apr 11 2012 for Simple Librarian by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jul 14 2012 for Simple Librarian by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
