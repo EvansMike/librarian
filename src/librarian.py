@@ -19,6 +19,7 @@ A (in)complete home book collection manager.
 Could do with extending to cover e-books, CDs and DVDs perhaps?
 '''
 
+import copy
 import MySQLdb
 import MySQLdb.cursors
 import sys,os
@@ -31,6 +32,13 @@ import gettext
 import popen2
 import lib_print
 import messages
+#from db_queries import calibre
+from db_queries import mysql as sql # Make this choosable for mysql and sqlite
+# or 
+#from db_queries import sqlite as sql
+
+
+
 locale.setlocale(locale.LC_ALL, '')
 APP = 'librarian'
 gettext.textdomain(APP)
@@ -148,7 +156,6 @@ class librarian:
 
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
 
-    #gtk.main()
 
   def on_button_print_clicked(self, widget):
     '''Print the entire book list to pdf then opes the default pdf viewer.
@@ -200,7 +207,32 @@ class librarian:
     elif os.name == "posix": # Linux
       os.system("/usr/bin/xdg-open " + filename)
 
-
+  def order_authors(self, result):
+    ''' 
+    Authors names are stored in regular text, we want so get them by
+    family,first name order.  This iterates through the result and
+    and appends to the liststore with the author names re-ordered.
+    
+    '''
+    for row in result:
+      # Deal with rearranging author names to last, first
+      if row['author'] != None:
+        name=row['author']
+        name = name.split()
+      else: name = ''
+      if len(name) > 0 :
+        author = []
+        author.append(name[-1]) # Last part
+        author.append(", ") # Decoration
+        author.append(' '.join(name[0:-1])) # All except last part adding a space between them
+        author = ''.join(author) # Join all elements into a string
+      else:
+        author = "N/A"
+      #logging.info(author)
+      self.booklist.append([row['isbn'], author, row['title'],
+      row['abstract'], row['publisher'], row['city'], str(row['year']),
+      row['id'], row['copies'], row['mtype']])
+      
 
   def get_book_list(self, selection):
     ''' Get the book lists from the databases.
@@ -209,59 +241,19 @@ class librarian:
     selection -- BORRORWED or ALL Which set to get.
 
     '''
-    #TODO: Get and insert ratings
-    #print selection
+    db_query = sql()
+    result = {}
     self.booklist.clear()
     if selection == ALL:
-      command = "SELECT * FROM books WHERE copies > 0 order by author;"
-      self.status1.value = "All Books"
-      # First get the e-books
+      result = db_query.get_all_books()
       import calibre
       e_books = calibre.calibre()
       self.booklist = e_books.insert_data2(self.booklist)
     #
     elif selection == BORROWED:
-      command = "select * from books, borrows where books.id = borrows.book \
-                      and i_date is null;"
-    else:
-      return
-    try:
-      db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
-    except:
-      print "No database connection.  Check some stuff"
-      messages.pop_info(_("A database connection failed.  Check the config file."))
-      #db = False
-      #quit()
-
-    try:
-      cur = db.cursor(MySQLdb.cursors.DictCursor)
-      cur.execute(command)
-      result = cur.fetchall()
-      #print result
-      for row in result:
-        # Deal with rearranging author names to last, first
-        if row['author'] != None:
-          name=row['author']
-          #.strip('[').strip(']')
-          name = name.split()
-        else: name = ''
-        if len(name) > 0 :
-          author = []
-          author.append(name[-1]) # Last part
-          author.append(", ") # Decoration
-          author.append(' '.join(name[0:-1])) # All except last part adding a space between them
-          author = ''.join(author) # Join all elements into a string
-        else:
-          author = "N/A"
-        #logging.info(author)
-        self.booklist.append([row['isbn'], author, row['title'],
-        row['abstract'], row['publisher'], row['city'], str(row['year']),
-        row['id'], row['copies'], row['mtype']])
-    except:
-      pass
-    finally:
-      db.close()
+      result = db_query.get_borrowed_books()
       
+    self.order_authors(result)'
 
 
 
