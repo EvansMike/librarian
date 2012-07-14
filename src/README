@@ -23,7 +23,7 @@ The scan triggers a lookup on the database and the book details are downloaded
 then commited to the local database.
 
 It uses MySQL.  The database config file is created if none exists.
-Use database.sql to populate the database, like:
+Use database.sql, after creating the database,  to populate the database, like:
 mysql -p books < database.sql
 You have to create the database first using your favourite method/tool.
 The database name (books in the example above) can be anything as long as the
@@ -83,3 +83,12 @@ Setting up gconf for user password stuff is up to you for the moment.
 I will add a GUI. NOTE:  Passwords are stored as plain text in gconf.  
 This is not good and some encryption method should (will) be used when 
 the config GUI is written.
+
+TODO:
+	DONE: I need to create a database setup script.
+  TODO: Maybe use sqlite3 for storage.  This would greatly ease the setup
+  for windoze users, that plus reverting to the file based config rather 
+  than gconf.  Unlikely Windoze users will want to install MySQL and GConf,
+  or even know how to.  MySQL is good for centralised storage but most
+  users wouldn't want that anyway.  Until I com up with a smartphone
+  version. :)
