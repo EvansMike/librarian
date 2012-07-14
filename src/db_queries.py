@@ -17,6 +17,8 @@
 Move all the db queries here.  There will be equivalent queries for both
 MySQL and SQLite so the user can choose either storage type from the setup
 dialog. (NB Write setup dialog.)
+See here for convertion script
+http://www.jbip.net/content/how-convert-mysql-sqlite
 '''
 
 
@@ -57,10 +59,25 @@ class sqlite:
   Database queries for sqlite.
 
   '''  
-  def __init__(self):
-    pass
+  import sqlite3
   
-  pass
+  def __init__(self):
+    self.con = self.sqlite3.connect('DatabaseName.sql')
+    self.con.row_factory = self.sqlite3.Row
+    self.cur = self.con.cursor()
+    pass
+    
+    
+  def get_all_books(self):
+    ''' 
+    An example of how to call the code from mysql from here.  This is
+    to avoid duplication code where the query code is identical.  For 
+    trivial selects this will the case, in other cases the sqlite3 code 
+    will differ slightly.
+    
+    '''
+    return mysql().get_all_books()
+  
   
 
 class mysql:
