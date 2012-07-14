@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-11 16:14+0100\n"
+"POT-Creation-Date: 2012-07-14 11:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,56 +17,60 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: add_edit.py:89
+#: add_edit.py:90
 msgid "No database connection.  Check "
 msgstr ""
 
-#: add_edit.py:123
+#: add_edit.py:124
 msgid "No book found"
 msgstr ""
 
-#: add_edit.py:126
+#: add_edit.py:127
 msgid "No Book found for this ISBN!"
 msgstr ""
 
-#: add_edit.py:250
+#: add_edit.py:252
 msgid " Book has been inserted."
 msgstr ""
 
-#: add_edit.py:264
+#: add_edit.py:266
 msgid " Book has been updated."
 msgstr ""
 
-#: add_edit.py:274
+#: add_edit.py:276
 msgid " Book has been removed."
 msgstr ""
 
-#: add_edit.py:286
+#: add_edit.py:288
 msgid "Edit"
 msgstr ""
 
-#: add_edit.py:288 ui/edit_book.glade.h:2
+#: add_edit.py:290 ui/edit_book.glade.h:2
 msgid "Add"
 msgstr ""
 
-#: add_edit.py:329
+#: add_edit.py:331
 msgid "Book has been marked as borrowed."
 msgstr ""
 
-#: add_edit.py:348
+#: add_edit.py:350
 msgid "Book has been marked as returned."
 msgstr ""
 
-#: add_edit.py:349
+#: add_edit.py:351
 msgid "Book has been NOT marked as returned."
 msgstr ""
 
-#: borrowers.py:68 guiscan.py:95
+#: borrowers.py:69 guiscan.py:95
 msgid "No database connection.  Check config file"
 msgstr ""
 
-#: borrowers.py:114 ui/edit_book.glade.h:10 ui/gui.glade.h:3
+#: borrowers.py:118 ui/edit_book.glade.h:10 ui/gui.glade.h:3
 msgid "CLOSE"
+msgstr ""
+
+#: calibre.py:145
+msgid "You don't appear to have Calibre installed, or it's not in your PATH."
 msgstr ""
 
 #: guiscan.py:108
@@ -86,45 +90,45 @@ msgid "Searching for DVDs\n"
 msgstr ""
 
 #: guiscan.py:147
-msgid "Found DVD\n"
+msgid "Found DVD:\n"
 msgstr ""
 
-#: guiscan.py:151
+#: guiscan.py:157
 msgid ""
 "No DVDs.\n"
 " Searching for CDs\n"
 msgstr ""
 
-#: guiscan.py:160
+#: guiscan.py:161
+msgid "CD Found:\n"
+msgstr ""
+
+#: guiscan.py:176
 msgid ""
 "\n"
 "\n"
 "You already have "
 msgstr ""
 
-#: guiscan.py:221
+#: guiscan.py:237
 msgid ""
 "\n"
 "\n"
 "You removed this book."
 msgstr ""
 
-#: guiscan.py:224
+#: guiscan.py:240
 msgid ""
 "\n"
 "\n"
 "Could not remove book!"
 msgstr ""
 
-#: guiscan.py:256
+#: guiscan.py:304
 msgid ""
 "\n"
 "\n"
-"You added this book."
-msgstr ""
-
-#: import_calibre.py:107
-msgid "You don't appear to have Calibre installed, or it's not in your PATH."
+"You added this "
 msgstr ""
 
 #: librarian.py:57
@@ -135,27 +139,27 @@ msgstr ""
 msgid "Version: "
 msgstr ""
 
-#: librarian.py:114
+#: librarian.py:115
 msgid "Medium"
 msgstr ""
 
-#: librarian.py:121 ui/edit_book.glade.h:5
+#: librarian.py:122 ui/edit_book.glade.h:5
 msgid "Author"
 msgstr ""
 
-#: librarian.py:129 ui/edit_book.glade.h:28
+#: librarian.py:131 ui/edit_book.glade.h:28
 msgid "Title"
 msgstr ""
 
-#: librarian.py:135
+#: librarian.py:138
 msgid "Rating"
 msgstr ""
 
-#: librarian.py:228
+#: librarian.py:232 librarian.py:330
 msgid "A database connection failed.  Check the config file."
 msgstr ""
 
-#: librarian.py:301
+#: librarian.py:308
 msgid "Cannot query e-books.  Please use calibre."
 msgstr ""
 
@@ -174,44 +178,64 @@ msgstr ""
 msgid "No config file found. Please edit "
 msgstr ""
 
-#: ui/borrowers.glade.h:1
-msgid "Borrowers."
-msgstr ""
-
-#: ui/borrowers.glade.h:2
+#: ui/borrower_dialog.glade.h:1 ui/borrowers.glade.h:3
 msgid "CANCEL"
 msgstr ""
 
-#: ui/borrowers.glade.h:3
-msgid "Contact:"
+#: ui/borrower_dialog.glade.h:2
+msgid "Contact: "
 msgstr ""
 
-#: ui/borrowers.glade.h:4
-msgid "How to contact the borrower."
+#: ui/borrower_dialog.glade.h:3
+msgid "Name: "
 msgstr ""
 
-#: ui/borrowers.glade.h:5
-msgid "Name of a new borrower."
+#: ui/borrower_dialog.glade.h:4
+msgid "Notes: "
 msgstr ""
 
-#: ui/borrowers.glade.h:6
-msgid "Name:"
-msgstr ""
-
-#: ui/borrowers.glade.h:7
-msgid "Notes:"
-msgstr ""
-
-#: ui/borrowers.glade.h:8
-msgid "Other notes."
-msgstr ""
-
-#: ui/borrowers.glade.h:9
+#: ui/borrower_dialog.glade.h:5 ui/borrowers.glade.h:10
 msgid "PRINT BORROWERS"
 msgstr ""
 
-#: ui/borrowers.glade.h:10
+#: ui/borrower_dialog.glade.h:6 ui/borrowers.glade.h:11
 msgid "SAVE"
+msgstr ""
+
+#: ui/borrower_dialog.glade.h:7
+msgid "label"
+msgstr ""
+
+#: ui/borrowers.glade.h:1
+msgid "Add User"
+msgstr ""
+
+#: ui/borrowers.glade.h:2
+msgid "Borrowers."
+msgstr ""
+
+#: ui/borrowers.glade.h:4
+msgid "Contact:"
+msgstr ""
+
+#: ui/borrowers.glade.h:5
+msgid "How to contact the borrower."
+msgstr ""
+
+#: ui/borrowers.glade.h:6
+msgid "Name of a new borrower."
+msgstr ""
+
+#: ui/borrowers.glade.h:7
+msgid "Name:"
+msgstr ""
+
+#: ui/borrowers.glade.h:8
+msgid "Notes:"
+msgstr ""
+
+#: ui/borrowers.glade.h:9
+msgid "Other notes."
 msgstr ""
 
 #: ui/edit_book.glade.h:1
@@ -351,17 +375,25 @@ msgid "Q_UERY"
 msgstr ""
 
 #: ui/librarian.glade.h:4
-msgid "_ALL BOOKS"
+msgid "THE LIBRARIAN"
 msgstr ""
 
 #: ui/librarian.glade.h:5
-msgid "_LOANED BOOKS"
+msgid "_ALL BOOKS"
 msgstr ""
 
 #: ui/librarian.glade.h:6
-msgid "_QUIT"
+msgid "_LOANED BOOKS"
 msgstr ""
 
 #: ui/librarian.glade.h:7
+msgid "_QUIT"
+msgstr ""
+
+#: ui/librarian.glade.h:8
 msgid "_SCAN NEW"
+msgstr ""
+
+#: ui/librarian.glade.h:9
+msgid "_SEARCH"
 msgstr ""

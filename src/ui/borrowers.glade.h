@@ -1,3 +1,4 @@
+char *s = N_("Add User");
 char *s = N_("Borrowers.");
 char *s = N_("CANCEL");
 char *s = N_("Contact:");

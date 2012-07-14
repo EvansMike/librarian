@@ -19,6 +19,7 @@ A GUI to edit a single book.
 TODO:
   Fix logic for borrowers list and checkbox.  If borrowed, ONLY the borrower
   should appear in the list and the checkbox should ALWAYS reflect correct status.
+  TODO: Make the GUI into a proper dialog.
 '''
 
 import MySQLdb
