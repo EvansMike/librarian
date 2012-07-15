@@ -21,13 +21,14 @@ See here for convertion script
 First do:
 mysqldump -p --compatible=ansi  books > books
 http://www.jbip.net/content/how-convert-mysql-sqlite
-Correct syntax to create authors table in sqlit3
-CREATE TABLE "authors" ( "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,"name" text NOT NULL);
+NOTE: Script on the site doesn't quite work, see my comments there.
 
 The query differences between MySQL and sqlite3 are often minor but enough
 to warrant the two classes.  There may be better ways to this beside 
 having two classes, maybe a string write function that builds the query 
 string for each type.  Something to think about.
+
+TODO: If the sqlit3 db file doesn't exist we should create a db with it's schema.
 '''
 
 
@@ -77,6 +78,9 @@ class sqlite:
   import sqlite3
   
   def __init__(self):
+    if ! os.path.exists(db_lite): #Create the db with schema
+      self.create_db()
+
     self.con = self.sqlite3.connect(db_lite)
     self.con.row_factory = self.sqlite3.Row
     self.cur = self.con.cursor()
@@ -87,6 +91,22 @@ class sqlite:
       self.con.commit() # Prpbably not neede with close.
       self.con.close()
     except: pass
+    
+  def create_db(self):
+    '''Create the DB with schema.
+    The query is the schema file
+    
+    schema created with:
+    sqlite books.db, derived from the MySQL DB
+    .output books.db.schema
+    .schema
+    .quit
+    
+    '''
+    f = open("books.db.schema", "r")
+    for line in f:
+      self.cur.execute(line)
+    pass
     
     
   def get_all_books(self):
