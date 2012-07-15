@@ -23,8 +23,6 @@ import copy
 import MySQLdb
 import MySQLdb.cursors
 import sys,os
-import load_config
-import gconf_config
 import logging
 import book
 import locale
@@ -33,9 +31,9 @@ import popen2
 import lib_print
 import messages
 #from db_queries import calibre
-from db_queries import mysql as sql # Make this choosable for mysql and sqlite
+#from db_queries import mysql as sql # Make this choosable for mysql and sqlite
 # or 
-#from db_queries import sqlite as sql
+from db_queries import sqlite as sql
 
 
 
@@ -64,17 +62,6 @@ try:
 except:
   print _("GTK Not Availible")
   sys.exit(1)
-
-# Read the config file
-
-#config = load_config.load_config() # For file based config
-config = gconf_config.gconf_config() # For gconf config.
-try:
-  db_user = config.db_user
-  db_pass = config.db_pass
-  db_base = config.db_base
-  db_host = config.db_host
-except: quit()
 
 NULL, ALL, BORROWED = range(3)
 
@@ -247,14 +234,15 @@ class librarian:
     #self.booklist.clear()
     if selection == ALL:
       result = db_query.get_all_books()
+      self.fill_booklist(result)
       import calibre
       e_books = calibre.calibre()
       self.booklist = e_books.insert_data2(self.booklist)
     #
     elif selection == BORROWED:
       result = db_query.get_borrowed_books()
-      
-    self.fill_booklist(result)
+      self.fill_booklist(result)
+    
 
 
 

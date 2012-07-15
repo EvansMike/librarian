@@ -24,29 +24,23 @@ TODO:
 
 import MySQLdb
 import sys
-import ConfigParser
 import logging
 import gtk
 import pygtk
 from biblio.webquery.xisbn import XisbnQuery
 import biblio.webquery
 import book
-import load_config
 import copy
 import gettext
 import datetime
-
+#from db_queries import mysql as sql # Make this choosable for mysql and sqlite
+# or 
+from db_queries import sqlite as sql
 
 _ = gettext.gettext
 
 logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s:', level=logging.DEBUG)
-
-config = load_config.load_config()
-db_user = config.db_user
-db_pass = config.db_pass
-db_base = config.db_base
-db_host = config.db_host
 
 
 class add_edit:
@@ -84,13 +78,6 @@ class add_edit:
 
     self.o_date = ''
 
-    try:
-        self.db = MySQLdb.connect(host = db_host, db=db_base,  passwd = db_pass);
-    except:
-      print _("No database connection.  Check ") + config_file
-      self.db = False
-    if self.db:
-      self.cur = self.db.cursor()
 
   def display(self):
     gtk.main()
@@ -133,25 +120,21 @@ class add_edit:
 
   def populate_borrowers(self):
     ''' Get borrowers and fill in the list'''
+    db_query = sql()
     #Populate borrowers combo box etc.
-    self.cur.execute ("SELECT * FROM  borrowers;")
-    result = self.cur.fetchall()
-    self.lentlist.clear()
+    result = db_query.get_all_borrowers()
     for row in result:
-      self.lentlist.append([row[0], row[1], row[2]])
+      self.lentlist.append([row["id"], row["name"], row["contact"]])
       #self.lent_select.append_text(row[1])
       self.borrowers += 1
     #Get borrows for this book up to the # of copies
-    # NB. Need to track copies available for borrowing
-    self.cur.execute("SELECT * FROM borrows where book = %s AND i_date IS NULL \
-        AND o_date IS NOT NULL LIMIT %s;",
-          [self.orig_book.id,self.orig_book.copies])
-    result = self.cur.fetchall()
+    result = db_query.get_borrows(self.orig_book.id,self.orig_book.copies)
+    print result
     bid = 0
     for row in result:
-      bid = row[4]
-      book_id = row[3]
-      self.o_date = row[1]
+      bid = row["borrower"]
+      book_id = row["book"]
+      self.o_date = row["o_date"]
     if bid != 0:
       #logging.info(bid)
       if self.orig_book.id == book_id:
@@ -166,9 +149,9 @@ class add_edit:
     pass
 
   def populate(self,book_id):
-    cur = self.db.cursor(MySQLdb.cursors.DictCursor)
-    cur.execute ("SELECT * FROM  books where id = %s;",book_id)
-    result = cur.fetchall()
+    db_query = sql()
+    logging.info(book_id)
+    result = db_query.get_by_id(book_id)
     #logging.info(result)
     for row in result:
       # Populate GUI
@@ -231,9 +214,11 @@ class add_edit:
 
 
   def update_db(self):
+    db_query = sql()
     book = copy.copy(self.mybook)
     #logging.info(self.orig_book.compare(book))
-    result = self.cur.execute ("SELECT * FROM books WHERE id = %s;",book.id)
+    result = db_query.get_by_id(book_id)
+    #result = self.cur.execute ("SELECT * FROM books WHERE id = %s;",book.id)
     #logging.info(result)
     if result == 0: # If no book in DB, add it
     # Make sure we don't add an empty book.  We could also use this to
@@ -243,12 +228,15 @@ class add_edit:
       #logging.info(book_data)
       if book_data == '': return # Do nothing if no data
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
-      self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
-      year, publisher, city, copies, mtype, add_date) \
-      VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
-        (book.title, book.authors, book.isbn, book.abstract,book.year,
-            book.publisher,book.city, 1,book.mtype, book.add_date))
-      self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
+      db_query.insert_book_complete(book.title, book.authors, book.isbn, book.abstract,book.year,\
+            book.publisher,book.city, 1,book.mtype, book.add_date)
+      #self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
+      #year, publisher, city, copies, mtype, add_date) \
+      #VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
+      #  (book.title, book.authors, book.isbn, book.abstract,book.year,
+      #      book.publisher,book.city, 1,book.mtype, book.add_date))
+      db_query.insert_unique_author(book.authors)
+      #self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
       self.status.set_text(_(" Book has been inserted."))
 
     # If a change has been made...
@@ -280,6 +268,7 @@ class add_edit:
     ''' Do things when selection is changed
     Need to check if the selected borrower has the book and set the
     checkbutton status to suit '''
+    db_query = sql() 
     if not self.lentlist.get_iter_first(): return # If we can't iterate then the list is empty
     foo = self.lent_select.get_active()
     bid = self.lentlist[foo][0]
@@ -289,9 +278,7 @@ class add_edit:
     else:
       self.add_button.set_label(_("Add"))
     # Get list of borrows for this book
-    result = self.cur.execute("SELECT * FROM borrows where \
-      borrows.book = %s AND borrower = %s AND i_date IS NULL AND o_date IS NOT NULL;" ,
-        [self.mybook.id,bid])
+    result = db_query.get_borrows(self.mybook.id,bid)
     #logging.info(result)
     if result == 0:
       self.lent.set_active(False)

@@ -16,15 +16,19 @@
 '''
 Move all the db queries here.  There will be equivalent queries for both
 MySQL and SQLite so the user can choose either storage type from the setup
-dialog. (NB Write setup dialog.)
+dialog. (NB Write setup dialog.)  Perhaps XML too?
 See here for convertion script
 http://www.jbip.net/content/how-convert-mysql-sqlite
+The query differences between MySQL and sqlite3 are often minor but enough
+to warrant the two classes.  There may be better ways to this beside 
+having two classes, maybe a string write function that builds the query 
+string for each type.  Something to think about.
 '''
 
 
 import sys,os
-import load_config
-import gconf_config
+import load_config as config
+#import gconf_config as config
 import locale
 import gettext
 import logging
@@ -43,17 +47,19 @@ plat = sys.platform
 
 # Read the config file
 
-#config = load_config.load_config() # For file based config
-config = gconf_config.gconf_config() # For gconf config.
+config = config.load_config() # For file based config
+
 try:
   db_user = config.db_user
   db_pass = config.db_pass
   db_base = config.db_base
   db_host = config.db_host
+  db_lite = config.lite_db
+  config.lite_base = "books-out.sqlite.db"
 except: quit()
 
 
-
+########################################################################
 class sqlite:
   ''' 
   Database queries for sqlite.
@@ -62,10 +68,10 @@ class sqlite:
   import sqlite3
   
   def __init__(self):
-    self.con = self.sqlite3.connect('DatabaseName.sql')
+    self.con = self.sqlite3.connect(db_lite)
     self.con.row_factory = self.sqlite3.Row
     self.cur = self.con.cursor()
-    pass
+    logging.info("This connection is using sqlite3")
     
     
   def get_all_books(self):
@@ -74,12 +80,52 @@ class sqlite:
     to avoid duplication code where the query code is identical.  For 
     trivial selects this will the case, in other cases the sqlite3 code 
     will differ slightly.
-    
-    '''
     return mysql().get_all_books()
   
+    '''
+    self.cur.execute("SELECT * FROM books WHERE copies > 0 order by author;")
+    return self.cur.fetchall()
   
+  def get_borrowed_books(self):
+    return mysql().get_borrowed_books()
+    
+  def get_borrows(self, bid, copies):
+    ''' Differing syntax for sqlite'''
+    self.cur.execute("SELECT * FROM borrows where book = ? AND i_date IS NULL \
+        AND o_date IS NOT NULL LIMIT ?;", (bid,copies))
+    return self.cur.fetchall()
+    
+    
+  def get_all_borrowers(self):
+    '''
+    Get all the borrowers in the database.
 
+    '''
+    self.cur.execute ("SELECT * FROM  borrowers;")
+    return self.cur.fetchall()
+      
+    
+  def search_books(self, search_string):
+    ''' 
+    Get books based on author and title search.
+    
+    '''
+    self.cur.execute("SELECT * FROM books WHERE title LIKE ? OR author LIKE ?", \
+               ('%%%s%%' % search_string, '%%%s%%' % search_string))
+    return  self.cur.fetchall()  
+  
+    
+  def get_by_id(self, book_id):
+    ''' 
+    Search for book on its ID.  NB. This is NOT its ISBN
+    
+    '''
+    self.cur.execute("SELECT * FROM  books where id = '%s';" % book_id)
+    return self.cur.fetchall()
+    
+    
+    
+#######################################################################    
 class mysql:
   '''
   Database queries for MySQL
@@ -137,7 +183,26 @@ class mysql:
         [('%%%s%%' % search_string), ('%%%s%%' % search_string)])
     return  self.cur.fetchall()
     
-    
+    def get_by_id(self, book_id):
+      ''' Search for book on its ID.  NB. This is NOT its ISBN
+      
+      '''
+      return self.cur.execute ("SELECT * FROM  books where id = %s;",book_id)
+      
+    def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
+                city,mtype, add_date):
+      ''' Insert a books' complete details in to the DB.
+      
+      ''' 
+      return self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
+        year, publisher, city, copies, mtype, add_date) \
+        VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
+          (title, authors, isbn, abstract,year,publisher,city, 1, mtype, add_date))
+         
+    def insert_unique_author(self, authors):
+      self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [authors])
+      
+########################################################################      
 class calibre:
   import calibre
   def __init__(self):
@@ -153,9 +218,9 @@ if __name__ == "__main__":
   my = mysql()
   cali = calibre()
   # Check connection and booklist getting.
-  mybooks = my.get_all_books()
+  mybooks = lite.get_all_books()
   #mybooks = my.search_books("cat")
   for book in mybooks:
     print book
-  my.get_borrowed_books()
+  #my.get_borrowed_books()
   
