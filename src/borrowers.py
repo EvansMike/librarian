@@ -40,7 +40,7 @@ APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
 
-logging.basicConfig(format='%(module)s: %(levelname)s:%(message)s: LINE %(lineno)d', level=logging.DEBUG)
+logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
 #logging.disable(logging.INFO) # Uncomment to disable info messages
 
 
@@ -63,6 +63,7 @@ class borrowers():
     self.button_cancel = builder.get_object("button_cancel")
     builder.connect_signals(self)
     self.bid = bid
+    logging.info(bid)
 
   def run(self):
     self.window.run()

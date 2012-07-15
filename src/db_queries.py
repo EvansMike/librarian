@@ -53,8 +53,8 @@ plat = sys.platform
 
 # Get the real location of this script
 iamhere = os.path.dirname( os.path.realpath( __file__ ) )
+#print "I am here",iamhere
 
-print "I am here",iamhere
 # Read the config file
 
 config = config.load_config() # For file based config
@@ -257,7 +257,8 @@ class mysql:
     return self.cur.fetchall()
   
   def get_one_borrower(bid):
-    return self.cur.execute("SELECT * from borrowers where id = '%s';" % self.bid)
+    self.cur.execute("SELECT * from borrowers where id = '%s';" % bid)
+    return self.cur.fetchall()
     
   def search_books(self, search_string):
     ''' 
@@ -272,7 +273,8 @@ class mysql:
     ''' Search for book on its ID.  NB. This is NOT its ISBN
     
     '''
-    return self.cur.execute ("SELECT * FROM  books where id = %s;",book_id)
+    self.cur.execute ("SELECT * FROM  books where id = %s;",book_id)
+    return self.cur.fetchall()
 
   def insert_unique_author(self, authors):
     '''

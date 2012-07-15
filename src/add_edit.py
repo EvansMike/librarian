@@ -121,7 +121,8 @@ class add_edit:
   def populate_borrowers(self):
     ''' Get borrowers and fill in the list'''
     db_query = sql()
-    #Populate borrowers combo box etc.
+    #Populate borrowers combo box etc. 
+    self.lentlist.clear()
     result = db_query.get_all_borrowers()
     for row in result:
       self.lentlist.append([row["id"], row["name"], row["contact"]])
