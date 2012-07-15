@@ -51,8 +51,7 @@ logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message
 # Get system platform
 plat = sys.platform
 
-
-__version__ = "20120715-233"
+import version
 
 try:
   import pygtk
@@ -92,7 +91,7 @@ class librarian:
   in the listings.  It doesn't track the "borrowing" of e-books. :)
   '''
   def __init__(self):
-    print _("Version: "),__version__
+    print _("Version: "),version.__version__
     builder = gtk.Builder()
     builder.add_from_file("ui/librarian.glade")
     builder.connect_signals(self)
@@ -140,7 +139,7 @@ class librarian:
     self.treeview.append_column(column)
 
     self.get_book_list(1)
-    self.status1.set_text("Version:" + __version__)
+    self.status1.set_text("Version:" + version.__version__)
     self.search_string = builder.get_object("entry_search")
 
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
