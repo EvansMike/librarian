@@ -19,6 +19,8 @@ A (in)complete home book collection manager.
 Could do with extending to cover e-books, CDs and DVDs perhaps?
 '''
 
+import os, sys
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.pardir))
 import copy
 import MySQLdb
 import MySQLdb.cursors
@@ -50,7 +52,7 @@ logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message
 plat = sys.platform
 
 
-__version__ = "2012051301"
+__version__ = "2012061501"
 
 try:
   import pygtk
