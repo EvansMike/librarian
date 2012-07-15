@@ -228,9 +228,9 @@ class sqlite:
           (name,contact, notes))
     self.con.commit()
   
-  def update_borrower(self,name, contact , bid):
-    self.cur.execute("UPDATE borrowers set name=%s, contact=%s ,notes=%s where id = %s;" % \
-          (name,contact, notes, bid))
+  def update_borrower(self,name, contact , notes, bid):
+    self.cur.execute("UPDATE borrowers set name='%s', contact='%s' ,notes='%s' where id = '%s';" % \
+          (name, contact, notes, bid))
     self.con.commit()
     
   def remove_book(bid):
