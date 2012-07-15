@@ -373,6 +373,18 @@ class calibre:
     try:return self.e_books
     except: return[]
   
+########################################################################
+class xml():
+  '''
+  I'm unlkely ever to implement XML data storage but I'll out this here
+  in case some other massochist wants to. :)
+  ''' 
+  def __init__(self):
+    pass_
+    
+    
+    
+########################################################################    
 
 # Test harness starts here
 if __name__ == "__main__":
