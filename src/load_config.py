@@ -1,5 +1,5 @@
 #!/bin/env python
-# Get config data from hidden/secret file
+# Get config data from file
 '''
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
 
-logger = logging.getLogger("barscan")
+logger = logging.getLogger("librarian")
 logging.basicConfig(format='%(module)s: %(levelname)s:%(message)s: LINE %(lineno)d', level=logging.DEBUG)
 
 
@@ -69,7 +69,8 @@ class load_config:
       parser.write(f)
       '''
       # The dirty way.  Preserves case.  Probably not cross OS safe.
-      f.write('[database]\nUSER = username\nPASSWD = password\nDB = db_name\nDBHOST = hostname\n\
+      f.write('[database]\nUSER = username\nPASSWD = password\nDB = db_name\n\
+      LITE_DB = sqlite.db\nDBHOST = hostname\n\
       \n# Optional: Define path to Calibre database, Users home dir will be\
       automatically determined.\n[calibre]\nCALIBRE_DB = calibre_db\n')
       # Set access mode to owner only
@@ -83,6 +84,7 @@ class load_config:
       self.db_pass = config.get('database','PASSWD')
       self.db_base = config.get('database','DB')
       self.db_host = config.get('database','DBHOST')
+      self.lite_db = config.get('database','LITE_DB')
       try:
         self.calibre_db = config.get('calibre','CALIBRE_DB')
       except:
