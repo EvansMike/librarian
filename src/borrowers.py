@@ -55,7 +55,6 @@ class borrowers():
   def __init__(self,bid = 0):
     builder = gtk.Builder()
     builder.add_from_file("ui/borrower_dialog.glade")
-    #self.window = builder.get_object("window1")
     self.window = builder.get_object("dialog1")
     self.name = builder.get_object("entry1")
     self.contact = builder.get_object("entry2")
@@ -64,22 +63,6 @@ class borrowers():
     self.button_cancel = builder.get_object("button_cancel")
     builder.connect_signals(self)
     self.bid = bid
-
-    try:
-        self.db = MySQLdb.connect(host = db_host, db=db_base,  passwd = db_pass);
-    except: # Message and quit
-      import messages
-      messages.pop_info(_("No database connection.  Check config file"))
-      #print _("No database connection.  Check ") + config_file
-      self.db = False
-      quit()
-    if self.db:
-      #self.cur = self.db.cursor(MySQLdb.cursors.DictCursor) # better cursor type, Use it next time.
-      self.cur = self.db.cursor()
-    self.populate()
-    #self.on_button_print_clicked(None)
-    #gtk.main()
-    #self.window.show()
 
   def run(self):
     self.window.run()
@@ -93,8 +76,6 @@ class borrowers():
     logging.info(self.bid)
     if self.bid > 0:
       get_one_borrower(self.bid):
-      #self.cur.execute("SELECT * from borrowers where id = %s;",self.bid)
-      #result = self.cur.fetchall()
       logging.info(result[0])
       self.name.set_text(result[0][1])
       self.contact.set_text(result[0][2])
@@ -111,12 +92,9 @@ class borrowers():
     logging.info(self.name.get_text())
     if len(self.name.get_text()) > 0:
       if self.bid == 0:
-        self.cur.execute("INSERT INTO borrowers(name,contact,notes) VALUES(%s,%s,%s);",
-          (self.name.get_text(),self.contact.get_text(), self.notes.get_text()))
+        db_query.add_new_borrower(self.name.get_text(),self.contact.get_text(), self.notes.get_text())
       else:
-         self.cur.execute("UPDATE borrowers set name=%s, contact=%s ,notes=%s where id = %s;",
-          (self.name.get_text(),self.contact.get_text(), self.notes.get_text(), self.bid))
-      self.db.commit()
+        db_query.update_borrower(self.name.get_text(),self.contact.get_text(), self.notes.get_text(), self.bid)
       self.status.set_text("Added a borrower.")
     else:
       logging.info("Nothing to add.")
@@ -156,11 +134,7 @@ class borrowers():
     Story.append(Paragraph(ptext, styles["Justify"]))
     Story.append(Spacer(1, 12))
     # Get the data
-    self.cur.execute("SELECT title, author, name, o_date FROM books, \
-        borrows, borrowers WHERE books.id = borrows.book \
-        AND borrows.borrower=borrowers.id AND i_date is null \
-        ORDER BY o_date;")
-    result = self.cur.fetchall()
+    db_query.get_borrowers_borrowed_books()
     for row in result:
       ptext = row[2] + " -- " + row[1] + " -- " + row[0] + " -- Borrowed: " + row[3].strftime('%Y %b %d')
       Story.append(Paragraph(ptext, styles["Normal"]))

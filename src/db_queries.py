@@ -104,6 +104,10 @@ class sqlite:
   def get_borrowed_books(self):
     return mysql().get_borrowed_books()
     
+  def get_borrowers_borrowed_books()
+    return mysql().get_borrowers_borrowed_books()
+    
+    
   def get_borrows(self, bid, copies):
     ''' Differing syntax for sqlite'''
     self.cur.execute("SELECT * FROM borrows where book = ? AND i_date IS NULL \
@@ -177,7 +181,17 @@ class sqlite:
   def update_borrows(self, id, bid):
     return self.cur.execute("UPDATE borrows SET i_date = DATETIME('now') \
           WHERE book = '%s' AND borrower = '%s' AND i_date IS NULL" % \
-          (id, bid))
+          (id, bid)) 
+          
+  def add_new_borrower(self, name, contact, notes):
+    self.cur.execute("INSERT INTO borrowers(name,contact,notes) VALUES('%s','%s','%s');" % \
+          (name,contact, notes))
+    self.con.commit()
+  
+  def update_borrower(self,name, contact , bid):
+    self.cur.execute("UPDATE borrowers set name=%s, contact=%s ,notes=%s where id = %s;" % \
+          (name,contact, notes, bid))
+    self.con.commit()
     
   def remove_book(bid):
     ''' remove a book/copy from the db.  This just decrements the copy 
@@ -216,6 +230,13 @@ class mysql:
                       and i_date is null;"
     self.cur.execute(command)
     return self.cur.fetchall()
+   
+  def get_borrowers_borrowed_books()
+    self.cur.execute("SELECT title, author, name, o_date FROM books, \
+        borrows, borrowers WHERE books.id = borrows.book \
+        AND borrows.borrower=borrowers.id AND i_date is null \
+        ORDER BY o_date;")
+    return self.cur.fetchall()  
     
   def get_borrows(self, bid, copies):
     '''
@@ -281,7 +302,14 @@ class mysql:
       (SELECT 1 FROM borrows WHERE book = %s AND borrower = %s AND i_date IS NULL);",
       [id, bid,id, bid])
       
-  def add_new_borrower():
+  def add_new_borrower(self, name, contact, notes):
+    self.cur.execute("INSERT INTO borrowers(name,contact,notes) VALUES(%s,%s,%s);",
+          (name,contact, notes))
+  
+  def update_borrower(self, name, contact, notes, bid):
+    self.cur.execute("UPDATE borrowers set name=%s, contact=%s ,notes=%s where id = %s;",
+          (name,contact, notes, bid))
+    
     
       
   def update_borrows(self, id, bid):
