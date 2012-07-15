@@ -32,8 +32,8 @@ APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
 
-logger = logging.getLogger("librarian")
-logging.basicConfig(format='%(module)s: %(levelname)s:%(message)s: LINE %(lineno)d', level=logging.DEBUG)
+#logger = logging.getLogger("librarian")
+logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
 
 # Get the real location of this file
 iamhere = os.path.dirname( os.path.realpath( __file__ ) )

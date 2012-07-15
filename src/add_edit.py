@@ -39,8 +39,8 @@ from db_queries import sqlite as sql
 
 _ = gettext.gettext
 
-logger = logging.getLogger("barscan")
-logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s:', level=logging.DEBUG)
+#logger = logging.getLogger("barscan")
+logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
 
 
 class add_edit:

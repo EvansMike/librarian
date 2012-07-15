@@ -36,8 +36,8 @@ APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
 
-logger = logging.getLogger("barscan")
-logging.basicConfig(format='%(module)s: %(levelname)s:%(message)s: LINE %(lineno)d', level=logging.DEBUG)
+#logger = logging.getLogger("barscan")
+logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s:', level=logging.DEBUG)
 
 class gconf_config():
   ''' Load the config data for use by applications.
