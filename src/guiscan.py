@@ -46,8 +46,7 @@ import datetime
 _ = gettext.gettext
 
 logger = logging.getLogger("barscan")
-logging.basicConfig(format='%(module)s: %(levelname)s:%(message)s: LINE %(lineno)d', level=logging.DEBUG)
-
+logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
 # Do we produce a QR code?
 QR_CODE = True
 

@@ -45,7 +45,7 @@ gettext.textdomain(APP)
 _ = gettext.gettext
 
 #logger = logging.getLogger("librarian")
-logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
 #logging.disable(logging.INFO)
 
 # Get system platform
