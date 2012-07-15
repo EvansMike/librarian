@@ -250,7 +250,7 @@ class mysql:
   def __init__(self):
     db = self.MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
     self.cur = db.cursor(self.MySQLdb.cursors.DictCursor)
-    
+    logging.info("This connection is using MySQL")
     
   def get_all_books(self):
     ''' 

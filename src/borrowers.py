@@ -79,9 +79,10 @@ class borrowers():
     logging.info(self.bid)
     if self.bid > 0:
       result = db_query.get_one_borrower(self.bid)
-      self.name.set_text(result[1])
-      self.contact.set_text(result[2])
-      self.notes.set_text(str(result[3]))
+      logging.info(result)
+      self.name.set_text(result["name"])
+      self.contact.set_text(result["contact"])
+      self.notes.set_text(str(result["notes"]))
 
 
 
