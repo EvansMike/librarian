@@ -40,7 +40,7 @@ APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
 
-logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
 #logging.disable(logging.INFO) # Uncomment to disable info messages
 
 
@@ -64,9 +64,11 @@ class borrowers():
     builder.connect_signals(self)
     self.bid = bid
     logging.info(bid)
+    self.populate()
 
   def run(self):
     self.window.run()
+    #self.populate()
     self.window.destroy()
     
   def populate(self):
@@ -76,11 +78,10 @@ class borrowers():
     db_query = sql()
     logging.info(self.bid)
     if self.bid > 0:
-      db_query.get_one_borrower(self.bid)
-      logging.info(result[0])
-      self.name.set_text(result[0][1])
-      self.contact.set_text(result[0][2])
-      self.notes.set_text(str(result[0][3]))
+      result = db_query.get_one_borrower(self.bid)
+      self.name.set_text(result[1])
+      self.contact.set_text(result[2])
+      self.notes.set_text(str(result[3]))
 
 
 

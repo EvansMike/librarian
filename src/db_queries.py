@@ -162,6 +162,12 @@ class sqlite:
     '''
     self.cur.execute("SELECT * FROM  books where id = '%s';" % book_id)
     return self.cur.fetchall()
+  
+  def get_one_borrower(self,bid):
+    logging.info(bid)
+    self.cur.execute("SELECT * from borrowers where id = '%s';" % bid)
+    return self.cur.fetchone() 
+    
     
   def update_book(self, title, authors, abstract, year, publisher, city, mtype, bid):
     self.cur.execute("UPDATE books SET title = '%s', author = '%s',abstract = '%s', \
@@ -256,9 +262,10 @@ class mysql:
     self.cur.execute ("SELECT * FROM  borrowers;")
     return self.cur.fetchall()
   
-  def get_one_borrower(bid):
-    self.cur.execute("SELECT * from borrowers where id = '%s';" % bid)
-    return self.cur.fetchall()
+  def get_one_borrower(self,bid):
+    logging.info(bid)
+    self.cur.execute("SELECT * from borrowers where id = %s;", bid)
+    return self.cur.fetchone()
     
   def search_books(self, search_string):
     ''' 
