@@ -35,7 +35,7 @@ _ = gettext.gettext
 logger = logging.getLogger("librarian")
 logging.basicConfig(format='%(module)s: %(levelname)s:%(message)s: LINE %(lineno)d', level=logging.DEBUG)
 
-# Get the real location of this file 
+# Get the real location of this file
 iamhere = os.path.dirname( os.path.realpath( __file__ ) )
 
 class load_config:
