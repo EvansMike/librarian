@@ -66,12 +66,15 @@ class load_config:
       parser.set('database', 'USER', 'username')
       parser.set('database', 'PASSWD', 'password')
       parser.set('database', 'DB', 'db_name')
+      parser.set('database', 'LITE_DB', 'books.db')
+      parser.set('database', '# DON'T change the LITE_DB name', '')
       parser.set('calibre', '# Optional: Define path to Calibre database, Users home dir will be automatically determined.', '')
       parser.set('calibre', 'CALIBRE_DB', 'calibre_db')
       parser.write(f)
       '''
       # The dirty way.  Preserves case.  Probably not cross OS safe.
       f.write('[database]\nUSER = username\nPASSWD = password\nDB = db_name\n\
+      # Don\'t change the LITE_DB name. \n\
       LITE_DB = sqlite.db\nDBHOST = hostname\n\
       \n# Optional: Define path to Calibre database, Users home dir will be\
       automatically determined.\n[calibre]\nCALIBRE_DB = calibre_db\n')
