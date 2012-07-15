@@ -1,0 +1,82 @@
+CREATE TABLE "authors" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "name" text NOT NULL
+);
+CREATE TABLE "books" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "title" text,
+  "author" text,
+  "isbn" text,
+  "cover" text,
+  "location" integer DEFAULT NULL,
+  "p_date" date DEFAULT NULL,
+  "city" text,
+  "publisher" text,
+  "abstract" text,
+  "copies" integer DEFAULT NULL,
+  "year" integer DEFAULT NULL,
+  "mtype" text,
+  "author_id" integer DEFAULT NULL,
+  "add_date" datetime DEFAULT NULL,
+  "sale_status" integer DEFAULT NULL,
+  "price" decimal(10,2) DEFAULT NULL
+);
+CREATE TABLE "borrowers" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "name" text,
+  "contact" text,
+  "notes" text
+);
+CREATE TABLE "borrows" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "o_date" datetime NOT NULL,
+  "i_date" datetime DEFAULT NULL,
+  "book" integer NOT NULL,
+  "borrower" integer NOT NULL
+);
+CREATE TABLE "cd_tracks" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "cdid" integer NOT NULL,
+  "tracknum" integer NOT NULL,
+  "trackname" varchar(45) NOT NULL,
+  "tracklen" varchar(8) DEFAULT NULL
+);
+CREATE TABLE "config" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "name" text,
+  "value" text
+);
+CREATE TABLE "customers" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "name" text,
+  "address" text
+);
+CREATE TABLE "discounts" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "break" integer NOT NULL,
+  "value" integer NOT NULL
+);
+CREATE TABLE "invoices" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "inv_id" varchar(50) NOT NULL,
+  "date_time" datetime DEFAULT NULL,
+  "customer_id" integer DEFAULT NULL,
+  "sale_total" decimal(5,2) DEFAULT NULL
+);
+CREATE TABLE "locations" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "location" text
+);
+CREATE TABLE "mtype" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "type" text
+);
+CREATE TABLE "qrcodes" (
+  "idpic" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "caption" varchar(45) NOT NULL,
+  "img" longblob NOT NULL
+);
+CREATE TABLE "rating" (
+  "bid" integer DEFAULT NULL,
+  "rating" integer DEFAULT NULL
+);
