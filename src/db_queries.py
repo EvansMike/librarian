@@ -179,7 +179,12 @@ class sqlite:
           WHERE book = '%s' AND borrower = '%s' AND i_date IS NULL" % \
           (id, bid))
     
-    
+  def remove_book(bid):
+    ''' remove a book/copy from the db.  This just decrements the copy 
+    counter until copies = 0 then we remove the entry completely.
+    '''
+    self.cur.execute("UPDATE books SET copies = copies-1 WHERE id = '%s';" % bid)
+    self.cur.execute("DELETE FROM books WHERE copies = 0;")  
 #######################################################################    
 class mysql:
   '''
