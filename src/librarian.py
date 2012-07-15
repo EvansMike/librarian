@@ -52,7 +52,7 @@ logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message
 plat = sys.platform
 
 
-__version__ = "2012061501"
+__version__ = "20120715-218"
 
 try:
   import pygtk
