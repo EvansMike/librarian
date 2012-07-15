@@ -102,7 +102,7 @@ class sqlite:
     return self.cur.fetchall()
   
   def get_borrowed_books(self):
-    return mysql().get_borrowed_books(self)
+    return mysql().get_borrowed_books()
     
   def get_borrowers_borrowed_books(self):
     return mysql().get_borrowers_borrowed_books()
@@ -173,6 +173,7 @@ class sqlite:
     ''' INsert a borrower into the borrows table.
     TODO: This doesn't work as is in sqlite3, FIXME
     '''
+    return #Because I'm broken  FIXME
     self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
     SELECT '%s', '%s', DATETIME('now') FROM DUAL WHERE NOT EXISTS \
     (SELECT 1 FROM borrows WHERE book = '%s' AND borrower = '%s' AND i_date IS NULL);" % \

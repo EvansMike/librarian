@@ -127,6 +127,7 @@ class add_edit:
       self.lentlist.append([row["id"], row["name"], row["contact"]])
       #self.lent_select.append_text(row[1])
       self.borrowers += 1
+    self.lentlist.prepend([0, "", ""])
     #Get borrows for this book up to the # of copies
     result = db_query.get_borrows(self.orig_book.id,self.orig_book.copies)
     print result
@@ -135,7 +136,8 @@ class add_edit:
       bid = row["borrower"]
       book_id = row["book"]
       self.o_date = row["o_date"]
-    if bid != 0:
+      logger.info(bid)
+    if bid and bid != 0:
       #logging.info(bid)
       if self.orig_book.id == book_id:
         self.orig_book.copies -=1
@@ -144,8 +146,9 @@ class add_edit:
       self.lent_select.set_active(bid - 1)
       self.lent_date.set_text(str(self.o_date))
     else:
-      self.lentlist.prepend([0, "", ""])
+      #self.lentlist.prepend([0, "", ""]) 
       self.lent_select.set_active(0)
+      self.lent.set_active(False)
     pass
 
   def populate(self,book_id):
@@ -271,7 +274,7 @@ class add_edit:
     if result == 0:
       self.lent.set_active(False)
     else:
-       self.lent.set_active(True)
+       self.lent.set_active(False)
 
 
   def on_button_clear_clicked(self, widget):
@@ -299,7 +302,6 @@ class add_edit:
       bid = self.lentlist[foo][0]
       #logging.info(bid)
       if bid != 0 and self.mybook.id != 0 and self.orig_book.copies > 0:
-        # TODO: Problematic in sqlite.
         db_query.add_borrow(self.mybook.id, bid)
         self.status.set_text(_("Book has been marked as borrowed."))
         self.orig_book.copies -= 1
@@ -328,6 +330,7 @@ class add_edit:
 
     '''
     import borrowers
+
     foo = self.lent_select.get_active()
     bid = self.lentlist[foo][0]
     adder = borrowers.borrowers(bid)
