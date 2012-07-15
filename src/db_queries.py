@@ -82,6 +82,12 @@ class sqlite:
     self.cur = self.con.cursor()
     logging.info("This connection is using sqlite3")
     
+  def __del__(self):
+    try:
+      self.con.commit() # Prpbably not neede with close.
+      self.con.close()
+    except: pass
+    
     
   def get_all_books(self):
     ''' 
@@ -133,13 +139,15 @@ class sqlite:
       year, publisher, city, copies, mtype, add_date) \
       VALUES(?, ?, ?,?,?,?,?,?,?,?);", \
         (title, authors, isbn, abstract,year,publisher,city, 1, mtype, add_date))
+    self.con.commit()
          
   def insert_unique_author(self, authors):
     '''
     Insert author(s) ensuring uniqueness.
     
     '''
-    self.cur.execute("INSERT OR IGNORE INTO authors(name) values(?);", authors)
+    self.cur.execute("INSERT OR IGNORE INTO authors(name) values('%s');" % authors)
+    self.con.commit()
      
   def get_by_id(self, book_id):
     ''' 
@@ -151,7 +159,11 @@ class sqlite:
     self.cur.execute("SELECT * FROM  books where id = '%s';" % book_id)
     return self.cur.fetchall()
     
-    
+  def update_book(self, title, authors, abstract, year, publisher, city, mtype, bid):
+    self.cur.execute("UPDATE books SET title = '%s', author = '%s',abstract = '%s', \
+          year = '%s', publisher = '%s', city = '%s',mtype = '%s' WHERE id = '%s'" % \
+        (title, authors, abstract,year,publisher, city, mtype, bid))
+    self.con.commit()    
     
 #######################################################################    
 class mysql:
@@ -235,7 +247,10 @@ class mysql:
       VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
         (title, authors, isbn, abstract,year,publisher,city, 1, mtype, add_date))
        
-      
+  def update_book(self, title, authors, abstract, year, publisher, city, mtype, bid):
+    self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \
+          year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
+        (title, authors, abstract,year,publisher, city, mtype, bid))   
 ########################################################################      
 class calibre:
   '''

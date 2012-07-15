@@ -217,8 +217,7 @@ class add_edit:
     db_query = sql()
     book = copy.copy(self.mybook)
     #logging.info(self.orig_book.compare(book))
-    result = db_query.get_by_id(book_id)
-    #result = self.cur.execute ("SELECT * FROM books WHERE id = %s;",book.id)
+    result = db_query.get_by_id(book.id)
     #logging.info(result)
     if result == 0: # If no book in DB, add it
     # Make sure we don't add an empty book.  We could also use this to
@@ -230,28 +229,17 @@ class add_edit:
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
       db_query.insert_book_complete(book.title, book.authors, book.isbn, book.abstract,book.year,\
             book.publisher,book.city, 1,book.mtype, book.add_date)
-      #self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
-      #year, publisher, city, copies, mtype, add_date) \
-      #VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
-      #  (book.title, book.authors, book.isbn, book.abstract,book.year,
-      #      book.publisher,book.city, 1,book.mtype, book.add_date))
       db_query.insert_unique_author(book.authors)
-      #self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
       self.status.set_text(_(" Book has been inserted."))
 
     # If a change has been made...
     elif  self.orig_book.compare(book) != 0:
       #logging.info("Something changed so an update is needed")
       self.update_book()
-      self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \
-          year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
-        (book.title, book.authors, book.abstract,book.year,book.publisher,
-        book.city, book.mtype, book.id))
+      db_query.update_book(book.title, book.authors, book.abstract,book.year,book.publisher,
+        book.city, book.mtype, book.id)
       logger.info(book.mtype)
-      self.db.commit()
       db_query.insert_unique_author(book.authors)
-      #self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
-      #self.db.commit()
       self.status.set_text(_(" Book has been updated."))
       self.orig_book = copy.copy(book) # So we can compare again.
     del book
