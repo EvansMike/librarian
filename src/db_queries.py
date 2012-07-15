@@ -166,6 +166,9 @@ class sqlite:
     self.con.commit()   
     
   def add_borrower(self, id, bid):
+    ''' INsert a borrower into the borrows table.
+    TODO: This doesn't work as is in sqlite3, FIXME
+    '''
     self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
     SELECT '%s', '%s', DATETIME('now') FROM DUAL WHERE NOT EXISTS \
     (SELECT 1 FROM borrows WHERE book = '%s' AND borrower = '%s' AND i_date IS NULL);" % \
@@ -274,6 +277,14 @@ class mysql:
     return self.cur.execute("UPDATE borrows SET i_date = NOW() \
           WHERE book = %s AND borrower = %s AND i_date IS NULL",
           [id, bid])
+          
+  def remove_book(bid):
+    ''' remove a book/copy from the db.  This just decrements the copy 
+    counter until copies = 0 then we remove the entry completely.
+    '''
+    self.cur.execute("UPDATE books set copies = copies-1 WHERE id = %s;",bid)
+    self.cur.execute("DELETE FROM books WHERE copies=0;")
+    
     
     
 ########################################################################      

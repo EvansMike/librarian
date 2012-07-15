@@ -246,10 +246,9 @@ class add_edit:
 
   def on_button_remove_clicked(self, widget):
     ''' Remove selected book from database '''
+    db_query = sql()
     #logging.info(str(self.mybook.id) + " about to be removed.")
-    self.cur.execute("UPDATE books set copies = copies-1 WHERE id = %s;",self.mybook.id)
-    # When copies = 0 remove from database
-    self.cur.execute("delete from books where copies=0;")
+    remove_book(self.mybook.id)
     self.status.set_text (_(" Book has been removed."))
     self.db.commit()
 
@@ -300,12 +299,8 @@ class add_edit:
       bid = self.lentlist[foo][0]
       #logging.info(bid)
       if bid != 0 and self.mybook.id != 0 and self.orig_book.copies > 0:
+        # TODO: Problematic in sqlite.
         db_query.add_borrower(self.mybook.id, bid)
-        #self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
-        #    SELECT %s, %s, now() FROM DUAL WHERE NOT EXISTS \
-        #    (SELECT 1 FROM borrows WHERE book = %s AND borrower = %s AND i_date IS NULL);",
-        #    [self.mybook.id, bid,self.mybook.id, bid])
-        #self.db.commit()
         self.status.set_text(_("Book has been marked as borrowed."))
         self.orig_book.copies -= 1
       else:
@@ -319,10 +314,6 @@ class add_edit:
       foo = self.lent_select.get_active()
       bid = self.lentlist[foo][0]
       if bid != 0:
-        #result = self.cur.execute("UPDATE borrows SET i_date = NOW() \
-        #  WHERE book = %s AND borrower = %s AND i_date IS NULL",
-        #  [self.mybook.id, bid])
-        #self.db.commit()
         result =  db_query.update_borrows(self.mybook.id, bid)
         if result:
           self.orig_book.copies += 1
@@ -336,18 +327,11 @@ class add_edit:
     of comboboxentry1(self.lent_select) and use that as a user name.
 
     '''
-
-    #foo = self.lent_select.get_entry()
-    #logger.info(foo)
     import borrowers
-
     foo = self.lent_select.get_active()
     bid = self.lentlist[foo][0]
     adder = borrowers.borrowers(bid)
     adder.run()
-    #adder.destroy()
-    # Update with new data # Never gets run!!
-    logger.info("Want to update here.")
     self.populate_borrowers()
 
 ############## END add_edit class ######################################
