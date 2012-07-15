@@ -101,6 +101,14 @@ class sqlite:
     self.cur.execute("SELECT * FROM books WHERE copies > 0 order by author;")
     return self.cur.fetchall()
   
+  def get_book_count_by_isbn(self, bar):
+    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = '%s';" % bar)
+    return  self.cur.fetchone()[0]
+  
+  def get_qrcode_count(self, isbn):
+    self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = '%s';" % "ISBN: "+str(self.abook.id))
+    return self.cur.fetchone()[0] 
+    
   def get_borrowed_books(self):
     return mysql().get_borrowed_books()
     
@@ -227,6 +235,15 @@ class mysql:
     command = "SELECT * FROM books WHERE copies > 0 order by author;"
     self.cur.execute(command)
     return  self.cur.fetchall()
+  
+  
+  def get_book_count_by_isbn(self, bar):
+    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;" , bar)
+    return  self.cur.fetchone()[0]
+    
+  def get_qrcode_count(self, isbn):
+    self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = %s;" , "ISBN: "+str(self.abook.id))
+    return self.cur.fetchone()[0] 
     
   def get_borrowed_books(self):
     ''' 
@@ -315,6 +332,9 @@ class mysql:
   def add_new_borrower(self, name, contact, notes):
     self.cur.execute("INSERT INTO borrowers(name,contact,notes) VALUES(%s,%s,%s);",
           (name,contact, notes))
+          
+
+    
   
   def update_borrower(self, name, contact, notes, bid):
     self.cur.execute("UPDATE borrowers set name=%s, contact=%s ,notes=%s where id = %s;",

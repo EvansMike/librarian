@@ -42,6 +42,10 @@ import gconf_config
 import gettext
 import book
 import datetime
+#from db_queries import mysql as sql # Make this choosable for mysql and sqlite
+# or 
+from db_queries import sqlite as sql
+
 
 _ = gettext.gettext
 
@@ -101,12 +105,16 @@ class scanner:
 
   def on_button_scan_clicked(self, widget):
     ''' Do the scan, query the database and store the results.
-
+    TODO: Need to find better way to enumerate cameras.
+    TODO: Need to find how to do this on Windoze, gstreamer for both?
     '''
+    db_query = sql()
+    device = None
     buff = self.text_view.get_buffer()
     buff.set_text(_("To begin press scan."))
     self.text_view.set_buffer(buff)
-    device = '/dev/video0'
+    try: device = '/dev/video0'
+    except: device = '/dev/video1'
     # create a Processor
     proc = zbar.Processor()
     # configure the Processor
@@ -169,8 +177,8 @@ class scanner:
         #return
         
     # DONE Check if exists and increment book count if so.
-    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;",bar)
-    count = self.cur.fetchone()[0]
+    count = db_query.get_book_count_by_isbn(bar)
+    logger.info(count)
     if count > 0:
       buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
     self.text_view.set_buffer(buff)
@@ -188,6 +196,7 @@ class scanner:
           Change output dir
     DONE: Store images in the DB
     '''
+    db_query = sql()
     if QR_CODE:
       import getpass
       user = getpass.getuser()
@@ -202,8 +211,10 @@ class scanner:
 
       qr = qrencode.encode_scaled(qr_data, (size*3)+2)
       img = qr[2]
-      self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = %s;","ISBN: "+str(self.abook.id))
-      count = self.cur.fetchone()[0]
+
+      db_query.get_qrcode_count_by_isbn(self.abook.id)
+      #self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = %s;","ISBN: "+str(self.abook.id))
+      #count = self.cur.fetchone()[0]
       if count == 0:
         sql = 'INSERT INTO qrcodes(caption,img) VALUES(%s,%s)' # But how to get them back out again?  See below.
         args = ("ISBN: " + str(self.abook.id), img, )
@@ -228,6 +239,7 @@ class scanner:
     '''Remove a book from the database.
 
     '''
+    db_query = sql()
     # Remove a scanned book from the database.  Why?
     print "You removed this book."
     buff = self.text_view.get_buffer()
@@ -270,6 +282,7 @@ class scanner:
     result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
          str(self.abook.isbn))
     '''
+    db_query = sql()
     a_name = str(self.abook.authors)
     a_mtype = str(self.abook.mtype)
     self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [a_name])
