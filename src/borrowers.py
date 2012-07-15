@@ -75,7 +75,7 @@ class borrowers():
     db_query = sql()
     logging.info(self.bid)
     if self.bid > 0:
-      get_one_borrower(self.bid):
+      db_query.get_one_borrower(self.bid)
       logging.info(result[0])
       self.name.set_text(result[0][1])
       self.contact.set_text(result[0][2])

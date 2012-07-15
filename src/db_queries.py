@@ -102,9 +102,9 @@ class sqlite:
     return self.cur.fetchall()
   
   def get_borrowed_books(self):
-    return mysql().get_borrowed_books()
+    return mysql().get_borrowed_books(self)
     
-  def get_borrowers_borrowed_books()
+  def get_borrowers_borrowed_books(self):
     return mysql().get_borrowers_borrowed_books()
     
     
@@ -231,7 +231,7 @@ class mysql:
     self.cur.execute(command)
     return self.cur.fetchall()
    
-  def get_borrowers_borrowed_books()
+  def get_borrowers_borrowed_books(self):
     self.cur.execute("SELECT title, author, name, o_date FROM books, \
         borrows, borrowers WHERE books.id = borrows.book \
         AND borrows.borrower=borrowers.id AND i_date is null \
