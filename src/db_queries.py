@@ -32,6 +32,7 @@ string for each type.  Something to think about.
 
 
 import sys,os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.pardir))
 import load_config as config
 #import gconf_config as config
 import locale
@@ -50,6 +51,10 @@ logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message
 # Get system platform
 plat = sys.platform
 
+# Get the real location of this script
+iamhere = os.path.dirname( os.path.realpath( __file__ ) )
+
+print "I am here",iamhere
 # Read the config file
 
 config = config.load_config() # For file based config
@@ -60,7 +65,6 @@ try:
   db_base = config.db_base
   db_host = config.db_host
   db_lite = config.lite_db
-  config.lite_base = "books-out.sqlite.db"
 except: quit()
 
 
@@ -231,8 +235,6 @@ class mysql:
       VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
         (title, authors, isbn, abstract,year,publisher,city, 1, mtype, add_date))
        
-  def insert_unique_author(self, authors):
-    self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [authors])
       
 ########################################################################      
 class calibre:
