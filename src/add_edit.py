@@ -249,8 +249,9 @@ class add_edit:
         book.city, book.mtype, book.id))
       logger.info(book.mtype)
       self.db.commit()
-      self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
-      self.db.commit()
+      db_query.insert_unique_author(book.authors)
+      #self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [book.authors])
+      #self.db.commit()
       self.status.set_text(_(" Book has been updated."))
       self.orig_book = copy.copy(book) # So we can compare again.
     del book

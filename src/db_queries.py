@@ -18,7 +18,12 @@ Move all the db queries here.  There will be equivalent queries for both
 MySQL and SQLite so the user can choose either storage type from the setup
 dialog. (NB Write setup dialog.)  Perhaps XML too?
 See here for convertion script
+First do:
+mysqldump -p --compatible=ansi  books > books
 http://www.jbip.net/content/how-convert-mysql-sqlite
+Correct syntax to create authors table in sqlit3
+CREATE TABLE "authors" ( "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,"name" text NOT NULL);
+
 The query differences between MySQL and sqlite3 are often minor but enough
 to warrant the two classes.  There may be better ways to this beside 
 having two classes, maybe a string write function that builds the query 
@@ -114,11 +119,30 @@ class sqlite:
                ('%%%s%%' % search_string, '%%%s%%' % search_string))
     return  self.cur.fetchall()  
   
+  def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
+              city,mtype, add_date):
+    ''' 
+    Insert a books' complete details in to the DB.
     
+    ''' 
+    return self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
+      year, publisher, city, copies, mtype, add_date) \
+      VALUES(?, ?, ?,?,?,?,?,?,?,?);", \
+        (title, authors, isbn, abstract,year,publisher,city, 1, mtype, add_date))
+         
+  def insert_unique_author(self, authors):
+    '''
+    Insert author(s) ensuring uniqueness.
+    
+    '''
+    self.cur.execute("INSERT OR IGNORE INTO authors(name) values(?);", authors)
+     
   def get_by_id(self, book_id):
     ''' 
     Search for book on its ID.  NB. This is NOT its ISBN
-    
+    NB The normal parameter substitution doesn't seem to work here  getting:
+    Incorrect number of bindings supplied. The current statement uses 1, and there are N supplied.
+    errors if the number has more than one digit.  N = number of digits. 
     '''
     self.cur.execute("SELECT * FROM  books where id = '%s';" % book_id)
     return self.cur.fetchall()
@@ -188,7 +212,15 @@ class mysql:
       
       '''
       return self.cur.execute ("SELECT * FROM  books where id = %s;",book_id)
-      
+  
+  def insert_unique_author(self, authors):
+    '''
+    Insert author(s) ensuring uniqueness.
+    
+    '''
+    return self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", authors) 
+    
+     
     def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
                 city,mtype, add_date):
       ''' Insert a books' complete details in to the DB.
