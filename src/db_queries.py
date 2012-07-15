@@ -94,7 +94,9 @@ class sqlite:
     
   def create_db(self):
     '''Create the DB with schema.
-    The query is the schema file
+    The query is the schema file.  We shouldn't get this far with a
+    missing config file.  The user is prompted to edit one.   The lite_db
+    name shouls be left alone.
     
     schema created with:
     sqlite books.db, derived from the MySQL DB
