@@ -58,26 +58,21 @@ class load_config:
 
       f = open(config_file,"w")
       # Write a dummy config file if one doesn't exist
-      '''
-      #The python way, but it converts everything to LOWER case!  I don't want that.
+      #The python way, but it converts everything to LOWER case! 
       parser = ConfigParser.SafeConfigParser()
       parser.add_section('database')
       parser.add_section('calibre')
       parser.set('database', 'USER', 'username')
       parser.set('database', 'PASSWD', 'password')
       parser.set('database', 'DB', 'db_name')
+      parser.set('database', '# DON\'T change the LITE_DB name', '')
       parser.set('database', 'LITE_DB', 'books.db')
-      parser.set('database', '# DON'T change the LITE_DB name', '')
+      parser.set('database', '# Select either sqlite or mysql, Disable a type with a leading #', '')
+      parser.set('database', 'use', 'sqlite')
+      parser.set('database', '#use', 'mysql')
       parser.set('calibre', '# Optional: Define path to Calibre database, Users home dir will be automatically determined.', '')
       parser.set('calibre', 'CALIBRE_DB', 'calibre_db')
       parser.write(f)
-      '''
-      # The dirty way.  Preserves case.  Probably not cross OS safe.
-      f.write('[database]\nUSER = username\nPASSWD = password\nDB = db_name\n\
-      # Don\'t change the LITE_DB name. \n\
-      LITE_DB = sqlite.db\nDBHOST = hostname\n\
-      \n# Optional: Define path to Calibre database, Users home dir will be\
-      automatically determined.\n[calibre]\nCALIBRE_DB = calibre_db\n')
       # Set access mode to owner only
       os.fchmod(f.fileno(),stat.S_IREAD|stat.S_IWRITE)
       f.close()
@@ -90,6 +85,7 @@ class load_config:
       self.db_base = config.get('database','DB')
       self.db_host = config.get('database','DBHOST')
       self.lite_db = config.get('database','LITE_DB')
+      self.use = config.get('database','USE')
       try:
         self.calibre_db = config.get('calibre','CALIBRE_DB')
       except:

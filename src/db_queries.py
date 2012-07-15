@@ -57,7 +57,6 @@ iamhere = os.path.dirname( os.path.realpath( __file__ ) )
 #print "I am here",iamhere
 
 # Read the config file
-
 config = config.load_config() # For file based config
 
 try:
@@ -66,7 +65,11 @@ try:
   db_base = config.db_base
   db_host = config.db_host
   db_lite = config.lite_db
-except: quit()
+  use = config.use # What DB type to use
+except: 
+  print "\nThere There is some error in the config file.\nCannot continue!\n\n "
+  quit()
+print "Module ",use
 
 
 ########################################################################
@@ -78,7 +81,7 @@ class sqlite:
   import sqlite3
   
   def __init__(self):
-    if ! os.path.exists(db_lite): #Create the db with schema
+    if not os.path.exists(db_lite): #Create the db with schema
       self.create_db()
 
     self.con = self.sqlite3.connect(db_lite)
@@ -404,8 +407,25 @@ class xml():
   def __init__(self):
     pass_
     
-    
-    
+########################################################################    
+
+''' In order to make a runtime decision about which class we are going
+to inherit from we need to do...
+
+See http://code.activestate.com/recipes/285262-create-objects-from-variable-class-names/
+'''
+object = globals()[use] # use is the class name from the config file
+
+class sql(object):
+  '''Inherit the approriate class methods here depending on how
+  we are constructed.  Object is whatever class name we provide.
+  To use:
+  
+  from db_queries import sql as sql
+  foo = sql()
+  
+  '''
+
 ########################################################################    
 
 # Test harness starts here
