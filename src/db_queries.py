@@ -207,12 +207,12 @@ class mysql:
         [('%%%s%%' % search_string), ('%%%s%%' % search_string)])
     return  self.cur.fetchall()
     
-    def get_by_id(self, book_id):
-      ''' Search for book on its ID.  NB. This is NOT its ISBN
-      
-      '''
-      return self.cur.execute ("SELECT * FROM  books where id = %s;",book_id)
-  
+  def get_by_id(self, book_id):
+    ''' Search for book on its ID.  NB. This is NOT its ISBN
+    
+    '''
+    return self.cur.execute ("SELECT * FROM  books where id = %s;",book_id)
+
   def insert_unique_author(self, authors):
     '''
     Insert author(s) ensuring uniqueness.
@@ -221,27 +221,35 @@ class mysql:
     return self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", authors) 
     
      
-    def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
-                city,mtype, add_date):
-      ''' Insert a books' complete details in to the DB.
-      
-      ''' 
-      return self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
-        year, publisher, city, copies, mtype, add_date) \
-        VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
-          (title, authors, isbn, abstract,year,publisher,city, 1, mtype, add_date))
-         
-    def insert_unique_author(self, authors):
-      self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [authors])
+  def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
+              city,mtype, add_date):
+    ''' Insert a books' complete details in to the DB.
+    
+    ''' 
+    return self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
+      year, publisher, city, copies, mtype, add_date) \
+      VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
+        (title, authors, isbn, abstract,year,publisher,city, 1, mtype, add_date))
+       
+  def insert_unique_author(self, authors):
+    self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [authors])
       
 ########################################################################      
 class calibre:
-  import calibre
+  '''
+  DB queries for Calibre database.  Note that many.some users will not 
+  have Caliber installed so this has to fail quietly.  Could just return
+  empty results.
+  
+  '''
+  try: import calibre
+  except: pass
   def __init__(self):
     self.e_books = self.calibre.calibre()
     
   def get_all_calibre(self):
-    return self.e_books
+    try:return self.e_books
+    except: return[]
   
 
 # Test harness starts here
