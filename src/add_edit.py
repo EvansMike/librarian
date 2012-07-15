@@ -300,7 +300,7 @@ class add_edit:
       #logging.info(bid)
       if bid != 0 and self.mybook.id != 0 and self.orig_book.copies > 0:
         # TODO: Problematic in sqlite.
-        db_query.add_borrower(self.mybook.id, bid)
+        db_query.add_borrow(self.mybook.id, bid)
         self.status.set_text(_("Book has been marked as borrowed."))
         self.orig_book.copies -= 1
       else:

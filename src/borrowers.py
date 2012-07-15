@@ -30,8 +30,11 @@ try:
   import load_config
 except  ImportError, e:
   print e
-  quit()
 
+  
+#from db_queries import mysql as sql # Make this choosable for mysql and sqlite
+# or 
+from db_queries import sqlite as sql
 
 APP = 'librarian'
 gettext.textdomain(APP)
@@ -86,10 +89,12 @@ class borrowers():
     '''If we are passed a bid > 0 populate the dialog.
 
     '''
+    db_query = sql()
     logging.info(self.bid)
     if self.bid > 0:
-      self.cur.execute("SELECT * from borrowers where id = %s;",self.bid)
-      result = self.cur.fetchall()
+      get_one_borrower(self.bid):
+      #self.cur.execute("SELECT * from borrowers where id = %s;",self.bid)
+      #result = self.cur.fetchall()
       logging.info(result[0])
       self.name.set_text(result[0][1])
       self.contact.set_text(result[0][2])
@@ -101,6 +106,7 @@ class borrowers():
     ''' Add a borrower to the database.
 
     '''
+    db_query = sql()
     logging.info("Added a borrower")
     logging.info(self.name.get_text())
     if len(self.name.get_text()) > 0:
@@ -122,6 +128,7 @@ class borrowers():
     reader for viewing and printing of the document.
 
     '''
+    db_query = sql()
     try:
       import time, os
       from reportlab.lib.enums import TA_LEFT

@@ -165,7 +165,7 @@ class sqlite:
         (title, authors, abstract,year,publisher, city, mtype, bid))
     self.con.commit()   
     
-  def add_borrower(self, id, bid):
+  def add_borrow(self, id, bid):
     ''' INsert a borrower into the borrows table.
     TODO: This doesn't work as is in sqlite3, FIXME
     '''
@@ -233,6 +233,9 @@ class mysql:
     '''
     self.cur.execute ("SELECT * FROM  borrowers;")
     return self.cur.fetchall()
+  
+  def get_one_borrower(bid):
+    return self.cur.execute("SELECT * from borrowers where id = '%s';" % self.bid)
     
   def search_books(self, search_string):
     ''' 
@@ -272,11 +275,14 @@ class mysql:
           year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
         (title, authors, abstract,year,publisher, city, mtype, bid))  
         
-  def add_borrower(self, id, bid):      
+  def add_borrow(self, id, bid):      
     self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
       SELECT %s, %s, now() FROM DUAL WHERE NOT EXISTS \
       (SELECT 1 FROM borrows WHERE book = %s AND borrower = %s AND i_date IS NULL);",
       [id, bid,id, bid])
+      
+  def add_new_borrower():
+    
       
   def update_borrows(self, id, bid):
     return self.cur.execute("UPDATE borrows SET i_date = NOW() \
