@@ -163,7 +163,19 @@ class sqlite:
     self.cur.execute("UPDATE books SET title = '%s', author = '%s',abstract = '%s', \
           year = '%s', publisher = '%s', city = '%s',mtype = '%s' WHERE id = '%s'" % \
         (title, authors, abstract,year,publisher, city, mtype, bid))
-    self.con.commit()    
+    self.con.commit()   
+    
+  def add_borrower(self, id, bid):
+    self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
+    SELECT '%s', '%s', DATETIME('now') FROM DUAL WHERE NOT EXISTS \
+    (SELECT 1 FROM borrows WHERE book = '%s' AND borrower = '%s' AND i_date IS NULL);" % \
+    (id, bid,id, bid))
+    
+  def update_borrows(self, id, bid):
+    return self.cur.execute("UPDATE borrows SET i_date = DATETIME('now') \
+          WHERE book = '%s' AND borrower = '%s' AND i_date IS NULL" % \
+          (id, bid))
+    
     
 #######################################################################    
 class mysql:
@@ -250,7 +262,20 @@ class mysql:
   def update_book(self, title, authors, abstract, year, publisher, city, mtype, bid):
     self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \
           year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
-        (title, authors, abstract,year,publisher, city, mtype, bid))   
+        (title, authors, abstract,year,publisher, city, mtype, bid))  
+        
+  def add_borrower(self, id, bid):      
+    self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
+      SELECT %s, %s, now() FROM DUAL WHERE NOT EXISTS \
+      (SELECT 1 FROM borrows WHERE book = %s AND borrower = %s AND i_date IS NULL);",
+      [id, bid,id, bid])
+      
+  def update_borrows(self, id, bid):
+    return self.cur.execute("UPDATE borrows SET i_date = NOW() \
+          WHERE book = %s AND borrower = %s AND i_date IS NULL",
+          [id, bid])
+    
+    
 ########################################################################      
 class calibre:
   '''

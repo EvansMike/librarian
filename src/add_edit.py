@@ -290,6 +290,7 @@ class add_edit:
   def on_checkbutton1_toggled(self, widget):
     if not self.lentlist.get_iter_first():
       return
+    db_query = sql()
     #logging.info(widget)
     # Get widget state
     # Set book as borrowed or not with borrower as key.
@@ -299,11 +300,12 @@ class add_edit:
       bid = self.lentlist[foo][0]
       #logging.info(bid)
       if bid != 0 and self.mybook.id != 0 and self.orig_book.copies > 0:
-        self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
-            SELECT %s, %s, now() FROM DUAL WHERE NOT EXISTS \
-            (SELECT 1 FROM borrows WHERE book = %s AND borrower = %s AND i_date IS NULL);",
-            [self.mybook.id, bid,self.mybook.id, bid])
-        self.db.commit()
+        db_query.add_borrower(self.mybook.id, bid)
+        #self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
+        #    SELECT %s, %s, now() FROM DUAL WHERE NOT EXISTS \
+        #    (SELECT 1 FROM borrows WHERE book = %s AND borrower = %s AND i_date IS NULL);",
+        #    [self.mybook.id, bid,self.mybook.id, bid])
+        #self.db.commit()
         self.status.set_text(_("Book has been marked as borrowed."))
         self.orig_book.copies -= 1
       else:
@@ -317,10 +319,11 @@ class add_edit:
       foo = self.lent_select.get_active()
       bid = self.lentlist[foo][0]
       if bid != 0:
-        result = self.cur.execute("UPDATE borrows SET i_date = NOW() \
-          WHERE book = %s AND borrower = %s AND i_date IS NULL",
-          [self.mybook.id, bid])
-        self.db.commit()
+        #result = self.cur.execute("UPDATE borrows SET i_date = NOW() \
+        #  WHERE book = %s AND borrower = %s AND i_date IS NULL",
+        #  [self.mybook.id, bid])
+        #self.db.commit()
+        result =  db_query.update_borrows(self.mybook.id, bid)
         if result:
           self.orig_book.copies += 1
           self.status.set_text(_("Book has been marked as returned."))
