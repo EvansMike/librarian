@@ -284,6 +284,13 @@ class mysql:
   def get_book_count_by_isbn(self, bar):
     self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;" , bar)
     return  self.cur.fetchone()[0]
+  
+  def get_book_borrower_by_book_id(self,bid):
+    self.cur.execute("select borrowers.name, borrows.o_date FROM  borrows, borrowers \
+      where i_date is null and borrows.book='%s' \
+      AND borrows.borrower=borrowers.id;" % bid)
+    return self.cur.fetchone() 
+    
     
   def get_qrcode_count(self, isbn):
     self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = %s;" , "ISBN: "+str(self.abook.id))
