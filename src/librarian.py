@@ -179,11 +179,15 @@ class librarian:
           row.append(Paragraph(model.get_value(myiter, 9),styles["Normal"]))
           row.append(Paragraph(model.get_value(myiter, 1),styles["Normal"]))
           row.append(Paragraph(model.get_value(myiter, 2),styles["Normal"]))
-          mm = (model.get_value(myiter,9)) + ":  " + (model.get_value(myiter, 1))+ ":  " +(model.get_value(myiter, 2))
+          row.append(Paragraph(model.get_value(myiter, 3),styles["Normal"]))
+          #mm = (model.get_value(myiter,9)) + ":  " + \
+          #      (model.get_value(myiter, 1))+ ":  " +\
+          #      (model.get_value(myiter, 2))+ ":  " +\
+          #     (model.get_value(myiter, 3))
           #logging.info(row)
           myiter = model.iter_next(myiter)
         data.append(row)
-      t=Table(data,[50,150,350])
+      t=Table(data,[50,150,250,120]) # Values are cell widths
       t.hAlign='LEFT' # Move WHOLE TABLE to the left, defaults to CENTRE
       t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP')])) # Apples to CELLS
       Story.append(t)
@@ -202,6 +206,7 @@ class librarian:
     and appends to the liststore with the author names re-ordered.
     
     '''
+    db_query = sql()
     self.booklist.clear()
     for row in result:
       # Deal with rearranging author names to last, first
@@ -218,8 +223,12 @@ class librarian:
       else:
         author = "N/A"
       #logging.info(author)
+      abstract = row['abstract']
+      b_book = db_query.get_book_borrower_by_book_id(row['id'])
+      if b_book: abstract = b_book['name'] + " : " + b_book['o_date'] 
       self.booklist.append([row['isbn'], author, row['title'],
-      row['abstract'], row['publisher'], row['city'], str(row['year']),
+      abstract,
+      row['publisher'], row['city'], str(row['year']),
       row['id'], row['copies'], row['mtype']])
       
 
@@ -258,6 +267,8 @@ class librarian:
     '''Display the loaned out books
 
     '''
+    column = self.treeview.get_column(3)
+    column.set_title(_('Borrower'))
     # Display all books on loan
     self.get_book_list(BORROWED)
 
