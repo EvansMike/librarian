@@ -16,6 +16,7 @@
   MA 02110-1301, USA.
 
 A GUI for setting up database and Amazon configuration tokens.
+Also get stats data from db.
 '''
 
 import sys
