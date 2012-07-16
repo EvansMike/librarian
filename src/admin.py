@@ -28,8 +28,8 @@ import datetime
 
 _ = gettext.gettext
 
-logger = logging.getLogger("configurator")
-logging.basicConfig(format='%(module)s: %(levelname)s:%(message)s: LINE %(lineno)d', level=logging.DEBUG)
+#logger = logging.getLogger("configurator")
+logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s: ', level=logging.DEBUG)
 
 try:
 	import pygtk
@@ -43,8 +43,13 @@ except:
 	sys.exit(1)
 
 config = gconf_config.gconf_config()
+db_user = config.db_user
+db_pass = config.db_pass
+db_base = config.db_base
+db_host = config.db_host
+db_lite = config.lite_db
+use = config.use # What DB type to use
 
-  pass
   
 class configurator:
   
@@ -60,16 +65,7 @@ class configurator:
     need to create the settings.  
     TODO: We shouldn't destroy existing settings however.
     '''
-    try:
-      self.db_user = config.db_user
-      self.db_pass = config.db_pass
-      self.db_base = config.db_base
-      self.db_host = config.db_host
-      self.AWS_KEY = config.az_key
-      self.SECRET_KEY = config.az_skey
-    except: # Means the settings don't exist so we have to create them
-      config.test_config() # Not a good method name is it?
-      self.load_settings() # Now try again
+
     
   def save_settings(self):
     pass

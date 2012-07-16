@@ -112,7 +112,7 @@ class calibre:
     query = "select name, title from authors, books, books_authors_link \
     where  books.id=books_authors_link.author \
     AND authors.id=books_authors_link.book \
-    AND title LIKE '%%%s%%';"  % (needle)
+    AND title LIKE '%% %s %%';"  % (needle)
     c.execute(query)
     # Insert data into booklist
     for row in c:
@@ -121,7 +121,7 @@ class calibre:
     query = "select name, title from authors, books, books_authors_link \
     where  books.id=books_authors_link.author \
     AND authors.id=books_authors_link.book \
-    AND name LIKE '%%%s%%';"  % (needle)
+    AND name LIKE '%% %s %%';"  % (needle)
     c.execute(query)
     # Insert data into booklist
     for row in c:
