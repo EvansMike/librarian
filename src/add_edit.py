@@ -144,9 +144,16 @@ class add_edit:
         self.orig_book.copies -=1
         self.copies.set_text(str(self.orig_book.copies))
       # Set active to current borrower.
-      self.lent_select.set_active(bid )
-      self.lent_date.set_text(str(self.o_date))
-      self.lent.set_active(True)
+      # FIXME: This get the first borrower of a copy.  Normally not an issue
+      # for personal libraries, it will be for lending libraries though. 
+      n = 0
+      for lender in self.lentlist:
+        if lender[0] == bid:
+          self.lent_select.set_active(n)
+          self.lent_date.set_text(str(self.o_date))
+          self.lent.set_active(True)
+          break
+        n += 1
     else:
       #self.lentlist.prepend([0, "", ""]) 
       self.lent_select.set_active(0)
@@ -310,7 +317,7 @@ class add_edit:
         self.orig_book.copies -= 1
       else:
         self.status.set_text(_("Book has been NOT marked as borrowed."))
-        self.lent.set_active(False)
+        #self.lent.set_active(False)
       self.lent_date.set_text(str(self.o_date))
 
     else: # Unchecked

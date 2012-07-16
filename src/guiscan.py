@@ -113,6 +113,7 @@ class scanner:
     buff = self.text_view.get_buffer()
     buff.set_text(_("To begin press scan."))
     self.text_view.set_buffer(buff)
+    # This isn't really good enough but...
     try: device = '/dev/video0'
     except: device = '/dev/video1'
     # create a Processor

@@ -35,7 +35,6 @@ TODO: If the sqlit3 db file doesn't exist we should create a db with it's schema
 import sys,os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.pardir))
 import load_config as config
-#import gconf_config as config
 import locale
 import gettext
 import logging
