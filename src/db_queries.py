@@ -134,10 +134,22 @@ class sqlite:
     return self.cur.fetchone()[0] 
     
   def get_borrowed_books(self):
-    return mysql().get_borrowed_books()
+    ''' 
+    Get a list of books that have been borrowed.
+    
+    '''
+    command = "select * from books, borrows where books.id = borrows.book \
+                      and i_date is null;"
+    self.cur.execute(command)
+    return self.cur.fetchall()
+    #return mysql().get_borrowed_books()
     
   def get_borrowers_borrowed_books(self):
-    return mysql().get_borrowers_borrowed_books()
+    self.cur.execute("SELECT title, author, name, o_date FROM books, \
+        borrows, borrowers WHERE books.id = borrows.book \
+        AND borrows.borrower=borrowers.id AND i_date is null \
+        ORDER BY o_date;")
+    return self.cur.fetchall() 
     
     
   def get_borrows(self, bid, copies):
@@ -208,14 +220,11 @@ class sqlite:
     self.con.commit()   
     
   def add_borrow(self, id, bid):
-    ''' INsert a borrower into the borrows table.
-    TODO: This doesn't work as is in sqlite3, FIXME
+    ''' Insert a borrower into the borrows table.
     '''
-    return #Because I'm broken  FIXME
     self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
-    SELECT '%s', '%s', DATETIME('now') FROM DUAL WHERE NOT EXISTS \
-    (SELECT 1 FROM borrows WHERE book = '%s' AND borrower = '%s' AND i_date IS NULL);" % \
-    (id, bid,id, bid))
+                  VALUES('%s','%s',DATETIME('NOW'));" %  (id, bid))
+    self.con.commit()
     
   def update_borrows(self, id, bid):
     return self.cur.execute("UPDATE borrows SET i_date = DATETIME('now') \
