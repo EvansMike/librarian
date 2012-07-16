@@ -137,15 +137,16 @@ class add_edit:
       bid = row["borrower"]
       book_id = row["book"]
       self.o_date = row["o_date"]
-      logger.info(bid)
-    if bid and bid != 0:
+      logging.info(bid)
+    if bid != 0:
       #logging.info(bid)
       if self.orig_book.id == book_id:
         self.orig_book.copies -=1
         self.copies.set_text(str(self.orig_book.copies))
       # Set active to current borrower.
-      self.lent_select.set_active(bid - 1)
+      self.lent_select.set_active(bid )
       self.lent_date.set_text(str(self.o_date))
+      self.lent.set_active(True)
     else:
       #self.lentlist.prepend([0, "", ""]) 
       self.lent_select.set_active(0)
@@ -268,6 +269,7 @@ class add_edit:
     if bid > 0:
       self.add_button.set_label(_("Edit"))
     else:
+      self.lent.set_active(False)
       self.add_button.set_label(_("Add"))
     # Get list of borrows for this book
     result = db_query.get_borrows(self.mybook.id,bid)
@@ -307,9 +309,8 @@ class add_edit:
         self.status.set_text(_("Book has been marked as borrowed."))
         self.orig_book.copies -= 1
       else:
-        pass
-        #self.status.set_text(_("Book has been NOT marked as borrowed."))
-        #self.lent.set_active(False)
+        self.status.set_text(_("Book has been NOT marked as borrowed."))
+        self.lent.set_active(False)
       self.lent_date.set_text(str(self.o_date))
 
     else: # Unchecked
