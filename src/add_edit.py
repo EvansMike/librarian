@@ -243,7 +243,7 @@ class add_edit:
       self.update_book()
       db_query.update_book(book.title, book.authors, book.abstract,book.year,book.publisher,
         book.city, book.mtype, book.id)
-      logger.info(book.mtype)
+      logging.info(book.mtype)
       db_query.insert_unique_author(book.authors)
       self.status.set_text(_(" Book has been updated."))
       self.orig_book = copy.copy(book) # So we can compare again.

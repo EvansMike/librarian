@@ -62,13 +62,6 @@ It's just a text field, the id is auto incremented.
 Obviously there should be a nice user friendly GUI for this. :)
 Update: There is now.
 
-Update: The config data are now using gconf.  This is (very) marginally more 
-secure
-but more importantly is not sensitive to config file location, providing
-gconf is installed on target system.  So go ahead, install it.  Edit the source
-if it isn't to revert to file based config.  Needs a GUI to setup stuff though,
-else use gconf-editor, but this is isn't exactly (l)user friendly.  TODO, 
-write the setup GUI.
 
 Update:  2012-04-12 
 You can now scan DVDs and CDs provided you have a Amazon web
@@ -92,3 +85,11 @@ TODO:
   or even know how to.  MySQL is good for centralised storage but most
   users wouldn't want that anyway.  Until I com up with a smartphone
   version. :)
+  
+  To get who borrowed what and for how long:
+  select title, name, DAtediff(i_date,o_date) as days 
+      from borrows, borrowers, books 
+      where borrows.borrower=borrowers.id 
+      and books.id=borrows.book;
+      
+
