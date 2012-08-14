@@ -260,9 +260,8 @@ class add_edit:
     ''' Remove selected book from database '''
     db_query = sql()
     #logging.info(str(self.mybook.id) + " about to be removed.")
-    remove_book(self.mybook.id)
+    db_query.remove_book(self.mybook.id)
     self.status.set_text (_(" Book has been removed."))
-    self.db.commit()
 
   def on_comboboxentry1_changed(self,widget):
     ''' Do things when selection is changed
