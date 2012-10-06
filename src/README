@@ -31,6 +31,11 @@ The database name (books in the example above) can be anything as long as the
 config file matches.  If the config file contains a password so take care to 
 make it secure from prying eyes.
 
+Can also use sqlite.  Edit db_conf.cfg to use whatever database you like.
+The sqlite file will be created it it doesn't already exist.  Sqlite is 
+easier to set up but not so useful if you want to access the data from 
+multiple computers.
+
 See INSTALL for install instructions.
 
 OBSOLETE
