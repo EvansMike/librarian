@@ -8,7 +8,7 @@ from src import version
 
   
 setup (
-      name='Librarian',
+      name='librarian',
       version=version.__version__,
       description='Helps you catalogue your books using a webcam to scan \
       the ISBN barcodes',
@@ -16,7 +16,8 @@ setup (
       author_email='mikee@saxicola.co.uk',
       url='https://github.com/EvansMike/librarian.git',
       license='GNU General Public License',
-      packages=['src'],
+      packages=['librarian'],
+      package_dir={'librarian': 'src'},
       package_data={'src': ['po/*']
       }
 )
