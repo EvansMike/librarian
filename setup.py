@@ -7,7 +7,8 @@ from src import version
 # python setup.py sdist 
 
   
-setup (name='Librarian',
+setup (
+      name='Librarian',
       version=version.__version__,
       description='Helps you catalogue your books using a webcam to scan \
       the ISBN barcodes',
