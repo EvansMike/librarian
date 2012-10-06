@@ -116,7 +116,6 @@ class calibre:
     c.execute(query)
     # Insert data into booklist
     for row in c:
-        print row
         mybooklist.append(['', row[0], row[1], \
         '', '', '', '0', 0, 0, 'e-book'])
     query = "select name, title from authors, books, books_authors_link \
@@ -126,7 +125,6 @@ class calibre:
     c.execute(query)
     # Insert data into booklist
     for row in c:
-        print row
         mybooklist.append(['', row[0], row[1], \
         '', '', '', '0', 0, 0, 'e-book'])
     return mybooklist
