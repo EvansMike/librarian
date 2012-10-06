@@ -51,8 +51,7 @@ _ = gettext.gettext
 
 logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
-# Do we produce a QR code?
-QR_CODE = True
+
 
 try:
 	import pygtk
@@ -73,7 +72,8 @@ db_user = config.db_user
 db_pass = config.db_pass
 db_base = config.db_base
 db_host = config.db_host
-qr_code = config.qr_code
+# Do we produce a QR code?
+QR_CODE = config.qr_code
 
 
 
@@ -200,7 +200,7 @@ class scanner:
           Change output dir
     DONE: Store images in the DB
     '''
-    if not qr_code: return
+    from db_queries import sql as sql
     db_query = sql()
     if QR_CODE:
       import getpass
@@ -217,9 +217,7 @@ class scanner:
       qr = qrencode.encode_scaled(qr_data, (size*3)+2)
       img = qr[2]
 
-      db_query.get_qrcode_count_by_isbn(self.abook.id)
-      #self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = %s;","ISBN: "+str(self.abook.id))
-      #count = self.cur.fetchone()[0]
+      count = db_query.get_qrcode_count(self.abook.id)
       if count == 0:
         sql = 'INSERT INTO qrcodes(caption,img) VALUES(%s,%s)' # But how to get them back out again?  See below.
         args = ("ISBN: " + str(self.abook.id), img, )

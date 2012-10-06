@@ -130,7 +130,7 @@ class sqlite:
     return  self.cur.fetchone()[0]
   
   def get_qrcode_count(self, isbn):
-    self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = '%s';" % "ISBN: "+str(self.abook.id))
+    self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = '%s';" % "ISBN: "+str(isbn))
     return self.cur.fetchone()[0] 
     
   def get_borrowed_books(self):
@@ -294,8 +294,10 @@ class mysql:
     
     
   def get_qrcode_count(self, isbn):
-    self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = %s;" , "ISBN: "+str(self.abook.id))
-    return self.cur.fetchone()[0] 
+    ''' Get a count of QR codes matching the ISBN
+    '''
+    self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = %s;" , "ISBN: "+str(isbn))
+    return self.cur.fetchone()
     
   def get_borrowed_books(self):
     ''' 

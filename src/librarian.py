@@ -139,7 +139,7 @@ class librarian:
     self.treeview.append_column(column)
 
     self.get_book_list(1)
-    self.status1.set_text("Version:" + version.__version__)
+    self.status1.set_text("Version:" + str(version.__version__))
     self.search_string = builder.get_object("entry_search")
 
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
