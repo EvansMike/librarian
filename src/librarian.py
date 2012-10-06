@@ -312,7 +312,7 @@ class librarian:
     self.get_book_list(1) # Repopulate book list.
     
   def on_button_search_clicked(self, widget):
-    ''' Get the search string from enytry_searchm query the DB and display 
+    ''' Get the search string from entry_search, query the DB and display 
     the result.
     
     '''

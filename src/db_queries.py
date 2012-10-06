@@ -185,7 +185,7 @@ class sqlite:
     
     '''
     self.cur.execute("SELECT * FROM books WHERE title LIKE ? OR author LIKE ?", \
-               ('%% %s %%' % search_string, '%% %s %%' % search_string))
+               ('%%%s%%' % search_string, '%%%s%%' % search_string))
     return  self.cur.fetchall()  
   
   def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
@@ -347,7 +347,7 @@ class mysql:
     
     '''
     self.cur.execute("SELECT * FROM books WHERE title LIKE %s OR author LIKE %s", \
-        [('%% %s %%' % search_string), ('%% %s %%' % search_string)])
+        [('%%%s%%' % search_string), ('%%%s%%' % search_string)])
     return  self.cur.fetchall()
     
   def get_by_id(self, book_id):

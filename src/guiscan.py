@@ -316,7 +316,7 @@ class scanner:
     buff = self.text_view.get_buffer()
     buff.insert_at_cursor(_( "\n\nYou added this " + str(self.abook.mtype) + ".\n"))
     self.text_view.set_buffer(buff)
-    self.make_qr_code()
+    #self.make_qr_code()
     print "You added this", str(self.abook.mtype)
 
 
