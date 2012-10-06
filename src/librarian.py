@@ -16,7 +16,6 @@
   MA 02110-1301, USA.
 
 A (in)complete home book collection manager.
-Could do with extending to cover e-books, CDs and DVDs perhaps?
 '''
 
 import os, sys
@@ -139,14 +138,14 @@ class librarian:
     self.treeview.append_column(column)
 
     self.get_book_list(1)
-    self.status1.set_text("Version:" + str(version.__version__))
+    self.status1.set_text("Version:" + version.__version__)
     self.search_string = builder.get_object("entry_search")
 
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
 
 
   def on_button_print_clicked(self, widget):
-    '''Print the entire book list to pdf then opes the default pdf viewer.
+    '''Print the entire book list to pdf then opens the default pdf viewer.
     TODO: Auto width columns
     This will likely be system specific
     '''
@@ -168,8 +167,6 @@ class librarian:
     styles=getSampleStyleSheet()
     text = Paragraph("long line",styles['Normal'])
     styles.add(ParagraphStyle(name='Justify', alignment=TA_LEFT))
-    #Story.append(Paragraph("Book Listing", styles["Normal"]))
-    #Story.append(Spacer(1, 12))
     model = self.booklist
     myiter = model.get_iter_first()
     if myiter is not None:
@@ -180,11 +177,6 @@ class librarian:
           row.append(Paragraph(model.get_value(myiter, 1),styles["Normal"]))
           row.append(Paragraph(model.get_value(myiter, 2),styles["Normal"]))
           row.append(Paragraph(model.get_value(myiter, 3),styles["Normal"]))
-          #mm = (model.get_value(myiter,9)) + ":  " + \
-          #      (model.get_value(myiter, 1))+ ":  " +\
-          #      (model.get_value(myiter, 2))+ ":  " +\
-          #     (model.get_value(myiter, 3))
-          #logging.info(row)
           myiter = model.iter_next(myiter)
         data.append(row)
       t=Table(data,[50,150,250,120]) # Values are cell widths
@@ -281,7 +273,6 @@ class librarian:
     #logging.info("Do the scan thang")
     from guiscan import scanner
     s = scanner()
-    #scanner.on_button_scan_clicked(s)
     self.get_book_list(ALL) # All books
 
 

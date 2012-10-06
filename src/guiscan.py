@@ -42,8 +42,6 @@ import logging
 import gettext
 import book
 import datetime
-#from db_queries import mysql as sql # Make this choosable for mysql and sqlite
-# or 
 from db_queries import sql as sql
 
 
@@ -243,7 +241,7 @@ class scanner:
 
     '''
     db_query = sql()
-    # Remove a scanned book from the database.  Why?
+    # Remove a scanned book from the database.
     print "You removed this book."
     buff = self.text_view.get_buffer()
     try:
@@ -302,6 +300,7 @@ class scanner:
     self.db.commit()
     
     # Get and insert the track listing
+    # TODO: Move DB stuff to db_queries
     if str(self.abook.mtype) == 'Music': 
       self.cur.execute("SELECT id FROM books WHERE title=%s AND author=%s LIMIT 1;",\
             [str(self.abook.title), str(self.abook.authors)])

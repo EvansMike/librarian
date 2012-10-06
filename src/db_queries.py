@@ -142,7 +142,6 @@ class sqlite:
                       and i_date is null;"
     self.cur.execute(command)
     return self.cur.fetchall()
-    #return mysql().get_borrowed_books()
   
   def get_borrowed_book_by_id(self, bid):
     self.cur.execute("select * FROM  borrows where i_date is null and borrows.book='%s'" % bid)
