@@ -193,15 +193,16 @@ class librarian:
     elif os.name == "posix": # Linux
       os.system("/usr/bin/xdg-open " + filename)
 
-  def fill_booklist(self, result):
+  def fill_booklist(self, result, append=False):
     ''' 
     Authors names are stored in regular text, we want so get them by
     family,first name order.  This iterates through the result and
     and appends to the liststore with the author names re-ordered.
-    
+    @param result
+    @param append boolean, whether to append to list.
     '''
     db_query = sql()
-    self.booklist.clear()
+    if not append: self.booklist.clear()
     for row in result:
       # Deal with rearranging author names to last, first
       if row['author'] != None:
@@ -313,11 +314,13 @@ class librarian:
     search_string = self.search_string.get_text()
     if search_string == "": return
     result = db_query.search_books(search_string)
-    self.fill_booklist(result)
+    self.fill_booklist(result,False)
     # Now search the calibre database.
     import calibre
     search = calibre.calibre()
-    search.search_calibre(search_string, self.booklist) # search and add to booklist
+    result = search.search_calibre(search_string, self.booklist) # search and add to booklist
+    #self.fill_booklist(result, True) # Append to the list
+    #del booklist
     return
 
   def treeview1_row_activated_cb(self, widget, path, col):

@@ -75,8 +75,8 @@ class calibre:
     c = conn.cursor()
     # Get author title pair.
     c.execute('select name, title from authors, books, books_authors_link \
-    where  books.id=books_authors_link.author \
-    AND authors.id=books_authors_link.book \
+    where  books.id=books_authors_link.book \
+    AND authors.id=books_authors_link.author \
     ;')
     # Insert data into booklist
     for row in c:
@@ -108,23 +108,25 @@ class calibre:
     self.booklist = booklist
     conn = sqlite3.connect(self.calibre_base)
     c = conn.cursor()
-    # Get author title pair for ALL the e-books.
+    # Get author title pair.
     query = "select name, title from authors, books, books_authors_link \
-    where  books.id=books_authors_link.author \
-    AND authors.id=books_authors_link.book \
-    AND title LIKE '%% %s %%';"  % (needle)
+    where  books.id=books_authors_link.book \
+    AND authors.id=books_authors_link.author \
+    AND title LIKE '%%%s%%';"  % (needle)
     c.execute(query)
     # Insert data into booklist
     for row in c:
+        print row
         mybooklist.append(['', row[0], row[1], \
         '', '', '', '0', 0, 0, 'e-book'])
     query = "select name, title from authors, books, books_authors_link \
-    where  books.id=books_authors_link.author \
-    AND authors.id=books_authors_link.book \
-    AND name LIKE '%% %s %%';"  % (needle)
+    where  books.id=books_authors_link.book \
+    AND authors.id=books_authors_link.author \
+    AND name LIKE '%%%s%%';"  % (needle)
     c.execute(query)
     # Insert data into booklist
     for row in c:
+        print row
         mybooklist.append(['', row[0], row[1], \
         '', '', '', '0', 0, 0, 'e-book'])
     return mybooklist
