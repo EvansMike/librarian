@@ -6,11 +6,12 @@ out how it works themselves.
 Also requires the python packages:
 biblio
 zbar
-If you want qrcode then also needs qrencode
+MySQLdb
+copy
 gtk
 sqlite3
 reportlab
-
+qrencode
 
 I wanted to catalog all my books using their barcodes as input and track who
 borrows my books.  That's all.  I looked online for a program that would
