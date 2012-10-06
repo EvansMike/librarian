@@ -62,6 +62,7 @@ class load_config:
       parser = ConfigParser.SafeConfigParser()
       parser.add_section('database')
       parser.add_section('calibre')
+      parser.add_section('qr_code')
       parser.set('database', 'USER', 'username')
       parser.set('database', 'PASSWD', 'password')
       parser.set('database', 'DB', 'db_name')
@@ -72,6 +73,7 @@ class load_config:
       parser.set('database', '#use', 'mysql')
       parser.set('calibre', '# Optional: Define path to Calibre database, Users home dir will be automatically determined.', '')
       parser.set('calibre', 'CALIBRE_DB', 'calibre_db')
+      parser.set('qr_code', 'QR_CODE', 'False')
       parser.write(f)
       # Set access mode to owner only
       os.fchmod(f.fileno(),stat.S_IREAD|stat.S_IWRITE)
@@ -86,6 +88,7 @@ class load_config:
       self.db_host = config.get('database','DBHOST')
       self.lite_db = config.get('database','LITE_DB')
       self.use = config.get('database','USE')
+      self.qr_code = config.get('qr_code','QR_CODE')
       try:
         self.calibre_db = config.get('calibre','CALIBRE_DB')
       except:

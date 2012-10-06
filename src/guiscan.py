@@ -36,9 +36,9 @@ import biblio.webquery
 import qrencode
 import MySQLdb
 import sys
-#import ConfigParser
+import load_config as config
 import logging
-import gconf_config
+#import load_config as gconf_config
 import gettext
 import book
 import datetime
@@ -66,11 +66,14 @@ except:
 	sys.exit(1)
 
 #config = gconf_config.load_config()
-config = gconf_config.gconf_config()
+#config = gconf_config.gconf_config()
+# Read the config file
+config = config.load_config() # For file based config
 db_user = config.db_user
 db_pass = config.db_pass
 db_base = config.db_base
 db_host = config.db_host
+qr_code = config.qr_code
 
 
 
@@ -197,6 +200,7 @@ class scanner:
           Change output dir
     DONE: Store images in the DB
     '''
+    if not qr_code: return
     db_query = sql()
     if QR_CODE:
       import getpass
@@ -316,7 +320,7 @@ class scanner:
     buff = self.text_view.get_buffer()
     buff.insert_at_cursor(_( "\n\nYou added this " + str(self.abook.mtype) + ".\n"))
     self.text_view.set_buffer(buff)
-    #self.make_qr_code()
+    self.make_qr_code()
     print "You added this", str(self.abook.mtype)
 
 
