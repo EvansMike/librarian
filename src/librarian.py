@@ -319,8 +319,6 @@ class librarian:
     import calibre
     search = calibre.calibre()
     result = search.search_calibre(search_string, self.booklist) # search and add to booklist
-    #self.fill_booklist(result, True) # Append to the list
-    #del booklist
     return
 
   def treeview1_row_activated_cb(self, widget, path, col):
