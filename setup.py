@@ -11,6 +11,15 @@ from src import version
 # python setup.py install
 
   
+freedesktop_files = [
+  # application icon                                                                                                          
+  ("share/icons/hicolor/48x48/apps",                                                                                          
+  ["desktop/keepnote.png"]),                                                                                                 
+  # desktop menu entry                                                                                                        
+  ("share/applications",                                                                                                      
+  ["desktop/librarian.desktop"])
+  ]
+
 setup (
       name='librarian',
       version=version.__version__,
@@ -22,6 +31,7 @@ setup (
       license='GNU General Public License',
       packages=['librarian'],
       package_dir={'librarian': 'src'},
+      data_files=[("share/applications",["desktop/librarian.desktop"])],
       package_data={'librarian': ['po/*', 'ui/*','librarian.jpg']},
       scripts=['bin/librarian']
 )
