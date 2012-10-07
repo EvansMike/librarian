@@ -23,7 +23,7 @@ and the zbarcam application with an ordinary webcam.
 The scan triggers a lookup on the database and the book details are downloaded
 then commited to the local database.
 
-It uses MySQL.  The database config file is created if none exists.
+It uses MySQL or sqlite.  The database config file is created if none exists.
 Use database.sql, after creating the database,  to populate the database, like:
 mysql -p books < database.sql
 You have to create the database first using your favourite method/tool.
@@ -38,17 +38,12 @@ multiple computers.
 
 See INSTALL for install instructions.
 
-OBSOLETE
-A small warning  Everytime you scan a book a qrcode is generated and place
-in the directory above the current directory You may not want this behaviour.
-It's trivial to delete/move the created codes however.  I should put a
-config option for this behaviour or place the qrcodes somewhere else.
+QR Codes
+Everytime you scan a book a qrcode can be generated. You may not want this behaviour.
+BY default the behaviour is turned off in the config file.
 It seemed like a good idea at the time but I admit to never have used the 
 qrcodes for anything. :)
-PS. Now removed this 'feature'.  If you want it then modify the source code in 
-guiscan.py.  I could write a script to create all of the QRCodes from the DB 
-info if at some time I change my mind and decide I need them after all.
-END OBSOLETE
+
 
 Older books without bar codes can be manually input via the Query/Edit book
 interface.  It's a bit of a pain though if you have lots of books.
@@ -78,24 +73,29 @@ Amazon's database this will fail.  Not sure what other databases there are
 for CD case barcodes.  Perhaps an application to add CD's as they are played 
 using freedb?
 
-Setting up gconf for user password stuff is up to you for the moment.  
-I will add a GUI. NOTE:  Passwords are stored as plain text in gconf.  
+Setting user database password stuff is up to you for the moment.  
+I will add a GUI. NOTE:  Passwords are stored as plain text in the config file.  
 This is not good and some encryption method should (will) be used when 
-the config GUI is written.
+the config GUI is written.  On first run a refault .db_config.cnf file is
+writting in your home directory, note that this is a hidden dot-file.  
+This must edited with the details of your database.
 
-TODO:
-	DONE: I need to create a database setup script.
-  TODO: Maybe use sqlite3 for storage.  This would greatly ease the setup
-  for windoze users, that plus reverting to the file based config rather 
-  than gconf.  Unlikely Windoze users will want to install MySQL and GConf,
-  or even know how to.  MySQL is good for centralised storage but most
-  users wouldn't want that anyway.  Until I com up with a smartphone
-  version. :)
-  
+To create the tables you will need the books_schema.sql  file from the sources.
+After creating the database run: mysql <-p> books < books_schema.sql to 
+create the tables.  The -p is required if your DB is password protected.
+Obviously you can call the DB anything you like, it doesn't have to be 
+books, as long as the .db_config.cfg file contains matching details.
+
   To get who borrowed what and for how long:
   select title, name, DAtediff(i_date,o_date) as days 
       from borrows, borrowers, books 
       where borrows.borrower=borrowers.id 
       and books.id=borrows.book;
+      
+Windows Users
+
+Apologies to Windows users.  You may have to adapt the code to suit.  Please
+send any relavent stuff back to me and I'll try to incorporate into the 
+code.
       
 
