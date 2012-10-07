@@ -92,6 +92,10 @@ class librarian:
   in the listings.  It doesn't track the "borrowing" of e-books. :)
   '''
   def __init__(self):
+    splScr = splashScreen()
+    while gtk.events_pending():
+      gtk.main_iteration()
+
     print _("Version: "),version.__version__
     builder = gtk.Builder()
     builder.add_from_file("ui/librarian.glade")
@@ -144,7 +148,7 @@ class librarian:
     self.search_string = builder.get_object("entry_search")
 
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
-
+    splScr.window.destroy()
 
   def on_button_print_clicked(self, widget):
     '''Print the entire book list to pdf then opens the default pdf viewer.
@@ -337,11 +341,6 @@ class librarian:
 
 ''' Run main if called directly.'''
 if __name__ == "__main__":
-  splScr = splashScreen()
-  while gtk.events_pending():
-    gtk.main_iteration()
-
   app = librarian()
-  splScr.window.destroy()
   gtk.main()
 
