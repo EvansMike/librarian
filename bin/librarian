@@ -1,4 +1,4 @@
-#!/bin/env python
+#! python
 import librarian.librarian as librarian
 app = librarian.librarian()
-gtk.main()
+

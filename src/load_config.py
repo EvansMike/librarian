@@ -37,6 +37,7 @@ logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(messag
 
 # Get the real location of this file
 iamhere = os.path.dirname( os.path.realpath( __file__ ) )
+home = os.environ['HOME']
 
 class load_config:
   ''' Load the config data for use by applications.
@@ -46,7 +47,7 @@ class load_config:
     self.get_config()
 
   def get_config(self):
-    config_file = "db_conf.cfg"
+    config_file = home + "/.db_conf.cfg"
     config = ConfigParser.ConfigParser()
     config.read(config_file)
     if not config.sections():
@@ -54,7 +55,7 @@ class load_config:
       # Pop up a message
       import messages
       messages.pop_info(_('No config file found.\nA template file file has been written to disk.\nPlease edit ') 
-        + config_file + _('to contain the correct login details for your databases.'))
+        + config_file + _(' to contain the correct login details for your databases.\nNote that is is a hidden file'))
 
       f = open(config_file,"w")
       # Write a dummy config file if one doesn't exist

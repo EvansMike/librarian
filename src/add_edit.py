@@ -23,7 +23,7 @@ TODO:
 '''
 
 import MySQLdb
-import sys
+import sys, os
 import logging
 import gtk
 import pygtk
@@ -49,7 +49,8 @@ class add_edit:
   def __init__(self):
     self.borrowers = 0
     builder = gtk.Builder()
-    builder.add_from_file("ui/edit_book.glade")
+    self.gladefile = os.path.join(os.path.dirname(__file__),"ui/edit_book.glade")
+    builder.add_from_file(self.gladefile)
     builder.connect_signals(self)
     self.window = builder.get_object("window_edit")
     self.isbn =  builder.get_object("entry1")
@@ -338,9 +339,10 @@ class add_edit:
 
     '''
     import borrowers
-
-    foo = self.lent_select.get_active()
-    bid = self.lentlist[foo][0]
+    try:
+      foo = self.lent_select.get_active()
+      bid = self.lentlist[foo][0]
+    except: bid = 0
     adder = borrowers.borrowers(bid)
     adder.run()
     self.populate_borrowers()

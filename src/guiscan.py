@@ -35,7 +35,7 @@ from biblio.webquery.xisbn import XisbnQuery
 import biblio.webquery
 import qrencode
 import MySQLdb
-import sys
+import sys, os
 import load_config as config
 import logging
 #import load_config as gconf_config
@@ -87,7 +87,8 @@ class scanner:
     qr_img = ""
     #vid_dev = "/dev/video0" # Need to scan for this and make it work in windows?
     builder = gtk.Builder()
-    builder.add_from_file("ui/gui.glade")
+    self.gladefile = os.path.join(os.path.dirname(__file__),"ui/gui.glade")
+    builder.add_from_file(self.gladefile)
     self.window = builder.get_object("window1")
     builder.connect_signals(self)
     self.text_view = builder.get_object("textview1")

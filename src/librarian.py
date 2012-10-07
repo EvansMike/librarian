@@ -77,7 +77,8 @@ class splashScreen():
     self.window.add(main_vbox)
     hbox = gtk.HBox(False, 0)
     self.image = gtk.Image()
-    self.image.set_from_file("librarian.jpg")
+    self.splash_image = os.path.join(os.path.dirname(__file__),"librarian.jpg")
+    self.image.set_from_file(self.splash_image)
     self.image.show()
     self.lbl = gtk.Label("Loading data...")
     self.lbl.set_alignment(0.5, 0.5)
@@ -98,7 +99,8 @@ class librarian:
 
     print _("Version: "),version.__version__
     builder = gtk.Builder()
-    builder.add_from_file("ui/librarian.glade")
+    self.gladefile = os.path.join(os.path.dirname(__file__),"ui/librarian.glade")
+    builder.add_from_file(self.gladefile)
     builder.connect_signals(self)
 
     self.treeview  = builder.get_object('treeview1')
@@ -149,7 +151,8 @@ class librarian:
 
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
     splScr.window.destroy()
-
+    gtk.main()
+    
   def on_button_print_clicked(self, widget):
     '''Print the entire book list to pdf then opens the default pdf viewer.
     TODO: Auto width columns
@@ -332,9 +335,9 @@ class librarian:
 
   def gtk_main_quit(self, widget):
     # Quit when we destroy the GUI
-    if __name__ == "__main__":
-      gtk.main_quit()
-      quit(0)
+    #if __name__ == "__main__":
+    gtk.main_quit()
+    quit(0)
 
 
 #################### END librarian #####################################

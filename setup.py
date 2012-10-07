@@ -18,7 +18,7 @@ setup (
       license='GNU General Public License',
       packages=['librarian'],
       package_dir={'librarian': 'src'},
-      package_data={'src': ['po/*']},
+      package_data={'librarian': ['po/*', 'ui/*','librarian.jpg']},
       scripts=['bin/librarian']
 )
 

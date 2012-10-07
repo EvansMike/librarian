@@ -18,8 +18,6 @@
 '''
 '''
 Add and edit borrowers.
-TODO: Do the edit part.
-TODO: Need to re-write this as a dialog
 '''
 try:
   import gtk
@@ -28,6 +26,7 @@ try:
   import gettext
   import logging
   import load_config
+  import sys, os
 except  ImportError, e:
   print e
 
@@ -54,7 +53,8 @@ db_host = config.db_host
 class borrowers():
   def __init__(self,bid = 0):
     builder = gtk.Builder()
-    builder.add_from_file("ui/borrower_dialog.glade")
+    self.gladefile = os.path.join(os.path.dirname(__file__),"ui/borrower_dialog.glade")
+    builder.add_from_file(self.gladefile)
     self.window = builder.get_object("dialog1")
     self.name = builder.get_object("entry1")
     self.contact = builder.get_object("entry2")
@@ -68,7 +68,6 @@ class borrowers():
 
   def run(self):
     self.window.run()
-    #self.populate()
     self.window.destroy()
     
   def populate(self):
