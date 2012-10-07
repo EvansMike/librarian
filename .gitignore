@@ -1,5 +1,4 @@
 *.pyc
-*.cfg
 *.db
 ISBN:*
 *.geany
