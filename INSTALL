@@ -1,0 +1,11 @@
+To Install
+
+python setup.py install
+You will probably have to be root, or sudoer.
+
+To make an installable package
+
+Create the package with
+python setup.py sdist 
+For an rpm
+python setup.py bdist_rpm 
