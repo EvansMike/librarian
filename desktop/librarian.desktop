@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Librarian
+GenericName=Book cataloguing Application
+Comment=Book cataloguing Application
+#Icon=keepnote
+Exec=librarian %f
+Categories=Office
+#MimeType=
+Terminal=false
+StartupNotify=false
