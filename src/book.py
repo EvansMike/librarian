@@ -35,8 +35,8 @@ class book:
     self.mtype = ''
     self.year = ''
     self.city = ''
-    self.copies = 0
-    self.where = 0
+    self.copies = 0 
+    self.where = 0 # Which shelf is it on?
     self.add_date = datetime.date.today()
 
   def print_book(self):
