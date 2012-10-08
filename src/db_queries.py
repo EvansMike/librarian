@@ -69,7 +69,6 @@ try:
 except: 
   print "\nThere There is some error in the config file.\nCannot continue!\n\n "
   quit()
-print "Module ",use
 
 
 ########################################################################
@@ -259,6 +258,13 @@ class sqlite:
     self.cur.execute("UPDATE books SET copies = copies-1 WHERE id = '%s';" % bid)
     self.cur.execute("DELETE FROM books WHERE copies = 0;")  
     self.con.commit()
+    
+  def add_location(self, room, shelf):
+    ''' 
+    Add a new location to the database. 
+    '''
+    self.cur.execute("INSERT INTO locations(room,shelf) VALUES(%s, %s);",room, shelf)
+    
 #######################################################################    
 class mysql:
   '''
@@ -268,8 +274,8 @@ class mysql:
   import MySQLdb
   import MySQLdb.cursors
   def __init__(self):
-    db = self.MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
-    self.cur = db.cursor(self.MySQLdb.cursors.DictCursor)
+    self.db = self.MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
+    self.cur = self.db.cursor(self.MySQLdb.cursors.DictCursor)
     #logging.info("This connection is using MySQL")
     
   def get_all_books(self):
@@ -387,10 +393,12 @@ class mysql:
       SELECT %s, %s, now() FROM DUAL WHERE NOT EXISTS \
       (SELECT 1 FROM borrows WHERE book = %s AND borrower = %s AND i_date IS NULL);",
       [id, bid,id, bid])
+    self.db.commit()
       
   def add_new_borrower(self, name, contact, notes):
     self.cur.execute("INSERT INTO borrowers(name,contact,notes) VALUES(%s,%s,%s);",
           (name,contact, notes))
+    self.db.commit()
           
 
     
@@ -413,6 +421,19 @@ class mysql:
     self.cur.execute("UPDATE books set copies = copies-1 WHERE id = %s;",bid)
     self.cur.execute("DELETE FROM books WHERE copies=0;")
     
+  def add_location(self, room, shelf):
+    ''' 
+    Add a new location to the database.
+    create table locations(id int auto_increment primary key, room text, shelf text);  
+    '''
+    print room,shelf
+    print self.cur.execute("INSERT INTO locations(room,shelf) VALUES(%s, %s);",(room, shelf))
+    self.db.commit()
+    return
+    
+  def get_locations(self):
+    self.cur.execute("SELECT * FROM locations")
+    return self.cur.fetchall()
     
 ########################################################################      
 class calibre:
@@ -434,7 +455,7 @@ class calibre:
 ########################################################################
 class xml():
   '''
-  I'm unlkely ever to implement XML data storage but I'll out this here
+  I'm unlkely ever to implement XML data storage but I'll put this here
   in case some other massochist wants to. :)
   ''' 
   def __init__(self):
