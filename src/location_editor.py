@@ -67,7 +67,12 @@ class location_edit():
     builder.connect_signals(self)
     self.populate_dialog()
     self.window.show()
-    gtk.main()
+     
+     
+  def run(self):
+    self.window.run()
+    self.window.destroy() 
+    
     
   def populate_dialog(self):
     '''
@@ -84,23 +89,19 @@ class location_edit():
     shelf = self.shelf_entry.get_text()
     if shelf == '' or room == '': 
       logging.info("Nothing to save")
+      self.run() # Re-run else we close.
       return
     logging.info("Saving: "+room+", "+shelf)
     db_query.add_location(room, shelf)
+    # Dont close, just re-run the dialog
+    self.run()
     
   def on_close_clicked_cb(self,widget):
     '''
     Ignore any input and close the dialog.
     '''
     logging.info("Closing")
-    self.on_destroy(widget)
-   
-  def on_destroy(self,widget):
-    if __name__ == "__main__":
-      gtk.main_quit()
-      quit(0)
-    else:
-      self.window.hide()
+ 
          
     
     

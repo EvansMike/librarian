@@ -25,8 +25,9 @@ TODO:
 import MySQLdb
 import sys, os
 import logging
-import gtk
 import pygtk
+pygtk.require("2.0")
+import gtk
 from biblio.webquery.xisbn import XisbnQuery
 import biblio.webquery
 import book
@@ -72,8 +73,11 @@ class add_edit:
     self.orig_book = book.book()
     self.status = builder.get_object("label_status")
     self.lent_date = builder.get_object("b_date")
-
-    #col = gtk.comboboxentry()
+    self.location_dropdown = builder.get_object("combobox_location")
+    self.location_liststore = builder.get_object("liststore_locations")
+    self.location_dropdown.set_model(self.location_liststore)
+    self.location_dropdown.set_text_column(1)
+    
     self.lent_select.set_model( self.lentlist)
     self.lent_select.set_text_column(1)
 
@@ -161,43 +165,89 @@ class add_edit:
       self.lent.set_active(False)
     pass
 
+  def populate_locations(self):
+    db_query = sql()
+    locations = db_query.get_locations()
+    self.location_liststore.clear()
+    loc = self.mybook.where
+    #logging.info(where)
+    for where in locations:
+      rs = where['room'] + ' - ' + where['shelf']
+      self.location_liststore.append([where['id'], rs])
+      #logging.info(where['id'])
+    self.location_liststore.prepend([0, ''])
+    # Now set the dropdown to the books location
+    n = 0
+    for lid in self.location_liststore:
+      #logging.info([loc, lid[0],n])
+      if lid[0] == loc:
+        self.location_dropdown.set_active(n)
+        return
+      n += 1
+    
+  def set_location(self):
+    '''
+    Set the book's location
+    '''
+    db_query = sql()
+    idx = self.location_dropdown.get_active()
+    lid = self.location_liststore[idx][0]
+    logging.info(lid)
+    self.mybook.where = lid
+    db_query.update_book_location(self.mybook.id, lid)
+    return
+  
+  def on_button_add_location_clicked_cb(self,widget):
+    ''' 
+    Open a dialog to add a new location
+    '''
+    import location_editor
+    dialog = location_editor.location_edit()
+    dialog.run()
+    # Update the combobox liststore
+    self.populate_locations()
+    
+  
+  
   def populate(self,book_id):
     db_query = sql()
     logging.info(book_id)
-    result = db_query.get_by_id(book_id)
+    row = db_query.get_by_id(book_id)
     #logging.info(result)
-    for row in result:
-      # Populate GUI
-      if row['isbn'] != None: self.isbn.set_text(row['isbn'])
-      if row['author'] != None: self.author.set_text(row['author'])
-      self.title.set_text(row['title'])
-      self.abstract.set_text(row['abstract'])
-      if row['publisher'] != None: self.publisher.set_text(row['publisher'])
-      if row['city'] != None: self.city.set_text(row['city'])
-      if row['year'] != None: self.year.set_text(str(row['year']))
-      self.mtype.set_text(str(row['mtype']))
-      self.copies.set_text(str(row['copies']))
+    #for row in result:
+    # Populate GUI
+    if row['isbn'] != None: self.isbn.set_text(row['isbn'])
+    if row['author'] != None: self.author.set_text(row['author'])
+    self.title.set_text(row['title'])
+    self.abstract.set_text(row['abstract'])
+    if row['publisher'] != None: self.publisher.set_text(row['publisher'])
+    if row['city'] != None: self.city.set_text(row['city'])
+    if row['year'] != None: self.year.set_text(str(row['year']))
+    self.mtype.set_text(str(row['mtype']))
+    self.copies.set_text(str(row['copies']))
 
-      # Populate a book object
-      self.orig_book.isbn =row['isbn']
-      self.orig_book.id = row['id']
-      self.orig_book.authors = row['author']
-      self.orig_book.title = row['title']
-      self.orig_book.abstract = row['abstract']
-      self.orig_book.publisher = row['publisher']
-      self.orig_book.city = row['city']
-      self.orig_book.year = row['year']
-      self.orig_book.copies = row['copies']
-      self.orig_book.where = row['location']
-      self.orig_book.mtype = row['mtype']
-      if row['add_date'] != "":
-        self.orig_book.add_date = row['add_date']
-      else:
-        # Dunno?  datetime.date.today() perhaps?
-        pass
+    # Populate a book object
+    self.orig_book.isbn =row['isbn']
+    self.orig_book.id = row['id']
+    self.orig_book.authors = row['author']
+    self.orig_book.title = row['title']
+    self.orig_book.abstract = row['abstract']
+    self.orig_book.publisher = row['publisher']
+    self.orig_book.city = row['city']
+    self.orig_book.year = row['year']
+    self.orig_book.copies = row['copies']
+    self.orig_book.where = row['location']
+    #logging.info(self.orig_book.where)
+    self.orig_book.mtype = row['mtype']
+    if row['add_date'] != "":
+      self.orig_book.add_date = row['add_date']
+    else:
+      # Dunno?  datetime.date.today() perhaps?
+      pass
 
-      self.mybook = copy.copy(self.orig_book)
+    self.mybook = copy.copy(self.orig_book)
     self.populate_borrowers()
+    self.populate_locations()
 
 
 
@@ -222,6 +272,7 @@ class add_edit:
     ''' Update the database with new info or add if not already in.'''
     self.update_book()
     self.update_db()
+    self.set_location()
     pass
 
 

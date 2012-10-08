@@ -78,6 +78,7 @@ class book:
     #error += (self.year != book.year)
     error += (self.city != book.city)
     error += (self.mtype != book.mtype)
+    error += (self.where != book.where)
     return error
 
 

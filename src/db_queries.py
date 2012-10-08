@@ -363,7 +363,7 @@ class mysql:
     
     '''
     self.cur.execute ("SELECT * FROM  books where id = %s;",book_id)
-    return self.cur.fetchall()
+    return self.cur.fetchone()
 
   def insert_unique_author(self, authors):
     '''
@@ -386,7 +386,10 @@ class mysql:
   def update_book(self, title, authors, abstract, year, publisher, city, mtype, bid):
     self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \
           year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
-        (title, authors, abstract,year,publisher, city, mtype, bid))  
+        (title, authors, abstract,year,publisher, city, mtype, bid))
+        
+  def update_book_location(self, bid, location):
+    self.cur.execute("UPDATE books SET location = %s WHERE id = %s;", (location, bid))
         
   def add_borrow(self, id, bid):      
     self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
