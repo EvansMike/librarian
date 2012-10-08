@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.22, for Linux (i686)
+-- MySQL dump 10.13  Distrib 5.5.23, for Linux (i686)
 --
 -- Host: localhost    Database: books
 -- ------------------------------------------------------
--- Server version	5.5.22-log
+-- Server version	5.5.23-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,7 +26,7 @@ CREATE TABLE `authors` (
   `name` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`(50))
-) ENGINE=MyISAM AUTO_INCREMENT=222 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=227 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,7 +54,7 @@ CREATE TABLE `books` (
   `sale_status` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=684 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=726 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `borrowers` (
   `contact` text,
   `notes` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,7 +85,7 @@ CREATE TABLE `borrows` (
   `book` int(11) NOT NULL,
   `borrower` int(11) NOT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=91 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=118 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `cd_tracks` (
   `trackname` varchar(45) NOT NULL,
   `tracklen` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -170,9 +170,10 @@ CREATE TABLE `invoices` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `locations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `location` text,
+  `room` text,
+  `shelf` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,7 +200,7 @@ CREATE TABLE `qrcodes` (
   `caption` varchar(45) NOT NULL,
   `img` longblob NOT NULL,
   PRIMARY KEY (`idpic`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,4 +224,4 @@ CREATE TABLE `rating` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-04-19 13:57:32
+-- Dump completed on 2012-10-08 18:33:13
