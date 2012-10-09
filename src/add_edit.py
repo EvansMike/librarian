@@ -136,7 +136,6 @@ class add_edit:
     self.lentlist.prepend([0, "", ""])
     #Get borrows for this book up to the # of copies
     result = db_query.get_borrows(self.orig_book.id,self.orig_book.copies)
-    print result
     bid = 0
     for row in result:
       bid = row["borrower"]
