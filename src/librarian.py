@@ -209,7 +209,9 @@ class librarian:
     @param append boolean, whether to append to list.
     '''
     db_query = sql()
-    if not append: self.booklist.clear()
+    if not append: self.booklist.clear()    
+    column = self.treeview.get_column(3)
+    column.set_title(_('Abstract'))
     for row in result:
       # Deal with rearranging author names to last, first
       if row['author'] != None:
@@ -227,6 +229,7 @@ class librarian:
       #logging.info(author)
       abstract = row['abstract']
       # It's a bit inefficient making this many calls to the DB.  FIXME if/when you feel like it. 
+      # I should store the borrower id in the book object... TODO
       b_book = db_query.get_book_borrower_by_book_id(row['id'])
       if b_book: abstract = b_book['name'] + " : " + str(b_book['o_date']) 
       self.booklist.append([row['isbn'], author, row['title'],
@@ -270,10 +273,10 @@ class librarian:
     '''Display the loaned out books
 
     '''
-    column = self.treeview.get_column(3)
-    column.set_title(_('Borrower'))
     # Display all books on loan
     self.get_book_list(BORROWED)
+    column = self.treeview.get_column(3)
+    column.set_title(_('Borrower'))
 
   def on_button_scan_clicked(self, widget):
     '''Open the scanning dialog.

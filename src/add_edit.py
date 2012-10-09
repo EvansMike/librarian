@@ -363,6 +363,7 @@ class add_edit:
       #logging.info(bid)
       if bid != 0 and self.mybook.id != 0 and self.orig_book.copies > 0:
         db_query.add_borrow(self.mybook.id, bid)
+        self.mybook.borrower_id = bid
         self.status.set_text(_("Book has been marked as borrowed."))
         self.orig_book.copies -= 1
       else:
@@ -378,6 +379,7 @@ class add_edit:
         result =  db_query.update_borrows(self.mybook.id, bid)
         if result:
           self.orig_book.copies += 1
+          self.mybook.borrower_id = None
           self.status.set_text(_("Book has been marked as returned."))
         else: self.status.set_text(_("Book has been NOT marked as returned."))
     self.copies.set_text(str(self.orig_book.copies))
