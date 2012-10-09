@@ -228,10 +228,10 @@ class librarian:
         author = "N/A"
       #logging.info(author)
       abstract = row['abstract']
-      # It's a bit inefficient making this many calls to the DB.  FIXME if/when you feel like it. 
-      # I should store the borrower id in the book object... TODO
-      b_book = db_query.get_book_borrower_by_book_id(row['id'])
-      if b_book: abstract = b_book['name'] + " : " + str(b_book['o_date']) 
+      # If a book is borrowed, display who by in the abtract column
+      if row['borrower_id']:
+        b_book = db_query.get_book_borrower_by_book_id(row['id'])
+        if b_book: abstract = b_book['name'] + " : " + str(b_book['o_date']) 
       self.booklist.append([row['isbn'], author, row['title'],
       abstract,
       row['publisher'], row['city'], str(row['year']),

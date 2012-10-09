@@ -161,7 +161,10 @@ class sqlite:
         ORDER BY o_date;")
     return self.cur.fetchall() 
     
-    
+  def get_borrower_by_id(self, bid):
+    self.cur.execute("select * FROM  borrows where id = '%s';",bid)
+    return self.cur.fetchone() 
+  
   def get_borrows(self, bid, copies):
     ''' Differing syntax for sqlite'''
     self.cur.execute("SELECT * FROM borrows where book = ? AND i_date IS NULL \
@@ -319,6 +322,10 @@ class mysql:
     self.cur.execute("select * FROM  borrows where i_date is null and borrows.book=%s", bid)
     return self.cur.fetchone()
     return 
+    
+  def get_borrower_by_id(self, bid):
+    self.cur.execute("select * FROM  borrows where id = %s;",bid)
+    return self.cur.fetchone()
    
   def get_borrowers_borrowed_books(self):
     self.cur.execute("SELECT title, author, name, o_date FROM books, \
