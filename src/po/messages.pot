@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-14 11:37+0100\n"
+"POT-Creation-Date: 2012-10-11 11:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,55 +17,51 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: add_edit.py:90
-msgid "No database connection.  Check "
-msgstr ""
-
-#: add_edit.py:124
+#: add_edit.py:116
 msgid "No book found"
 msgstr ""
 
-#: add_edit.py:127
+#: add_edit.py:119
 msgid "No Book found for this ISBN!"
 msgstr ""
 
-#: add_edit.py:252
+#: add_edit.py:296
 msgid " Book has been inserted."
 msgstr ""
 
-#: add_edit.py:266
+#: add_edit.py:306
 msgid " Book has been updated."
 msgstr ""
 
-#: add_edit.py:276
+#: add_edit.py:315
 msgid " Book has been removed."
 msgstr ""
 
-#: add_edit.py:288
+#: add_edit.py:327
 msgid "Edit"
 msgstr ""
 
-#: add_edit.py:290 ui/edit_book.glade.h:2
+#: add_edit.py:330 ui/edit_book.glade.h:3
 msgid "Add"
 msgstr ""
 
-#: add_edit.py:331
+#: add_edit.py:367
 msgid "Book has been marked as borrowed."
 msgstr ""
 
-#: add_edit.py:350
+#: add_edit.py:370
+msgid "Book has been NOT marked as borrowed."
+msgstr ""
+
+#: add_edit.py:383
 msgid "Book has been marked as returned."
 msgstr ""
 
-#: add_edit.py:351
+#: add_edit.py:384
 msgid "Book has been NOT marked as returned."
 msgstr ""
 
-#: borrowers.py:69 guiscan.py:95
-msgid "No database connection.  Check config file"
-msgstr ""
-
-#: borrowers.py:118 ui/edit_book.glade.h:10 ui/gui.glade.h:3
+#: borrowers.py:104 ui/edit_book.glade.h:12 ui/gui.glade.h:3
 msgid "CLOSE"
 msgstr ""
 
@@ -73,105 +69,115 @@ msgstr ""
 msgid "You don't appear to have Calibre installed, or it's not in your PATH."
 msgstr ""
 
-#: guiscan.py:108
+#: guiscan.py:100
+msgid "No database connection.  Check config file"
+msgstr ""
+
+#: guiscan.py:116
 msgid "To begin press scan."
 msgstr ""
 
-#: guiscan.py:119
+#: guiscan.py:129
 msgid "No camera present!"
 msgstr ""
 
-#: guiscan.py:139
+#: guiscan.py:149
 msgid "No data returned, retry?"
 msgstr ""
 
-#: guiscan.py:142
+#: guiscan.py:152
 msgid "Searching for DVDs\n"
 msgstr ""
 
-#: guiscan.py:147
+#: guiscan.py:157
 msgid "Found DVD:\n"
 msgstr ""
 
-#: guiscan.py:157
+#: guiscan.py:167
 msgid ""
 "No DVDs.\n"
 " Searching for CDs\n"
 msgstr ""
 
-#: guiscan.py:161
+#: guiscan.py:171
 msgid "CD Found:\n"
 msgstr ""
 
-#: guiscan.py:176
+#: guiscan.py:186
 msgid ""
 "\n"
 "\n"
 "You already have "
 msgstr ""
 
-#: guiscan.py:237
+#: guiscan.py:250
 msgid ""
 "\n"
 "\n"
 "You removed this book."
 msgstr ""
 
-#: guiscan.py:240
+#: guiscan.py:253
 msgid ""
 "\n"
 "\n"
 "Could not remove book!"
 msgstr ""
 
-#: guiscan.py:304
+#: guiscan.py:319
 msgid ""
 "\n"
 "\n"
 "You added this "
 msgstr ""
 
-#: librarian.py:57
+#: librarian.py:65 location_editor.py:40
 msgid "GTK Not Availible"
 msgstr ""
 
-#: librarian.py:98
+#: librarian.py:100
 msgid "Version: "
 msgstr ""
 
-#: librarian.py:115
+#: librarian.py:118
 msgid "Medium"
 msgstr ""
 
-#: librarian.py:122 ui/edit_book.glade.h:5
+#: librarian.py:125 ui/edit_book.glade.h:6
 msgid "Author"
 msgstr ""
 
-#: librarian.py:131 ui/edit_book.glade.h:28
+#: librarian.py:134 ui/edit_book.glade.h:30
 msgid "Title"
 msgstr ""
 
-#: librarian.py:138
+#: librarian.py:141
 msgid "Rating"
 msgstr ""
 
-#: librarian.py:232 librarian.py:330
-msgid "A database connection failed.  Check the config file."
+#: librarian.py:214 ui/edit_book.glade.h:2
+msgid "Abstract"
 msgstr ""
 
-#: librarian.py:308
+#: librarian.py:279
+msgid "Borrower"
+msgstr ""
+
+#: librarian.py:306
 msgid "Cannot query e-books.  Please use calibre."
 msgstr ""
 
-#: load_config.py:54
+#: load_config.py:57
 msgid ""
 "No config file found.\n"
 "A template file file has been written to disk.\n"
 "Please edit "
 msgstr ""
 
-#: load_config.py:55
-msgid "to contain the correct login details for your databases."
+#: load_config.py:58
+msgid ""
+" to contain the correct login details for your databases.\n"
+"Note that is is a hidden file"
 msgstr ""
 
 #: messages.py:33
@@ -200,10 +206,6 @@ msgstr ""
 
 #: ui/borrower_dialog.glade.h:6 ui/borrowers.glade.h:11
 msgid "SAVE"
-msgstr ""
-
-#: ui/borrower_dialog.glade.h:7
-msgid "label"
 msgstr ""
 
 #: ui/borrowers.glade.h:1
@@ -238,116 +240,116 @@ msgstr ""
 msgid "Other notes."
 msgstr ""
 
-#: ui/edit_book.glade.h:1
-msgid "Abstract"
+#: ui/edit_book.glade.h:1 ui/gui.glade.h:1
+msgid "ADD"
 msgstr ""
 
-#: ui/edit_book.glade.h:3
+#: ui/edit_book.glade.h:4
 msgid ""
 "Add a new borrower, or edit the \n"
 "currently selected one"
 msgstr ""
 
-#: ui/edit_book.glade.h:6
+#: ui/edit_book.glade.h:7
 msgid "Available copies of this book."
 msgstr ""
 
-#: ui/edit_book.glade.h:7
-msgid "Borrowed?"
-msgstr ""
-
 #: ui/edit_book.glade.h:8
-msgid "Borrower Details"
+msgid "Book Location:"
 msgstr ""
 
 #: ui/edit_book.glade.h:9
-msgid "CLEAR"
+msgid "Borrowed?"
+msgstr ""
+
+#: ui/edit_book.glade.h:10
+msgid "Borrower Details"
 msgstr ""
 
 #: ui/edit_book.glade.h:11
-msgid "Checked if displayed borrower has this book."
-msgstr ""
-
-#: ui/edit_book.glade.h:12
-msgid "City"
+msgid "CLEAR"
 msgstr ""
 
 #: ui/edit_book.glade.h:13
-msgid "Closing before update loses any changes."
+msgid "Checked if displayed borrower has this book."
 msgstr ""
 
 #: ui/edit_book.glade.h:14
-msgid "Copies:"
+msgid "City"
 msgstr ""
 
 #: ui/edit_book.glade.h:15
-msgid "Date of lending to borrower."
+msgid "Closing before update loses any changes."
 msgstr ""
 
 #: ui/edit_book.glade.h:16
-msgid "Date:"
+msgid "Copies:"
 msgstr ""
 
 #: ui/edit_book.glade.h:17
-msgid "Edit Book"
+msgid "Date of lending to borrower."
 msgstr ""
 
 #: ui/edit_book.glade.h:18
-msgid "Editing"
+msgid "Date:"
 msgstr ""
 
 #: ui/edit_book.glade.h:19
-msgid "ISBN"
+msgid "Edit Book"
 msgstr ""
 
 #: ui/edit_book.glade.h:20
-msgid "ISBN SEARCH"
+msgid "Editing"
 msgstr ""
 
 #: ui/edit_book.glade.h:21
-msgid "List of borrowers."
+msgid "ISBN"
 msgstr ""
 
 #: ui/edit_book.glade.h:22
-msgid "Publisher"
+msgid "ISBN SEARCH"
 msgstr ""
 
-#: ui/edit_book.glade.h:23 ui/gui.glade.h:5
-msgid "REMOVE"
+#: ui/edit_book.glade.h:23
+msgid "List of borrowers."
 msgstr ""
 
 #: ui/edit_book.glade.h:24
-msgid "Removes book from database."
+msgid "Publisher"
 msgstr ""
 
-#: ui/edit_book.glade.h:25
-msgid "Search on ISBN number."
+#: ui/edit_book.glade.h:25 ui/gui.glade.h:5
+msgid "REMOVE"
 msgstr ""
 
 #: ui/edit_book.glade.h:26
+msgid "Removes book from database."
+msgstr ""
+
+#: ui/edit_book.glade.h:27
+msgid "Search on ISBN number."
+msgstr ""
+
+#: ui/edit_book.glade.h:28
 msgid ""
 "This does NOT remove the book, just clears the\n"
 " entry to allow a new book to be entered manually."
 msgstr ""
 
-#: ui/edit_book.glade.h:29
+#: ui/edit_book.glade.h:31
 msgid "Type"
 msgstr ""
 
-#: ui/edit_book.glade.h:30
+#: ui/edit_book.glade.h:32
 msgid "UPDATE"
 msgstr ""
 
-#: ui/edit_book.glade.h:31
+#: ui/edit_book.glade.h:33
 msgid "Update any changes."
 msgstr ""
 
-#: ui/edit_book.glade.h:32
+#: ui/edit_book.glade.h:34
 msgid "Year"
-msgstr ""
-
-#: ui/gui.glade.h:1
-msgid "ADD"
 msgstr ""
 
 #: ui/gui.glade.h:2
