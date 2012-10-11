@@ -8,3 +8,9 @@ intltool-extract --type=gettext/glade ui/gui.glade
 intltool-extract --type=gettext/glade ui/borrower_dialog.glade
 
 xgettext -k_ -kN_ -o po/messages.pot *.py ui/*.*.h
+
+mkdir -p locale/en_GB/LC_MESSAGES/
+msgfmt po/en_GB.po -o locale/en_GB/LC_MESSAGES/librarian.mo
+
+mkdir -p locale/cy/LC_MESSAGES/
+msgfmt po/cy.po -o locale/cy/LC_MESSAGES/librarian.mo
