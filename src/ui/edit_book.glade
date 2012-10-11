@@ -556,11 +556,5 @@ currently selected one</property>
       <!-- column-name gchararray1 -->
       <column type="gchararray"/>
     </columns>
-    <data>
-      <row>
-        <col id="0">0</col>
-        <col id="1" translatable="yes"/>
-      </row>
-    </data>
   </object>
 </interface>
