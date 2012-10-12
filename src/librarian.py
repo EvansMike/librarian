@@ -38,12 +38,8 @@ import messages
 # or 
 from db_queries import sql as sql
 
-
-
-locale.setlocale(locale.LC_ALL, '')
-APP = 'librarian'
-gettext.textdomain(APP)
-_ = gettext.gettext
+import i18n
+_ = i18n.language.gettext
 
 #logger = logging.getLogger("librarian")
 logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
