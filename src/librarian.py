@@ -77,7 +77,7 @@ class splashScreen():
     self.window.add(main_vbox)
     hbox = gtk.HBox(False, 0)
     self.image = gtk.Image()
-    self.splash_image = os.path.join(os.path.dirname(__file__),"librarian.jpg")
+    self.splash_image = os.path.join(os.path.dirname(__file__),"librarian.png")
     self.image.set_from_file(self.splash_image)
     self.image.show()
     self.lbl = gtk.Label("Loading data...")
