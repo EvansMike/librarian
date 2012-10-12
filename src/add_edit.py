@@ -205,6 +205,7 @@ class add_edit:
     dialog.run()
     # Update the combobox liststore
     self.populate_locations()
+    self.status.set_text(_("Location changed."))
     
   
   
@@ -266,6 +267,7 @@ class add_edit:
 
     #logging.info(self.mybook.year)
     # Is the book on loan and to whome?
+    self.status.set_text(_("Book updated."))
 
   def on_button_update_clicked(self, widget):
     ''' Update the database with new info or add if not already in.'''
@@ -347,6 +349,7 @@ class add_edit:
     self.city.set_text('')
     self.year.set_text('')
     self.copies.set_text('')
+    self.status.set_text(_("Everything cleared."))
 
 
   def on_checkbutton1_toggled(self, widget):

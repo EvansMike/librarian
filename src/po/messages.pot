@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-11 12:04+0100\n"
+"POT-Creation-Date: 2012-10-12 08:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,39 +25,51 @@ msgstr ""
 msgid "No Book found for this ISBN!"
 msgstr ""
 
-#: add_edit.py:296
+#: add_edit.py:208
+msgid "Location changed."
+msgstr ""
+
+#: add_edit.py:270
+msgid "Book updated."
+msgstr ""
+
+#: add_edit.py:298
 msgid " Book has been inserted."
 msgstr ""
 
-#: add_edit.py:306
+#: add_edit.py:308
 msgid " Book has been updated."
 msgstr ""
 
-#: add_edit.py:315
+#: add_edit.py:317
 msgid " Book has been removed."
 msgstr ""
 
-#: add_edit.py:327
+#: add_edit.py:329
 msgid "Edit"
 msgstr ""
 
-#: add_edit.py:330 ui/edit_book.glade.h:3
+#: add_edit.py:332 ui/edit_book.glade.h:3
 msgid "Add"
 msgstr ""
 
-#: add_edit.py:367
-msgid "Book has been marked as borrowed."
+#: add_edit.py:352
+msgid "Everything cleared."
 msgstr ""
 
 #: add_edit.py:370
+msgid "Book has been marked as borrowed."
+msgstr ""
+
+#: add_edit.py:373
 msgid "Book has been NOT marked as borrowed."
 msgstr ""
 
-#: add_edit.py:383
+#: add_edit.py:386
 msgid "Book has been marked as returned."
 msgstr ""
 
-#: add_edit.py:384
+#: add_edit.py:387
 msgid "Book has been NOT marked as returned."
 msgstr ""
 
