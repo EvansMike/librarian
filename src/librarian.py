@@ -65,6 +65,7 @@ NULL, ALL, BORROWED = range(3)
 
 class splashScreen():
   def __init__(self):
+    import time
     #DONT connect 'destroy' event here!
     self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
     self.version = "Version:" + version.__version__
@@ -82,6 +83,7 @@ class splashScreen():
     main_vbox.pack_start(self.lbl, True, True)
     self.window.show_all()
     while gtk.events_pending():
+      time.sleep (0.001) # This forces the window to display its contents !?
       gtk.main_iteration()
       
 class librarian:
@@ -91,7 +93,7 @@ class librarian:
   in the listings.  It doesn't track the "borrowing" of e-books. :)
   '''
   def __init__(self):
-    splScr = splashScreen()
+    #splScr = splashScreen()
 
     print _("Version: "),version.__version__
     builder = gtk.Builder()
@@ -344,7 +346,11 @@ class librarian:
 #################### END librarian #####################################
 
 ''' Run main if called directly.'''
-if __name__ == "__main__":
+if __name__ == "__main__": 
+  splScr = splashScreen()
+  #If you don't do this, the splash screen will show, but wont render it's contents
+  while gtk.events_pending():
+    gtk.main_iteration()
   app = librarian()
   gtk.main()
 
