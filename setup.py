@@ -76,7 +76,7 @@ setup (
       packages=['librarian'],
       package_dir={'librarian': 'src'},
       data_files=[("share/applications",["desktop/librarian.desktop"])],
-      package_data={'librarian': ['po/*', 'ui/*','librarian.jpg']},
+      package_data={'librarian': ['po/*', 'ui/*','librarian.png']},
       scripts=['bin/librarian'],
       cmdclass     = cmdclass
 )
