@@ -13,6 +13,8 @@ sqlite3
 reportlab
 qrencode
 
+Install with python setup.py install
+
 I wanted to catalog all my books using their barcodes as input and track who
 borrows my books.  That's all.  I looked online for a program that would
 do just that and couldn't find any that supported barcode input.  The idea

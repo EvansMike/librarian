@@ -44,7 +44,7 @@ class build_trans(cmd.Command):
                         if src_mtime > dest_mtime:
                             print 'Compiling %s' % src
                             msgfmt.make(src, dest)
-                            
+                           
 class build(_build):
     sub_commands = _build.sub_commands + [('build_trans', None)]
     def run(self):

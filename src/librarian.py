@@ -67,21 +67,23 @@ class splashScreen():
   def __init__(self):
     #DONT connect 'destroy' event here!
     self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    self.window.set_title('THE LIBRARIAN')
+    self.version = "Version:" + version.__version__
+    self.window.set_title('LIBRARIAN')
     self.window.set_position(gtk.WIN_POS_CENTER)
-    main_vbox = gtk.VBox(False, 2)
+    main_vbox = gtk.VBox(False, 3)
     self.window.add(main_vbox)
-    hbox = gtk.HBox(False, 0)
     self.image = gtk.Image()
     self.splash_image = os.path.join(os.path.dirname(__file__),"librarian.png")
     self.image.set_from_file(self.splash_image)
     self.image.show()
-    self.lbl = gtk.Label("Loading data...")
+    self.lbl = gtk.Label(self.version)
     self.lbl.set_alignment(0.5, 0.5)
     main_vbox.pack_start(self.image, True, True)
     main_vbox.pack_start(self.lbl, True, True)
     self.window.show_all()
-
+    while gtk.events_pending():
+      gtk.main_iteration()
+      
 class librarian:
   '''
   A simple book tracking program that uses a webcam to scan the barcodes
@@ -90,8 +92,6 @@ class librarian:
   '''
   def __init__(self):
     splScr = splashScreen()
-    while gtk.events_pending():
-      gtk.main_iteration()
 
     print _("Version: "),version.__version__
     builder = gtk.Builder()
@@ -140,12 +140,12 @@ class librarian:
     column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
     column.set_sort_column_id(3)
     self.treeview.append_column(column)
-
-    self.get_book_list(1)
     self.status1.set_text("Version:" + version.__version__)
+    
     self.search_string = builder.get_object("entry_search")
-
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
+    
+    self.get_book_list(1)
     splScr.window.destroy()
     gtk.main()
     
@@ -245,7 +245,9 @@ class librarian:
     result = {}
     #self.booklist.clear()
     if selection == ALL:
-      result = db_query.get_all_books()
+      result, numrows = db_query.get_all_books()
+      #logging.info(numrows)
+      self.status1.set_text("Book count = " + str(numrows) + ". E-book count = ")
       self.fill_booklist(result)
       import calibre
       e_books = calibre.calibre()

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-12 08:32+0100\n"
+"POT-Creation-Date: 2012-10-13 11:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,39 +143,39 @@ msgid ""
 "You added this "
 msgstr ""
 
-#: librarian.py:65 location_editor.py:40
+#: librarian.py:61 location_editor.py:40
 msgid "GTK Not Availible"
 msgstr ""
 
-#: librarian.py:100
+#: librarian.py:96
 msgid "Version: "
 msgstr ""
 
-#: librarian.py:118
+#: librarian.py:114
 msgid "Medium"
 msgstr ""
 
-#: librarian.py:125 ui/edit_book.glade.h:6
+#: librarian.py:121 ui/edit_book.glade.h:6
 msgid "Author"
 msgstr ""
 
-#: librarian.py:134 ui/edit_book.glade.h:30
+#: librarian.py:130 ui/edit_book.glade.h:30
 msgid "Title"
 msgstr ""
 
-#: librarian.py:141
+#: librarian.py:137
 msgid "Rating"
 msgstr ""
 
-#: librarian.py:214 ui/edit_book.glade.h:2
+#: librarian.py:210 ui/edit_book.glade.h:2
 msgid "Abstract"
 msgstr ""
 
-#: librarian.py:279
+#: librarian.py:275
 msgid "Borrower"
 msgstr ""
 
-#: librarian.py:306
+#: librarian.py:302
 msgid "Cannot query e-books.  Please use calibre."
 msgstr ""
 

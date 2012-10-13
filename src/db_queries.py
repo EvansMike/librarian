@@ -287,8 +287,8 @@ class mysql:
     
     '''
     command = "SELECT * FROM books WHERE copies > 0 order by author;"
-    self.cur.execute(command)
-    return  self.cur.fetchall()
+    numrows = self.cur.execute(command)
+    return  self.cur.fetchall(), numrows
   
   
   def get_book_count_by_isbn(self, bar):

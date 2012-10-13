@@ -14,7 +14,7 @@ import gettext
 APP_NAME = "librarian"
  
 # This is ok for maemo. Not sure in a regular desktop:
-#APP_DIR = os.path.join (sys.prefix, 'share')
+APP_DIR = os.path.join (sys.prefix, 'share')
 LOCALE_DIR = os.path.join(APP_DIR, 'locale') # .mo files will then be located in APP_Dir/locale/LANGUAGECODE/LC_MESSAGES/
  
 # Now we need to choose the language. We will provide a list, and gettext

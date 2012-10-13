@@ -44,7 +44,6 @@ import book
 import datetime
 from db_queries import sql as sql
 
-
 _ = gettext.gettext
 
 logger = logging.getLogger("barscan")
@@ -222,9 +221,10 @@ class scanner:
         args = ("ISBN: " + str(self.abook.id), img, )
         self.cur.execute (sql, args)
         self.db.commit()
+      #pixmap,mask = pixbuf.render_pixmap_and_mask()
       #img.save('tmp.png', 'png')
       # Display it in the GUI
-      #self.qr_img.set_from_image(img) # may need to be gtk.image
+      #self.qr_img.set_from_image(img, mask) # may need to be gtk.image
       #self.qr_img.set_from_file('tmp.png') # fix this, I don't like using tmp files
       
       '''
