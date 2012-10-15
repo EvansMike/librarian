@@ -383,12 +383,14 @@ class mysql:
   def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
               city,mtype, add_date):
     ''' Insert a books' complete details in to the DB.
-    
+    @return last insert ID 
     ''' 
-    return self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
+    self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
       year, publisher, city, copies, mtype, add_date) \
       VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
         (title, authors, isbn, abstract,year,publisher,city, 1, mtype, add_date))
+    self.cur.execute("SELECT LAST_INSERT_ID()")
+    return self.cur.fetchone()
        
   def update_book(self, title, authors, abstract, year, publisher, city, mtype, bid):
     self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \

@@ -190,10 +190,12 @@ class add_edit:
     '''
     db_query = sql()
     idx = self.location_dropdown.get_active()
-    lid = self.location_liststore[idx][0]
-    logging.info(lid)
-    self.mybook.where = lid
-    db_query.update_book_location(self.mybook.id, lid)
+    #logging.info(idx)
+    if idx > 0:
+      lid = self.location_liststore[idx][0]
+      logging.info(lid)
+      self.mybook.where = lid
+      db_query.update_book_location(self.mybook.id, lid)
     return
   
   def on_button_add_location_clicked_cb(self,widget):
@@ -284,7 +286,7 @@ class add_edit:
     #logging.info(self.orig_book.compare(book))
     result = db_query.get_by_id(book.id)
     #logging.info(result)
-    if result == 0: # If no book in DB, add it
+    if result == None: # If no book in DB, add it
     # Make sure we don't add an empty book.  We could also use this to
     #check for changes if we have a copy of the original data.
       book_data = book.title + book.authors + book.isbn + book.abstract \
@@ -292,9 +294,13 @@ class add_edit:
       #logging.info(book_data)
       if book_data == '': return # Do nothing if no data
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
-      db_query.insert_book_complete(book.title, book.authors, book.isbn, book.abstract,book.year,\
-            book.publisher,book.city, 1,book.mtype, book.add_date)
+      #insert_book_complete(title,authors, isbn, abstract,year,publisher,
+      #        city,mtype, add_date):
+      book.id = db_query.insert_book_complete(book.title, book.authors, book.isbn, book.abstract, book.year,\
+            book.publisher, book.city ,book.mtype, book.add_date)['LAST_INSERT_ID()']
+      #logging.info(book.id)
       db_query.insert_unique_author(book.authors)
+      
       self.status.set_text(_(" Book has been inserted."))
 
     # If a change has been made...
@@ -303,7 +309,7 @@ class add_edit:
       self.update_book()
       db_query.update_book(book.title, book.authors, book.abstract,book.year,book.publisher,
         book.city, book.mtype, book.id)
-      logging.info(book.mtype)
+      #logging.info(book.mtype)
       db_query.insert_unique_author(book.authors)
       self.status.set_text(_(" Book has been updated."))
       self.orig_book = copy.copy(book) # So we can compare again.
