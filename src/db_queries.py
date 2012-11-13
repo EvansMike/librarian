@@ -190,6 +190,16 @@ class sqlite:
                ('%%%s%%' % search_string, '%%%s%%' % search_string))
     return  self.cur.fetchall()  
   
+  
+  def insert_book_object(self, book):
+    ''' Insert a book's details directly from a book object
+    @param book.  A book object.
+    @return Result of insert
+    '''
+    
+    return  
+  
+  
   def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
               city,mtype, add_date):
     ''' 
@@ -379,7 +389,19 @@ class mysql:
     '''
     return self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", authors) 
     
-     
+  def insert_book_object(self, book):
+    ''' Insert a book's details directly from a book object
+    @param book.  A book object.
+    @return Result of insert
+    '''
+    self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
+      year, publisher, city, copies, mtype, add_date, owner_id) \
+      VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
+      (book.title, book.authors, book.isbn, book.abstract, \
+      book.year, book.publisher, book.city, 1, book.mtype, book.add_date, book.owner_id))
+    return self.cur.fetchone()
+    
+       
   def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
               city,mtype, add_date):
     ''' Insert a books' complete details in to the DB.

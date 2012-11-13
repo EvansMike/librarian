@@ -20,7 +20,7 @@ def get_book_info(isbn):
     title = data[0]['title']
     with open(title+'.json','w') as f:
         f.write(json.dumps(data))
-    print "Guardada info de '%s' en '%s.json'" %(isbn, title)
+    print "Book info for '%s' is '%s'" %(isbn, title)
 
 if __name__ == "__main__":
     while True:

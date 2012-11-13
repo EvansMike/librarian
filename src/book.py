@@ -39,6 +39,7 @@ class book:
     self.where = 0 # Which shelf is it on?
     self.add_date = datetime.date.today()
     self.borrower_id = None
+    self.owner_id = None # For books borrowed from others
 
   def print_book(self):
     ## Return some book details as a string for printing.  Mostly a debug thing.

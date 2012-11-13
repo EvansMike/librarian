@@ -43,6 +43,8 @@ import gettext
 import book
 import datetime
 from db_queries import sql as sql
+import getpass
+
 
 _ = gettext.gettext
 
@@ -176,6 +178,7 @@ class scanner:
             self.abook.mtype = str(cd_search.ProductGroup)
             self.abook.id = str(bar)
             self.abook.year = 0 # Should be available but ... 
+            self.abook.owner_id = getpass.getuser() # Assume owner is current logged in person
         #return
         
     # DONE Check if exists and increment book count if so.
@@ -283,6 +286,7 @@ class scanner:
     for instance, books printed before ISBN was invented.
     result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
          str(self.abook.isbn))
+    TODO Move all DB stuff to db_queries.py
     '''
     db_query = sql()
     a_name = str(self.abook.authors)
