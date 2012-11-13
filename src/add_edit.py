@@ -66,6 +66,7 @@ class add_edit:
     self.lent = builder.get_object("checkbutton1")
     self.lentlist = builder.get_object("liststore1")
     self.lent_select = builder.get_object("comboboxentry1")
+    self.book_owner = builder.get_object("entry_owner")
     self.add_button = builder.get_object("button_new_user") # Add a new user or edit
     self.where = ""
     self.add_date = False # builder.get_object("comboboxentry1") #To be added to GUI
@@ -225,6 +226,7 @@ class add_edit:
     if row['publisher'] != None: self.publisher.set_text(row['publisher'])
     if row['city'] != None: self.city.set_text(row['city'])
     if row['year'] != None: self.year.set_text(str(row['year']))
+    if row['owner'] != None: self.owner.set_text(str(row['owner']))
     self.mtype.set_text(str(row['mtype']))
     self.copies.set_text(str(row['copies']))
 
@@ -239,6 +241,7 @@ class add_edit:
     self.orig_book.year = row['year']
     self.orig_book.copies = row['copies']
     self.orig_book.where = row['location']
+    self.orig_book.owner = row['owner']
     #logging.info(self.orig_book.where)
     self.orig_book.mtype = row['mtype']
     if row['add_date'] != "":
@@ -264,6 +267,7 @@ class add_edit:
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city=self.city.get_text()
     self.mybook.mtype=self.mtype.get_text()
+    self.mybook.owner=self.owner.get_text()
     #self.mybook.add_date=self.add_date.get_text() #TODO
     if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
 
@@ -308,7 +312,7 @@ class add_edit:
       #logging.info("Something changed so an update is needed")
       self.update_book()
       db_query.update_book(book.title, book.authors, book.abstract,book.year,book.publisher,
-        book.city, book.mtype, book.id)
+        book.city, book.mtype,book.owner, book.id)
       #logging.info(book.mtype)
       db_query.insert_unique_author(book.authors)
       self.status.set_text(_(" Book has been updated."))

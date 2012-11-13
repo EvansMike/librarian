@@ -395,10 +395,10 @@ class mysql:
     @return Result of insert
     '''
     self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
-      year, publisher, city, copies, mtype, add_date, owner_id) \
+      year, publisher, city, copies, mtype, add_date, owner) \
       VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
       (book.title, book.authors, book.isbn, book.abstract, \
-      book.year, book.publisher, book.city, 1, book.mtype, book.add_date, book.owner_id))
+      book.year, book.publisher, book.city, 1, book.mtype, book.add_date, book.owner))
     return self.cur.fetchone()
     
        
@@ -416,8 +416,8 @@ class mysql:
        
   def update_book(self, title, authors, abstract, year, publisher, city, mtype, bid):
     self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \
-          year = %s, publisher = %s, city = %s,mtype = %s WHERE id = %s", \
-        (title, authors, abstract,year,publisher, city, mtype, bid))
+          year = %s, publisher = %s, city = %s,mtype = %s, owner = %s WHERE id = %s", \
+        (title, authors, abstract,year,publisher, city, mtype, owner, bid))
         
   def update_book_location(self, bid, location):
     self.cur.execute("UPDATE books SET location = %s WHERE id = %s;", (location, bid))
