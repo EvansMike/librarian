@@ -503,7 +503,7 @@ currently selected one</property>
                 <property name="receives_default">True</property>
                 <property name="has_tooltip">True</property>
                 <property name="tooltip_text" translatable="yes">Closing before update loses any changes.</property>
-                <signal name="clicked" handler="on_destroy"/>
+                <signal name="clicked" handler="on_button_close_clicked"/>
               </object>
               <packing>
                 <property name="left_attach">4</property>

@@ -403,14 +403,14 @@ class mysql:
     
        
   def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
-              city,mtype, add_date):
+              city,mtype, owner, add_date):
     ''' Insert a books' complete details in to the DB.
     @return last insert ID 
     ''' 
     self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
       year, publisher, city, copies, mtype, add_date) \
-      VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s);", \
-        (title, authors, isbn, abstract,year,publisher,city, 1, mtype, add_date))
+      VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s,$s);", \
+        (title, authors, isbn, abstract,year,publisher,city, 1, mtype, owner, add_date))
     self.cur.execute("SELECT LAST_INSERT_ID()")
     return self.cur.fetchone()
        

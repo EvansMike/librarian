@@ -88,13 +88,35 @@ class add_edit:
   def display(self):
     gtk.main()
     pass
+    
+  def on_button_close_clicked(self, widget):
+    ''' Check if any changed made and pop up worning
+    else close the dialog.
+    '''
+    if self.update_book() == 0:
+      if __name__ == "__main__":
+        gtk.main_quit()
+      else:
+        self.window.hide()
+    else: # pop up an are you sure dialog.
+      dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_QUESTION,
+            gtk.BUTTONS_YES_NO, "Changes have be made.\nDo you want to save changes?")
+      dlg_val = dialog.run()
+      dialog.destroy()
+      del dialog
+      self.on_destroy(widget)
+    if dlg_val == -9: # yes
+      self.update_book()
+    else: #no
+      self.on_button_update_clicked(widget)
+      self.on_destroy(widget)
+
 
   def on_destroy(self,widget):
     if __name__ == "__main__":
       gtk.main_quit()
     else:
       self.window.hide()
-      pass
 
 
   def isbn_lookup(self,widget):
@@ -258,7 +280,9 @@ class add_edit:
 
 
   def update_book(self):
-    ## Update any changes from GUI
+    ''' Update any changes from GUI
+    @return Error value from book.compare(book) 
+    '''
     self.mybook.isbn=self.isbn.get_text()
     self.mybook.title=self.title.get_text()
     self.mybook.authors=self.author.get_text()
@@ -274,6 +298,7 @@ class add_edit:
     #logging.info(self.mybook.year)
     # Is the book on loan and to whome?
     self.status.set_text(_("Book updated."))
+    return self.mybook.compare(self.orig_book)
 
   def on_button_update_clicked(self, widget):
     ''' Update the database with new info or add if not already in.'''
@@ -298,10 +323,8 @@ class add_edit:
       #logging.info(book_data)
       if book_data == '': return # Do nothing if no data
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
-      #insert_book_complete(title,authors, isbn, abstract,year,publisher,
-      #        city,mtype, add_date):
       book.id = db_query.insert_book_complete(book.title, book.authors, book.isbn, book.abstract, book.year,\
-            book.publisher, book.city ,book.mtype, book.add_date)['LAST_INSERT_ID()']
+            book.publisher, book.city ,book.mtype,book.owner, book.add_date)['LAST_INSERT_ID()']
       #logging.info(book.id)
       db_query.insert_unique_author(book.authors)
       
