@@ -332,8 +332,9 @@ class mysql:
     Get a list of books that have been borrowed. plus those lent to me.
     TODO Lent to me books.
     '''
-    command = "select * from books, borrows where books.id = borrows.book \
-                      and i_date is null;"
+    import getpass
+    command = ("select * from books, borrows where books.id = borrows.book \
+                      and i_date IS NULL;")
     self.cur.execute(command)
     return self.cur.fetchall()
     

@@ -33,6 +33,7 @@ import gettext
 import popen2
 import lib_print
 import messages
+import getpass
 #from db_queries import calibre
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
 # or 
@@ -228,9 +229,12 @@ class librarian:
       abstract = row['abstract']
       # If a book is borrowed, display who by in the abtract column
       # FIXME Not working and also need to display lender.
-      if row['borrower_id']:
+      if row['borrower_id'] != None:
         b_book = db_query.get_book_borrower_by_book_id(row['id'])
-        if b_book: abstract = b_book['name'] + " : " + str(b_book['o_date']) 
+        if b_book: abstract = b_book['name'] + " : " + str(b_book['o_date'])
+      if row['owner'] != getpass.getuser():
+        abstract += "  " + str(row['owner'])
+         
       self.booklist.append([row['isbn'], author, row['title'],
       abstract,
       row['publisher'], row['city'], str(row['year']),
