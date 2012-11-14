@@ -26,7 +26,7 @@ CREATE TABLE `authors` (
   `name` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`(50))
-) ENGINE=MyISAM AUTO_INCREMENT=227 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=230 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,8 +53,10 @@ CREATE TABLE `books` (
   `add_date` datetime DEFAULT NULL,
   `sale_status` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
+  `borrower_id` int(11) DEFAULT NULL,
+  `owner` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=726 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=736 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,7 +87,7 @@ CREATE TABLE `borrows` (
   `book` int(11) NOT NULL,
   `borrower` int(11) NOT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=118 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=119 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,7 +175,7 @@ CREATE TABLE `locations` (
   `room` text,
   `shelf` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -224,4 +226,4 @@ CREATE TABLE `rating` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-08 18:33:13
+-- Dump completed on 2012-11-14 11:59:52
