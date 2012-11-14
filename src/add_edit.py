@@ -226,7 +226,7 @@ class add_edit:
     if row['publisher'] != None: self.publisher.set_text(row['publisher'])
     if row['city'] != None: self.city.set_text(row['city'])
     if row['year'] != None: self.year.set_text(str(row['year']))
-    if row['owner'] != None: self.owner.set_text(str(row['owner']))
+    if row['owner'] != None: self.book_owner.set_text(str(row['owner']))
     self.mtype.set_text(str(row['mtype']))
     self.copies.set_text(str(row['copies']))
 
@@ -267,7 +267,7 @@ class add_edit:
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city=self.city.get_text()
     self.mybook.mtype=self.mtype.get_text()
-    self.mybook.owner=self.owner.get_text()
+    self.mybook.owner=self.book_owner.get_text()
     #self.mybook.add_date=self.add_date.get_text() #TODO
     if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
 

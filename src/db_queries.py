@@ -236,11 +236,11 @@ class sqlite:
     return self.cur.fetchone() 
     
     
-  def update_book(self, title, authors, abstract, year, publisher, city, mtype, bid):
+  def update_book(self, title, authors, abstract, year, publisher, city, mtype, owner, bid):
     self.cur.execute("UPDATE books SET title = '%s', author = '%s',abstract = '%s', \
-          year = '%s', publisher = '%s', city = '%s',mtype = '%s' WHERE id = '%s'" % \
-        (title, authors, abstract,year,publisher, city, mtype, bid))
-    self.con.commit()   
+          year = '%s', publisher = '%s', city = '%s',mtype = '%s', owner = '%s' WHERE id = '%s'" % \
+        (title, authors, abstract,year,publisher, city, mtype, owner, bid))
+    return self.con.commit()   
     
   def add_borrow(self, id, bid):
     ''' Insert a borrower into the borrows table.
@@ -320,8 +320,8 @@ class mysql:
     
   def get_borrowed_books(self):
     ''' 
-    Get a list of books that have been borrowed.
-    
+    Get a list of books that have been borrowed. plus those lent to me.
+    TODO Lent to me books.
     '''
     command = "select * from books, borrows where books.id = borrows.book \
                       and i_date is null;"
@@ -414,7 +414,7 @@ class mysql:
     self.cur.execute("SELECT LAST_INSERT_ID()")
     return self.cur.fetchone()
        
-  def update_book(self, title, authors, abstract, year, publisher, city, mtype, bid):
+  def update_book(self, title, authors, abstract, year, publisher, city, mtype, owner, bid):
     self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \
           year = %s, publisher = %s, city = %s,mtype = %s, owner = %s WHERE id = %s", \
         (title, authors, abstract,year,publisher, city, mtype, owner, bid))
