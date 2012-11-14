@@ -34,6 +34,7 @@ import book
 import copy
 import gettext
 import datetime
+import getpass
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
 # or 
 from db_queries import sql as sql
@@ -323,8 +324,10 @@ class add_edit:
       #logging.info(book_data)
       if book_data == '': return # Do nothing if no data
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
-      book.id = db_query.insert_book_complete(book.title, book.authors, book.isbn, book.abstract, book.year,\
-            book.publisher, book.city ,book.mtype,book.owner, book.add_date)['LAST_INSERT_ID()']
+      book.owner = getpass.getuser() # Assume owner is current logged in person
+      db_query.insert_book_object(book)
+      #book.id = db_query.insert_book_complete(book.title, book.authors, book.isbn, book.abstract, book.year,\
+      #      book.publisher, book.city ,book.mtype, book.add_date, book.owner)['LAST_INSERT_ID()']
       #logging.info(book.id)
       db_query.insert_unique_author(book.authors)
       

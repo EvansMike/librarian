@@ -178,7 +178,7 @@ class scanner:
             self.abook.mtype = str(cd_search.ProductGroup)
             self.abook.id = str(bar)
             self.abook.year = 0 # Should be available but ... 
-            self.abook.owner_id = getpass.getuser() # Assume owner is current logged in person
+            self.abook.owner = getpass.getuser() # Assume owner is current logged in person
         #return
         
     # DONE Check if exists and increment book count if so.
