@@ -227,6 +227,7 @@ class librarian:
       #logging.info(author)
       abstract = row['abstract']
       # If a book is borrowed, display who by in the abtract column
+      # FIXME Not working and also need to display lender.
       if row['borrower_id']:
         b_book = db_query.get_book_borrower_by_book_id(row['id'])
         if b_book: abstract = b_book['name'] + " : " + str(b_book['o_date']) 

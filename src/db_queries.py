@@ -196,21 +196,30 @@ class sqlite:
     @param book.  A book object.
     @return Result of insert
     '''
-    
+    self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
+      year, publisher, city, copies, mtype, owner, add_date) \
+      VALUES(?, ?, ?,?,?,?,?,?,?,?,?);", \
+        (book.title, book.authors, book.isbn, book.abstract, book.year,
+        book.publisher, book.city, 1, book.mtype, book.owner, book.add_date))
+    self.con.commit()
+    self.cur.execute("SELECT LAST_INSERT_ROWID()") # 
+    return self.cur.fetchone()
     return  
   
   
   def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
-              city,mtype, add_date):
+              city,mtype, owner, add_date):
     ''' 
     Insert a books' complete details in to the DB.
     
     ''' 
-    return self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
-      year, publisher, city, copies, mtype, add_date) \
-      VALUES(?, ?, ?,?,?,?,?,?,?,?);", \
-        (title, authors, isbn, abstract,year,publisher,city, 1, mtype, add_date))
+    self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
+      year, publisher, city, copies, mtype, owner, add_date) \
+      VALUES(?, ?, ?,?,?,?,?,?,?,?,?);", \
+        (title, authors, isbn, abstract,year,publisher,city, 1, mtype, owner, add_date))
     self.con.commit()
+    self.cur.execute("SELECT LAST_INSERT_ROWID()") # 
+    return self.cur.fetchone()
          
   def insert_unique_author(self, authors):
     '''
