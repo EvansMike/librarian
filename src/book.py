@@ -22,6 +22,8 @@
 
 
 import datetime
+import getpass
+
 
 class book:
   ''' Define book properties here '''
@@ -39,8 +41,8 @@ class book:
     self.where = 0 # Which shelf is it on?
     self.add_date = datetime.date.today()
     self.borrower_id = None
-    self.owner = None # For books borrowed from others or current user by default
-
+    self.owner = getpass.getuser() # Assume owner is current logged in person
+    
   def print_book(self):
     ## Return some book details as a string for printing.  Mostly a debug thing.
     bookstring = self.isbn + "\n" + self.authors + "\n" + self.title
