@@ -281,7 +281,7 @@ class librarian:
     # Display all books on loan
     self.get_book_list(BORROWED)
     column = self.treeview.get_column(3)
-    column.set_title(_('Borrower/Owner'))
+    column.set_title(_('Owner'))
 
   def on_button_scan_clicked(self, widget):
     '''Open the scanning dialog.

@@ -138,8 +138,12 @@ class sqlite:
     Get a list of books that have been borrowed.
     
     '''
-    command = "select * from books, borrows where books.id = borrows.book \
-                      and i_date is null;"
+    command = ("select * from  books, borrows  where  (books.owner!=%s \
+    AND books.borrower_id IS NULL) \
+    OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
+    GROUP BY books.id;" % user)
+    #command = "select * from books, borrows where books.id = borrows.book \
+    #                  and i_date is null;"
     self.cur.execute(command)
     return self.cur.fetchall()
   
@@ -333,9 +337,11 @@ class mysql:
     TODO Lent to me books.
     '''
     import getpass
-    command = ("select * from books, borrows where books.id = borrows.book \
-                      and i_date IS NULL;")
-    self.cur.execute(command)
+    user = getpass.getuser()
+    self.cur.execute ("select * from  books, borrows  where  (books.owner!=%s \
+    AND books.borrower_id IS NULL) \
+    OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
+    GROUP BY books.id;", user)
     return self.cur.fetchall()
     
   def get_borrowed_book_by_id(self, bid):
