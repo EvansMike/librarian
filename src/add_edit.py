@@ -376,7 +376,8 @@ class add_edit:
 
 
   def on_button_clear_clicked(self, widget):
-    ''' Clear all the edit boxes '''
+    ''' Clear all the edit boxes so A new book can be entered.
+    '''
     self.isbn.set_text('')
     self.author.set_text('')
     self.title.set_text('')
@@ -385,7 +386,13 @@ class add_edit:
     self.city.set_text('')
     self.year.set_text('')
     self.copies.set_text('')
-    self.status.set_text(_("Everything cleared."))
+    # Create a new empty book
+    import book
+    self.orig_book = book.book()
+    self.mybook = copy.copy(self.orig_book)
+    self.populate_borrowers()
+    self.populate_locations()
+    self.status.set_text(_("Everything cleared.  Enter new book's details."))
 
 
   def on_checkbutton1_toggled(self, widget):
