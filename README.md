@@ -15,6 +15,10 @@ sqlite3
 reportlab
 qrencode - optional
 
+Get the code with:
+git clone git://github.com/EvansMike/librarian.git
+
+
 Install with python setup.py install
 
 I wanted to catalog all my books using their barcodes as input and track who
