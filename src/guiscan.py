@@ -33,7 +33,7 @@ import zbar
 import webbrowser
 from biblio.webquery.xisbn import XisbnQuery
 import biblio.webquery
-
+import platform
 import MySQLdb
 import sys, os
 import load_config as config
@@ -81,6 +81,7 @@ if QR_CODE:
   except:
     QR_CODE = False
 
+system = platform.system() # What are we running on.
 
 ################## BEGIN scanner class #################################
 class scanner:
@@ -123,8 +124,17 @@ class scanner:
     buff.set_text(_("To begin press scan."))
     self.text_view.set_buffer(buff)
     # This isn't really good enough but...
-    try: device = '/dev/video0'
-    except: device = '/dev/video1'
+    if system == "Linux":
+      try: device = '/dev/video0'
+      except: device = '/dev/video1'
+    elif system == "Windows":
+      # TODO: Windows camera stuff.
+      pass
+    else:
+      # TODO: Write code for other systems.  Others can do this perhaps.
+      buff.set_text (_("Cannot find camera on this Operating system."))
+      self.text_view.set_buffer(buff)
+      return 
     # create a Processor
     proc = zbar.Processor()
     # configure the Processor
