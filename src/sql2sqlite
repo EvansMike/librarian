@@ -4,7 +4,7 @@ if [ "x$1" == "x" ]; then
   exit
 fi
 
-cat $1 |
+cat $1.sql |
 grep -v ' KEY "' |
 grep -v ' UNIQUE KEY "' |
 grep -v ' PRIMARY KEY ' |
@@ -28,12 +28,12 @@ if (/^(INSERT.+?)\(/) {
   s/\\n/\n/g;
   s/\),\(/\);\n$a\(/g;
 }
-' > $1.sql
-cat $1.sql | sqlite3 $1.db > $1.err
+' > $1-x.sql
+cat $1-x.sql | sqlite3 $1.db > $1.err
 ERRORS=`cat $1.err | wc -l`
 if [ $ERRORS == 0 ]; then
   echo "Conversion completed without error. Output file: $1.db"
-#  rm $1.sql
+  rm $1-x.sql
   rm $1.err
 else
   echo "There were errors during conversion.  Please review $1.err and $1.sql for details."

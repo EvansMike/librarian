@@ -1,8 +1,10 @@
-README FIRST
+# README FIRST
 
 
-Requires some flavour of linux and Python.  Windows user will have to figure
-out how it works themselves.
+Requires some flavour of Linux and Python.  
+Windows user will have to figure out how it works themselves and edit 
+the code to suit.
+
 Also requires the python packages:
 biblio
 zbar
@@ -11,7 +13,7 @@ copy
 gtk
 sqlite3
 reportlab
-qrencode
+qrencode - optional
 
 Install with python setup.py install
 
@@ -40,7 +42,7 @@ multiple computers.
 
 See INSTALL for install instructions.
 
-QR Codes
+## QR Codes
 Everytime you scan a book a qrcode can be generated. You may not want this behaviour.
 BY default the behaviour is turned off in the config file.
 It seemed like a good idea at the time but I admit to never have used the 
@@ -51,7 +53,7 @@ Older books without bar codes can be manually input via the Query/Edit book
 interface.  It's a bit of a pain though if you have lots of books.
 
 
-DB NOTES:
+## DB NOTES:
 To get a list of borrowed books from mysql:
 SELECT o_date, title, author, borrowers.name
   FROM borrows, borrowers, books
@@ -65,8 +67,11 @@ It's just a text field, the id is auto incremented.
 Obviously there should be a nice user friendly GUI for this. :)
 Update: There is now.
 
+The sqlite2 database file is createed from the books.schema.sql file with:
+./mysql2sqlite --no-data  -p books | sqlite3 books_schema.db
 
-Update:  2012-04-12 
+
+### Update:  2012-04-12 
 You can now scan DVDs and CDs provided you have a Amazon web
 services account.  http://aws.amazon.com to sign up.  As far as I know, low
 useage will attract no charge, likely to be most domestic users.
@@ -94,7 +99,10 @@ books, as long as the .db_config.cfg file contains matching details.
       where borrows.borrower=borrowers.id 
       and books.id=borrows.book;
       
-Windows Users
+
+
+
+## Windows Users
 
 Apologies to Windows users.  You may have to adapt the code to suit.  Please
 send any relavent stuff back to me and I'll try to incorporate into the 

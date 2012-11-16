@@ -56,7 +56,7 @@ CREATE TABLE `books` (
   `borrower_id` int(11) DEFAULT NULL,
   `owner` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=736 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=740 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -226,4 +226,4 @@ CREATE TABLE `rating` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-14 11:59:52
+-- Dump completed on 2012-11-16  8:54:49

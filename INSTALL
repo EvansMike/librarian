@@ -1,7 +1,8 @@
 To Install
 
 python setup.py install
-You will probably have to be root, or sudoer.
+You will probably have to be root, or sudoer as site-packages is only
+writable by root in most (all?) cases.
 
 To make an installable package
 

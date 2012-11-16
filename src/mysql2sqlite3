@@ -7,7 +7,7 @@
 # The mysqldump file is traversed only once.
 
 # Usage: $ ./mysql2sqlite mysqldump-opts db-name | sqlite3 database.sqlite
-# Example: $ ./mysql2sqlite --no-data -u root -pMySecretPassWord myDbase | sqlite3 database.sqlite
+# Example: $ ./mysql2sqlite --no-data  -p books | sqlite3 books_schema.db
 
 # Thanks to and @artemyk and @gkuenning for their nice tweaks.
 # https://gist.github.com/943776
