@@ -126,7 +126,7 @@ class add_edit:
       update the database and close the window
     '''
     try:
-      logger.info(self.isbn.get_text())
+      logging.info(self.isbn.get_text())
       self.mybook.webquery(self.isbn.get_text())
       self.isbn.set_text(self.mybook.isbn)
       self.title.set_text(self.mybook.title)
