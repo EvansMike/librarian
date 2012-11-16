@@ -33,7 +33,7 @@ import zbar
 import webbrowser
 from biblio.webquery.xisbn import XisbnQuery
 import biblio.webquery
-import qrencode
+
 import MySQLdb
 import sys, os
 import load_config as config
@@ -74,6 +74,12 @@ db_host = config.db_host
 # Do we produce a QR code?
 QR_CODE = config.qr_code
 
+
+if QR_CODE:
+  try:
+    import qrencode # Only if available AND required
+  except:
+    QR_CODE = False
 
 
 ################## BEGIN scanner class #################################
