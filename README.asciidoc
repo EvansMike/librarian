@@ -32,7 +32,7 @@ The scan triggers a lookup on the database and the book details are downloaded
 then commited to the local database.
 
 It uses MySQL or sqlite.  The database config file is created if none exists.
-Use database.sql, after creating the database,  to populate the database with
+Use database.schema.sql, after creating the database,  to populate the database with
 the required tables:
 ----
 mysql -p books < database.schema.sql

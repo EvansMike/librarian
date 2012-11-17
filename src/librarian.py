@@ -256,9 +256,12 @@ class librarian:
       #logging.info(numrows)
       self.status1.set_text("Book count = " + str(numrows) + ". E-book count = ")
       self.fill_booklist(result)
-      import calibre
-      e_books = calibre.calibre()
-      self.booklist = e_books.insert_data2(self.booklist)
+      try:
+        import calibre
+        e_books = calibre.calibre()
+        self.booklist = e_books.insert_data2(self.booklist)
+      except:
+        pass # Do nothing if it's not available.
     #
     elif selection == BORROWED:
       result = db_query.get_borrowed_books()
@@ -331,9 +334,11 @@ class librarian:
     result = db_query.search_books(search_string)
     self.fill_booklist(result,False)
     # Now search the calibre database.
-    import calibre
-    search = calibre.calibre()
-    result = search.search_calibre(search_string, self.booklist) # search and add to booklist
+    try:
+      import calibre
+      search = calibre.calibre()
+      result = search.search_calibre(search_string, self.booklist) # search and add to booklist
+    except: pass # Do nothing
     return
 
   def treeview1_row_activated_cb(self, widget, path, col):
