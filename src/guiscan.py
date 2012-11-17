@@ -168,33 +168,37 @@ class scanner:
         #logging.info(self.abook.print_book())
         buff.set_text (_("Searching for DVDs\n"))
         self.text_view.set_buffer(buff)
-        import amazonlookup
-        dvd_search = amazonlookup.DVDlookup()
-        if dvd_search.lookup(bar) != 1:
-          buff.insert_at_cursor (_("Found DVD:\n"))
-          buff.insert_at_cursor(str(dvd_search.Title) + "\n")
-          buff.insert_at_cursor(str(dvd_search.Director))
-          self.text_view.set_buffer(buff)
-          self.abook.title = str(dvd_search.Title)
-          self.abook.authors = str(dvd_search.Director) # This isn't perfect and maybe I should use K-V pairs?
-          self.abook.mtype = str(dvd_search.ProductGroup)
-          self.abook.id = str(bar)
-          self.abook.year = 0 # Should be available but ...
-        else: # Do a CD search
-          buff.set_text (_("No DVDs.\n Searching for CDs\n"))
-          self.text_view.set_buffer(buff)
-          cd_search = amazonlookup.CDlookup() # Should be able to get more data from freedb.org
-          if cd_search.lookup(bar) != 1 and cd_search.Title != '' :
-            buff.insert_at_cursor(_("CD Found:\n"))
+        try:
+          import amazonlookup
+          dvd_search = amazonlookup.DVDlookup()
+          if dvd_search.lookup(bar) != 1:
+            buff.insert_at_cursor (_("Found DVD:\n"))
+            buff.insert_at_cursor(str(dvd_search.Title) + "\n")
+            buff.insert_at_cursor(str(dvd_search.Director))
             self.text_view.set_buffer(buff)
-            buff.insert_at_cursor(str(cd_search.Title) + "\n")
-            buff.insert_at_cursor(str(cd_search.Artist))
-            self.abook.title = str(cd_search.Title)
-            self.abook.authors = str(cd_search.Artist)
-            self.abook.mtype = str(cd_search.ProductGroup)
+            self.abook.title = str(dvd_search.Title)
+            self.abook.authors = str(dvd_search.Director) # This isn't perfect and maybe I should use K-V pairs?
+            self.abook.mtype = str(dvd_search.ProductGroup)
             self.abook.id = str(bar)
-            self.abook.year = 0 # Should be available but ... 
-            self.abook.owner = getpass.getuser() # Assume owner is current logged in person
+            self.abook.year = 0 # Should be available but ...
+          else: # Do a CD search
+            buff.set_text (_("No DVDs.\n Searching for CDs\n"))
+            self.text_view.set_buffer(buff)
+            cd_search = amazonlookup.CDlookup() # Should be able to get more data from freedb.org
+            if cd_search.lookup(bar) != 1 and cd_search.Title != '' :
+              buff.insert_at_cursor(_("CD Found:\n"))
+              self.text_view.set_buffer(buff)
+              buff.insert_at_cursor(str(cd_search.Title) + "\n")
+              buff.insert_at_cursor(str(cd_search.Artist))
+              self.abook.title = str(cd_search.Title)
+              self.abook.authors = str(cd_search.Artist)
+              self.abook.mtype = str(cd_search.ProductGroup)
+              self.abook.id = str(bar)
+              self.abook.year = 0 # Should be available but ... 
+              self.abook.owner = getpass.getuser() # Assume owner is current logged in person
+        except: 
+          buff.set_text (_("Could not lookup DVD on Amazon"))
+          self.text_view.set_buffer(buff)
         #return
         
     # DONE Check if exists and increment book count if so.
