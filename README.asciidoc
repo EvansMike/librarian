@@ -1,24 +1,24 @@
-# README FIRST
-
+== README FIRST
 
 Requires some flavour of Linux and Python.  
-Windows user will have to figure out how it works themselves and edit 
+Windows users will have to figure out how it works themselves and edit 
 the code to suit.
-
+....
 Also requires the python packages:
-biblio
-zbar
-MySQLdb
-copy
-gtk
-sqlite3
-reportlab
-qrencode - optional
+biblio  
+zbar  
+MySQLdb  
+copy  
+gtk  
+sqlite3  
+reportlab  
+qrencode - optional  
+....
 
 Get the code with:
+----
 git clone git://github.com/EvansMike/librarian.git
-
-
+----
 Install with python setup.py install
 
 I wanted to catalog all my books using their barcodes as input and track who
@@ -32,8 +32,11 @@ The scan triggers a lookup on the database and the book details are downloaded
 then commited to the local database.
 
 It uses MySQL or sqlite.  The database config file is created if none exists.
-Use database.sql, after creating the database,  to populate the database, like:
-mysql -p books < database.sql
+Use database.sql, after creating the database,  to populate the database with
+the required tables:
+----
+mysql -p books < database.schema.sql
+----
 You have to create the database first using your favourite method/tool.
 The database name (books in the example above) can be anything as long as the
 config file matches.  If the config file contains a password so take care to 
@@ -46,36 +49,31 @@ multiple computers.
 
 See INSTALL for install instructions.
 
-## QR Codes
-Everytime you scan a book a qrcode can be generated. You may not want this behaviour.
+=== QR Codes
+Everytime you scan a book a QRcode can be generated. You may not want this behaviour.
 BY default the behaviour is turned off in the config file.
 It seemed like a good idea at the time but I admit to never have used the 
-qrcodes for anything. :)
-
+QRcodes for anything. :)
 
 Older books without bar codes can be manually input via the Query/Edit book
 interface.  It's a bit of a pain though if you have lots of books.
 
-
-## DB NOTES:
+=== DB Notes
 To get a list of borrowed books from mysql:
+----
 SELECT o_date, title, author, borrowers.name
   FROM borrows, borrowers, books
-  where borrows.borrower = borrowers.id
-  and books.id = borrows.book
-  and borrows.i_date IS NULL;
+  WHERE borrows.borrower = borrowers.id
+  AND books.id = borrows.book
+  AND borrows.i_date IS NULL;
+----
 
-To insert a borrower in the mysql shell:
-insert into borrowers(name) values ('Borrower Name');
-It's just a text field, the id is auto incremented.
-Obviously there should be a nice user friendly GUI for this. :)
-Update: There is now.
-
-The sqlite2 database file is createed from the books.schema.sql file with:
+The sqlite2 database file is created from the books.schema.sql file with:
+----
 ./mysql2sqlite --no-data  -p books | sqlite3 books_schema.db
+----
 
-
-### Update:  2012-04-12 
+=== Update:  2012-04-12 
 You can now scan DVDs and CDs provided you have a Amazon web
 services account.  http://aws.amazon.com to sign up.  As far as I know, low
 useage will attract no charge, likely to be most domestic users.
@@ -97,19 +95,22 @@ create the tables.  The -p is required if your DB is password protected.
 Obviously you can call the DB anything you like, it doesn't have to be 
 books, as long as the .db_config.cfg file contains matching details.
 
-  To get who borrowed what and for how long:
+To get who borrowed what and for how long:
+----
   select title, name, DAtediff(i_date,o_date) as days 
       from borrows, borrowers, books 
       where borrows.borrower=borrowers.id 
       and books.id=borrows.book;
-      
+----      
 
 
 
-## Windows Users
+=== Windows Users
 
 Apologies to Windows users.  You may have to adapt the code to suit.  Please
 send any relavent stuff back to me and I'll try to incorporate into the 
 code.
+
+Stuff that need fixing for Windows include zbarcam code in guiscan.py.
       
 
