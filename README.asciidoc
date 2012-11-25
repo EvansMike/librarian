@@ -7,19 +7,24 @@ the code to suit.
 Also requires the python packages:
 biblio  
 zbar  
-MySQLdb  
-copy  
-gtk  
-sqlite3  
-reportlab  
-qrencode - optional  
+copy
+pygtk
+gtk 
+amazonlookup - For CD barcode lookup
+MySQLdb - For MySQl database or
+sqlite3  - For sqlite database
+reportlab - For PDF report generation
+qrencode - For QR code generation
 ....
 
 Get the code with:
 ----
 git clone git://github.com/EvansMike/librarian.git
 ----
-Install with python setup.py install
+Install with 
+----
+python setup.py install
+----
 
 I wanted to catalog all my books using their barcodes as input and track who
 borrows my books.  That's all.  I looked online for a program that would
@@ -43,11 +48,8 @@ config file matches.  If the config file contains a password so take care to
 make it secure from prying eyes.
 
 Can also use sqlite.  Edit db_conf.cfg to use whatever database you like.
-The sqlite file will be created it it doesn't already exist.  Sqlite is 
-easier to set up but not so useful if you want to access the data from 
+Sqlite is easier to set up but not so useful if you want to access the data from 
 multiple computers.
-
-See INSTALL for install instructions.
 
 === QR Codes
 Everytime you scan a book a QRcode can be generated. You may not want this behaviour.
@@ -56,7 +58,7 @@ It seemed like a good idea at the time but I admit to never have used the
 QRcodes for anything. :)
 
 Older books without bar codes can be manually input via the Query/Edit book
-interface.  It's a bit of a pain though if you have lots of books.
+window.  It's a bit of a pain though if you have lots of books.
 
 === DB Notes
 To get a list of borrowed books from mysql:
@@ -69,9 +71,9 @@ SELECT o_date, title, author, borrowers.name
   AND borrows.i_date IS NULL;
 ----
 
-The sqlite2 database file is created from the books.schema.sql file with:
+The sqlite2 database file is created from the database.schema.sql file with:
 ----
-./mysql2sqlite --no-data  -p books | sqlite3 books_schema.db
+./mysql2sqlite3 --no-data  -p books | sqlite3 database_schema.db
 ----
 
 === Update:  2012-04-12 
@@ -85,10 +87,9 @@ using freedb?
 
 Setting user database password stuff is up to you for the moment.  
 I will add a GUI. NOTE:  Passwords are stored as plain text in the config file.  
-This is not good and some encryption method should (will) be used when 
-the config GUI is written.  On first run a refault .db_config.cnf file is
-writting in your home directory, note that this is a hidden dot-file.  
-This must edited with the details of your database.
+On first run a default .db_config.cnf file is
+written in your home directory, note that this is a hidden dot-file.  
+This must edited with the details of your database plus any other preferences.
 
 To create the tables you will need the books_schema.sql  file from the sources.
 After creating the database run: mysql <-p> books < books_schema.sql to 
@@ -98,20 +99,20 @@ books, as long as the .db_config.cfg file contains matching details.
 
 To get who borrowed what and for how long:
 ----
-  select title, name, DAtediff(i_date,o_date) as days 
-      from borrows, borrowers, books 
-      where borrows.borrower=borrowers.id 
-      and books.id=borrows.book;
+  SELECT title, name, DATEDIFF(i_date,o_date) AS days 
+      FROM borrows, borrowers, books 
+      WHERE borrows.borrower=borrowers.id 
+      AND books.id=borrows.book;
 ----      
-
-
 
 === Windows Users
 
-Apologies to Windows users.  You may have to adapt the code to suit.  Please
-send any relavent stuff back to me and I'll try to incorporate into the 
-code.
+Apologies to MS Windows users, I don't use MS Windows myself so I have no way to 
+develop or test code other than on Linux.  You will have to adapt the code 
+to suit.
 
-Stuff that need fixing for Windows include zbarcam code in guiscan.py.
+Stuff that need fixing for MS Windows include zbarcam code in guiscan.py, 
+database connections to anything other than MySQl and sqlite3 is also not
+currently supported.
       
 
