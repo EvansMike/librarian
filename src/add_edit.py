@@ -332,6 +332,7 @@ class add_edit:
       db_query.insert_unique_author(book.authors)
       
       self.status.set_text(_(" Book has been inserted."))
+      self.orig_book = copy.copy(book) # So we can compare again.
 
     # If a change has been made...
     elif  self.orig_book.compare(book) != 0:
