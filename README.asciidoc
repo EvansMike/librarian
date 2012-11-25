@@ -60,6 +60,7 @@ interface.  It's a bit of a pain though if you have lots of books.
 
 === DB Notes
 To get a list of borrowed books from mysql:
+[source,sql]
 ----
 SELECT o_date, title, author, borrowers.name
   FROM borrows, borrowers, books
