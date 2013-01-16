@@ -107,7 +107,7 @@ To get who borrowed what and for how long:
 
 === Windows Users
 
-Apologies to MS Windows users, I don't use MS Windows myself so I have no way to 
+Apologies to MS Windows, amd Mac users, I don't use MS Windows or a Mac myself so I have no way to 
 develop or test code other than on Linux.  You will have to adapt the code 
 to suit.
 
