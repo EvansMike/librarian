@@ -1,0 +1,196 @@
+\hypertarget{classsrc_1_1librarian_1_1librarian}{
+\section{src::librarian::librarian Class Reference}
+\label{classsrc_1_1librarian_1_1librarian}\index{src::librarian::librarian@{src::librarian::librarian}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classsrc_1_1librarian_1_1librarian_acf3949b5b74bcec9e6571f1cfa212bcb}{
+def {\bfseries \_\-\_\-init\_\-\_\-}}
+\label{classsrc_1_1librarian_1_1librarian_acf3949b5b74bcec9e6571f1cfa212bcb}
+
+\item 
+def \hyperlink{classsrc_1_1librarian_1_1librarian_a4f28ce0f2370c18156999d082b143c59}{on\_\-button\_\-print\_\-clicked}
+\item 
+def \hyperlink{classsrc_1_1librarian_1_1librarian_a5a0ac477e38c817b334dcc02460072d8}{fill\_\-booklist}
+\item 
+def \hyperlink{classsrc_1_1librarian_1_1librarian_a172f1724b10cc6d2b0b490e578680e8d}{get\_\-book\_\-list}
+\item 
+def \hyperlink{classsrc_1_1librarian_1_1librarian_a972a2c91d3934db4763434ad294a7d56}{on\_\-button\_\-all\_\-clicked}
+\item 
+def \hyperlink{classsrc_1_1librarian_1_1librarian_a87655d7021f49aaea50dfb6191e2867e}{on\_\-button\_\-loaned\_\-clicked}
+\item 
+def \hyperlink{classsrc_1_1librarian_1_1librarian_aac059ba0d6c27ca605267ce116bc0e05}{on\_\-button\_\-scan\_\-clicked}
+\item 
+def \hyperlink{classsrc_1_1librarian_1_1librarian_a61a6cbccd578bf9f88a27667709813bf}{on\_\-button\_\-query\_\-clicked}
+\item 
+def \hyperlink{classsrc_1_1librarian_1_1librarian_a07feb9f46d60a453a685f47a975b8644}{on\_\-button\_\-search\_\-clicked}
+\item 
+\hypertarget{classsrc_1_1librarian_1_1librarian_a6afbd844c393f443263bb9f1e26f92a5}{
+def {\bfseries treeview1\_\-row\_\-activated\_\-cb}}
+\label{classsrc_1_1librarian_1_1librarian_a6afbd844c393f443263bb9f1e26f92a5}
+
+\item 
+\hypertarget{classsrc_1_1librarian_1_1librarian_a71bda0bd58fc1e317888bc9f641c3d4b}{
+def {\bfseries gtk\_\-main\_\-quit}}
+\label{classsrc_1_1librarian_1_1librarian_a71bda0bd58fc1e317888bc9f641c3d4b}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classsrc_1_1librarian_1_1librarian_a339612b89a0e80a39b0ea2e9d3ed839a}{
+{\bfseries gladefile}}
+\label{classsrc_1_1librarian_1_1librarian_a339612b89a0e80a39b0ea2e9d3ed839a}
+
+\item 
+\hypertarget{classsrc_1_1librarian_1_1librarian_a56018b542dccd5157570c29a9d77ba4b}{
+{\bfseries treeview}}
+\label{classsrc_1_1librarian_1_1librarian_a56018b542dccd5157570c29a9d77ba4b}
+
+\item 
+\hypertarget{classsrc_1_1librarian_1_1librarian_aef267f34ec9b09681dbab5736dc3062e}{
+{\bfseries booklist}}
+\label{classsrc_1_1librarian_1_1librarian_aef267f34ec9b09681dbab5736dc3062e}
+
+\item 
+\hypertarget{classsrc_1_1librarian_1_1librarian_aee6a4212fde721204917e3ba12509ac5}{
+{\bfseries status1}}
+\label{classsrc_1_1librarian_1_1librarian_aee6a4212fde721204917e3ba12509ac5}
+
+\item 
+\hypertarget{classsrc_1_1librarian_1_1librarian_a26ac2398971012ea0457ccbc512c3e24}{
+{\bfseries search\_\-string}}
+\label{classsrc_1_1librarian_1_1librarian_a26ac2398971012ea0457ccbc512c3e24}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}
+A simple book tracking program that uses a webcam to scan the barcodes
+to add books.  It also tracks borrowers and can include your e-books
+in the listings.  It doesn't track the "borrowing" of e-books. :)
+\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\hypertarget{classsrc_1_1librarian_1_1librarian_a5a0ac477e38c817b334dcc02460072d8}{
+\index{src::librarian::librarian@{src::librarian::librarian}!fill\_\-booklist@{fill\_\-booklist}}
+\index{fill\_\-booklist@{fill\_\-booklist}!src::librarian::librarian@{src::librarian::librarian}}
+\subsubsection[{fill\_\-booklist}]{\setlength{\rightskip}{0pt plus 5cm}def src::librarian::librarian::fill\_\-booklist (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{result, }
+\item[{}]{append = {\ttfamily False}}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1librarian_1_1librarian_a5a0ac477e38c817b334dcc02460072d8}
+\begin{DoxyVerb}
+Authors names are stored in regular text, we want so get them by
+family,first name order.  This iterates through the result and
+and appends to the liststore with the author names re-ordered.
+@param result
+@param append boolean, whether to append to list.
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1librarian_1_1librarian_a172f1724b10cc6d2b0b490e578680e8d}{
+\index{src::librarian::librarian@{src::librarian::librarian}!get\_\-book\_\-list@{get\_\-book\_\-list}}
+\index{get\_\-book\_\-list@{get\_\-book\_\-list}!src::librarian::librarian@{src::librarian::librarian}}
+\subsubsection[{get\_\-book\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}def src::librarian::librarian::get\_\-book\_\-list (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{selection}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1librarian_1_1librarian_a172f1724b10cc6d2b0b490e578680e8d}
+\begin{DoxyVerb}Get the book lists from the databases.
+
+Params:
+selection -- BORRORWED or ALL Which set to get.
+
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1librarian_1_1librarian_a972a2c91d3934db4763434ad294a7d56}{
+\index{src::librarian::librarian@{src::librarian::librarian}!on\_\-button\_\-all\_\-clicked@{on\_\-button\_\-all\_\-clicked}}
+\index{on\_\-button\_\-all\_\-clicked@{on\_\-button\_\-all\_\-clicked}!src::librarian::librarian@{src::librarian::librarian}}
+\subsubsection[{on\_\-button\_\-all\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def src::librarian::librarian::on\_\-button\_\-all\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1librarian_1_1librarian_a972a2c91d3934db4763434ad294a7d56}
+\begin{DoxyVerb}Display all the books
+
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1librarian_1_1librarian_a87655d7021f49aaea50dfb6191e2867e}{
+\index{src::librarian::librarian@{src::librarian::librarian}!on\_\-button\_\-loaned\_\-clicked@{on\_\-button\_\-loaned\_\-clicked}}
+\index{on\_\-button\_\-loaned\_\-clicked@{on\_\-button\_\-loaned\_\-clicked}!src::librarian::librarian@{src::librarian::librarian}}
+\subsubsection[{on\_\-button\_\-loaned\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def src::librarian::librarian::on\_\-button\_\-loaned\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1librarian_1_1librarian_a87655d7021f49aaea50dfb6191e2867e}
+\begin{DoxyVerb}Display the loaned out books
+
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1librarian_1_1librarian_a4f28ce0f2370c18156999d082b143c59}{
+\index{src::librarian::librarian@{src::librarian::librarian}!on\_\-button\_\-print\_\-clicked@{on\_\-button\_\-print\_\-clicked}}
+\index{on\_\-button\_\-print\_\-clicked@{on\_\-button\_\-print\_\-clicked}!src::librarian::librarian@{src::librarian::librarian}}
+\subsubsection[{on\_\-button\_\-print\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def src::librarian::librarian::on\_\-button\_\-print\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1librarian_1_1librarian_a4f28ce0f2370c18156999d082b143c59}
+\begin{DoxyVerb}Print the entire book list to pdf then opens the default pdf viewer.
+TODO: Auto width columns
+This will likely be system specific
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1librarian_1_1librarian_a61a6cbccd578bf9f88a27667709813bf}{
+\index{src::librarian::librarian@{src::librarian::librarian}!on\_\-button\_\-query\_\-clicked@{on\_\-button\_\-query\_\-clicked}}
+\index{on\_\-button\_\-query\_\-clicked@{on\_\-button\_\-query\_\-clicked}!src::librarian::librarian@{src::librarian::librarian}}
+\subsubsection[{on\_\-button\_\-query\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def src::librarian::librarian::on\_\-button\_\-query\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1librarian_1_1librarian_a61a6cbccd578bf9f88a27667709813bf}
+\begin{DoxyVerb}Open the query dialog.
+
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1librarian_1_1librarian_aac059ba0d6c27ca605267ce116bc0e05}{
+\index{src::librarian::librarian@{src::librarian::librarian}!on\_\-button\_\-scan\_\-clicked@{on\_\-button\_\-scan\_\-clicked}}
+\index{on\_\-button\_\-scan\_\-clicked@{on\_\-button\_\-scan\_\-clicked}!src::librarian::librarian@{src::librarian::librarian}}
+\subsubsection[{on\_\-button\_\-scan\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def src::librarian::librarian::on\_\-button\_\-scan\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1librarian_1_1librarian_aac059ba0d6c27ca605267ce116bc0e05}
+\begin{DoxyVerb}Open the scanning dialog.
+
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1librarian_1_1librarian_a07feb9f46d60a453a685f47a975b8644}{
+\index{src::librarian::librarian@{src::librarian::librarian}!on\_\-button\_\-search\_\-clicked@{on\_\-button\_\-search\_\-clicked}}
+\index{on\_\-button\_\-search\_\-clicked@{on\_\-button\_\-search\_\-clicked}!src::librarian::librarian@{src::librarian::librarian}}
+\subsubsection[{on\_\-button\_\-search\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def src::librarian::librarian::on\_\-button\_\-search\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1librarian_1_1librarian_a07feb9f46d60a453a685f47a975b8644}
+\begin{DoxyVerb}Get the search string from entry_search, query the DB and display 
+the result.
+
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+librarian.py\end{DoxyCompactItemize}

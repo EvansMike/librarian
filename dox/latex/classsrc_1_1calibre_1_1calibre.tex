@@ -1,0 +1,96 @@
+\hypertarget{classsrc_1_1calibre_1_1calibre}{
+\section{src::calibre::calibre Class Reference}
+\label{classsrc_1_1calibre_1_1calibre}\index{src::calibre::calibre@{src::calibre::calibre}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classsrc_1_1calibre_1_1calibre_afe28ad6d5d54eb40f436872a484da76a}{
+def {\bfseries \_\-\_\-init\_\-\_\-}}
+\label{classsrc_1_1calibre_1_1calibre_afe28ad6d5d54eb40f436872a484da76a}
+
+\item 
+def \hyperlink{classsrc_1_1calibre_1_1calibre_a088c87fe22b26f38b62960c969ba6da5}{insert\_\-data}
+\item 
+def \hyperlink{classsrc_1_1calibre_1_1calibre_a7c98744e53e5388136effa08221e42df}{search\_\-calibre}
+\item 
+def \hyperlink{classsrc_1_1calibre_1_1calibre_af2e1b6cd43e4ba15051e0b92fb7a5f29}{insert\_\-data2}
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classsrc_1_1calibre_1_1calibre_a11881dd7a65070948567165ae45aca6e}{
+{\bfseries calibre\_\-base}}
+\label{classsrc_1_1calibre_1_1calibre_a11881dd7a65070948567165ae45aca6e}
+
+\item 
+\hypertarget{classsrc_1_1calibre_1_1calibre_a8604877f2fa1d0f3b5cdbf1d8b7815b4}{
+{\bfseries booklist}}
+\label{classsrc_1_1calibre_1_1calibre_a8604877f2fa1d0f3b5cdbf1d8b7815b4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Do the import and insert the data into the list.
+Called from librarian.py
+
+\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\hypertarget{classsrc_1_1calibre_1_1calibre_a088c87fe22b26f38b62960c969ba6da5}{
+\index{src::calibre::calibre@{src::calibre::calibre}!insert\_\-data@{insert\_\-data}}
+\index{insert\_\-data@{insert\_\-data}!src::calibre::calibre@{src::calibre::calibre}}
+\subsubsection[{insert\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}def src::calibre::calibre::insert\_\-data (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{booklist = {\ttfamily \mbox{[}\mbox{]}}}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1calibre_1_1calibre_a088c87fe22b26f38b62960c969ba6da5}
+\begin{DoxyVerb}Directly use the database to get book list.
+
+Parameters:
+booklist -- The gtk.liststore into which the books will be added
+
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1calibre_1_1calibre_af2e1b6cd43e4ba15051e0b92fb7a5f29}{
+\index{src::calibre::calibre@{src::calibre::calibre}!insert\_\-data2@{insert\_\-data2}}
+\index{insert\_\-data2@{insert\_\-data2}!src::calibre::calibre@{src::calibre::calibre}}
+\subsubsection[{insert\_\-data2}]{\setlength{\rightskip}{0pt plus 5cm}def src::calibre::calibre::insert\_\-data2 (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{booklist = {\ttfamily \mbox{[}\mbox{]}}}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1calibre_1_1calibre_af2e1b6cd43e4ba15051e0b92fb7a5f29}
+\begin{DoxyVerb}Use "calibredb list" command to get book list.  May make it more
+portable and avoids user having to set dabase paths.  It does seem to
+be slower however.
+
+Parameters:
+booklist -- The gtk.liststore into which the books will be added
+
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1calibre_1_1calibre_a7c98744e53e5388136effa08221e42df}{
+\index{src::calibre::calibre@{src::calibre::calibre}!search\_\-calibre@{search\_\-calibre}}
+\index{search\_\-calibre@{search\_\-calibre}!src::calibre::calibre@{src::calibre::calibre}}
+\subsubsection[{search\_\-calibre}]{\setlength{\rightskip}{0pt plus 5cm}def src::calibre::calibre::search\_\-calibre (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{needle, }
+\item[{}]{booklist = {\ttfamily \mbox{[}\mbox{]}}}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1calibre_1_1calibre_a7c98744e53e5388136effa08221e42df}
+\begin{DoxyVerb}Search the calibre database on the parameters given.
+The DB is searched twice for title and name.  Adding an OR clause to 
+the search made te query v e r y   s l o w to execute.  Much 
+quicker to do two searches.
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+calibre.py\end{DoxyCompactItemize}

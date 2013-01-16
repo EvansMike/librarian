@@ -1,0 +1,176 @@
+\hypertarget{classsrc_1_1guiscan_1_1scanner}{
+\section{src::guiscan::scanner Class Reference}
+\label{classsrc_1_1guiscan_1_1scanner}\index{src::guiscan::scanner@{src::guiscan::scanner}}
+}
+
+
+BEGIN scanner class \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classsrc_1_1guiscan_1_1scanner_ad868d76a745db2338e4f50b31b087ba6}{
+def {\bfseries \_\-\_\-init\_\-\_\-}}
+\label{classsrc_1_1guiscan_1_1scanner_ad868d76a745db2338e4f50b31b087ba6}
+
+\item 
+def \hyperlink{classsrc_1_1guiscan_1_1scanner_aab26c2e13df013a9c003245463b4e579}{on\_\-button\_\-scan\_\-clicked}
+\item 
+def \hyperlink{classsrc_1_1guiscan_1_1scanner_ae4884f53d8f5986c03dd58cc813e3c4b}{make\_\-qr\_\-code}
+\item 
+def \hyperlink{classsrc_1_1guiscan_1_1scanner_ad3a1150705119fe772c1132c662c0b4a}{on\_\-button\_\-remove\_\-clicked}
+\item 
+def \hyperlink{classsrc_1_1guiscan_1_1scanner_a48d4fbc1d9174b5f21b543af0ccd39e2}{get\_\-cd\_\-tracks}
+\item 
+def \hyperlink{classsrc_1_1guiscan_1_1scanner_a85859c92b9741c8f019271503a44f67e}{on\_\-button\_\-add\_\-clicked}
+\item 
+\hypertarget{classsrc_1_1guiscan_1_1scanner_af4989b9ea96720d251261382e4031b71}{
+def {\bfseries append\_\-text}}
+\label{classsrc_1_1guiscan_1_1scanner_af4989b9ea96720d251261382e4031b71}
+
+\item 
+\hypertarget{classsrc_1_1guiscan_1_1scanner_a2c5078ba404560f54bbe36d316435a09}{
+def {\bfseries get\_\-book\_\-data}}
+\label{classsrc_1_1guiscan_1_1scanner_a2c5078ba404560f54bbe36d316435a09}
+
+\item 
+\hypertarget{classsrc_1_1guiscan_1_1scanner_aca20c83fdf47e5eaee59f5ccfa4df81c}{
+def {\bfseries gtk\_\-main\_\-quit}}
+\label{classsrc_1_1guiscan_1_1scanner_aca20c83fdf47e5eaee59f5ccfa4df81c}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classsrc_1_1guiscan_1_1scanner_a7bf15a8e9812faee9b163bbc8e9f4cf5}{
+{\bfseries abook}}
+\label{classsrc_1_1guiscan_1_1scanner_a7bf15a8e9812faee9b163bbc8e9f4cf5}
+
+\item 
+\hypertarget{classsrc_1_1guiscan_1_1scanner_a27cb7eaf7b8af16f81ce70d42fc7d9e7}{
+{\bfseries gladefile}}
+\label{classsrc_1_1guiscan_1_1scanner_a27cb7eaf7b8af16f81ce70d42fc7d9e7}
+
+\item 
+\hypertarget{classsrc_1_1guiscan_1_1scanner_aa96f6b887ccb4f83a8ab081cbaf4b9bc}{
+{\bfseries window}}
+\label{classsrc_1_1guiscan_1_1scanner_aa96f6b887ccb4f83a8ab081cbaf4b9bc}
+
+\item 
+\hypertarget{classsrc_1_1guiscan_1_1scanner_a6e5b0b40019cc45d6ecb8afe78895796}{
+{\bfseries text\_\-view}}
+\label{classsrc_1_1guiscan_1_1scanner_a6e5b0b40019cc45d6ecb8afe78895796}
+
+\item 
+\hypertarget{classsrc_1_1guiscan_1_1scanner_aa893dc7cec6aa02379479f854ea9fae1}{
+{\bfseries qr\_\-img}}
+\label{classsrc_1_1guiscan_1_1scanner_aa893dc7cec6aa02379479f854ea9fae1}
+
+\item 
+\hypertarget{classsrc_1_1guiscan_1_1scanner_a3a972ddcb421075a1280bf2143e3d9fb}{
+{\bfseries cur}}
+\label{classsrc_1_1guiscan_1_1scanner_a3a972ddcb421075a1280bf2143e3d9fb}
+
+\item 
+\hypertarget{classsrc_1_1guiscan_1_1scanner_a7157289ec79a1c5c5f90b1146119be38}{
+{\bfseries db}}
+\label{classsrc_1_1guiscan_1_1scanner_a7157289ec79a1c5c5f90b1146119be38}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+BEGIN scanner class \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#. 
+
+\begin{DoxyVerb}Scanner class. Scans books, queries isbndb and adds book to database,
+or CSV.  This will work stand alone hence the separate database query
+and inserts that don't rely on librarian.py.
+
+\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\hypertarget{classsrc_1_1guiscan_1_1scanner_a48d4fbc1d9174b5f21b543af0ccd39e2}{
+\index{src::guiscan::scanner@{src::guiscan::scanner}!get\_\-cd\_\-tracks@{get\_\-cd\_\-tracks}}
+\index{get\_\-cd\_\-tracks@{get\_\-cd\_\-tracks}!src::guiscan::scanner@{src::guiscan::scanner}}
+\subsubsection[{get\_\-cd\_\-tracks}]{\setlength{\rightskip}{0pt plus 5cm}def src::guiscan::scanner::get\_\-cd\_\-tracks (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1guiscan_1_1scanner_a48d4fbc1d9174b5f21b543af0ccd39e2}
+\begin{DoxyVerb}Get the cd details and store then in the DB.  We can use book class
+for rest of details.
+
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1guiscan_1_1scanner_ae4884f53d8f5986c03dd58cc813e3c4b}{
+\index{src::guiscan::scanner@{src::guiscan::scanner}!make\_\-qr\_\-code@{make\_\-qr\_\-code}}
+\index{make\_\-qr\_\-code@{make\_\-qr\_\-code}!src::guiscan::scanner@{src::guiscan::scanner}}
+\subsubsection[{make\_\-qr\_\-code}]{\setlength{\rightskip}{0pt plus 5cm}def src::guiscan::scanner::make\_\-qr\_\-code (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1guiscan_1_1scanner_ae4884f53d8f5986c03dd58cc813e3c4b}
+\begin{DoxyVerb}
+Make a QR code for the book.  This could be useful somewhere I guess.
+It contains the ISBN, title and Authors of the book.
+Maybe it should contain the owner name , yes YOU, just in case you ever need
+to split up you and your parter's books.  You know why that might be
+needed.
+TODO. Maybe print the ISBN too.
+  Change output dir
+DONE: Store images in the DB
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1guiscan_1_1scanner_a85859c92b9741c8f019271503a44f67e}{
+\index{src::guiscan::scanner@{src::guiscan::scanner}!on\_\-button\_\-add\_\-clicked@{on\_\-button\_\-add\_\-clicked}}
+\index{on\_\-button\_\-add\_\-clicked@{on\_\-button\_\-add\_\-clicked}!src::guiscan::scanner@{src::guiscan::scanner}}
+\subsubsection[{on\_\-button\_\-add\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def src::guiscan::scanner::on\_\-button\_\-add\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1guiscan_1_1scanner_a85859c92b9741c8f019271503a44f67e}
+\begin{DoxyVerb}
+Add a book, DVD or CD to the database.
+Arguably I could have used "ON DUPLICATE KEY", using the isbn as the key,
+here but it may happen that several books will have empty isbn values
+for instance, books printed before ISBN was invented.
+result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
+ str(self.abook.isbn))
+TODO Move all DB stuff to db_queries.py
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1guiscan_1_1scanner_ad3a1150705119fe772c1132c662c0b4a}{
+\index{src::guiscan::scanner@{src::guiscan::scanner}!on\_\-button\_\-remove\_\-clicked@{on\_\-button\_\-remove\_\-clicked}}
+\index{on\_\-button\_\-remove\_\-clicked@{on\_\-button\_\-remove\_\-clicked}!src::guiscan::scanner@{src::guiscan::scanner}}
+\subsubsection[{on\_\-button\_\-remove\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def src::guiscan::scanner::on\_\-button\_\-remove\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1guiscan_1_1scanner_ad3a1150705119fe772c1132c662c0b4a}
+\begin{DoxyVerb}Remove a book from the database.
+
+\end{DoxyVerb}
+ \hypertarget{classsrc_1_1guiscan_1_1scanner_aab26c2e13df013a9c003245463b4e579}{
+\index{src::guiscan::scanner@{src::guiscan::scanner}!on\_\-button\_\-scan\_\-clicked@{on\_\-button\_\-scan\_\-clicked}}
+\index{on\_\-button\_\-scan\_\-clicked@{on\_\-button\_\-scan\_\-clicked}!src::guiscan::scanner@{src::guiscan::scanner}}
+\subsubsection[{on\_\-button\_\-scan\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}def src::guiscan::scanner::on\_\-button\_\-scan\_\-clicked (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classsrc_1_1guiscan_1_1scanner_aab26c2e13df013a9c003245463b4e579}
+\begin{DoxyVerb}Do the scan, query the database and store the results.
+TODO: Need to find better way to enumerate cameras.
+TODO: Need to find how to do this on Windoze, gstreamer for both?
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+guiscan.py\end{DoxyCompactItemize}
