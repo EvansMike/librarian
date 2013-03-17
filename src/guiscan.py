@@ -228,9 +228,9 @@ class scanner:
       user = getpass.getuser()
       # Do the QR thang
       qr_data = 'ISBN:'+ str(self.abook.id) \
-        + ' TITLE:' +  str(self.abook.title) \
-        + ' AUTHORS:' + str(self.abook.authors) \
-        + " OWNER: " + user
+        + ';TITLE:' +  str(self.abook.title) \
+        + ';AUTHORS:' + str(self.abook.authors) \
+        + ";OWNER:" + user
       qr = qrencode.encode(qr_data)
       # Rescale using the size and add a 1 px border
       size = qr[1]
