@@ -251,18 +251,20 @@ class librarian:
     db_query = sql()
     result = {}
     #self.booklist.clear()
+    num_ebooks = 0
     if selection == ALL:
       result, numrows = db_query.get_all_books()
       #logging.info(numrows)
-      self.status1.set_text("Book count = " + str(numrows) + ". E-book count = ")
+      
       self.fill_booklist(result)
       try:
         import calibre
         e_books = calibre.calibre()
-        self.booklist = e_books.insert_data2(self.booklist)
+        self.booklist, num_ebooks = e_books.insert_data2(self.booklist)
       except:
+        print "Cannot find any e-books.\n"
         pass # Do nothing if it's not available.
-    #
+      self.status1.set_text("Book count = " + str(numrows) + ". E-book count = " +  str(num_ebooks))
     elif selection == BORROWED:
       result = db_query.get_borrowed_books()
       self.fill_booklist(result)
