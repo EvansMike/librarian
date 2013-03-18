@@ -141,7 +141,7 @@ class calibre:
     book_count = 0
     import commands
     self.booklist = booklist
-    try:  book_string = commands.getoutput("/opt/calibre/calibredb list --separator=\"\t\"")
+    try:  book_string = commands.getoutput("calibredb list --separator=\"\t\"")
     except: # Calibre not installed perhaps.
       print (_("You don't appear to have Calibre installed, or it's not in your PATH."))
       return

@@ -18,10 +18,13 @@ qrencode - For QR code generation
 ....
 
 Get the code with:
+[source,bash]
 ----
 git clone git://github.com/EvansMike/librarian.git
 ----
+
 Install with 
+[source,bash]
 ----
 python setup.py install
 ----
@@ -37,8 +40,10 @@ The scan triggers a lookup on the database and the book details are downloaded
 then commited to the local database.
 
 It uses MySQL or sqlite.  The database config file is created if none exists.
+
 Use database.schema.sql, after creating the database,  to populate the database with
 the required tables:
+[source,sql]
 ----
 mysql -p books < database.schema.sql
 ----
@@ -72,6 +77,7 @@ SELECT o_date, title, author, borrowers.name
 ----
 
 The sqlite2 database file is created from the database.schema.sql file with:
+[source,bash]
 ----
 ./mysql2sqlite3 --no-data  -p books | sqlite3 database_schema.db
 ----
@@ -98,6 +104,7 @@ Obviously you can call the DB anything you like, it doesn't have to be
 books, as long as the .db_config.cfg file contains matching details.
 
 To get who borrowed what and for how long:
+[source,sql]
 ----
   SELECT title, name, DATEDIFF(i_date,o_date) AS days 
       FROM borrows, borrowers, books 
