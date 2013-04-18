@@ -195,7 +195,6 @@ class scanner:
               self.abook.mtype = str(cd_search.ProductGroup)
               self.abook.id = str(bar)
               self.abook.year = 0 # Should be available but ... 
-              self.abook.owner = getpass.getuser() # Assume owner is current logged in person
         except: 
           buff.set_text (_("Could not lookup DVD on Amazon"))
           self.text_view.set_buffer(buff)
