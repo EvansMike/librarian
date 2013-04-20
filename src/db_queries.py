@@ -316,7 +316,7 @@ class mysql:
   
   def get_book_count_by_isbn(self, bar):
     self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;" , bar)
-    return  self.cur.fetchone()[0]
+    return  self.cur.fetchone()
   
   def get_book_borrower_by_book_id(self,bid):
     self.cur.execute("select borrowers.name, borrows.o_date FROM  borrows, borrowers \

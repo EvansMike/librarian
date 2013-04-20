@@ -201,12 +201,12 @@ class scanner:
         #return
         
     # DONE Check if exists and increment book count if so.
-    count = db_query.get_book_count_by_isbn(bar)
+    count = db_query.get_book_count_by_isbn(bar)['count']
     logger.info(count)
     if count > 0:
       buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
     self.text_view.set_buffer(buff)
-    del buff
+    del buff, device
 
 
   def make_qr_code(self):
