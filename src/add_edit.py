@@ -106,11 +106,11 @@ class add_edit:
       dialog.destroy()
       del dialog
       self.on_destroy(widget)
-    if dlg_val == -9: # yes
-      self.update_book()
-    else: #no
-      self.on_button_update_clicked(widget)
-      self.on_destroy(widget)
+      if dlg_val == -9: # yes
+        self.update_book()
+      else: #no
+        self.on_button_update_clicked(widget)
+        self.on_destroy(widget)
 
 
   def on_destroy(self,widget):
