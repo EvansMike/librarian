@@ -95,13 +95,20 @@ class load_config:
         self.calibre_db = config.get('calibre','CALIBRE_DB')
       except:
         pass
+        
+  def print_config(self):
+    ''' print some values for testing.  Take care not to expose secret data.
+    '''
+    print "USER =", self.db_user
+    print "PASSWD =", self.db_pass
+    print "DBASE =", self.db_base
+    print "DB_HOST =", self.db_host
 
 
 # For testing
 if __name__ == "__main__":
   app = load_config()
   app.print_config()
-  print app.get_config()
 
 
 
