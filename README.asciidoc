@@ -1,6 +1,6 @@
 == README FIRST
 
-Requires some flavour of Linux and Python.  
+Requires some flavour of Linux and Python > 2.7.  
 Windows users will have to figure out how it works themselves and edit 
 the code to suit.
 ....
@@ -23,9 +23,12 @@ Get the code with:
 git clone git://github.com/EvansMike/librarian.git
 ----
 
-Install with 
+Install with: (On a Fedora system)
 [source,bash]
 ----
+easy_install biblio.webquery
+yum install zbar-pygtk pygtk MySQL-python
+
 python setup.py install
 ----
 
