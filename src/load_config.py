@@ -67,6 +67,7 @@ class load_config:
       parser.set('database', 'USER', 'username')
       parser.set('database', 'PASSWD', 'password')
       parser.set('database', 'DB', 'db_name')
+      parser.set('database', 'DBHOST', 'db_host')
       parser.set('database', '# DON\'T change the LITE_DB name', '')
       parser.set('database', 'LITE_DB', 'books.db')
       parser.set('database', '# Select either sqlite or mysql, Disable a type with a leading #', '')
