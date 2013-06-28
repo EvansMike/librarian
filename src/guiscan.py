@@ -118,6 +118,7 @@ class scanner:
     TODO: Need to find better way to enumerate cameras.
     TODO: Need to find how to do this on Windoze, gstreamer for both?
     '''
+    owner = getpass.getuser() # Assume the logged in person owns the book.
     db_query = sql()
     device = None
     buff = self.text_view.get_buffer()
@@ -181,6 +182,7 @@ class scanner:
             self.abook.mtype = str(dvd_search.ProductGroup)
             self.abook.id = str(bar)
             self.abook.year = 0 # Should be available but ...
+            self.abook.owner = owner
           else: # Do a CD search
             buff.set_text (_("No DVDs.\n Searching for CDs\n"))
             self.text_view.set_buffer(buff)
@@ -317,10 +319,10 @@ class scanner:
     values = (str(self.abook.title), str(self.abook.authors), str(self.abook.id),
         str(self.abook.abstract),self.abook.year,
         str(self.abook.publisher),str(self.abook.city),1,author_id,
-        datetime.date.today(), str(self.abook.mtype))
+        datetime.date.today(), str(self.abook.mtype),str(self.abook.owner))
     self.cur.execute("INSERT INTO books\
-    (title, author, isbn,abstract, year, publisher, city, copies, author_id, add_date,mtype)\
-    VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s);", values)
+    (title, author, isbn,abstract, year, publisher, city, copies, author_id, add_date,mtype,owner)\
+    VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s);", values)
     self.db.commit()
     
     # Get and insert the track listing
