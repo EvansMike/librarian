@@ -35,7 +35,9 @@ cur = db.cursor(MySQLdb.cursors.DictCursor)
 
 def parse_isbn_books():
     '''
-    Attempt to parse the current file.
+    Along with mods to biblio.webquery-0.4.3b this fixes errors in the authors
+    list where simply grabbing the existing would not, without replroducing 
+    the functionality of biblio.webquery.
     '''
     cur.execute("DELETE FROM books_to_authors") # Clean the tables
     cur.execute("DELETE FROM book_authors") # Clean the tables
@@ -50,6 +52,7 @@ def parse_isbn_books():
         
 
 def parse_non_isbn_books():
+    ''' Subtly different. Don't try to refactor with the ISBN case.'''
     db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
     cur = db.cursor(MySQLdb.cursors.DictCursor)
     # Now the books with no ISBNs
@@ -57,17 +60,45 @@ def parse_non_isbn_books():
     # etc.
     books = cur.fetchall()
     for abook in books:
-        print abook['title']
+        # Just copy them in to start with
+        print abook['title'], abook['author'] 
+        cur.execute("INSERT INTO new_books(title, author, isbn,abstract, \
+          year, publisher, city, copies, mtype, add_date, owner) \
+          VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
+          (abook['title'], abook['author'], abook['isbn'], abook['abstract'], \
+          abook['year'], abook['publisher'], abook['city'], 1, abook['mtype'], \
+          abook['add_date'], abook['owner']))
+        db.commit()
+        cur.execute("SELECT LAST_INSERT_ID()")
+        last_book_id = cur.fetchone()
+        last_book_id = last_book_id['LAST_INSERT_ID()']
+        split_suthors = abook['author'].split(",")
+        ordinal = 0
+        print abook['title'], abook['author']
+        for author in split_suthors:
+            if author == '' : continue
+            last = author.split()[-1]
+            first = " ".join(author.split()[0:-1])
+            #print "Ordinal = ", ordinal, author, first, last
+            cur.execute("INSERT IGNORE INTO book_authors(author_last, author_first) \
+                        VALUES(%s, %s)", (last, first))
+            db.commit()
+            cur.execute("SELECT author_id FROM book_authors WHERE author_last=%s AND author_first=%s",(last, first))
+            last_author_id = cur.fetchone()
+            last_author_id = last_author_id['author_id']
 
-
-    return;
+            cur.execute("INSERT INTO books_to_authors(book_id, author_id, author_ordinal) \
+                VALUES(%s,%s,%s)", (last_book_id,last_author_id,  ordinal))
+            db.commit()
+            ordinal += 1
+    return
 
 def fix_by_isbn(isbn):
     '''
     Put a book into the new table format.
     '''
     abook = book.book()
-    abook.webquery(mybook['isbn'])
+    abook.webquery(isbn)
 
     authors = abook.authors
     print "" ## Debug
@@ -88,27 +119,27 @@ def fix_by_isbn(isbn):
     for author in split_suthors:
         if author == '' : continue
         last = author.split()[-1]
-        first = author.split()[0]
+        first = " ".join(author.split()[0:-1]) # everything except the last part
         #print "Ordinal = ", ordinal, author, first, last
         cur.execute("INSERT IGNORE INTO book_authors(author_last, author_first) \
                     VALUES(%s, %s)", (last, first))
-        #last_author_id = cur.execute("SELECT author_id FROM book_authors ORDER BY author_id DESC LIMIT 0 , 1")
         db.commit()
-        cur.execute("SELECT LAST_INSERT_ID()")
+        cur.execute("SELECT author_id FROM book_authors WHERE author_last=%s AND author_first=%s",(last, first))
         last_author_id = cur.fetchone()
-        last_author_id = last_author_id['LAST_INSERT_ID()']
+        last_author_id = last_author_id['author_id']
 
         cur.execute("INSERT INTO books_to_authors(book_id, author_id, author_ordinal) \
             VALUES(%s,%s,%s)", (last_book_id,last_author_id,  ordinal))
         db.commit()
         ordinal += 1
-  return
+    return
   
 
 
 
 ''' Run main if called directly.'''
 if __name__ == "__main__":
+    #parse_isbn_books()
     parse_non_isbn_books()
     #app = librarian()
     #gtk.main()
