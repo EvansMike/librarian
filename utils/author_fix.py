@@ -52,7 +52,10 @@ def parse_isbn_books():
         
 
 def parse_non_isbn_books():
-    ''' Subtly different. Don't try to refactor with the ISBN case.'''
+    ''' 
+    Subtly different. Don't try to refactor with the ISBN case.  
+    See notes in  parse_isbn_books() above for why.
+    '''
     db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
     cur = db.cursor(MySQLdb.cursors.DictCursor)
     # Now the books with no ISBNs
