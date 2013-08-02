@@ -345,6 +345,8 @@ class scanner:
     self.text_view.set_buffer(buff)
     self.make_qr_code()
     print "You added this", str(self.abook.mtype)
+    import author_fix
+    author_fix.fix_by_isbn(self.abook.isbn)
 
 
   def append_text(self, text):
