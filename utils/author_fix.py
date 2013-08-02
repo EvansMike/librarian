@@ -31,7 +31,7 @@ db_base = config.db_base
 db_host = config.db_host
 
       
-def parse():
+def parse_isbn_books():
   '''
   Attempt to parse the current file.
   '''
@@ -42,7 +42,7 @@ def parse():
   cur.execute("DELETE FROM new_books") # Clean the tables
   
   
-  command = "SELECT id, isbn FROM books where isbn !='' ORDER BY id LIMIT 2;" # LIMIT for testing
+  command = "SELECT id, isbn FROM books where isbn !='' ORDER BY id;" # LIMIT for testing
   numrows = cur.execute(command)
   books = cur.fetchall()
   complex_names = []
@@ -63,14 +63,15 @@ def parse():
     cur.execute("SELECT LAST_INSERT_ID()")
     last_book_id = cur.fetchone()
     last_book_id = last_book_id['LAST_INSERT_ID()']  
-    print "last_book_id = ",last_book_id
+    #print "last_book_id = ",last_book_id
     split_suthors = authors.split(",")
     ordinal = 0
+    print abook.title, abook.authors
     for author in split_suthors:
-      #if author == None : continue
+      if author == '' : continue
       last = author.split()[-1]
       first = author.split()[0]
-      print "Ordinal = ", ordinal, author, first, last
+      #print "Ordinal = ", ordinal, author, first, last
       cur.execute("INSERT IGNORE INTO book_authors(author_last, author_first) \
                   VALUES(%s, %s)", (last, first))
       #last_author_id = cur.execute("SELECT author_id FROM book_authors ORDER BY author_id DESC LIMIT 0 , 1")
@@ -84,11 +85,15 @@ def parse():
       db.commit()
       ordinal += 1
 
-    
+def parse_non_isbn_books():
+  db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
+  cur = db.cursor(MySQLdb.cursors.DictCursor)
   # Now the books with no ISBNs
-  sql = "SELECT id, isbn FROM books where isbn ='' ORDER BY id;"
+  cur.execute("SELECT * FROM books where isbn ='' ORDER BY id;")
   # etc.
-    
+  books = cur.fetchall()
+  for abook in books:
+    print abook['title'] 
     
     
   return;
@@ -98,6 +103,6 @@ def parse():
 
 ''' Run main if called directly.'''
 if __name__ == "__main__":
-  parse() 
+  parse_non_isbn_books() 
   #app = librarian()
   #gtk.main()
