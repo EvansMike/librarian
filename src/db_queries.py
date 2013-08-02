@@ -415,6 +415,7 @@ class mysql:
       VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
       (book.title, book.authors, book.isbn, book.abstract, \
       book.year, book.publisher, book.city, 1, book.mtype, book.add_date, book.owner))
+    self.db.commit()
     self.cur.execute("SELECT LAST_INSERT_ID()")
     return self.cur.fetchone()
     
@@ -428,6 +429,7 @@ class mysql:
       year, publisher, city, copies, mtype, owner, add_date) \
       VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);", \
         (title, authors, isbn, abstract, year, publisher, city, 1, mtype, owner, add_date))
+    self.db.commit()
     self.cur.execute("SELECT LAST_INSERT_ID()")
     return self.cur.fetchone()
        
@@ -451,19 +453,18 @@ class mysql:
           (name,contact, notes))
     self.db.commit()
           
-
-    
   
   def update_borrower(self, name, contact, notes, bid):
     self.cur.execute("UPDATE borrowers set name=%s, contact=%s ,notes=%s where id = %s;",
           (name,contact, notes, bid))
-    
+    self.db.commit()
     
       
   def update_borrows(self, id, bid):
     return self.cur.execute("UPDATE borrows SET i_date = NOW() \
           WHERE book = %s AND borrower = %s AND i_date IS NULL",
           [id, bid])
+    self.db.commit()
           
   def remove_book(self, bid):
     ''' remove a book/copy from the db.  This just decrements the copy 

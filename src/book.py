@@ -31,6 +31,7 @@ class book:
     self.id = ''
     self.isbn = ''
     self.authors = ''
+    self.edited = False
     self.title = ''
     self.publisher = ''
     self.abstract = ''
@@ -66,6 +67,7 @@ class book:
       self.city = details_list[7]
       self.copies = details_list[8]
       self.where = details_list[9]
+      self.edited = details_list[10]
     except: return -1
     return 0
 
@@ -104,14 +106,21 @@ class book:
       self.publisher=(nn.publisher)
       self.city=(nn.city)
       self.year=(nn.year)
+      self.edited=(nn.edited)
     except:
       return 1
 
 # Test harness
 if __name__ == "__main__":
   abook = book()
-  abook.webquery("0752272225")
-  #abook.webquery("075227222")
+  abook.webquery("0140432914")
+  print abook.__dict__
+  print
+  abook.webquery("0130104949")
   #print abook.print_book()
   print abook.__dict__
+  print
+  abook.webquery("1565924339")
+  print abook.__dict__
+  print
   del abook
