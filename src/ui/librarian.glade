@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <interface>
   <requires lib="gtk+" version="2.16"/>
+  <!-- interface-naming-policy toplevel-contextual -->
   <object class="GtkAction" id="action1"/>
   <object class="GtkListStore" id="liststore1">
     <columns>
@@ -30,20 +31,17 @@
     <property name="width_request">800</property>
     <property name="height_request">400</property>
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
     <property name="title" translatable="yes">THE LIBRARIAN</property>
     <property name="window_position">center</property>
     <property name="gravity">center</property>
-    <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
+    <signal name="destroy" handler="gtk_main_quit"/>
     <child>
       <object class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <child>
           <object class="GtkFixed" id="fixed1">
             <property name="height_request">20</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -54,24 +52,20 @@
         <child>
           <object class="GtkToolbar" id="toolbar1">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkHBox" id="hbox1">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="spacing">3</property>
             <child>
               <object class="GtkVBox" id="vbox2">
                 <property name="width_request">130</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <child>
                   <object class="GtkButton" id="button1">
                     <property name="label" translatable="yes">_ALL BOOKS</property>
@@ -79,9 +73,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
-                    <signal name="clicked" handler="on_button_all_clicked" swapped="no"/>
+                    <signal name="clicked" handler="on_button_all_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -96,9 +89,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
-                    <signal name="clicked" handler="on_button_loaned_clicked" swapped="no"/>
+                    <signal name="clicked" handler="on_button_loaned_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -113,9 +105,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
-                    <signal name="clicked" handler="on_button_scan_clicked" swapped="no"/>
+                    <signal name="clicked" handler="on_button_scan_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -130,9 +121,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
-                    <signal name="clicked" handler="on_button_query_clicked" swapped="no"/>
+                    <signal name="clicked" handler="on_button_query_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -146,9 +136,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
-                    <signal name="clicked" handler="on_button_print_clicked" swapped="no"/>
+                    <signal name="clicked" handler="on_button_print_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -162,10 +151,9 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
                     <property name="yalign">0.49000000953674316</property>
-                    <signal name="clicked" handler="gtk_main_quit" swapped="no"/>
+                    <signal name="clicked" handler="gtk_main_quit"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -176,7 +164,6 @@
                 <child>
                   <object class="GtkAspectFrame" id="aspectframe1">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow_type">none</property>
                     <child>
@@ -184,23 +171,7 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
                     <property name="position">6</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="entry_search">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="invisible_char">●</property>
-                    <signal name="activate" handler="on_button_search_clicked" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
-                    <property name="pack_type">end</property>
-                    <property name="position">7</property>
                   </packing>
                 </child>
                 <child>
@@ -209,9 +180,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
-                    <signal name="clicked" handler="on_button_search_clicked" swapped="no"/>
+                    <signal name="clicked" handler="on_button_search_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -220,10 +190,23 @@
                     <property name="position">8</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkEntry" id="entry_search">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">&#x25CF;</property>
+                    <signal name="activate" handler="on_button_search_clicked"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">7</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
-                <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -238,16 +221,11 @@
                     <property name="model">liststore1</property>
                     <property name="search_column">0</property>
                     <property name="enable_grid_lines">horizontal</property>
-                    <signal name="row-activated" handler="treeview1_row_activated_cb" swapped="no"/>
-                    <child internal-child="selection">
-                      <object class="GtkTreeSelection" id="treeview-selection1"/>
-                    </child>
+                    <signal name="row_activated" handler="treeview1_row_activated_cb"/>
                   </object>
                 </child>
               </object>
               <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -256,34 +234,27 @@
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
             <property name="position">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkStatusbar" id="statusbar1">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="spacing">2</property>
             <child>
               <object class="GtkLabel" id="status1">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="xalign">0.10000000149011612</property>
                 <property name="label" translatable="yes">Hello World</property>
                 <property name="single_line_mode">True</property>
               </object>
               <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">True</property>
             <property name="position">3</property>
           </packing>
         </child>
