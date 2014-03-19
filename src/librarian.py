@@ -30,7 +30,6 @@ import logging
 import book
 import locale
 import gettext
-import popen2
 import lib_print
 import messages
 import getpass
