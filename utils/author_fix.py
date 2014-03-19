@@ -142,7 +142,8 @@ def fix_by_isbn(isbn):
 
 ''' Run main if called directly.'''
 if __name__ == "__main__":
-    #parse_isbn_books()
+    parse_isbn_books()
     parse_non_isbn_books()
+    #fix_by_isbn('1857239547')
     #app = librarian()
     #gtk.main()
