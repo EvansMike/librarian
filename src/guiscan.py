@@ -102,6 +102,7 @@ class scanner:
     self.text_view = builder.get_object("textview1")
     self.qr_img = builder.get_object("image1")
     self.cur = None
+    owner = getpass.getuser() # Assume the logged in person owns the book.
     try:
       self.db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass);
     except:
@@ -118,7 +119,6 @@ class scanner:
     TODO: Need to find better way to enumerate cameras.
     TODO: Need to find how to do this on Windoze, gstreamer for both?
     '''
-    owner = getpass.getuser() # Assume the logged in person owns the book.
     db_query = sql()
     device = None
     buff = self.text_view.get_buffer()
