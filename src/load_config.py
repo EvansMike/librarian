@@ -47,7 +47,7 @@ class load_config:
     self.get_config()
 
   def get_config(self):
-    config_file = home + "/.db_conf.cfg"
+    config_file = home + "/.librarian.cfg"
     config = ConfigParser.ConfigParser()
     config.read(config_file)
     if not config.sections():
