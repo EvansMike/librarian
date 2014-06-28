@@ -102,7 +102,7 @@ class scanner:
     self.text_view = builder.get_object("textview1")
     self.qr_img = builder.get_object("image1")
     self.cur = None
-    owner = getpass.getuser() # Assume the logged in person owns the book.
+    self.owner = getpass.getuser() # Assume the logged in person owns the book.
     try:
       self.db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass);
     except:
@@ -155,6 +155,7 @@ class scanner:
     proc.visible = False
     logging.info(proc.results)
     
+    
 
     for symbol in proc.results:
       bar = symbol.data
@@ -182,7 +183,7 @@ class scanner:
             self.abook.mtype = str(dvd_search.ProductGroup)
             self.abook.id = str(bar)
             self.abook.year = 0 # Should be available but ...
-            self.abook.owner = owner
+            self.abook.owner = self.owner
           else: # Do a CD search
             buff.set_text (_("No DVDs.\n Searching for CDs\n"))
             self.text_view.set_buffer(buff)
@@ -203,13 +204,14 @@ class scanner:
           self.text_view.set_buffer(buff)
         #return
         
+        
     # DONE Check if exists and increment book count if so.
     count = db_query.get_book_count_by_isbn(bar)['count']
     logger.info(count)
     if count > 0:
       buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
     self.text_view.set_buffer(buff)
-    del buff, device
+    del buff,proc
 
 
   def make_qr_code(self):
