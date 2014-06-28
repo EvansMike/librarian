@@ -21,13 +21,12 @@ from.
 '''
 
 import amazonproduct
-import gconf_config
+import load_config as config
 
+config = config.load_config()
 
-config = gconf_config.gconf_config() 
-if config:
-  AWS_KEY = config.az_key
-  SECRET_KEY = config.az_skey
+AWS_KEY = config.az_key
+SECRET_KEY = config.az_skey
 
   
 DVD_EAN='5051429101095' # Sample DVD EAN
@@ -40,7 +39,7 @@ class DVDlookup:
   '''
   def __init__(self):
     # Get the keys from gconf, or some secret location
-    self.api = amazonproduct.API(AWS_KEY, SECRET_KEY, 'uk')
+    self.api = amazonproduct.API(locale='uk')
   
   def lookup(self, EAN):
     if EAN:
@@ -53,7 +52,7 @@ class DVDlookup:
         self.ProductGroup = dvd.Items.Item.ItemAttributes.ProductGroup
         return 0 # Success
       except:
-        #raise
+        raise
         return 1
 
   def test_look(self):
@@ -64,6 +63,8 @@ class DVDlookup:
       print self.Director
       print self.Actor
       print self.ProductGroup
+    else:
+        print "Failed"
 
 #################### END DVDlookup CLASS ###############################
 
@@ -73,7 +74,7 @@ class CDlookup():
   '''
   def __init__(self):
     # Get the keys from gconf, or some secret location
-    self.api = amazonproduct.API(AWS_KEY, SECRET_KEY, 'uk')
+    self.api = amazonproduct.API(locale='uk')
     
   def lookup(self, EAN):
     if EAN:
@@ -103,7 +104,7 @@ class Booklookup():
   '''
   def __init__(self):
     # Get the keys from gconf, or some secret location
-    self.api = amazonproduct.API(AWS_KEY, SECRET_KEY, 'uk')
+    self.api = amazonproduct.API(locale= 'uk')
     
   def lookup(self, EAN):
     if EAN:
