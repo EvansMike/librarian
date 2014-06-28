@@ -304,6 +304,7 @@ class add_edit:
   def on_button_update_clicked(self, widget):
     ''' Update the database with new info or add if not already in.'''
     self.update_book()
+    self.orig_book = self.mybook
     self.update_db()
     self.set_location()
     pass
