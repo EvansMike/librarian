@@ -76,6 +76,8 @@ class load_config:
       parser.set('calibre', '# Optional: Define path to Calibre database, Users home dir will be automatically determined.', '')
       parser.set('calibre', 'CALIBRE_DB', 'calibre_db')
       parser.set('qr_code', 'QR_CODE', 'False')
+      parser.set('amazon_aws','AWS_KEY','AWS_KEY')
+      parser.set('amazon_aws','SECRET_KEY','SECRET_KEY')
       parser.write(f)
       # Set access mode to owner only
       os.fchmod(f.fileno(),stat.S_IREAD|stat.S_IWRITE)
@@ -91,6 +93,8 @@ class load_config:
       self.lite_db = config.get('database','LITE_DB')
       self.use = config.get('database','USE')
       self.qr_code = config.get('qr_code','QR_CODE')
+      self.az_key = config.get('amazon_aws','AWS_KEY')
+      self.az_skey = config.get('amazon_aws','SECRET_KEY')
       try:
         self.calibre_db = config.get('calibre','CALIBRE_DB')
       except:
