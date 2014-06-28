@@ -29,7 +29,7 @@ AWS_KEY = config.az_key
 SECRET_KEY = config.az_skey
 
   
-DVD_EAN='5051429101095' # Sample DVD EAN
+DVD_EAN='5051429100166' # Sample DVD EAN
 CD_EAN = '5014293611725' # Sample CD EAN
 BOOK_EAN = '9780596001704' # Sample book EAN
 
@@ -57,12 +57,13 @@ class DVDlookup:
 
   def test_look(self):
     if self.lookup(DVD_EAN) != 1:
-      assert self.Title == "The Butterfly Effect - Director's Cut [DVD]"
+      #assert self.Title == "The Butterfly Effect - Director's Cut [DVD]"
       print self.Title
       print self.Manufacturer
       print self.Director
       print self.Actor
       print self.ProductGroup
+      print "\n"
     else:
         print "Failed"
 
@@ -96,6 +97,7 @@ class CDlookup():
       print self.Artist
       print self.Manufacturer
       print self.ProductGroup
+      print "\n"
 
 #################### END CDlookup CLASS ###############################  
 class Booklookup():

@@ -198,7 +198,8 @@ class scanner:
               self.abook.id = str(bar)
               self.abook.year = 0 # Should be available but ... 
         except: 
-          buff.set_text (_("Could not lookup DVD on Amazon"))
+          raise
+          buff.set_text (_("Could not lookup DVD or CD on Amazon"))
           self.text_view.set_buffer(buff)
         #return
         
