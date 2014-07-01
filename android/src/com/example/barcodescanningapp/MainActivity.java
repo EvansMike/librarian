@@ -48,7 +48,7 @@ import com.google.zxing.integration.android.IntentResult;
 public class MainActivity extends Activity implements OnClickListener {
 	String API_KEY = "AIzaSyDP4pNjcWfRWRNZvt1FCZu1vY8I-ehmN5c";
 	//scan, preview, link buttons
-	private Button scanBtn, previewBtn, linkBtn;
+	private Button scanBtn, previewBtn, linkBtn, saveBtn;
 	//author, title, description, date and rating count text views
 	private TextView authorText, titleText, descriptionText, dateText, ratingCountText;
 	//layout for star rating
@@ -75,6 +75,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		linkBtn = (Button)findViewById(R.id.link_btn);
 		linkBtn.setVisibility(View.GONE);
 		linkBtn.setOnClickListener(this);
+		saveBtn = (Button)findViewById(R.id.save_btn);
+		saveBtn.setVisibility(View.GONE);
+		saveBtn.setOnClickListener(this);
 
 		//ui items
 		authorText = (TextView)findViewById(R.id.book_author);
@@ -112,6 +115,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			else previewBtn.setEnabled(false);
 			if(savedInstanceState.getInt("isLink")==View.VISIBLE) linkBtn.setVisibility(View.VISIBLE);
 			else linkBtn.setVisibility(View.GONE);
+			saveBtn.setVisibility(View.VISIBLE);
 			previewBtn.setVisibility(View.VISIBLE);
 
 		}
@@ -280,6 +284,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				try{
 					linkBtn.setTag(volumeObject.getString("infoLink"));
 					linkBtn.setVisibility(View.VISIBLE);
+					saveBtn.setVisibility(View.VISIBLE);
 				}
 				catch(JSONException jse){ 
 					linkBtn.setVisibility(View.GONE);

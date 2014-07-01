@@ -19,9 +19,10 @@ public final class R {
         public static final int book_description=0x7f050005;
         public static final int book_rating_count=0x7f050007;
         public static final int book_title=0x7f050001;
-        public static final int embedded_book_view=0x7f05000a;
+        public static final int embedded_book_view=0x7f05000b;
         public static final int link_btn=0x7f050009;
         public static final int preview_btn=0x7f050008;
+        public static final int save_btn=0x7f05000a;
         public static final int scan_button=0x7f050000;
         public static final int star_layout=0x7f050006;
         public static final int thumb=0x7f050003;
@@ -36,6 +37,7 @@ public final class R {
         public static final int link=0x7f040006;
         public static final int menu_settings=0x7f040001;
         public static final int pre=0x7f040005;
+        public static final int save=0x7f040007;
         public static final int scan=0x7f040003;
         public static final int thumb=0x7f040004;
     }
