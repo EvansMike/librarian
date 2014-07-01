@@ -46,7 +46,7 @@ import com.google.zxing.integration.android.IntentResult;
  *
  */
 public class MainActivity extends Activity implements OnClickListener {
-String Your_KEY = "AIzaSyDP4pNjcWfRWRNZvt1FCZu1vY8I-ehmN5c";
+	String API_KEY = "AIzaSyDP4pNjcWfRWRNZvt1FCZu1vY8I-ehmN5c";
 	//scan, preview, link buttons
 	private Button scanBtn, previewBtn, linkBtn;
 	//author, title, description, date and rating count text views
@@ -155,7 +155,7 @@ String Your_KEY = "AIzaSyDP4pNjcWfRWRNZvt1FCZu1vY8I-ehmN5c";
 			if(scanContent!=null && scanFormat!=null && scanFormat.equalsIgnoreCase("EAN_13")){
 				previewBtn.setTag(scanContent);
 				String bookSearchString = "https://www.googleapis.com/books/v1/volumes?" +
-						"q=isbn:"+scanContent+"&key=AIzaSyDP4pNjcWfRWRNZvt1FCZu1vY8I-ehmN5c";
+						"q=isbn:"+scanContent+"&key=" + API_KEY;
 				//fetch search results
 				new GetBookInfo().execute(bookSearchString);
 			}
