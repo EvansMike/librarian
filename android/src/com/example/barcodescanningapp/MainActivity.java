@@ -149,6 +149,7 @@ public class MainActivity extends Activity implements OnClickListener {
         {
             Log.d("BUTTON","save_btn");
             DBStorage dbStorage = new DBStorage(this);
+            // TODO
             String foo = (String)authorText.getText();
             dbStorage.createRecords("3",foo);
             

@@ -101,7 +101,7 @@ public class DBStorage {
             dbHelper = new MySQLiteHelper(context);  
             database = dbHelper.getWritableDatabase();  
         }
-        
+        // TODO
         public long createRecords(String id, String name){  
            ContentValues values = new ContentValues();  
            values.put(EMP_ID, id);  
@@ -109,7 +109,7 @@ public class DBStorage {
            Log.d(DBStorage.class.getName(),name);  
            return database.insert(EMP_TABLE, null, values);  
 }    
-
+    // TODO
     public Cursor selectRecords() {
        String[] cols = new String[] {EMP_ID, EMP_NAME};  
        Cursor mCursor = database.query(true, EMP_TABLE,cols,null  

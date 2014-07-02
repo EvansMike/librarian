@@ -9,9 +9,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     
     private static final String DATABASE_NAME = "DBName";
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     // Database creation sql statement
+    // TODO
     private static final String DATABASE_CREATE = "create table MyEmployees ( _id integer primary key,name text not null)";
 
     public MySQLiteHelper(Context context) {
@@ -30,7 +31,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.w(MySQLiteHelper.class.getName(),
                          "Upgrading database from version " + oldVersion + " to "
                          + newVersion + ", which will destroy all old data");
-        database.execSQL("DROP TABLE IF EXISTS MyEmployees");
+        database.execSQL("DROP TABLE IF EXISTS MyEmployees"); //TODO
         onCreate(database);
     }
  
