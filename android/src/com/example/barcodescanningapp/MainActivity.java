@@ -124,13 +124,13 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	public void onClick(View v){
 		//check for scan button
-		if(v.getId()==R.id.scan_button){
+		if(v.getId() == R.id.scan_button){
 			//instantiate ZXing integration class
 			IntentIntegrator scanIntegrator = new IntentIntegrator(this);
 			//start scanning
 			scanIntegrator.initiateScan();
 		}
-		else if(v.getId()==R.id.link_btn){
+		else if(v.getId() == R.id.link_btn){
 			//get the url tag
 			String tag = (String)v.getTag();
 			//launch the url
@@ -138,13 +138,22 @@ public class MainActivity extends Activity implements OnClickListener {
 			webIntent.setData(Uri.parse(tag));
 			startActivity(webIntent);
 		}
-		else if(v.getId()==R.id.preview_btn){
+		else if(v.getId() == R.id.preview_btn){
 			String tag = (String)v.getTag();
 			//launch preview
 			Intent intent = new Intent(this, EmbeddedBook.class);
 			intent.putExtra("isbn", tag);
 			startActivity(intent);
 		}
+        else if(v.getId() == R.id.save_btn)
+        {
+            Log.d("BUTTON","save_btn");
+            DBStorage dbStorage = new DBStorage(this);
+            String foo = (String)authorText.getText();
+            dbStorage.createRecords("3",foo);
+            
+            
+        }
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
