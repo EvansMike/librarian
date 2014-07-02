@@ -109,6 +109,7 @@ public class DBStorage {
         // Get data as JSON from database.
         //Log.d("updateLibrarian", "I'm in here now.");
         Cursor mCursor = selectRecords();
+        int rowCount = mCursor.getCount(); // Num rows in DB
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         while (mCursor.isAfterLast() == false) 
@@ -137,12 +138,13 @@ public class DBStorage {
         catch (JSONException jse){jse.printStackTrace();}
         
         // Now send that to the librarian API
-        // TODO Write the API.
+        // TODO Write the API.  Oooh, found one already written, partly.
+        int result = 0; // Number of rows inserted on server, should match rows sent.
         
         
         
-        // Delete all from database
-        database.delete(BOOK_TABLE, null, null);
+        // Delete all from database once we've uploaded it.
+        if (result == rowCount){database.delete(BOOK_TABLE, null, null);}
         return 1; // FIXME
     }
     
