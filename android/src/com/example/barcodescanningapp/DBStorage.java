@@ -57,10 +57,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
 
 public class DBStorage {
-    public static final int DATABASE_VERSION = 2;
+    //public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "librarian.db";
     private MySQLiteHelper dbHelper; 
     private SQLiteDatabase database;
+    private String LIBRARIAN_API = ""; // TODO
     
     // Example code CHANGE ME
     public final static String BOOK_TABLE="books"; // name of table 
@@ -76,23 +77,76 @@ public class DBStorage {
             database = dbHelper.getWritableDatabase();  
         }
         
-        // TODO
-        public long createRecords(String author, String title, String description, String date, String rating){  
+        public long createRecords(String isbn, String author, String title, String publisher ,
+                        String description, String date, String rating)
+        {  
            ContentValues values = new ContentValues();  
+           values.put("isbn", isbn); 
            values.put("author", author);  
            values.put("title", title);
+           values.put("publisher", publisher);
+           values.put("description", description);
+           values.put("date", date);
+           values.put("rating", rating);
            Log.d(DBStorage.class.getName(),author);  
            return database.insert(BOOK_TABLE, null, values);  
-}    
-    // TODO
-    /*
+        }    
+    
     public Cursor selectRecords() {
-       String[] cols = new String[] {EMP_ID, EMP_NAME};  
-       Cursor mCursor = database.query(true, BOOK_TABLE,cols,null  
-                , null, null, null, null, null);  
+       String[] cols = new String[] {"isbn, author","title","publisher","description","date","rating"};  
+       Cursor mCursor = database.query(BOOK_TABLE,null,null,null, null, null, null);  
        if (mCursor != null) {  
          mCursor.moveToFirst();  
        }  
        return mCursor; // iterate to get each value.
-    }*/
+    }
+    
+    /* Send stored books to the master librarian database.
+     * When sent and confirmed empty the local storage.
+     */
+    public int updateLibrarian()
+    {
+        // Get data as JSON from database.
+        //Log.d("updateLibrarian", "I'm in here now.");
+        Cursor mCursor = selectRecords();
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
+        while (mCursor.isAfterLast() == false) 
+        {
+         JSONObject json = new JSONObject();   
+         //String item = mCursor.getString(0);
+         try{
+             json.put("ISBN",mCursor.getString(0));
+             json.put("AUTHOR",mCursor.getString(1));
+             json.put("TITLE",mCursor.getString(2));
+             json.put("PUBLISHER",mCursor.getString(3));
+             json.put("DESCRIPTION",mCursor.getString(4));
+             json.put("DATE",mCursor.getString(5));
+             json.put("RATING",mCursor.getString(6));
+             array.put(json);
+            }
+        catch (JSONException jse){jse.printStackTrace();}
+        
+        mCursor.moveToNext();   
+        }
+        mCursor.close();
+        try {
+            jsonObject.put("BOOK", array);
+            Log.d("updateLibrarian",jsonObject.toString(2));
+            }
+        catch (JSONException jse){jse.printStackTrace();}
+        
+        // Now send that to the librarian API
+        // TODO Write the API.
+        
+        
+        
+        // Delete all from database
+        database.delete(BOOK_TABLE, null, null);
+        return 1; // FIXME
+    }
+    
+    public void sendToAPI(JSONObject json){
+        
+    }
 }

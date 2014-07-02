@@ -9,10 +9,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     
     private static final String DATABASE_NAME = "DBName";
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 8;
     
     private static final String DATABASE_CREATE = "CREATE TABLE books(" +
-            "author text, title text, description text, date text, rating text);";
+            "isbn text primary key, author text, title text, publisher text, description text, date text, rating text);";
         
 
     public MySQLiteHelper(Context context) {

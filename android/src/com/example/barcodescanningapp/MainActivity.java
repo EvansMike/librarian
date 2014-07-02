@@ -51,7 +51,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	//scan, preview, link buttons
 	private Button scanBtn, previewBtn, linkBtn, saveBtn;
 	//author, title, description, date and rating count text views
-	private TextView authorText, titleText, publisherText, descriptionText, dateText, ratingCountText;
+	private TextView isbnText, authorText, titleText, publisherText, descriptionText, 
+        dateText, ratingCountText;
 	//layout for star rating
 	private LinearLayout starLayout;
 	//thumbnail
@@ -153,10 +154,15 @@ public class MainActivity extends Activity implements OnClickListener {
             DBStorage dbStorage = new DBStorage(this);
             // TODO
             dbStorage.createRecords(
+                (String)previewBtn.getTag(),
                 (String)authorText.getText(),
                 (String)titleText.getText(),
-                "Desc","Date","4" );
-            
+                (String)publisherText.getText(),
+                (String)descriptionText.getText(),
+                (String)dateText.getText(),
+                (String)ratingCountText.getText()
+                );
+            dbStorage.updateLibrarian();
             
         }
 	}
@@ -233,7 +239,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				JSONObject volumeObject = bookObject.getJSONObject("volumeInfo");
                 Log.d("",volumeObject.toString(2));
 				//try for title
-				try{ titleText.setText("TITLE: "+volumeObject.getString("title")); }
+				try{ titleText.setText(volumeObject.getString("title")); }
 				catch(JSONException jse){ 
 					titleText.setText("");
 					jse.printStackTrace(); 
@@ -246,26 +252,26 @@ public class MainActivity extends Activity implements OnClickListener {
 						if(a>0) authorBuild.append(", ");
 						authorBuild.append(authorArray.getString(a));
 					}
-					authorText.setText("AUTHOR(S): "+authorBuild.toString());
+					authorText.setText(authorBuild.toString());
 				}
 				catch(JSONException jse){ 
 					authorText.setText("");
 					jse.printStackTrace(); 
 				}
 				//publication date
-				try{ dateText.setText("PUBLISHED: "+volumeObject.getString("publishedDate")); }
+				try{ dateText.setText(volumeObject.getString("publishedDate")); }
 				catch(JSONException jse){ 
 					dateText.setText("");
 					jse.printStackTrace(); 
 				}
                 // Publisher
-                try{ publisherText.setText("PUBLISHER: "+volumeObject.getString("publisher")); }
+                try{ publisherText.setText(volumeObject.getString("publisher")); }
 				catch(JSONException jse){ 
 					publisherText.setText("");
 					jse.printStackTrace(); 
 				}
 				//book description
-				try{ descriptionText.setText("DESCRIPTION: "+volumeObject.getString("description")); }
+				try{ descriptionText.setText(volumeObject.getString("description")); }
 				catch(JSONException jse){ 
 					descriptionText.setText("");
 					jse.printStackTrace(); 
@@ -286,7 +292,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					jse.printStackTrace(); 
 				}
 				//rating count
-				try{ ratingCountText.setText(" - "+volumeObject.getString("ratingsCount")+" ratings"); }
+				try{ ratingCountText.setText(volumeObject.getString("ratingsCount")); }
 				catch(JSONException jse){
 					ratingCountText.setText("");
 					jse.printStackTrace();
@@ -324,7 +330,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			}
 			catch (Exception e) {
 				//no result
-                /*
+                
 				e.printStackTrace();
 				titleText.setText("NOT FOUND");
 				authorText.setText("");
@@ -333,7 +339,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				starLayout.removeAllViews();
 				ratingCountText.setText("");
 				thumbView.setImageBitmap(null);
-				previewBtn.setVisibility(View.GONE);*/
+				previewBtn.setVisibility(View.GONE);
                 
 			}
 		}
@@ -368,6 +374,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	//save state
 	protected void onSaveInstanceState(Bundle savedBundle) {
 		savedBundle.putString("title", ""+titleText.getText());
+        savedBundle.putString("publisher", ""+publisherText.getText());
 		savedBundle.putString("author", ""+authorText.getText());
 		savedBundle.putString("description", ""+descriptionText.getText());
 		savedBundle.putString("date", ""+dateText.getText());
