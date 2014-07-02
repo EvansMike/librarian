@@ -57,40 +57,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
 
 public class DBStorage {
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "librarian.db";
     private MySQLiteHelper dbHelper; 
     private SQLiteDatabase database;
     
     // Example code CHANGE ME
-    public final static String EMP_TABLE="MyEmployees"; // name of table 
-
-    public final static String EMP_ID="_id"; // id value for employee
-    public final static String EMP_NAME="name";  // name of employee
-
-
-	/*public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-        //retrieve state
-		if (savedInstanceState != null){
-			String authorText = savedInstanceState.getString("author");
-			String titleText = savedInstanceState.getString("title");
-			String descriptionText = savedInstanceState.getString("description");
-			String dateText = savedInstanceState.getString("date");
-			String ratingCountText = savedInstanceState.getString("ratings");
-			int numStars = savedInstanceState.getInt("stars");//zero if null
-            Log.d("DBStorage","Yay!  Data here!");
-            Log.d("DBStorage",titleText);
-        }
-        else {
-            // Do some error stuff.
-            Log.d("DBStorage","Oh noes!  No data here!");
-        }
-       
-        
-    }
-    */
-    
+    public final static String BOOK_TABLE="books"; // name of table 
+  
      
      /** 
          * 
@@ -101,22 +75,24 @@ public class DBStorage {
             dbHelper = new MySQLiteHelper(context);  
             database = dbHelper.getWritableDatabase();  
         }
+        
         // TODO
-        public long createRecords(String id, String name){  
+        public long createRecords(String author, String title, String description, String date, String rating){  
            ContentValues values = new ContentValues();  
-           values.put(EMP_ID, id);  
-           values.put(EMP_NAME, name);
-           Log.d(DBStorage.class.getName(),name);  
-           return database.insert(EMP_TABLE, null, values);  
+           values.put("author", author);  
+           values.put("title", title);
+           Log.d(DBStorage.class.getName(),author);  
+           return database.insert(BOOK_TABLE, null, values);  
 }    
     // TODO
+    /*
     public Cursor selectRecords() {
        String[] cols = new String[] {EMP_ID, EMP_NAME};  
-       Cursor mCursor = database.query(true, EMP_TABLE,cols,null  
+       Cursor mCursor = database.query(true, BOOK_TABLE,cols,null  
                 , null, null, null, null, null);  
        if (mCursor != null) {  
          mCursor.moveToFirst();  
        }  
        return mCursor; // iterate to get each value.
-    }
+    }*/
 }

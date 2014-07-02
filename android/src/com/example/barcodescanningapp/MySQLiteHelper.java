@@ -9,11 +9,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     
     private static final String DATABASE_NAME = "DBName";
 
-    private static final int DATABASE_VERSION = 1;
-
-    // Database creation sql statement
-    // TODO
-    private static final String DATABASE_CREATE = "create table MyEmployees ( _id integer primary key,name text not null)";
+    private static final int DATABASE_VERSION = 2;
+    
+    private static final String DATABASE_CREATE = "CREATE TABLE books(" +
+            "author text, title text, description text, date text, rating text);";
+        
 
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -31,7 +31,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.w(MySQLiteHelper.class.getName(),
                          "Upgrading database from version " + oldVersion + " to "
                          + newVersion + ", which will destroy all old data");
-        database.execSQL("DROP TABLE IF EXISTS MyEmployees"); //TODO
+        database.execSQL("DROP TABLE IF EXISTS books"); //TODO
         onCreate(database);
     }
  

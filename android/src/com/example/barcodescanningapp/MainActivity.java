@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	//scan, preview, link buttons
 	private Button scanBtn, previewBtn, linkBtn, saveBtn;
 	//author, title, description, date and rating count text views
-	private TextView authorText, titleText, descriptionText, dateText, ratingCountText;
+	private TextView authorText, titleText, publisherText, descriptionText, dateText, ratingCountText;
 	//layout for star rating
 	private LinearLayout starLayout;
 	//thumbnail
@@ -81,6 +81,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		saveBtn.setOnClickListener(this);
 
 		//ui items
+        publisherText = (TextView)findViewById(R.id.book_publisher);
 		authorText = (TextView)findViewById(R.id.book_author);
 		titleText = (TextView)findViewById(R.id.book_title);
 		descriptionText = (TextView)findViewById(R.id.book_description);
@@ -97,6 +98,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		//retrieve state
 		if (savedInstanceState != null){
+            publisherText.setText(savedInstanceState.getString("publisher"));
 			authorText.setText(savedInstanceState.getString("author"));
 			titleText.setText(savedInstanceState.getString("title"));
 			descriptionText.setText(savedInstanceState.getString("description"));
@@ -150,8 +152,10 @@ public class MainActivity extends Activity implements OnClickListener {
             Log.d("BUTTON","save_btn");
             DBStorage dbStorage = new DBStorage(this);
             // TODO
-            String foo = (String)authorText.getText();
-            dbStorage.createRecords("3",foo);
+            dbStorage.createRecords(
+                (String)authorText.getText(),
+                (String)titleText.getText(),
+                "Desc","Date","4" );
             
             
         }
@@ -227,6 +231,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				JSONArray bookArray = resultObject.getJSONArray("items");
 				JSONObject bookObject = bookArray.getJSONObject(0);
 				JSONObject volumeObject = bookObject.getJSONObject("volumeInfo");
+                Log.d("",volumeObject.toString(2));
 				//try for title
 				try{ titleText.setText("TITLE: "+volumeObject.getString("title")); }
 				catch(JSONException jse){ 
@@ -251,6 +256,12 @@ public class MainActivity extends Activity implements OnClickListener {
 				try{ dateText.setText("PUBLISHED: "+volumeObject.getString("publishedDate")); }
 				catch(JSONException jse){ 
 					dateText.setText("");
+					jse.printStackTrace(); 
+				}
+                // Publisher
+                try{ publisherText.setText("PUBLISHER: "+volumeObject.getString("publisher")); }
+				catch(JSONException jse){ 
+					publisherText.setText("");
 					jse.printStackTrace(); 
 				}
 				//book description
@@ -313,6 +324,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			}
 			catch (Exception e) {
 				//no result
+                /*
 				e.printStackTrace();
 				titleText.setText("NOT FOUND");
 				authorText.setText("");
@@ -321,7 +333,8 @@ public class MainActivity extends Activity implements OnClickListener {
 				starLayout.removeAllViews();
 				ratingCountText.setText("");
 				thumbView.setImageBitmap(null);
-				previewBtn.setVisibility(View.GONE);
+				previewBtn.setVisibility(View.GONE);*/
+                
 			}
 		}
 	}
