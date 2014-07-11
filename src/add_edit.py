@@ -327,10 +327,7 @@ class add_edit:
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
       #book.owner = getpass.getuser() # Assume owner is current logged in person
       db_query.insert_book_object(book)
-      #book.id = db_query.insert_book_complete(book.title, book.authors, book.isbn, book.abstract, book.year,\
-      #      book.publisher, book.city ,book.mtype, book.add_date, book.owner)['LAST_INSERT_ID()']
-      #logging.info(book.id)
-      db_query.insert_unique_author(book.authors)
+      #db_query.insert_unique_author(book.authors)
       
       self.status.set_text(_(" Book has been inserted."))
       self.orig_book = copy.copy(book) # So we can compare again.

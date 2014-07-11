@@ -210,21 +210,6 @@ class sqlite:
     self.cur.execute("SELECT LAST_INSERT_ROWID()") # 
     return self.cur.fetchone()
     return  
-  
-  
-  def insert_book_complete(self,title,authors, isbn, abstract,year,publisher,
-              city,mtype, owner, add_date):
-    ''' 
-    Insert a books' complete details in to the DB.
-    
-    ''' 
-    self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
-      year, publisher, city, copies, mtype, owner, add_date) \
-      VALUES(?, ?, ?,?,?,?,?,?,?,?,?);", \
-        (title, authors, isbn, abstract,year,publisher,city, 1, mtype, owner, add_date))
-    self.con.commit()
-    self.cur.execute("SELECT LAST_INSERT_ROWID()") # 
-    return self.cur.fetchone()
          
   def insert_unique_author(self, authors):
     '''
@@ -454,20 +439,7 @@ class mysql:
 
     return  last_book_id 
     
-       
-  def insert_book_complete(self, title, authors, isbn, abstract, year,
-                            publisher, city, mtype, owner, add_date):
-    ''' Insert a books' complete details in to the DB.
-    @return last insert ID 
-    ''' 
-    self.cur.execute("INSERT INTO books(title, author, isbn, abstract, \
-      year, publisher, city, copies, mtype, owner, add_date) \
-      VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);", \
-        (title, authors, isbn, abstract, year, publisher, city, 1, mtype, owner, add_date))
-    self.db.commit()
-    self.cur.execute("SELECT LAST_INSERT_ID()")
-    return self.cur.fetchone()
-       
+    
   def update_book(self, title, authors, abstract, year, publisher, city, mtype, owner, bid):
     self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \
           year = %s, publisher = %s, city = %s,mtype = %s, owner = %s WHERE id = %s", \
@@ -483,7 +455,7 @@ class mysql:
   def add_borrow(self, id, bid):      
     self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
       SELECT %s, %s, now() FROM DUAL WHERE NOT EXISTS \
-      (SELECT 1 FROM borrows WHERE book = %s AND borrower = %s AND i_date IS NULL);",
+      (SELECT 1 FROM borrows WHERE new_book = %s AND borrower = %s AND i_date IS NULL);",
       [id, bid,id, bid])
     self.db.commit()
       
