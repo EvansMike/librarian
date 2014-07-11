@@ -384,7 +384,7 @@ class mysql:
     ''' Search for book on its ID.  NB. This is NOT its ISBN
     
     '''
-    self.cur.execute ("SELECT * FROM  books where id = %s;",book_id)
+    self.cur.execute ("SELECT * FROM  new_books where id = %s;",book_id)
     return self.cur.fetchone()
 
   def insert_unique_author(self, authors):
