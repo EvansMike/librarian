@@ -40,16 +40,20 @@ def parse_isbn_books():
     the functionality of biblio.webquery.
     '''
     cur.execute("DELETE FROM books_to_authors") # Clean the tables
+    db.commit() 
     cur.execute("DELETE FROM book_authors") # Clean the tables
+    db.commit()
     cur.execute("DELETE FROM new_books") # Clean the tables
-
+    db.commit()
+    
+    '''
     command = "SELECT id, isbn FROM books where isbn !='' ORDER BY id;" # LIMIT for testing
     numrows = cur.execute(command)
     books = cur.fetchall()
     complex_names = []
     for mybook in books:
         fix_by_isbn(mybook['isbn'])
-        
+    '''        
 
 def parse_non_isbn_books():
     ''' 
@@ -59,7 +63,8 @@ def parse_non_isbn_books():
     db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
     cur = db.cursor(MySQLdb.cursors.DictCursor)
     # Now the books with no ISBNs
-    cur.execute("SELECT * FROM books where isbn ='' ORDER BY id;")
+    #cur.execute("SELECT * FROM books where isbn ='' ORDER BY id;")
+    cur.execute("SELECT * FROM books ORDER BY id;")
     # etc.
     books = cur.fetchall()
     for abook in books:
@@ -77,12 +82,11 @@ def parse_non_isbn_books():
         last_book_id = last_book_id['LAST_INSERT_ID()']
         split_suthors = abook['author'].split(",")
         ordinal = 0
-        print abook['title'], abook['author']
         for author in split_suthors:
             if author == '' : continue
             last = author.split()[-1]
             first = " ".join(author.split()[0:-1])
-            #print "Ordinal = ", ordinal, author, first, last
+            print "Ordinal = ", ordinal, author, first, last
             cur.execute("INSERT IGNORE INTO book_authors(author_last, author_first) \
                         VALUES(%s, %s)", (last, first))
             db.commit()
@@ -101,7 +105,7 @@ def fix_by_isbn(isbn):
     Put a book into the new table format.
     '''
     abook = book.book()
-    abook.webquery(isbn)
+    abook.webquery(isbn) # FIXME This misses DVDs and CDs.
 
     authors = abook.authors
     print "" ## Debug
