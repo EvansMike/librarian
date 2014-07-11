@@ -342,10 +342,10 @@ class mysql:
     '''
     import getpass
     user = getpass.getuser()
-    self.cur.execute ("select * from  books, borrows  where  (books.owner!=%s \
-    AND books.borrower_id IS NULL) \
-    OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
-    GROUP BY books.id;", user)
+    self.cur.execute ("select * from  new_books, borrows  where  (new_books.owner!=%s \
+    AND new_books.borrower_id IS NULL) \
+    OR  (new_books.id = borrows.book AND  borrows.i_date IS NULL) \
+    GROUP BY new_books.id;", user)
     return self.cur.fetchall()
     
   def get_borrowed_book_by_id(self, bid):
@@ -475,7 +475,11 @@ class mysql:
         
   def update_book_location(self, bid, location):
     self.cur.execute("UPDATE books SET location = %s WHERE id = %s;", (location, bid))
-        
+    db.commit() 
+    self.cur.execute("UPDATE new_books SET location = %s WHERE id = %s;", (location, bid))
+    db.commit()  
+    
+    
   def add_borrow(self, id, bid):      
     self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
       SELECT %s, %s, now() FROM DUAL WHERE NOT EXISTS \

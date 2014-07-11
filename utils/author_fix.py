@@ -81,6 +81,15 @@ def parse_non_isbn_books():
         last_book_id = cur.fetchone()
         last_book_id = last_book_id['LAST_INSERT_ID()']
         split_suthors = abook['author'].split(",")
+        # Need to update borrows table.
+        cur.execute("SELECT * FROM borrows WHERE book = %s;", abook['id'])
+        #print cur.rowcount
+        if int (cur.rowcount) == 1:
+            borrow = cur.fetchone()
+            cur.execute("INSERT INTO borrows(o_date, i_date, book, borrower) \
+                VALUES(%s,%s,%s,%s)",
+                [borrow['o_date'], borrow['i_date'],last_book_id, borrow['borrower']])
+        
         ordinal = 0
         for author in split_suthors:
             if author == '' : continue
