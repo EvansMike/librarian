@@ -90,7 +90,8 @@ def parse_non_isbn_books():
             cur.execute("INSERT IGNORE INTO book_authors(author_last, author_first) \
                         VALUES(%s, %s)", (last, first))
             db.commit()
-            cur.execute("SELECT author_id FROM book_authors WHERE author_last=%s AND author_first=%s",(last, first))
+            cur.execute("SELECT author_id FROM book_authors WHERE author_last=%s \
+                AND author_first=%s",(last, first))
             last_author_id = cur.fetchone()
             last_author_id = last_author_id['author_id']
 

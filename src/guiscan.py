@@ -319,6 +319,8 @@ class scanner:
     self.cur.execute("SELECT * FROM authors WHERE name=%s;",[a_name])
     result = self.cur.fetchall()
     author_id = result[0][0]
+    db_query.insert_book_object(abook)
+    '''
     values = (str(self.abook.title), str(self.abook.authors), str(self.abook.id),
         str(self.abook.abstract),self.abook.year,
         str(self.abook.publisher),str(self.abook.city),1,author_id,
@@ -327,6 +329,7 @@ class scanner:
     (title, author, isbn,abstract, year, publisher, city, copies, author_id, add_date,mtype,owner)\
     VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s);", values)
     self.db.commit()
+    '''
     
     # Get and insert the track listing
     # TODO: Move DB stuff to db_queries

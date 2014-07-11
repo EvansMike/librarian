@@ -30,6 +30,7 @@ having two classes, maybe a string write function that builds the query
 string for each type.  Something to think about.
 
 TODO: If the sqlit3 db file doesn't exist we should create a db with it's schema.
+TODO: Update to suite new DB schema.
 '''
 
 
@@ -309,7 +310,10 @@ class mysql:
     Get all of the books and return a list.
     
     '''
-    command = "SELECT * FROM books WHERE copies > 0 order by author;"
+    #command = "SELECT * FROM books WHERE copies > 0 order by author;"
+    command = "SELECT *  FROM new_books b INNER JOIN books_to_authors ba ON (b.id = ba.book_id) \
+    INNER JOIN book_authors a ON (ba.author_id = a.author_id) \
+    GROUP BY b.title ORDER BY author_last, author_ordinal;"
     numrows = self.cur.execute(command)
     return  self.cur.fetchall(), numrows
   
@@ -416,8 +420,39 @@ class mysql:
       (book.title, book.authors, book.isbn, book.abstract, \
       book.year, book.publisher, book.city, 1, book.mtype, book.add_date, book.owner))
     self.db.commit()
-    self.cur.execute("SELECT LAST_INSERT_ID()")
-    return self.cur.fetchone()
+    # We're inserting into both schemas currenty until all dependent code
+    # is migrated.
+    self.cur.execute("INSERT INTO new_books(title, author, isbn,abstract, \
+          year, publisher, city, copies, mtype, add_date, owner) \
+          VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
+          (abook['title'], abook['author'], abook['isbn'], abook['abstract'], \
+          abook['year'], abook['publisher'], abook['city'], 1, abook['mtype'], \
+          abook['add_date'], abook['owner']))
+    self.db.commit()
+    cur.execute("SELECT LAST_INSERT_ID()")
+    last_book_id = cur.fetchone()
+    last_book_id = last_book_id['LAST_INSERT_ID()']
+    split_suthors = abook['author'].split(",")
+    ordinal = 0
+    for author in split_suthors:
+        if author == '' : continue
+        last = author.split()[-1]
+        first = " ".join(author.split()[0:-1])
+        print "Ordinal = ", ordinal, author, first, last
+        cur.execute("INSERT IGNORE INTO book_authors(author_last, author_first) \
+                    VALUES(%s, %s)", (last, first))
+        db.commit()
+        cur.execute("SELECT author_id FROM book_authors WHERE author_last=%s \
+            AND author_first=%s",(last, first))
+        last_author_id = cur.fetchone()
+        last_author_id = last_author_id['author_id']
+
+        cur.execute("INSERT INTO books_to_authors(book_id, author_id, author_ordinal) \
+            VALUES(%s,%s,%s)", (last_book_id,last_author_id,  ordinal))
+        db.commit()
+        ordinal += 1
+
+    return  last_book_id 
     
        
   def insert_book_complete(self, title, authors, isbn, abstract, year,
