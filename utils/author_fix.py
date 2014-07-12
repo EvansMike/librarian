@@ -34,11 +34,31 @@ db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
 cur = db.cursor(MySQLdb.cursors.DictCursor)
 
 def fix_books():
-    cur.execute("DELETE FROM books_to_authors") # Clean the tables
-    db.commit() 
-    cur.execute("DELETE FROM book_authors") # Clean the tables
+    # Create new tables
+    cur.execute(" \
+        DROP TABLE IF EXISTS `books_to_authors`;\
+        CREATE TABLE `books_to_authors` (\
+          `book_id` int(11) NOT NULL,\
+          `author_id` int(11) NOT NULL,\
+          `author_ordinal` int(11) NOT NULL,\
+          `author_role` text\
+        )\
+    ") 
+    
+    
     db.commit()
-    cur.execute("DELETE FROM new_books") # Clean the tables
+    cur.execute("\
+        DROP TABLE IF EXISTS `book_authors`;\
+        CREATE TABLE `book_authors` ( \
+        `author_id` int(11) NOT NULL AUTO_INCREMENT, \
+        `author_last` text,\
+        `author_first` text,\
+        PRIMARY KEY (`author_id`),\
+        UNIQUE KEY `book_authors_unique_idx` (`author_last`(10),`author_first`(10))\
+        ) ") 
+        
+    db.commit()
+    cur.execute("DROP table IF EXISTS new_books") # Clean the tables
     db.commit()
     
     db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
