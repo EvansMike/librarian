@@ -296,7 +296,7 @@ class mysql:
     
     '''
     #command = "SELECT * FROM books WHERE copies > 0 order by author;"
-    command = "SELECT *  FROM new_books b INNER JOIN books_to_authors ba ON (b.id = ba.book_id) \
+    command = "SELECT *  FROM books b INNER JOIN books_to_authors ba ON (b.id = ba.book_id) \
     INNER JOIN book_authors a ON (ba.author_id = a.author_id) \
     GROUP BY b.title ORDER BY author_last, author_ordinal;"
     numrows = self.cur.execute(command)
@@ -327,10 +327,10 @@ class mysql:
     '''
     import getpass
     user = getpass.getuser()
-    self.cur.execute ("select * from  new_books, borrows  where  (new_books.owner!=%s \
-    AND new_books.borrower_id IS NULL) \
-    OR  (new_books.id = borrows.book AND  borrows.i_date IS NULL) \
-    GROUP BY new_books.id;", user)
+    self.cur.execute ("select * from  books, borrows  where  (books.owner!=%s \
+    AND books.borrower_id IS NULL) \
+    OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
+    GROUP BY books.id;", user)
     return self.cur.fetchall()
     
   def get_borrowed_book_by_id(self, bid):
@@ -384,7 +384,7 @@ class mysql:
     ''' Search for book on its ID.  NB. This is NOT its ISBN
     
     '''
-    self.cur.execute ("SELECT * FROM  new_books where id = %s;",book_id)
+    self.cur.execute ("SELECT * FROM  books where id = %s;",book_id)
     return self.cur.fetchone()
 
   def insert_unique_author(self, authors):
@@ -407,7 +407,7 @@ class mysql:
     self.db.commit()
     # We're inserting into both schemas currenty until all dependent code
     # is migrated.
-    self.cur.execute("INSERT INTO new_books(title, author, isbn,abstract, \
+    self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
           year, publisher, city, copies, mtype, add_date, owner) \
           VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
           (abook['title'], abook['author'], abook['isbn'], abook['abstract'], \
@@ -448,7 +448,7 @@ class mysql:
   def update_book_location(self, bid, location):
     self.cur.execute("UPDATE books SET location = %s WHERE id = %s;", (location, bid))
     db.commit() 
-    self.cur.execute("UPDATE new_books SET location = %s WHERE id = %s;", (location, bid))
+    self.cur.execute("UPDATE books SET location = %s WHERE id = %s;", (location, bid))
     db.commit()  
     
     
