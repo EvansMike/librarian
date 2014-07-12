@@ -436,18 +436,17 @@ class mysql:
         ordinal += 1
 
     return  last_book_id 
-    
-    
-  def update_book(self, title, authors, abstract, year, publisher, city, mtype, owner, bid):
+  
+  def update_book(self, book, bid):
     self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \
-          year = %s, publisher = %s, city = %s,mtype = %s, owner = %s WHERE id = %s", \
-        (title, authors, abstract,year,publisher, city, mtype, owner, bid))
+          year = %s, publisher = %s, city = %s,mtype = %s, owner = %s, location = %s WHERE id = %s", \
+          (book.title, book.authors, book.abstract,book.year,book.publisher, \
+          book.city, book.mtype, book.owner, book.location, bid))
+    self.db.commit()
         
   def update_book_location(self, bid, location):
     self.cur.execute("UPDATE books SET location = %s WHERE id = %s;", (location, bid))
-    db.commit() 
-    self.cur.execute("UPDATE books SET location = %s WHERE id = %s;", (location, bid))
-    db.commit()  
+    self.db.commit()  
     
     
   def add_borrow(self, id, bid):      

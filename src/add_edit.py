@@ -237,7 +237,7 @@ class add_edit:
   
   def populate(self,book_id):
     db_query = sql()
-    logging.info(book_id)
+    logging.debug(book_id)
     row = db_query.get_by_id(book_id)
     #logging.info(result)
     #for row in result:
@@ -278,12 +278,11 @@ class add_edit:
     self.populate_locations()
 
 
-
-
   def update_book(self):
     ''' Update any changes from GUI
     @return Error value from book.compare(book) 
     '''
+    self.orig_book = copy.copy(self.mybook)
     self.mybook.isbn=self.isbn.get_text()
     self.mybook.title=self.title.get_text()
     self.mybook.authors=self.author.get_text()
@@ -293,51 +292,50 @@ class add_edit:
     self.mybook.city=self.city.get_text()
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.owner=self.book_owner.get_text()
+    self.mybook.location = self.location_dropdown.get_active()
     #self.mybook.add_date=self.add_date.get_text() #TODO
     if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
 
     #logging.info(self.mybook.year)
     # Is the book on loan and to whome?
     self.status.set_text(_("Book updated."))
-    return self.mybook.compare(self.orig_book)
+    return self.orig_book.compare(self.mybook)
 
   def on_button_update_clicked(self, widget):
     ''' Update the database with new info or add if not already in.'''
+    self.orig_book = copy.copy(self.mybook)
     self.update_book()
-    self.orig_book = self.mybook
-    self.update_db()
-    self.set_location()
+    logging.debug(self.orig_book.compare(self.mybook))
+    if self.orig_book.compare(self.mybook) != 0: # Any changes?
+        logging.debug("Something changed so an update is needed.")
+        self.update_db()
+        self.set_location()
     pass
-
-
 
   def update_db(self):
     db_query = sql()
     book = copy.copy(self.mybook)
     #logging.info(self.orig_book.compare(book))
     result = db_query.get_by_id(book.id)
-    #logging.info(result)
+    logging.debug(result)
+    logging.debug(book.is_empty())
+    if book.is_empty(): return # Do nothing if no data
     if result == None: # If no book in DB, add it
-    # Make sure we don't add an empty book.  We could also use this to
-    #check for changes if we have a copy of the original data.
-      book_data = book.title + book.authors + book.isbn + book.abstract \
-      + book.year + book.publisher + book.city
-      #logging.info(book_data)
-      if book_data == '': return # Do nothing if no data
+    # Make sure we don't add an empty book.  We could also use this to      
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
       #book.owner = getpass.getuser() # Assume owner is current logged in person
       db_query.insert_book_object(book)
       #db_query.insert_unique_author(book.authors)
-      
+       
       self.status.set_text(_(" Book has been inserted."))
       self.orig_book = copy.copy(book) # So we can compare again.
-
-    # If a change has been made...
-    elif  self.orig_book.compare(book) != 0:
-      #logging.info("Something changed so an update is needed")
-      self.update_book()
-      db_query.update_book(book.title, book.authors, book.abstract,book.year,book.publisher,
-        book.city, book.mtype,book.owner, book.id)
+    
+    #check for changes if we have a copy of the original data.     
+    # If the book is not empty
+    else:
+      logging.info("Something changed so an update is needed")
+      #self.update_book()
+      db_query.update_book(book, book.id)
       #logging.info(book.mtype)
       db_query.insert_unique_author(book.authors)
       self.status.set_text(_(" Book has been updated."))
