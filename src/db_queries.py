@@ -455,7 +455,7 @@ class mysql:
   def add_borrow(self, id, bid):      
     self.cur.execute("INSERT INTO borrows(book, borrower, o_date) \
       SELECT %s, %s, now() FROM DUAL WHERE NOT EXISTS \
-      (SELECT 1 FROM borrows WHERE new_book = %s AND borrower = %s AND i_date IS NULL);",
+      (SELECT 1 FROM borrows WHERE book = %s AND borrower = %s AND i_date IS NULL);",
       [id, bid,id, bid])
     self.db.commit()
       
