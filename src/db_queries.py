@@ -404,7 +404,7 @@ class mysql:
     if book_count > 1:
         self.cur.execute("UPDATE books SET copies = %s WHERE isbn = %s",(book_count+1,book.isbn) )
         self.db.commit()
-        return 0
+        return  book_count
     self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
       year, publisher, city, copies, mtype, add_date, owner) \
       VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \

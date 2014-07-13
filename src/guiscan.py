@@ -178,12 +178,14 @@ class scanner:
             buff.insert_at_cursor(str(dvd_search.Title) + "\n")
             buff.insert_at_cursor(str(dvd_search.Director))
             self.text_view.set_buffer(buff)
+            self.abook.isbn = bar
             self.abook.title = str(dvd_search.Title)
             self.abook.authors = str(dvd_search.Director) # This isn't perfect and maybe I should use K-V pairs?
             self.abook.mtype = str(dvd_search.ProductGroup)
             self.abook.id = str(bar)
-            self.abook.year = 0 # Should be available but ...
+            #self.abook.year = 0 # Should be available but ...
             self.abook.owner = self.owner
+            self.abook.add_date = datetime.date.today()
           else: # Do a CD search
             buff.set_text (_("No DVDs.\n Searching for CDs\n"))
             self.text_view.set_buffer(buff)
@@ -312,14 +314,16 @@ class scanner:
          str(self.abook.isbn))
     TODO Move all DB stuff to db_queries.py
     '''
+    buff = self.text_view.get_buffer()
     db_query = sql()
-    a_name = str(self.abook.authors)
-    a_mtype = str(self.abook.mtype)
-    self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", [a_name])
-    self.cur.execute("SELECT * FROM authors WHERE name=%s;",[a_name])
-    result = self.cur.fetchall()
-    author_id = result[0][0]
-    db_query.insert_book_object(self.abook)
+    last_id = db_query.insert_book_object(self.abook)
+    logging.debug(last_id);
+    # We should check this for success
+    if last_id == 0:
+        print ("Failed to add book to database.")
+        buff.insert_at_cursor (_( "\n\nCould add this book!"))
+        self.text_view.set_buffer(buff)
+        return
     # Get and insert the track listing
     # TODO: Move DB stuff to db_queries
     if str(self.abook.mtype) == 'Music': 
