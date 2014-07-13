@@ -206,7 +206,7 @@ class scanner:
         
         
     # DONE Check if exists and increment book count if so.
-    count = db_query.get_book_count_by_isbn(bar)['count']
+    count = db_query.get_book_count_by_isbn(bar)
     logger.info(count)
     if count > 0:
       buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
@@ -319,18 +319,7 @@ class scanner:
     self.cur.execute("SELECT * FROM authors WHERE name=%s;",[a_name])
     result = self.cur.fetchall()
     author_id = result[0][0]
-    db_query.insert_book_object(abook)
-    '''
-    values = (str(self.abook.title), str(self.abook.authors), str(self.abook.id),
-        str(self.abook.abstract),self.abook.year,
-        str(self.abook.publisher),str(self.abook.city),1,author_id,
-        datetime.date.today(), str(self.abook.mtype),str(self.abook.owner))
-    self.cur.execute("INSERT INTO books\
-    (title, author, isbn,abstract, year, publisher, city, copies, author_id, add_date,mtype,owner)\
-    VALUES(%s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s);", values)
-    self.db.commit()
-    '''
-    
+    db_query.insert_book_object(self.abook)
     # Get and insert the track listing
     # TODO: Move DB stuff to db_queries
     if str(self.abook.mtype) == 'Music': 
@@ -351,8 +340,6 @@ class scanner:
     self.text_view.set_buffer(buff)
     self.make_qr_code()
     print "You added this", str(self.abook.mtype)
-    import author_fix
-    author_fix.fix_by_isbn(self.abook.isbn)
 
 
   def append_text(self, text):
