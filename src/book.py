@@ -33,6 +33,9 @@ class book:
         self.authors = ''
         self.edited = False
         self.title = ''
+        self.issue = '' # For comics etc.
+        self.sale_price = 0.00
+        self.condition = ''
         self.publisher = ''
         self.abstract = ''
         self.mtype = ''
