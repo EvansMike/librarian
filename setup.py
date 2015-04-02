@@ -3,9 +3,9 @@
 #from setuptools import setup
 from src import version
 # We create the package with
-# python setup.py sdist 
+# python setup.py sdist
 # For an rpm
-# python setup.py bdist_rpm 
+# python setup.py bdist_rpm
 # To install
 # python setup.py install
 from distutils.core import setup
@@ -20,10 +20,10 @@ class build_trans(cmd.Command):
     description = 'Compile .po files into .mo files'
     def initialize_options(self):
         pass
- 
+
     def finalize_options(self):
         pass
- 
+
     def run(self):
         po_dir = os.path.join(os.path.dirname(os.curdir), 'src/po')
         for path, names, filenames in os.walk(po_dir):
@@ -44,12 +44,12 @@ class build_trans(cmd.Command):
                         if src_mtime > dest_mtime:
                             print 'Compiling %s' % src
                             msgfmt.make(src, dest)
-                           
+
 class build(_build):
     sub_commands = _build.sub_commands + [('build_trans', None)]
     def run(self):
         _build.run(self)
-        
+
 class install_data(_install_data):
     def run(self):
         for lang in os.listdir('build/locale/'):
@@ -57,7 +57,7 @@ class install_data(_install_data):
             lang_file = os.path.join('build', 'locale', lang, 'LC_MESSAGES', 'librarian.mo')
             self.data_files.append( (lang_dir, [lang_file]) )
         _install_data.run(self)
-        
+
 cmdclass = {
     'build': build,
     'build_trans': build_trans,
@@ -78,6 +78,10 @@ setup (
       data_files=[("share/applications",["desktop/librarian.desktop"])],
       package_data={'librarian': ['po/*', 'ui/*','librarian.png']},
       scripts=['bin/librarian'],
+      install_requires=[
+          'biblio.webquery',
+          'zbar',
+      ],
       cmdclass=cmdclass
 )
 
