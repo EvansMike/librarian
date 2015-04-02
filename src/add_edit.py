@@ -36,13 +36,14 @@ import gettext
 import datetime
 import getpass
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
-# or 
+# or
 from db_queries import sql as sql
 
 _ = gettext.gettext
 
 #logger = logging.getLogger("barscan")
-logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', \
+      level=logging.DEBUG)
 
 
 class add_edit:
@@ -79,7 +80,7 @@ class add_edit:
     self.location_liststore = builder.get_object("liststore_locations")
     self.location_dropdown.set_model(self.location_liststore)
     self.location_dropdown.set_text_column(1)
-    
+
     self.lent_select.set_model( self.lentlist)
     self.lent_select.set_text_column(1)
 
@@ -89,17 +90,22 @@ class add_edit:
   def display(self):
     gtk.main()
     pass
-    
+
   def on_button_close_clicked(self, widget):
     ''' Check if any changed made and pop up worning
     else close the dialog.
+    FIXME:  Don't show the dialog if there have been no changes.
     '''
-    if self.update_book() == 0:
+    updated = self.update_book()
+    if updated == 0:
+      logging.info("Closing without saving.")
       if __name__ == "__main__":
         gtk.main_quit()
       else:
         self.window.hide()
     else: # pop up an are you sure dialog.
+      logging.info(updated)
+      logging.info("Opening a dialog to ask to save changes")
       dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_QUESTION,
             gtk.BUTTONS_YES_NO, "Changes have be made.\nDo you want to save changes?")
       dlg_val = dialog.run()
@@ -150,7 +156,7 @@ class add_edit:
   def populate_borrowers(self):
     ''' Get borrowers and fill in the list'''
     db_query = sql()
-    #Populate borrowers combo box etc. 
+    #Populate borrowers combo box etc.
     self.lentlist.clear()
     result = db_query.get_all_borrowers()
     for row in result:
@@ -173,7 +179,7 @@ class add_edit:
         self.copies.set_text(str(self.orig_book.copies))
       # Set active to current borrower.
       # FIXME: This get the first borrower of a copy.  Normally not an issue
-      # for personal libraries, it will be for lending libraries though. 
+      # for personal libraries, it will be for lending libraries though.
       n = 0
       for lender in self.lentlist:
         if lender[0] == bid:
@@ -183,7 +189,7 @@ class add_edit:
           break
         n += 1
     else:
-      #self.lentlist.prepend([0, "", ""]) 
+      #self.lentlist.prepend([0, "", ""])
       self.lent_select.set_active(0)
       self.lent.set_active(False)
     pass
@@ -202,12 +208,12 @@ class add_edit:
     # Now set the dropdown to the books location
     n = 0
     for lid in self.location_liststore:
-      #logging.info([loc, lid[0],n])
+      logging.debug([loc, lid[0],n])
       if lid[0] == loc:
         self.location_dropdown.set_active(n)
         return
       n += 1
-    
+
   def set_location(self):
     '''
     Set the book's location
@@ -217,13 +223,13 @@ class add_edit:
     #logging.info(idx)
     if idx > 0:
       lid = self.location_liststore[idx][0]
-      logging.info(lid)
+      logging.debug(lid)
       self.mybook.where = lid
       db_query.update_book_location(self.mybook.id, lid)
     return
-  
+
   def on_button_add_location_clicked_cb(self,widget):
-    ''' 
+    '''
     Open a dialog to add a new location
     '''
     import location_editor
@@ -232,9 +238,9 @@ class add_edit:
     # Update the combobox liststore
     self.populate_locations()
     self.status.set_text(_("Location changed."))
-    
-  
-  
+
+
+
   def populate(self,book_id):
     db_query = sql()
     logging.debug(book_id)
@@ -280,9 +286,9 @@ class add_edit:
 
   def update_book(self):
     ''' Update any changes from GUI
-    @return Error value from book.compare(book) 
+    @return Error value from book.compare(book)
     '''
-    self.orig_book = copy.copy(self.mybook)
+    self.orig_book = copy.copy(self.mybook) # Make a copy
     self.mybook.isbn=self.isbn.get_text()
     self.mybook.title=self.title.get_text()
     self.mybook.authors=self.author.get_text()
@@ -292,7 +298,8 @@ class add_edit:
     self.mybook.city=self.city.get_text()
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.owner=self.book_owner.get_text()
-    self.mybook.location = self.location_dropdown.get_active()
+    self.mybook.where = self.location_dropdown.get_active()
+    logging.debug(self.location_dropdown.get_active())
     #self.mybook.add_date=self.add_date.get_text() #TODO
     if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
 
@@ -303,14 +310,10 @@ class add_edit:
 
   def on_button_update_clicked(self, widget):
     ''' Update the database with new info or add if not already in.'''
-    self.orig_book = copy.copy(self.mybook)
-    self.update_book()
-    logging.debug(self.orig_book.compare(self.mybook))
-    if self.orig_book.compare(self.mybook) != 0: # Any changes?
-        logging.debug("Something changed so an update is needed.")
-        self.update_db()
-        self.set_location()
-    pass
+    if self.update_book() != 0: # Any changes?
+      logging.debug("Something changed so an update is needed.")
+      self.update_db()
+      self.set_location()
 
   def update_db(self):
     db_query = sql()
@@ -321,16 +324,16 @@ class add_edit:
     logging.debug(book.is_empty())
     if book.is_empty(): return # Do nothing if no data
     if result == None: # If no book in DB, add it
-    # Make sure we don't add an empty book.  We could also use this to      
+    # Make sure we don't add an empty book.  We could also use this to
       if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
       #book.owner = getpass.getuser() # Assume owner is current logged in person
       db_query.insert_book_object(book)
       #db_query.insert_unique_author(book.authors)
-       
+
       self.status.set_text(_(" Book has been inserted."))
       self.orig_book = copy.copy(book) # So we can compare again.
-    
-    #check for changes if we have a copy of the original data.     
+
+    #check for changes if we have a copy of the original data.
     # If the book is not empty
     else:
       logging.info("Something changed so an update is needed")
@@ -353,7 +356,7 @@ class add_edit:
     ''' Do things when selection is changed
     Need to check if the selected borrower has the book and set the
     checkbutton status to suit '''
-    db_query = sql() 
+    db_query = sql()
     if not self.lentlist.get_iter_first(): return # If we can't iterate then the list is empty
     foo = self.lent_select.get_active()
     bid = self.lentlist[foo][0]

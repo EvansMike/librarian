@@ -41,13 +41,13 @@ class book:
         self.mtype = ''
         self.year = ''
         self.city = ''
-        self.copies = 0 
+        self.copies = 0
         self.where = 0 # Which shelf is it on?
         self.add_date = datetime.date.today()
         self.borrower_id = None
         self.owner = getpass.getuser() # Assume owner is current logged in person
         self.location = 0
-    
+
     def print_book(self):
         ## Return some book details as a string for printing.  Mostly a debug thing.
         bookstring = self.isbn + "\n" + self.authors + "\n" + self.title
@@ -79,18 +79,17 @@ class book:
         ''' Determine if two books differ.  Return 0 if same and number of
         differences if different. '''
         err_num = 0
-        err_num += (self.isbn != book.isbn)
-        err_num += (self.authors != book.authors)
-        err_num += (self.title != book.title)
-        err_num += (self.publisher != book.publisher)
-        err_num += (self.abstract != book.abstract)
-        err_num += (self.mtype != book.mtype)
-        #err_num += (self.year != book.year)
-        err_num += (self.city != book.city)
-        err_num += (self.mtype != book.mtype)
-        err_num += (self.where != book.where)
-        err_num += (self.owner != book.owner)
-        err_num += (self.location != book.location)
+        err_num += (self.isbn != book.isbn) * 1
+        err_num += (self.authors != book.authors) * 2
+        err_num += (self.title != book.title) * 4
+        err_num += (self.publisher != book.publisher) * 8
+        err_num += (self.abstract != book.abstract) * 16
+        err_num += (self.mtype != book.mtype) * 32
+        #err_num += (self.year != book.year) * 64
+        err_num += (self.city != book.city) * 128
+        err_num += (self.mtype != book.mtype) * 256
+        err_num += (self.where != book.where) * 512
+        err_num += (self.owner != book.owner) * 1024
         return err_num
 
     def is_empty(self):
@@ -98,7 +97,7 @@ class book:
         self.abstract + self.mtype + self.city +  self.mtype + str(self.where) + self.owner
         if test == '': return True
         else: return False
-    
+
     def webquery(self,isbn):
         import book
         from biblio.webquery.xisbn import XisbnQuery
