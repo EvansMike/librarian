@@ -46,7 +46,7 @@ class book:
         self.add_date = datetime.date.today()
         self.borrower_id = None
         self.owner = getpass.getuser() # Assume owner is current logged in person
-        self.location = 0
+        #self.location = 0
 
     def print_book(self):
         ## Return some book details as a string for printing.  Mostly a debug thing.
@@ -76,8 +76,7 @@ class book:
         return 0
 
     def compare(self, book):
-        ''' Determine if two books differ.  Return 0 if same and number of
-        differences if different. '''
+        ''' Determine if two books differ.  Return 0 if same.'''
         err_num = 0
         err_num += (self.isbn != book.isbn) * 1
         err_num += (self.authors != book.authors) * 2

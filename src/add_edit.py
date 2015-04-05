@@ -199,7 +199,7 @@ class add_edit:
     locations = db_query.get_locations()
     self.location_liststore.clear()
     loc = self.mybook.where
-    #logging.info(where)
+    #logging.info(loc)
     for where in locations:
       rs = where['room'] + ' - ' + where['shelf']
       self.location_liststore.append([where['id'], rs])
@@ -208,7 +208,7 @@ class add_edit:
     # Now set the dropdown to the books location
     n = 0
     for lid in self.location_liststore:
-      logging.debug([loc, lid[0],n])
+      #logging.debug([loc, lid[0],n])
       if lid[0] == loc:
         self.location_dropdown.set_active(n)
         return
@@ -223,7 +223,7 @@ class add_edit:
     #logging.info(idx)
     if idx > 0:
       lid = self.location_liststore[idx][0]
-      logging.debug(lid)
+      #logging.debug(lid)
       self.mybook.where = lid
       db_query.update_book_location(self.mybook.id, lid)
     return
@@ -298,8 +298,9 @@ class add_edit:
     self.mybook.city=self.city.get_text()
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.owner=self.book_owner.get_text()
-    self.mybook.where = self.location_dropdown.get_active()
-    logging.debug(self.location_dropdown.get_active())
+    #self.mybook.where = self.location_dropdown.get_active()
+    #logging.debug(self.location_dropdown.get_active())
+    self.set_location()
     #self.mybook.add_date=self.add_date.get_text() #TODO
     if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
 
