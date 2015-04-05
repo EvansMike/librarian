@@ -214,8 +214,25 @@ class scanner:
       buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
     self.text_view.set_buffer(buff)
     del buff,proc
+    
+  ''' To: Future me.   Do this whenever you are ready
+  def getVideoDevices(self):
+        videoDevices = []
+        for dev in os.listdir("/dev/v4l/by-id"):
+            try:
+                yield([
+                    " ".join(dev.split("-")[1].split("_")), 
+                    os.path.join("/dev/v4l/by-id", dev)
+                ])
+            except:
+                yield([
+                    dev, 
+                    os.path.join("/dev/v4l/by-id", dev)
+                ])
+            videoDevices.append(dev)
 
-
+  '''
+  
   def make_qr_code(self):
     '''
     Make a QR code for the book.  This could be useful somewhere I guess.
