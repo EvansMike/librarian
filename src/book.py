@@ -46,7 +46,7 @@ class book:
         self.add_date = datetime.date.today()
         self.borrower_id = None
         self.owner = getpass.getuser() # Assume owner is current logged in person
-        #self.location = 0
+        self.rating = 0 # Stars out of 5?
 
     def print_book(self):
         ## Return some book details as a string for printing.  Mostly a debug thing.
