@@ -406,10 +406,10 @@ class mysql:
         self.db.commit()
         return  book_count
     self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
-      year, publisher, city, copies, mtype, add_date, owner) \
-      VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
+      year, publisher, city, copies, mtype, add_date, owner, rating) \
+      VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
       (book.title, book.authors, book.isbn, book.abstract, \
-      book.year, book.publisher, book.city, 1, book.mtype, book.add_date, book.owner))
+      book.year, book.publisher, book.city, 1, book.mtype, book.add_date, book.owner, book.rating))
     self.db.commit()
 
     self.cur.execute("SELECT LAST_INSERT_ID()")
@@ -439,9 +439,10 @@ class mysql:
   
   def update_book(self, book, bid):
     self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \
-          year = %s, publisher = %s, city = %s,mtype = %s, owner = %s, location = %s WHERE id = %s", \
+          year = %s, publisher = %s, city = %s,mtype = %s, owner = %s, location = %s, rating = %s\
+          WHERE id = %s", \
           (book.title, book.authors, book.abstract,book.year,book.publisher, \
-          book.city, book.mtype, book.owner, book.location, bid))
+          book.city, book.mtype, book.owner, book.where, book.rating, bid))
     self.db.commit()
         
   def update_book_location(self, bid, location):

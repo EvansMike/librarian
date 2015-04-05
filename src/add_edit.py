@@ -70,6 +70,9 @@ class add_edit:
     self.lent_select = builder.get_object("comboboxentry1")
     self.book_owner = builder.get_object("entry_owner")
     self.add_button = builder.get_object("button_new_user") # Add a new user or edit
+    self.rating_select = builder.get_object("combobox_rating")
+    self.rating_liststore = builder.get_object("liststore_rating")
+    self.rating_select.set_model(self.rating_liststore)
     self.where = ""
     self.add_date = False # builder.get_object("comboboxentry1") #To be added to GUI
     self.mybook = book.book()
@@ -228,6 +231,12 @@ class add_edit:
       db_query.update_book_location(self.mybook.id, lid)
     return
 
+  def populate_rating(self, rating):
+    ''' Set the rating dropdown to the current book's rating'''
+    # rating = 3 # Test
+    self.rating_select.set_active(rating)
+    return
+    
   def on_button_add_location_clicked_cb(self,widget):
     '''
     Open a dialog to add a new location
@@ -243,7 +252,7 @@ class add_edit:
 
   def populate(self,book_id):
     db_query = sql()
-    logging.debug(book_id)
+    #logging.debug(book_id)
     row = db_query.get_by_id(book_id)
     #logging.info(result)
     #for row in result:
@@ -271,6 +280,7 @@ class add_edit:
     self.orig_book.copies = row['copies']
     self.orig_book.where = row['location']
     self.orig_book.owner = row['owner']
+    self.orig_book.rating = row['rating']
     #logging.info(self.orig_book.where)
     self.orig_book.mtype = row['mtype']
     if row['add_date'] != "":
@@ -282,6 +292,7 @@ class add_edit:
     self.mybook = copy.copy(self.orig_book)
     self.populate_borrowers()
     self.populate_locations()
+    self.populate_rating(row['rating'])
 
 
   def update_book(self):
@@ -298,8 +309,9 @@ class add_edit:
     self.mybook.city=self.city.get_text()
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.owner=self.book_owner.get_text()
-    #self.mybook.where = self.location_dropdown.get_active()
-    #logging.debug(self.location_dropdown.get_active())
+    self.mybook.rating = self.rating_select.get_active()
+    #logging.debug(self.mybook.rating)
+    #logging.debug(self.rating_select.get_active())
     self.set_location()
     #self.mybook.add_date=self.add_date.get_text() #TODO
     if self.year.get_text() != '' : self.mybook.year=self.year.get_text()

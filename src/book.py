@@ -89,6 +89,7 @@ class book:
         err_num += (self.mtype != book.mtype) * 256
         err_num += (self.where != book.where) * 512
         err_num += (self.owner != book.owner) * 1024
+        err_num += (self.rating != book.rating) * 2048
         return err_num
 
     def is_empty(self):
