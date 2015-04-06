@@ -124,10 +124,14 @@ class scanner:
     buff = self.text_view.get_buffer()
     buff.set_text(_("To begin press scan."))
     self.text_view.set_buffer(buff)
-    # This isn't really good enough but...
     if system == "Linux":
-      try: device = '/dev/video0'
-      except: device = '/dev/video1'
+      try:
+          for i in self.getVideoDevices(): # Get the first found device.
+              device = i[1]
+      except:
+        buff.set_text (_("Cannot find camera on this Operating system."))
+        self.text_view.set_buffer(buff)
+        return ## No video device
     elif system == "Windows":
       # TODO: Windows camera stuff.
       pass
@@ -215,8 +219,9 @@ class scanner:
     self.text_view.set_buffer(buff)
     del buff,proc
     
-  ''' To: Future me.   Do this whenever you are ready
+  ''' '''
   def getVideoDevices(self):
+      ''' Enumerate all connected video devices. '''
         videoDevices = []
         for dev in os.listdir("/dev/v4l/by-id"):
             try:
@@ -231,7 +236,7 @@ class scanner:
                 ])
             videoDevices.append(dev)
 
-  '''
+  
   
   def make_qr_code(self):
     '''
