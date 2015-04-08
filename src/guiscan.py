@@ -118,6 +118,7 @@ class scanner:
     ''' Do the scan, query the database and store the results.
     TODO: Need to find better way to enumerate cameras.
     TODO: Need to find how to do this on Windoze, gstreamer for both?
+    TODO: If we already have a book display its location.
     '''
     db_query = sql()
     device = None
@@ -158,12 +159,21 @@ class scanner:
     # hide the preview window
     proc.visible = False
     logging.info(proc.results)
+    del proc
+
     
     
 
     for symbol in proc.results:
       bar = symbol.data
       logging.info(bar)
+      # DONE Check if exists and increment book count if so.
+      count = db_query.get_book_count_by_isbn(bar)
+      logger.info(count)
+      self.getBookLocation(bar)
+      if count > 0:
+        buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
+        self.text_view.set_buffer(buff)
       if self.abook.webquery(bar) != 1:
         logging.info(self.abook.print_book())
         buff.set_text(self.abook.print_book())
@@ -209,19 +219,19 @@ class scanner:
           buff.set_text (_("Could not lookup DVD or CD on Amazon"))
           self.text_view.set_buffer(buff)
         #return
-        
-        
-    # DONE Check if exists and increment book count if so.
-    count = db_query.get_book_count_by_isbn(bar)
-    logger.info(count)
-    if count > 0:
-      buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
-    self.text_view.set_buffer(buff)
     del buff,proc
+
+  def getBookLocation(self):
+    location_string = None
+    result = get_location_by_isbn(isbn, self) # Could be multiple but unlikely
+    for row in result:
+      print row
+    
+    return location_string
     
   ''' '''
   def getVideoDevices(self):
-      ''' Enumerate all connected video devices. '''
+        ''' Enumerate all connected video devices. '''
         videoDevices = []
         for dev in os.listdir("/dev/v4l/by-id"):
             try:
