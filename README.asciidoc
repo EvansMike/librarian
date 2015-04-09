@@ -60,7 +60,7 @@ Sqlite is easier to set up but not so useful if you want to access the data from
 multiple computers.
 
 === QR Codes
-Everytime you scan a book a QRcode can be generated. You may not want this behaviour.
+Every time you scan a book a QRcode can be generated. You may not want this behaviour.
 BY default the behaviour is turned off in the config file.
 It seemed like a good idea at the time but I admit to never have used the 
 QRcodes for anything. :)
@@ -84,6 +84,9 @@ The sqlite2 database file is created from the database.schema.sql file with:
 ----
 ./mysql2sqlite3 --no-data  -p books | sqlite3 database_schema.db
 ----
+
+Bugs should be reported at: http://http://saxicola.ddns.me.uk/mantisbt
+
 
 === Update:  2012-04-12 
 You can now scan DVDs and CDs provided you have a Amazon web
