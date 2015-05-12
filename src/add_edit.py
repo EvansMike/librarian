@@ -64,7 +64,7 @@ class add_edit:
     self.city =  builder.get_object("entry6")
     scrolled_window =  builder.get_object("scrolledwindow1")
     logging.debug(scrolled_window)
-    self.abstract =  builder.get_object("textview_abtract") #TODO Want text box for this when GUI changes
+    self.abstract =  builder.get_object("textview_abtract") 
     logging.debug(self.abstract)
     self.mtype =  builder.get_object("entry8")
     self.copies = builder.get_object("entry9")
@@ -144,7 +144,7 @@ class add_edit:
       self.title.set_text(self.mybook.title)
       self.author.set_text(str(self.mybook.authors))
       textbuffer = self.mybook.abstract
-      abs_buffer.set_text(self.mybook.abstract) #TODO Want text box for this when GUI changes
+      abs_buffer.set_text(self.mybook.abstract) 
       self.mtype.set_text(self.mybook.mtype)
       self.publisher.set_text(self.mybook.publisher)
       self.city.set_text(self.mybook.city)
@@ -266,7 +266,7 @@ class add_edit:
     self.title.set_text(row['title'])
     abs_buffer = self.abstract.get_buffer()
     logging.debug(abs_buffer)
-    abs_buffer.set_text(row['abstract']) # TODO: Want text box for this when GUI changes
+    abs_buffer.set_text(row['abstract']) 
     if row['publisher'] != None: self.publisher.set_text(row['publisher'])
     if row['city'] != None: self.city.set_text(row['city'])
     if row['year'] != None: self.year.set_text(str(row['year']))
@@ -311,7 +311,7 @@ class add_edit:
     self.mybook.authors=self.author.get_text()
     textbuffer = self.abstract.get_buffer()
     startiter, enditer = textbuffer.get_bounds()  
-    self.mybook.abstract=textbuffer.get_text(startiter, enditer) # TODO: Want text box methods when gui changes
+    self.mybook.abstract=textbuffer.get_text(startiter, enditer) 
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city=self.city.get_text()
@@ -402,7 +402,7 @@ class add_edit:
     self.isbn.set_text('')
     self.author.set_text('')
     self.title.set_text('')
-    self.abstract.set_text('') # TODO Want text box methods when GUI chages
+    self.abstract.set_text('') 
     self.publisher.set_text('')
     self.city.set_text('')
     self.year.set_text('')
