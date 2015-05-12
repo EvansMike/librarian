@@ -35,8 +35,6 @@ import copy
 import gettext
 import datetime
 import getpass
-#from db_queries import mysql as sql # Make this choosable for mysql and sqlite
-# or
 from db_queries import sql as sql
 
 _ = gettext.gettext
