@@ -62,7 +62,7 @@ class add_edit:
     self.publisher =  builder.get_object("entry4")
     self.year =  builder.get_object("entry5")
     self.city =  builder.get_object("entry6")
-    self.abstract =  builder.get_object("entry7")
+    self.abstract =  builder.get_object("entry7") #TODO Want text box for this when GUI changes
     self.mtype =  builder.get_object("entry8")
     self.copies = builder.get_object("entry9")
     self.lent = builder.get_object("checkbutton1")
@@ -140,7 +140,7 @@ class add_edit:
       self.isbn.set_text(self.mybook.isbn)
       self.title.set_text(self.mybook.title)
       self.author.set_text(str(self.mybook.authors))
-      self.abstract.set_text(self.mybook.abstract)
+      self.abstract.set_text(self.mybook.abstract) #TODO Want text box for this when GUI changes
       self.mtype.set_text(self.mybook.mtype)
       self.publisher.set_text(self.mybook.publisher)
       self.city.set_text(self.mybook.city)
@@ -260,7 +260,7 @@ class add_edit:
     if row['isbn'] != None: self.isbn.set_text(row['isbn'])
     if row['author'] != None: self.author.set_text(row['author'])
     self.title.set_text(row['title'])
-    self.abstract.set_text(row['abstract'])
+    self.abstract.set_text(row['abstract']) # TODO: Want text box for this when GUI changes
     if row['publisher'] != None: self.publisher.set_text(row['publisher'])
     if row['city'] != None: self.city.set_text(row['city'])
     if row['year'] != None: self.year.set_text(str(row['year']))
@@ -303,7 +303,7 @@ class add_edit:
     self.mybook.isbn=self.isbn.get_text()
     self.mybook.title=self.title.get_text()
     self.mybook.authors=self.author.get_text()
-    self.mybook.abstract=self.abstract.get_text()
+    self.mybook.abstract=self.abstract.get_text() # TODO: Want text box methods when gui changes
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city=self.city.get_text()
@@ -394,7 +394,7 @@ class add_edit:
     self.isbn.set_text('')
     self.author.set_text('')
     self.title.set_text('')
-    self.abstract.set_text('')
+    self.abstract.set_text('') # TODO Want text box methods when GUI chages
     self.publisher.set_text('')
     self.city.set_text('')
     self.year.set_text('')
