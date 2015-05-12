@@ -143,7 +143,10 @@ class add_edit:
       self.isbn.set_text(self.mybook.isbn)
       self.title.set_text(self.mybook.title)
       self.author.set_text(str(self.mybook.authors))
-      self.abstract.set_text(self.mybook.abstract) #TODO Want text box for this when GUI changes
+      textbuffer = self.mybook.abstract
+      #abs_buffer = self.abstract.get_buffer()
+      #logging.debug(abs_buffer)
+      abs_buffer.set_text(self.mybook.abstract) #TODO Want text box for this when GUI changes
       self.mtype.set_text(self.mybook.mtype)
       self.publisher.set_text(self.mybook.publisher)
       self.city.set_text(self.mybook.city)
