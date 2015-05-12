@@ -144,8 +144,6 @@ class add_edit:
       self.title.set_text(self.mybook.title)
       self.author.set_text(str(self.mybook.authors))
       textbuffer = self.mybook.abstract
-      #abs_buffer = self.abstract.get_buffer()
-      #logging.debug(abs_buffer)
       abs_buffer.set_text(self.mybook.abstract) #TODO Want text box for this when GUI changes
       self.mtype.set_text(self.mybook.mtype)
       self.publisher.set_text(self.mybook.publisher)
