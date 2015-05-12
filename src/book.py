@@ -93,8 +93,9 @@ class book:
         return err_num
 
     def is_empty(self):
-        test =  self.isbn + self.authors + self.title + self.publisher + \
-        self.abstract + self.mtype + self.city +  self.mtype + str(self.where) + self.owner
+        test =  self.isbn + self.authors + self.title + self.publisher \
+            + self.abstract + self.mtype + self.city +  self.mtype + str(self.where) \
+            + self.owner + str(self.rating)
         if test == '': return True
         else: return False
 

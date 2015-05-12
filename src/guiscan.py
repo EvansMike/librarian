@@ -132,15 +132,17 @@ class scanner:
       except:
         buff.set_text (_("Cannot find camera on this Operating system."))
         self.text_view.set_buffer(buff)
+        del buff,proc
         return ## No video device
     elif system == "Windows":
-      # TODO: Windows camera stuff.
-      pass
+        # TODO: Windows camera stuff.
+        pass
     else:
-      # TODO: Write code for other systems.  Others can do this perhaps.
-      buff.set_text (_("Cannot find camera on this Operating system."))
-      self.text_view.set_buffer(buff)
-      return 
+        # TODO: Write code for other systems.  Others can do this perhaps.
+        buff.set_text (_("Cannot find camera on this Operating system."))
+        self.text_view.set_buffer(buff)
+        del buff,proc
+        return 
     # create a Processor
     proc = zbar.Processor()
     # configure the Processor
@@ -149,9 +151,10 @@ class scanner:
     # enable the preview window
     try: proc.init(device)
     except:
-      buff.set_text (_("No camera present!"))
-      self.text_view.set_buffer(buff)
-      return
+        buff.set_text (_("No camera present!"))
+        self.text_view.set_buffer(buff)
+        del buff,proc
+        return
     proc.visible = True
     # read at least one barcode (or until window closed)
     proc.process_one()
@@ -159,10 +162,6 @@ class scanner:
     # hide the preview window
     proc.visible = False
     logging.info(proc.results)
-    del proc
-
-    
-    
 
     for symbol in proc.results:
       bar = symbol.data
@@ -170,13 +169,18 @@ class scanner:
       # DONE Check if exists and increment book count if so.
       count = db_query.get_book_count_by_isbn(bar)
       logger.info(count)
-      self.getBookLocation(bar)
+      location = self.getBookLocation(bar)
       if count > 0:
-        buff.insert_at_cursor (_("\n\nYou already have " + str(count) + " in the database!\n"))
+        buff.insert_at_cursor (_("\n\nYou already have " \
+            + str(count) \
+            + " in the database!\n It's located at" \
+            + location \
+            + ".\n"))
         self.text_view.set_buffer(buff)
       if self.abook.webquery(bar) != 1:
         logging.info(self.abook.print_book())
         buff.set_text(self.abook.print_book())
+        del buff,proc
         return
       else: # Try for a DVD lookup
         buff.set_text (_("No data returned, retry?"))
@@ -184,6 +188,14 @@ class scanner:
         #logging.info(self.abook.print_book())
         buff.set_text (_("Searching for DVDs\n"))
         self.text_view.set_buffer(buff)
+        ''' This is broken, getting:
+        Traceback (most recent call last):
+          File "./guiscan.py", line 188, in on_button_scan_clicked
+            import amazonlookup
+          File "/home/mikee/Projects/librarian/src/amazonlookup.py", line 23, in <module>
+            import amazonproduct
+        ImportError: No module named amazonproduct
+
         try:
           import amazonlookup
           dvd_search = amazonlookup.DVDlookup()
@@ -218,14 +230,17 @@ class scanner:
           raise
           buff.set_text (_("Could not lookup DVD or CD on Amazon"))
           self.text_view.set_buffer(buff)
+          del buff,proc '''
         #return
     del buff,proc
 
-  def getBookLocation(self):
+  def getBookLocation(self, isbn):
+    db_query = sql()
     location_string = None
-    result = get_location_by_isbn(isbn, self) # Could be multiple but unlikely
+    result = db_query.get_location_by_isbn(isbn) # Could be multiple but unlikely
     for row in result:
       print row
+      location_string += row
     
     return location_string
     
