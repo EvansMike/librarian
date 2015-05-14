@@ -33,6 +33,7 @@ import gettext
 import lib_print
 import messages
 import getpass
+import csv
 #from db_queries import calibre
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
 # or 
@@ -345,8 +346,34 @@ class librarian:
   def treeview1_row_activated_cb(self, widget, path, col):
     self.on_button_query_clicked(None)
     
+  def on_button_export_clicked(self, widget):
+    '''
+    Export the entire database to CSV.  
+    from MySQL with a single command such as:
+    '''
+    filename = None
+    db_query = sql()
+    ext = gtk.FileFilter()
+    ext.add_pattern("*.csv")
+    dialog = gtk.FileChooserDialog("Save CSV as", None,gtk.FILE_CHOOSER_ACTION_SAVE, (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
+    dialog.set_filter(ext)
+    response = dialog.run()
+    if response == gtk.RESPONSE_OK:
+      filename = dialog.get_filename() 
+      print "Selected filepath: %s" % dialog.get_filename()
+    dialog.destroy()
+    logging.info(filename)
+    ## Now just export direct from the DB
+    result, numrows = db_query.get_all_books()
+    with open(filename, 'wb') as csvfile:
+        fieldnames = ["isbn","title", "author", "abstract","year", "publisher","rating,"]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, extrasaction='ignore')
+        writer.writeheader()
+        for book in result:
+            logging.debug(book)
+            writer.writerow(book)
+    return
     
-
   def gtk_main_quit(self, widget):
     # Quit when we destroy the GUI
     #if __name__ == "__main__":
