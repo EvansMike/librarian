@@ -1,3 +1,4 @@
+#!/bin/env python2
 ### setup.py ###
 
 #from setuptools import setup
