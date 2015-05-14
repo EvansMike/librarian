@@ -366,7 +366,7 @@ class librarian:
     ## Now just export direct from the DB
     result, numrows = db_query.get_all_books()
     with open(filename, 'wb') as csvfile:
-        fieldnames = ["isbn","title", "author", "abstract","year", "publisher","rating,"]
+        fieldnames = ["isbn","title", "author", "abstract","year", "publisher","rating"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames, extrasaction='ignore')
         writer.writeheader()
         for book in result:
