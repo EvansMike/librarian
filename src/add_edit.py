@@ -176,7 +176,7 @@ class add_edit:
       bid = row["borrower"]
       book_id = row["book"]
       self.o_date = row["o_date"]
-      logging.info(bid)
+      #logging.info(bid)
     if bid != 0:
       #logging.info(bid)
       if self.orig_book.id == book_id:
@@ -263,7 +263,7 @@ class add_edit:
     if row['author'] != None: self.author.set_text(row['author'])
     self.title.set_text(row['title'])
     abs_buffer = self.abstract.get_buffer()
-    logging.debug(abs_buffer)
+    #logging.debug(abs_buffer)
     abs_buffer.set_text(row['abstract']) 
     if row['publisher'] != None: self.publisher.set_text(row['publisher'])
     if row['city'] != None: self.city.set_text(row['city'])
