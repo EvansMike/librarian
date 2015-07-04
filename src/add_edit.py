@@ -368,8 +368,16 @@ class add_edit:
     ''' Remove selected book from database '''
     db_query = sql()
     #logging.info(str(self.mybook.id) + " about to be removed.")
+    dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_QUESTION,
+        gtk.BUTTONS_YES_NO, "Are you sure you want to delete this book?")
+    dlg_val = dialog.run()
+    logging.debug(dlg_val)
+    dialog.destroy()
+    del dialog
+    if dlg_val == -9:return
     db_query.remove_book(self.mybook.id)
     self.status.set_text (_(" Book has been removed."))
+    logging.info("Book has been removed.")
 
   def on_comboboxentry1_changed(self,widget):
     ''' Do things when selection is changed
@@ -400,11 +408,13 @@ class add_edit:
     self.isbn.set_text('')
     self.author.set_text('')
     self.title.set_text('')
-    self.abstract.set_text('') 
+    textbuffer = self.abstract.get_buffer()
+    textbuffer.set_text('') 
     self.publisher.set_text('')
     self.city.set_text('')
     self.year.set_text('')
     self.copies.set_text('')
+    self.lent_select.set_active(0)
     # Create a new empty book
     import book
     self.orig_book = book.book()

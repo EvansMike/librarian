@@ -400,11 +400,12 @@ class mysql:
     @param book.  A book object.
     @return Result of insert
     '''
-    book_count = self.get_book_count_by_isbn(book.isbn)
-    if book_count > 1:
-        self.cur.execute("UPDATE books SET copies = %s WHERE isbn = %s",(book_count+1,book.isbn) )
-        self.db.commit()
-        return  book_count
+    # Don't do this, just insert the book
+    #book_count = self.get_book_count_by_isbn(book.isbn)
+    #if book_count > 1:
+    #    self.cur.execute("UPDATE books SET copies = %s WHERE isbn = %s",(book_count+1,book.isbn) )
+    #    self.db.commit()
+    #    return  book_count
     self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
       year, publisher, city, copies, mtype, add_date, owner, rating) \
       VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
