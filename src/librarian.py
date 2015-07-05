@@ -49,7 +49,8 @@ logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(
 # Get system platform
 plat = sys.platform
 
-import version
+try:import version
+except:pass
 
 try:
   import pygtk
@@ -69,7 +70,11 @@ class splashScreen():
     import time
     #DONT connect 'destroy' event here!
     self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    self.version = "Version: " + version.__version__
+    try:
+        self.version = "Version: " + version.__version__
+    except:
+        self.version = "Version: devel."
+        pass
     self.window.set_title('LIBRARIAN')
     self.window.set_position(gtk.WIN_POS_CENTER)
     main_vbox = gtk.VBox(False, 3)
