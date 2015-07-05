@@ -50,8 +50,11 @@ logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(
 plat = sys.platform
 
 try:import version
-except:pass
-
+except:
+    vf = open('version.py','w')
+    vf.write("__version__ = \"devel\"\n")
+    vf.close()
+import version
 try:
   import pygtk
   pygtk.require("2.0")
@@ -70,11 +73,7 @@ class splashScreen():
     import time
     #DONT connect 'destroy' event here!
     self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    try:
-        self.version = "Version: " + version.__version__
-    except:
-        self.version = "Version: devel."
-        pass
+    self.version = "Version: " + version.__version__
     self.window.set_title('LIBRARIAN')
     self.window.set_position(gtk.WIN_POS_CENTER)
     main_vbox = gtk.VBox(False, 3)
@@ -100,7 +99,6 @@ class librarian:
   '''
   def __init__(self):
     splScr = splashScreen()
-
     print _("Version: "),version.__version__
     builder = gtk.Builder()
     self.gladefile = os.path.join(os.path.dirname(__file__),"ui/librarian.glade")
