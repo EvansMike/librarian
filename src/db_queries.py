@@ -31,6 +31,7 @@ string for each type.  Something to think about.
 
 TODO: If the sqlit3 db file doesn't exist we should create a db with it's schema.
 TODO: Update to suite new DB schema.
+TODO: Make sure all the functions do the same thing for mysql and sqlite storage.
 '''
 
 
@@ -295,7 +296,6 @@ class mysql:
     Get all of the books and return a list.
     
     '''
-    #command = "SELECT * FROM books WHERE copies > 0 order by author;"
     command = "SELECT *  FROM books b INNER JOIN books_to_authors ba ON (b.id = ba.book_id) \
     INNER JOIN book_authors a ON (ba.author_id = a.author_id) \
     WHERE copies > 0 \
@@ -400,12 +400,6 @@ class mysql:
     @param book.  A book object.
     @return Result of insert
     '''
-    # Don't do this, just insert the book
-    #book_count = self.get_book_count_by_isbn(book.isbn)
-    #if book_count > 1:
-    #    self.cur.execute("UPDATE books SET copies = %s WHERE isbn = %s",(book_count+1,book.isbn) )
-    #    self.db.commit()
-    #    return  book_count
     self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
       year, publisher, city, copies, mtype, add_date, owner, rating) \
       VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
