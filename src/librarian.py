@@ -73,6 +73,7 @@ class splashScreen():
     import time
     #DONT connect 'destroy' event here!
     self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    self.window.set_decorated(False)
     self.version = "Version: " + version.__version__
     self.window.set_title('LIBRARIAN')
     self.window.set_position(gtk.WIN_POS_CENTER)
