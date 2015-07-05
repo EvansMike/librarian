@@ -371,11 +371,22 @@ class mysql:
     logging.info(bid)
     self.cur.execute("SELECT * from borrowers where id = %s;", bid)
     return self.cur.fetchone()
+
+  def get_borrowing_history(self):
+    ''' Get all the books ever borrowed, by whome, when and for how long.
+    TODO; This properly.
+    '''
+    self.cur.execute ("SELECT borrows.id, title, author, name, o_date, i_date \
+                        FROM books, borrows, borrowers \
+                        WHERE books.id = borrows.book \
+                        AND borrows.borrower=borrowers.id  \
+                        AND name != 'tester' \
+                        ORDER BY o_date;")
+    return self.cur.fetchall()
     
   def search_books(self, search_string):
-    ''' 
+    '''
     Get books based on author and title search.
-    
     '''
     self.cur.execute("SELECT * FROM books WHERE title LIKE %s OR author LIKE %s", \
         [('%%%s%%' % search_string), ('%%%s%%' % search_string)])
