@@ -100,6 +100,7 @@ class book:
         else: return False
 
     def webquery(self,isbn):
+        if len(isbn) == 9: isbn = '0' + isbn 
         import book
         from biblio.webquery.xisbn import XisbnQuery
         import biblio.webquery
