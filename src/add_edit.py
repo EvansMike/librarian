@@ -389,10 +389,10 @@ class add_edit:
     bid = self.lentlist[foo][0]
     #logging.info(bid)
     if bid > 0:
-      self.add_button.set_label(_("Edit"))
+      self.add_button.set_label(_("EDIT"))
     else:
       self.lent.set_active(False)
-      self.add_button.set_label(_("Add"))
+      self.add_button.set_label(_("ADD"))
     # Get list of borrows for this book
     result = db_query.get_borrows(self.mybook.id,bid)
     #logging.info(result)
@@ -415,6 +415,9 @@ class add_edit:
     self.year.set_text('')
     self.copies.set_text('')
     self.lent_select.set_active(0)
+    #DEBUG(getpass.getuser())
+    self.book_owner.set_text(str(getpass.getuser())) # Assume the user is the book owner.
+  
     # Create a new empty book
     import book
     self.orig_book = book.book()
