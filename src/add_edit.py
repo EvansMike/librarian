@@ -148,6 +148,8 @@ class add_edit:
       self.city.set_text(self.mybook.city)
       self.year.set_text(self.mybook.year)
     except:
+      pass
+    if self.mybook.title == '':
       logging.info(_("No book found"))
       d = gtk.Dialog()
       d.add_buttons(gtk.STOCK_OK, 1)
