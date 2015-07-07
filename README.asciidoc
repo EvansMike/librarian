@@ -1,11 +1,11 @@
 == README FIRST
 
-Requires some flavour of Linux and Python > 2.7.  
+Requires some flavour of Linux and Python >= 2.7.  
 Windows users will have to figure out how it works themselves and edit 
 the code to suit.
 ....
 Also requires the python packages:
-biblio  
+biblio.webquery - For ISBN lookup  
 zbar  
 copy
 pygtk
@@ -16,6 +16,10 @@ sqlite3  - For sqlite database
 reportlab - For PDF report generation
 qrencode - For QR code generation
 ....
+
+Some of these can be installed by running:
+[source,bash]
+pip install -r requirements.txt
 
 Get the code with:
 [source,bash]
