@@ -3,8 +3,7 @@
 
 #from setuptools import setup
 try:
-    from src import version
-    
+    from src import version    
 except: # If we can't find it build it
     import os
     from subprocess import call

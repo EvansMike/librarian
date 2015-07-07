@@ -121,12 +121,21 @@ class book:
         except:
             return 1
 
+    def isbnlib_lookup(self, isbn,service='mcated'):
+        import isbnlib
+        data = isbnlib.meta(str(isbn))
+        #data['Abstract'] = isbnlib.desc(str(isbn))
+        return data
+
 # Test harness
 if __name__ == "__main__":
     abook = book()
-    abook.webquery("0140432914")
+    abook.webquery("0130104949")
     print abook.__dict__
     print
+    print abook.isbnlib_lookup("0130104949")
+    print
+    quit(1)
     abook.webquery("0130104949")
     #print abook.print_book()
     print abook.__dict__
