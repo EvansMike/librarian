@@ -127,6 +127,23 @@ class book:
         #data['Abstract'] = isbnlib.desc(str(isbn))
         return data
 
+    def get_abstract(self,isbn):
+        # TODO This
+        from .dev.webservice import query as wsquery
+        url = "https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn}"\
+          "&fields=items/volumeInfo(description)"\
+          "&maxResults=1".format(isbn=isbn)
+        content =  wsquery(url, user_agent="isbnlib (gzip)")
+        try:
+            content = loads(content)
+            content = content['items'][0]['volumeInfo']['description']
+            content = fill(content, width=75) if content else None
+            if content and cache is not None:     # pragma: no cover
+                cache[key] = content
+            return content
+        except KeyError:                          # pragma: no cover
+            return
+
 # Test harness
 if __name__ == "__main__":
     abook = book()
@@ -135,6 +152,10 @@ if __name__ == "__main__":
     print
     print abook.isbnlib_lookup("0130104949")
     print
+    abook.webquery("9780099478850")
+    print abook.__dict__
+    print
+    #abook.get_abstract("9780099478850")
     quit(1)
     abook.webquery("0130104949")
     #print abook.print_book()
