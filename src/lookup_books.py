@@ -9,42 +9,32 @@ import requests
 
 class BookLookup(object):
 
-    def retry(func):
-        ''' decorator function to retry'''
-        
-        def retried_func(*args, **kwargs):
-            MAX_TRIES = 3
-            tries = 0
-            while True:
-                resp = func(*args, **kwargs)
-                if resp.status_code != 200 and tries < MAX_TRIES:
-                    tries += 1
-                    continue
-                break
-            return resp
-        return retried_func
-
-    def google_desc(self, isbn):
-        url = "https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn}"\
-          "&fields=items/volumeInfo(description)"\
-          "&maxResults=1".format(isbn=isbn)
-        r = None
-        while True:
+    def get_response(self, url):
+        ''' Get and test the response.
+        @param The url of the request.
+        @return The response.
+        '''
+        retries = 3 # Try this mnay times
+        while retries:
             r = requests.get(url)
             if r.status_code == 200:
-                break
+                return r
+            retries -= 1
+        return None
+    
+    def google_desc(self, isbn):
+        url = "https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn} \
+          &fields=items/volumeInfo(description)\
+          &maxResults=1".format(isbn=isbn)
+        r = self.get_response(url)
         content = r.json()
         return content['items'][0]['volumeInfo']['description'].encode('utf8')
     
-    #@retry
     def xisbn(self, isbn):
-        url = 'http://xisbn.worldcat.org/webservices/xid/isbn/{isbn}?'\
-        'method=getMetadata&format=json&fl=title,author,year,publisher,lang,city'.format(isbn=isbn)
-        r = None
-        while True:
-            r = requests.get(url)
-            if r.status_code == 200:
-                break
+        url = "http://xisbn.worldcat.org/webservices/xid/isbn/{isbn}? \
+        method=getMetadata&format=json&fl=title,author,year,publisher,lang,city".format(isbn=isbn)
+        r = self.get_response(url)
+        if not r: return None
         content = r.json()
         content = content['list'][0]
         book = {}
@@ -58,7 +48,7 @@ class BookLookup(object):
         book['year'] = content['year']
         book['language'] = content['lang']
         book['edited'] = ''
-        book['type'] = ''
+        book['type'] = 'book'
         book['abstract'] = self.google_desc(isbn)
         return book
 
