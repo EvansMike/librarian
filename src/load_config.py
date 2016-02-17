@@ -64,6 +64,7 @@ class load_config:
       parser.add_section('database')
       parser.add_section('calibre')
       parser.add_section('qr_code')
+      parser.add_section('amazon_aws')
       parser.set('database', 'USER', 'username')
       parser.set('database', 'PASSWD', 'password')
       parser.set('database', 'DB', 'db_name')
