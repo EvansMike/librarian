@@ -118,6 +118,7 @@ class book:
               self.city=(nn.city)
               self.year=(nn.year)
               self.edited=(nn.edited)
+              self.abstract = self.get_abstract(isbn)
         except:
             return 1
 
@@ -128,21 +129,18 @@ class book:
         return data
 
     def get_abstract(self,isbn):
-        # TODO This
-        from .dev.webservice import query as wsquery
+        import json
+        from isbnlib.dev.webservice import query as wsquery
         url = "https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn}"\
           "&fields=items/volumeInfo(description)"\
           "&maxResults=1".format(isbn=isbn)
         content =  wsquery(url, user_agent="isbnlib (gzip)")
         try:
-            content = loads(content)
-            content = content['items'][0]['volumeInfo']['description']
-            content = fill(content, width=75) if content else None
-            if content and cache is not None:     # pragma: no cover
-                cache[key] = content
-            return content
+            jc = json.loads(content)
+            desc = str(jc['items'][0]['volumeInfo']['description'])
+            return desc
         except KeyError:                          # pragma: no cover
-            return
+            return None
 
 # Test harness
 if __name__ == "__main__":

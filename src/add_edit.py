@@ -142,8 +142,9 @@ class add_edit:
           self.isbn.set_text(self.mybook.isbn)
       self.title.set_text(self.mybook.title)
       self.author.set_text(str(self.mybook.authors))
-      textbuffer = self.mybook.abstract
-      abs_buffer.set_text(self.mybook.abstract) 
+      abs_buffer = self.abstract.get_buffer()
+      abs_buffer.set_text(self.mybook.abstract)
+      logging.info(self.mybook.abstract) 
       self.mtype.set_text(self.mybook.mtype)
       self.publisher.set_text(self.mybook.publisher)
       self.city.set_text(self.mybook.city)
