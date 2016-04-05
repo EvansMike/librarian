@@ -138,7 +138,8 @@ class add_edit:
     try:
       logging.info(self.isbn.get_text())
       self.mybook.webquery(self.isbn.get_text())
-      self.isbn.set_text(self.mybook.isbn)
+      if self.mybook.isbn != "":
+          self.isbn.set_text(self.mybook.isbn)
       self.title.set_text(self.mybook.title)
       self.author.set_text(str(self.mybook.authors))
       textbuffer = self.mybook.abstract
