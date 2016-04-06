@@ -91,7 +91,7 @@ class scanner:
 
   '''
   def __init__(self):
-    self.abook = book.book()
+    self.abook = book.Book()
     qr_img = ""
     #vid_dev = "/dev/video0" # Need to scan for this and make it work in windows?
     builder = gtk.Builder()

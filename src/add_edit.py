@@ -76,8 +76,8 @@ class add_edit:
     self.rating_select.set_model(self.rating_liststore)
     self.where = ""
     self.add_date = False # builder.get_object("comboboxentry1") #To be added to GUI
-    self.mybook = book.book()
-    self.orig_book = book.book()
+    self.mybook = book.Book()
+    self.orig_book = book.Book()
     self.status = builder.get_object("label_status")
     self.lent_date = builder.get_object("b_date")
     self.location_dropdown = builder.get_object("combobox_location")
@@ -424,7 +424,7 @@ class add_edit:
   
     # Create a new empty book
     import book
-    self.orig_book = book.book()
+    self.orig_book = book.Book()
     self.mybook = copy.copy(self.orig_book)
     self.populate_borrowers()
     self.populate_locations()

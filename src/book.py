@@ -25,7 +25,7 @@ import datetime
 import getpass
 
 
-class book:
+class Book:
     ''' Define book properties here '''
     def __init__(self):
         self.id = ''
@@ -100,50 +100,32 @@ class book:
         else: return False
 
     def webquery(self,isbn):
-        if len(isbn) == 9: isbn = '0' + isbn 
-        import book
-        from biblio.webquery.xisbn import XisbnQuery
-        import biblio.webquery
-        a = XisbnQuery()
-        try:
-              abook = a.query_bibdata_by_isbn(isbn)
-              nn = abook.pop()
-              self.id=nn.id
-              self.isbn=nn.id
-              self.title=nn.title
-              self.authors=(str(nn.authors)).replace('[','').replace(']','')
-              self.abstract=(nn.abstract)
-              self.mtype=nn.type
-              self.publisher=(nn.publisher)
-              self.city=(nn.city)
-              self.year=(nn.year)
-              self.edited=(nn.edited)
-              self.abstract = self.get_abstract(isbn)
-        except:
-            return 1
-
+        data = self.lookup(isbn)
+        self.abstract = data['abstract']
+        self.id = data['id']
+        self.isbn = data['isbn']
+        self.title = data['title']
+        self.authors = data['authors']
+        self.mtype = data['type']
+        self.publisher = data['publisher']
+        self.city = data['city']
+        self.year = data['year']
+        self.edited = data['edited']
+        
     def lookup(self, isbn):
         import lookup_books
         lookup = lookup_books.BookLookup()
         data = lookup.xisbn(str(isbn))
         return data
-
-    def get_abstract(self,isbn):
-        import json
-        from isbnlib.dev.webservice import query as wsquery
-        url = "https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn}"\
-          "&fields=items/volumeInfo(description)"\
-          "&maxResults=1".format(isbn=isbn)
-        content =  wsquery(url, user_agent="isbnlib (gzip)")
-        try:
-            jc = json.loads(content)
-            desc = str(jc['items'][0]['volumeInfo']['description'])
-            return desc
-        except KeyError:                          # pragma: no cover
-            return None
+########### END CLASS book ################
 
 # Test harness
 if __name__ == "__main__":
     abook = book() 
-    print abook.lookup("1565924339")
+    abook.webquery("1565924339")
+    print abook.__dict__
+    print ""
+    abook.webquery("0130104949")
+    print abook.__dict__
+
     del abook
