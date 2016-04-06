@@ -105,9 +105,9 @@ class Book:
         self.id = data['id']
         self.isbn = data['isbn']
         self.title = data['title']
-        self.authors = data['authors']
+        self.authors = str(data['authors'][0])
         self.mtype = data['type']
-        self.publisher = data['publisher']
+        self.publisher = str(data['publisher'])
         self.city = data['city']
         self.year = data['year']
         self.edited = data['edited']
@@ -121,11 +121,14 @@ class Book:
 
 # Test harness
 if __name__ == "__main__":
-    abook = book() 
+    abook = Book() 
     abook.webquery("1565924339")
     print abook.__dict__
     print ""
     abook.webquery("0130104949")
     print abook.__dict__
-
+    print ""
+    abook.webquery("057109659X")
+    print abook.__dict__
+    print ""
     del abook
