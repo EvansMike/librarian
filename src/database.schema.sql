@@ -27,7 +27,7 @@ CREATE TABLE `authors` (
   `name` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`(50))
-) ENGINE=MyISAM AUTO_INCREMENT=255 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=270 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `book_authors` (
   `author_first` text,
   PRIMARY KEY (`author_id`),
   UNIQUE KEY `book_authors_unique_idx` (`author_last`(10),`author_first`(10))
-) ENGINE=InnoDB AUTO_INCREMENT=3531 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3605 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,8 +73,10 @@ CREATE TABLE `books` (
   `price` decimal(10,2) DEFAULT NULL,
   `borrower_id` int(11) DEFAULT NULL,
   `owner` varchar(60) DEFAULT NULL,
+  `rating` int(11) DEFAULT '0',
+  `value` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=795 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=934 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +107,7 @@ CREATE TABLE `borrowers` (
   `contact` text,
   `notes` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +124,7 @@ CREATE TABLE `borrows` (
   `book` int(11) NOT NULL,
   `borrower` int(11) NOT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=146 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,7 +218,7 @@ CREATE TABLE `locations` (
   `room` text,
   `shelf` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,21 +233,6 @@ CREATE TABLE `mtype` (
   `type` text,
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `qrcodes`
---
-
-DROP TABLE IF EXISTS `qrcodes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `qrcodes` (
-  `idpic` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `caption` varchar(45) NOT NULL,
-  `img` longblob NOT NULL,
-  PRIMARY KEY (`idpic`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,4 +257,4 @@ CREATE TABLE `rating` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-12 13:33:04
+-- Dump completed on 2016-07-18 14:38:23
