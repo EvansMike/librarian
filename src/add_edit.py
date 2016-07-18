@@ -82,8 +82,12 @@ class add_edit:
     self.lent_date = builder.get_object("b_date")
     self.location_dropdown = builder.get_object("combobox_location")
     self.location_liststore = builder.get_object("liststore_locations")
+   
     self.location_dropdown.set_model(self.location_liststore)
     self.location_dropdown.set_text_column(1)
+
+    self.values_dropdown = builder.get_object("comboboxentry_value")
+    self.values_liststore = builder.get_object("liststore_values")
 
     self.lent_select.set_model( self.lentlist)
     self.lent_select.set_text_column(1)
@@ -223,6 +227,12 @@ class add_edit:
         return
       n += 1
 
+  def populate_values(self):
+      for value in book.Book.values:
+        logging.debug(value)
+        self.values_liststore.append([value])
+      
+
   def set_location(self):
     '''
     Set the book's location
@@ -301,6 +311,7 @@ class add_edit:
     self.populate_borrowers()
     self.populate_locations()
     self.populate_rating(row['rating'])
+    self.populate_values()
 
 
   def update_book(self):
