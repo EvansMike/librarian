@@ -130,10 +130,6 @@ class sqlite:
   def get_book_count_by_isbn(self, bar):
     self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = '%s';" % bar)
     return  self.cur.fetchone()[0]
-  
-  def get_qrcode_count(self, isbn):
-    self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = '%s';" % "ISBN: "+str(isbn))
-    return self.cur.fetchone()
     
   def get_borrowed_books(self):
     ''' 
