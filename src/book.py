@@ -24,8 +24,9 @@
 import datetime
 import getpass
 
-
-class Book:
+ 
+class Book(object):
+    values = ['normal', 'scarce', 'rare', 'v_rare', 'valuable', '1st edition']
     ''' Define book properties here '''
     def __init__(self):
         self.id = ''
@@ -47,6 +48,7 @@ class Book:
         self.borrower_id = None
         self.owner = getpass.getuser() # Assume owner is current logged in person
         self.rating = 0 # Stars out of 5?
+        self.value = self.values[0]; # Assume lowest value class
 
     def print_book(self):
         ## Return some book details as a string for printing.  Mostly a debug thing.
