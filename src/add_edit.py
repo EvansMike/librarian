@@ -120,8 +120,10 @@ class add_edit:
       dialog.destroy()
       del dialog
       self.on_destroy(widget)
-      if dlg_val == -9: # yes
+      if dlg_val == gtk.RESPONSE_YES:
+        logging.info("Saving changes");  
         self.update_book()
+        self.update_db()
       else: #no
         self.on_button_update_clicked(widget)
         self.on_destroy(widget)
@@ -229,8 +231,9 @@ class add_edit:
 
   def populate_values(self):
       for value in book.Book.values:
-        logging.debug(value)
+        #logging.debug(value)
         self.values_liststore.append([value])
+        self.values_dropdown.set_active(self.orig_book.value)
       
 
   def set_location(self):
@@ -287,6 +290,7 @@ class add_edit:
     self.copies.set_text(str(row['copies']))
 
     # Populate a book object
+    self.orig_book.value = row['value']
     self.orig_book.isbn =row['isbn']
     self.orig_book.id = row['id']
     self.orig_book.authors = row['author']
@@ -331,6 +335,7 @@ class add_edit:
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.owner=self.book_owner.get_text()
     self.mybook.rating = self.rating_select.get_active()
+    self.mybook.value = self.values_dropdown.get_active()
     #logging.debug(self.mybook.rating)
     #logging.debug(self.rating_select.get_active())
     self.set_location()

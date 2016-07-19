@@ -441,10 +441,10 @@ class mysql:
   
   def update_book(self, book, bid):
     self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \
-          year = %s, publisher = %s, city = %s,mtype = %s, owner = %s, location = %s, rating = %s\
-          WHERE id = %s", \
+          year = %s, publisher = %s, city = %s,mtype = %s, owner = %s, location = %s, rating = %s,\
+          value = %s WHERE id = %s", \
           (book.title, book.authors, book.abstract,book.year,book.publisher, \
-          book.city, book.mtype, book.owner, book.where, book.rating, bid))
+          book.city, book.mtype, book.owner, book.where, book.rating, book.value, bid))
     self.db.commit()
         
   def update_book_location(self, bid, location):
