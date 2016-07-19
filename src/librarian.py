@@ -164,9 +164,10 @@ class librarian:
     try:
       from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT
       from reportlab.lib.pagesizes import A4
-      from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
+      from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle,KeepTogether
       from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
       from reportlab.lib.units import mm
+      
     except ImportError, e:
       messages.pop_info(e)
       return
@@ -188,10 +189,10 @@ class librarian:
           row.append(Paragraph(model.get_value(myiter, 9),styles["Normal"]))
           row.append(Paragraph(model.get_value(myiter, 1),styles["Normal"]))
           row.append(Paragraph(model.get_value(myiter, 2),styles["Normal"]))
-          row.append(Paragraph(model.get_value(myiter, 3),styles["Normal"]))
+          #row.append(Paragraph(model.get_value(myiter, 3),styles["Normal"]))
           myiter = model.iter_next(myiter)
         data.append(row)
-      t=Table(data,[50,150,250,120]) # Values are cell widths
+      t=Table(data,[50,180,250]) # Values are cell widths
       t.hAlign='LEFT' # Move WHOLE TABLE to the left, defaults to CENTRE
       t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP')])) # Apples to CELLS
       Story.append(t)
