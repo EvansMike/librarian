@@ -19,13 +19,13 @@
 
 A (in)complete home book collection manager.
 '''
-
+from __future__ import absolute_import
 import os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.pardir))
 import copy
 import MySQLdb
 import MySQLdb.cursors
-import sys,os
+import sys, os
 import logging
 import book
 import locale
@@ -34,6 +34,7 @@ import lib_print
 import messages
 import getpass
 import csv
+
 #from db_queries import calibre
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
 # or 
@@ -49,7 +50,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(
 # Get system platform
 plat = sys.platform
 
-try:import version
+try: import version
 except:
     vf = open('version.py','w')
     vf.write("__version__ = \"devel\"\n")
@@ -63,7 +64,7 @@ except:
 try:
   import gtk
 except:
-  print _("GTK Not Availible")
+  print(_("GTK Not Availible"))
   sys.exit(1)
 
 NULL, ALL, BORROWED = range(3)
@@ -100,7 +101,7 @@ class librarian:
   '''
   def __init__(self):
     splScr = splashScreen()
-    print _("Version: "),version.__version__
+    print (_("Version: "),version.__version__)
     builder = gtk.Builder()
     self.gladefile = os.path.join(os.path.dirname(__file__),"ui/librarian.glade")
     builder.add_from_file(self.gladefile)
@@ -267,7 +268,7 @@ class librarian:
         e_books = calibre.calibre()
         self.booklist, num_ebooks = e_books.insert_data2(self.booklist)
       except:
-        print "Cannot find any e-books.\n"
+        print ("Cannot find any e-books.\n")
         pass # Do nothing if it's not available.
       self.status1.set_text("Book count = " + str(numrows) + ". E-book count = " +  str(num_ebooks))
     elif selection == BORROWED:
@@ -365,7 +366,7 @@ class librarian:
     response = dialog.run()
     if response == gtk.RESPONSE_OK:
       filename = dialog.get_filename() 
-      print "Selected filepath: %s" % dialog.get_filename()
+      print("Selected filepath: %s" % dialog.get_filename())
     dialog.destroy()
     logging.info(filename)
     ## Now just export direct from the DB
