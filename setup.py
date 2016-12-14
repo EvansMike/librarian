@@ -1,7 +1,7 @@
 #!/bin/env python2
 ### setup.py ###
 
-#from setuptools import setup
+from setuptools import setup
 try:
     from src import version    
 except: # If we can't find it build it
