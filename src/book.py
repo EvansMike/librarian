@@ -125,7 +125,7 @@ class Book(object):
 # Test harness
 if __name__ == "__main__":
     abook = Book() 
-    abook.webquery("1565924339")
+    abook.webquery("9780241146507")
     print abook.__dict__
     print ""
     abook.webquery("0130104949")

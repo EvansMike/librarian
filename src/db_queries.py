@@ -327,7 +327,7 @@ class mysql:
     self.cur.execute ("select * from  books, borrows  where  (books.owner!=%s \
     AND books.borrower_id IS NULL) \
     OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
-    GROUP BY books.id;", 	(user,))
+    GROUP BY books.id;",  (user,))
     return self.cur.fetchall()
     
   def get_borrowed_book_by_id(self, bid):
@@ -481,7 +481,7 @@ class mysql:
     ''' remove a book/copy from the db.  This just decrements the copy 
     counter until copies = 0 then we remove the entry completely.
     '''
-    self.cur.execute("UPDATE books set copies = copies-1 WHERE id = %s;",bid)
+    self.cur.execute("UPDATE books set copies = copies-1 WHERE id = %s;",(bid,))
     self.cur.execute("DELETE FROM books WHERE copies=0;")
     
   def add_location(self, room, shelf):
