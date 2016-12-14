@@ -46,16 +46,15 @@ class BookLookup(object):
         book['title'] = content['title']
         buf = content['author']
         book['authors'] = [x.strip('. ') for x in buf.split(';')]
+        book['year'] = content['year']
         try:
             book['publisher'] = content['publisher']
             book['city'] = content['city']
-            book['year'] = content['year']
             book['language'] = content['lang']
             book['edited'] = ''
         except:
             book['publisher'] = ''
             book['city'] = ''
-            book['year'] = ''
             book['language'] = ''
             book['edited'] = ''
             pass

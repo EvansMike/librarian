@@ -301,7 +301,7 @@ class mysql:
   
   
   def get_book_count_by_isbn(self, bar):
-    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;" , bar)
+    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;" , (bar,))
     return  int (self.cur.fetchone()['count'])
   
   def get_book_borrower_by_book_id(self,bid):
@@ -331,12 +331,12 @@ class mysql:
     return self.cur.fetchall()
     
   def get_borrowed_book_by_id(self, bid):
-    self.cur.execute("select * FROM  borrows where i_date is null and borrows.book=%s", bid)
+    self.cur.execute("select * FROM  borrows where i_date is null and borrows.book=%s", (bid,))
     return self.cur.fetchone()
     return 
     
   def get_borrower_by_id(self, bid):
-    self.cur.execute("select * FROM  borrows where id = %s;",bid)
+    self.cur.execute("select * FROM  borrows where id = %s;",(bid,))
     return self.cur.fetchone()
    
   def get_borrowers_borrowed_books(self):
@@ -365,7 +365,7 @@ class mysql:
   
   def get_one_borrower(self,bid):
     logging.info(bid)
-    self.cur.execute("SELECT * from borrowers where id = %s;", bid)
+    self.cur.execute("SELECT * from borrowers where id = %s;", (bid,))
     return self.cur.fetchone()
 
   def get_borrowing_history(self):
@@ -400,7 +400,7 @@ class mysql:
     Insert author(s) ensuring uniqueness.
     
     '''
-    return self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", authors) 
+    return self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", (authors,)) 
     
   def insert_book_object(self, book):
     ''' Insert a book's details directly from a book object
