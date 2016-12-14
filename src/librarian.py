@@ -19,7 +19,6 @@
 
 A (in)complete home book collection manager.
 '''
-from __future__ import absolute_import
 import os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.pardir))
 import copy
