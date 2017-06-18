@@ -92,7 +92,6 @@ setup (
       package_data={'librarian': ['po/*', 'ui/*','librarian.png']},
       scripts=['bin/librarian'],
       install_requires=[
-          'biblio.webquery',
           'zbar',
       ],
       cmdclass=cmdclass
