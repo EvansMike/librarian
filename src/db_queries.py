@@ -398,7 +398,8 @@ class mysql:
   def insert_unique_author(self, authors):
     '''
     Insert author(s) ensuring uniqueness.
-    
+    This just emits a warning about Duplicate entry if it fails.
+    This should probably be caught and dealt with.
     '''
     return self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", (authors,)) 
     
