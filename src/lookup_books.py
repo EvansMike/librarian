@@ -3,7 +3,7 @@
 
 import requests
 import json
-#import logging
+import logging
 #logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
 #DEBUG = logging.debug
 
@@ -39,7 +39,7 @@ class BookLookup(object):
         content = r.json()
         
         content = content['list'][0]
-        print (content)
+        #print(content)
         book = {}
         book['isbn'] = isbn
         book['id'] = isbn
@@ -47,25 +47,33 @@ class BookLookup(object):
         buf = content['author']
         book['authors'] = [x.strip('. ') for x in buf.split(';')]
         book['year'] = content['year']
+        book['city'] = ''
+        book['publisher'] = ''
+        book['abstract'] = ''
+        book['language'] = ''
+        book['edited'] = ''
+        try:
+            book['city'] = content['city']
+        except:
+            pass
         try:
             book['publisher'] = content['publisher']
-            book['city'] = content['city']
+        except:pass
+        try:
             book['language'] = content['lang']
             book['edited'] = ''
         except:
-            book['publisher'] = ''
-            book['city'] = ''
-            book['language'] = ''
-            book['edited'] = ''
             pass
         book['type'] = 'book'
-        book['abstract'] = self.google_desc(isbn)
+        try:
+            book['abstract'] = self.google_desc(isbn)
+        except:pass
         return book
 
 
 if __name__ == '__main__':
     lookup = BookLookup()
-    data = lookup.xisbn("9780241146507")
-    #print data
+    data = lookup.xisbn("0130104949")
+    print data
     #data = lookup.xisbn("1565924339")
     #print data
