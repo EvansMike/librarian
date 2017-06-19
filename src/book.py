@@ -103,7 +103,7 @@ class Book(object):
         else: return False
 
     def webquery(self,isbn):
-        data = self.lookup(isbn)
+        data = self.lookup(isbn) # This returns a book, why am I re-assigning the data?
         self.abstract = data['abstract']
         self.id = data['id']
         self.isbn = data['isbn']
