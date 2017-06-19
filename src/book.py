@@ -103,35 +103,26 @@ class Book(object):
         else: return False
 
     def webquery(self,isbn):
-        data = self.lookup(isbn) # This returns a book, why am I re-assigning the data?
-        self.abstract = data['abstract']
-        self.id = data['id']
-        self.isbn = data['isbn']
-        self.title = data['title']
-        self.authors = str(data['authors'][0])
-        self.mtype = data['type']
-        self.publisher = str(data['publisher'])
-        self.city = data['city']
-        self.year = data['year']
-        self.edited = data['edited']
+        book = self.lookup(isbn)
+        return book
         
     def lookup(self, isbn):
         import lookup_books
         lookup = lookup_books.BookLookup()
         data = lookup.xisbn(str(isbn))
         return data
+        
 ########### END CLASS book ################
 
 # Test harness
 if __name__ == "__main__":
-    abook = Book() 
-    abook.webquery("9780241146507")
+    abook = Book().webquery("9780241146507")
     print abook.__dict__
     print ""
-    abook.webquery("0130104949")
+    abook = abook.webquery("0130104949")
     print abook.__dict__
     print ""
-    abook.webquery("057109659X")
+    abook = abook.webquery("057109659X")
     print abook.__dict__
     print ""
     del abook

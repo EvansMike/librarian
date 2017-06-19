@@ -39,41 +39,33 @@ class BookLookup(object):
         content = r.json()
         
         content = content['list'][0]
-        #print(content)
-        book = {}
-        book['isbn'] = isbn
-        book['id'] = isbn
-        book['title'] = content['title']
-        buf = content['author']
-        book['authors'] = [x.strip('. ') for x in buf.split(';')]
-        book['year'] = content['year']
-        book['city'] = ''
-        book['publisher'] = ''
-        book['abstract'] = ''
-        book['language'] = ''
-        book['edited'] = ''
+        import book
+        book = book.Book()
+        book.isbn = isbn
+        book.id = isbn
+        book.title = content['title']
+        buf = str(content['author'])
+        book.authors = [x.strip('. ') for x in buf.split(';')]
+        book.year = content['year']
         try:
-            book['city'] = content['city']
-        except:
-            pass
+            book.city = content['city']
+        except: pass
         try:
-            book['publisher'] = content['publisher']
-        except:pass
+            book.publisher = str(content['publisher'])
+        except: pass
         try:
-            book['language'] = content['lang']
-            book['edited'] = ''
-        except:
-            pass
-        book['type'] = 'book'
+            book.language = content['lang']
+        except: pass
+        book.type = 'book'
         try:
-            book['abstract'] = self.google_desc(isbn)
-        except:pass
+            book.abstract = self.google_desc(isbn)
+        except: pass
         return book
 
 
 if __name__ == '__main__':
     lookup = BookLookup()
-    data = lookup.xisbn("0130104949")
-    print data
-    #data = lookup.xisbn("1565924339")
-    #print data
+    book = lookup.xisbn("0130104949")
+    print book.__dict__
+    #book = lookup.xisbn("1565924339")
+    #print book.__dict__
