@@ -150,7 +150,6 @@ class add_edit:
       self.author.set_text(str(self.mybook.authors))
       abs_buffer = self.abstract.get_buffer()
       abs_buffer.set_text(self.mybook.abstract)
-      logging.info(self.mybook.abstract) 
       self.mtype.set_text(self.mybook.mtype)
       self.publisher.set_text(self.mybook.publisher)
       self.city.set_text(self.mybook.city)
@@ -286,6 +285,7 @@ class add_edit:
     if row['city'] != None: self.city.set_text(row['city'])
     if row['year'] != None: self.year.set_text(str(row['year']))
     if row['owner'] != None: self.book_owner.set_text(str(row['owner']))
+    if row['add_date'] != None: self.add_date.set_text(str(row['add_date']))
     self.mtype.set_text(str(row['mtype']))
     self.copies.set_text(str(row['copies']))
 
