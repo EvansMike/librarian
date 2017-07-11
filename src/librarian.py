@@ -396,7 +396,7 @@ class LibrarianTest(TestCase):
     def setUp(self):
         self.l = librarian()
         
-    def test_book(self):
+    def test_startup(self):
         pass
 
 
