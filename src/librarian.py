@@ -387,17 +387,6 @@ class librarian:
 
 
 #################### END librarian #####################################
-# Test harness
-# Invoke with: python -m unittest librarian.LibrarianTest
-
-from unittest import TestCase, main
-class LibrarianTest(TestCase):
-
-    def setUp(self):
-        self.l = librarian()
-        
-    def test_startup(self):
-        pass
 
 
 
@@ -405,4 +394,21 @@ class LibrarianTest(TestCase):
 if __name__ == "__main__":
   app = librarian()
   gtk.main()
+  quit(0)
   
+  
+# Test harness
+# Invoke with: python -m unittest librarian
+
+from unittest import TestCase, main
+class LibrarianTest(TestCase):
+        
+    def test_startup(self):
+        self.l = librarian()
+        pass
+        
+    def test_monkeys(self): # A failing test
+        print "Monkeys"
+        self.assertEqual(1,2)
+        pass
+        
