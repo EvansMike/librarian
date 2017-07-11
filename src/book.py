@@ -115,7 +115,24 @@ class Book(object):
 ########### END CLASS book ################
 
 # Test harness
+from unittest import TestCase, main
+class MyBookTest(TestCase):
+
+    def setUp(self):
+        self.abook = Book()
+        
+    def test_book(self):
+      book = self.abook.webquery("9780241146507")
+      print book.__dict__
+      self.assertEqual(book.id,"9780241146507")
+    
+
+
+
+'''
+# Test harness
 if __name__ == "__main__":
+    main()
     abook = Book().webquery("9780241146507")
     print abook.__dict__
     print ""
@@ -126,3 +143,4 @@ if __name__ == "__main__":
     print abook.__dict__
     print ""
     del abook
+'''

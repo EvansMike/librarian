@@ -154,7 +154,7 @@ class librarian:
     
     self.get_book_list(1)
     splScr.window.destroy()
-    gtk.main()
+
     
   def on_button_print_clicked(self, widget):
     '''Print the entire book list to pdf then opens the default pdf viewer.
@@ -387,9 +387,22 @@ class librarian:
 
 
 #################### END librarian #####################################
+# Test harness
+# Invoke with: python -m unittest librarian.LibrarianTest
+
+from unittest import TestCase, main
+class LibrarianTest(TestCase):
+
+    def setUp(self):
+        self.l = librarian()
+        
+    def test_book(self):
+        pass
+
+
 
 ''' Run main if called directly.'''
-if __name__ == "__main__": 
+if __name__ == "__main__":
   app = librarian()
   gtk.main()
-
+  
