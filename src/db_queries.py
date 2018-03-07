@@ -324,7 +324,7 @@ class mysql:
     '''
     import getpass
     user = getpass.getuser()
-    self.cur.execute ("select * from  books, borrows  where  (books.owner!=%s \
+    self.cur.execute ("select author, title, owner, borrowers.name abstract from  books, borrows, borrowers  where  (books.owner!=%s \
     AND books.borrower_id IS NULL) \
     OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
     GROUP BY books.id;",  (user,))
