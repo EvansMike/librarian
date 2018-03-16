@@ -33,6 +33,7 @@ import lib_print
 import messages
 import getpass
 import csv
+import argparse 
 
 #from db_queries import calibre
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
@@ -68,6 +69,10 @@ except:
   sys.exit(1)
 
 NULL, ALL, BORROWED = range(3)
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--export', action='store_true', help='Export the books as a CSV file.')
+parser.add_argument('--version', action='version', version=version.__version__)
 
 class splashScreen():
   def __init__(self):
@@ -155,7 +160,11 @@ class librarian:
     
     self.get_book_list(1)
     splScr.window.destroy()
-    gtk.main()
+    #gtk.main()
+
+
+  def export_csv(self):
+    return
     
   def on_button_print_clicked(self, widget):
     '''Print the entire book list to pdf then opens the default pdf viewer.
@@ -390,7 +399,13 @@ class librarian:
 #################### END librarian #####################################
 
 ''' Run main if called directly.'''
-if __name__ == "__main__": 
-  app = librarian()
-  gtk.main()
+if __name__ == "__main__":
+    args = parser.parse_args()
+    if args.export:
+        print "I is exporting yo shit to a CSV."
+        app = librarian()
+        app.export_csv()
+        quit(0)
+    app = librarian()
+    gtk.main()
 
