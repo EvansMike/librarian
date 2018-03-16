@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.24-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.35, for Linux (i686)
 --
 -- Host: localhost    Database: books
 -- ------------------------------------------------------
--- Server version	10.1.24-MariaDB
+-- Server version	5.5.35
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +27,7 @@ CREATE TABLE `authors` (
   `name` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`(50))
-) ENGINE=MyISAM AUTO_INCREMENT=275 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=270 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `book_authors` (
   `author_first` text,
   PRIMARY KEY (`author_id`),
   UNIQUE KEY `book_authors_unique_idx` (`author_last`(10),`author_first`(10))
-) ENGINE=InnoDB AUTO_INCREMENT=3616 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3605 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +76,7 @@ CREATE TABLE `books` (
   `rating` int(11) DEFAULT '0',
   `value` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=951 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=934 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +107,7 @@ CREATE TABLE `borrowers` (
   `contact` text,
   `notes` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -257,4 +257,4 @@ CREATE TABLE `rating` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-12 11:24:50
+-- Dump completed on 2016-07-18 14:38:23

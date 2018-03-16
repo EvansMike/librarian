@@ -42,7 +42,7 @@ _ = gettext.gettext
 #logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', \
       level=logging.DEBUG)
-DEBUG = logging.debug
+
 
 class add_edit:
   ''' Interface to manipulate book details.
@@ -150,6 +150,7 @@ class add_edit:
       self.author.set_text(str(self.mybook.authors))
       abs_buffer = self.abstract.get_buffer()
       abs_buffer.set_text(self.mybook.abstract)
+      logging.info(self.mybook.abstract) 
       self.mtype.set_text(self.mybook.mtype)
       self.publisher.set_text(self.mybook.publisher)
       self.city.set_text(self.mybook.city)
@@ -285,7 +286,6 @@ class add_edit:
     if row['city'] != None: self.city.set_text(row['city'])
     if row['year'] != None: self.year.set_text(str(row['year']))
     if row['owner'] != None: self.book_owner.set_text(str(row['owner']))
-    if row['add_date'] != None: self.add_date.set_text(str(row['add_date']))
     self.mtype.set_text(str(row['mtype']))
     self.copies.set_text(str(row['copies']))
 
@@ -329,7 +329,6 @@ class add_edit:
     textbuffer = self.abstract.get_buffer()
     startiter, enditer = textbuffer.get_bounds()  
     self.mybook.abstract=textbuffer.get_text(startiter, enditer) 
-    DEBUG(self.mybook.abstract)
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city=self.city.get_text()
