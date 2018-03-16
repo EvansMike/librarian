@@ -42,7 +42,7 @@ class BookLookup(object):
         print (content)
         book = {}
         book['isbn'] = isbn
-        book['id'] = isbn
+        #book['id'] = isbn
         book['title'] = content['title']
         buf = content['author']
         book['authors'] = [x.strip('. ') for x in buf.split(';')]

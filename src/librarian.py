@@ -45,6 +45,7 @@ _ = i18n.language.gettext
 #logger = logging.getLogger("librarian")
 logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
 #logging.disable(logging.INFO)
+DEBUG = logging.debug
 
 # Get system platform
 plat = sys.platform

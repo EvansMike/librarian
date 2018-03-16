@@ -49,6 +49,7 @@ class Book(object):
         self.owner = getpass.getuser() # Assume owner is current logged in person
         self.rating = 0 # Stars out of 5?
         self.value = self.values[0]; # Assume lowest value class
+        self.updated = False # Book data updated locally.
 
     def print_book(self):
         ## Return some book details as a string for printing.  Mostly a debug thing.
@@ -105,7 +106,7 @@ class Book(object):
     def webquery(self,isbn):
         data = self.lookup(isbn)
         self.abstract = data['abstract']
-        self.id = data['id']
+        #self.id = data['id']
         self.isbn = data['isbn']
         self.title = data['title']
         self.authors = str(data['authors'][0])
@@ -114,6 +115,7 @@ class Book(object):
         self.city = data['city']
         self.year = data['year']
         self.edited = data['edited']
+        self.updated = True
         
     def lookup(self, isbn):
         import lookup_books

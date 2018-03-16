@@ -42,7 +42,8 @@ _ = gettext.gettext
 #logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', \
       level=logging.DEBUG)
-
+DEBUG = logging.debug
+INFO = logging.info
 
 class add_edit:
   ''' Interface to manipulate book details.
@@ -150,7 +151,6 @@ class add_edit:
       self.author.set_text(str(self.mybook.authors))
       abs_buffer = self.abstract.get_buffer()
       abs_buffer.set_text(self.mybook.abstract)
-      logging.info(self.mybook.abstract) 
       self.mtype.set_text(self.mybook.mtype)
       self.publisher.set_text(self.mybook.publisher)
       self.city.set_text(self.mybook.city)
@@ -323,12 +323,15 @@ class add_edit:
     @return Error value from book.compare(book)
     '''
     self.orig_book = copy.copy(self.mybook) # Make a copy
+    DEBUG(self.mybook.id)
     self.mybook.isbn=self.isbn.get_text()
     self.mybook.title=self.title.get_text()
     self.mybook.authors=self.author.get_text()
     textbuffer = self.abstract.get_buffer()
     startiter, enditer = textbuffer.get_bounds()  
-    self.mybook.abstract=textbuffer.get_text(startiter, enditer) 
+    self.mybook.abstract = textbuffer.get_text(startiter, enditer)
+    #DEBUG(self.mybook.abstract)
+    #DEBUG(self.orig_book.abstract)
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city=self.city.get_text()
@@ -343,13 +346,14 @@ class add_edit:
     if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
 
     #logging.info(self.mybook.year)
+    DEBUG(self.orig_book.compare(self.mybook))
     # Is the book on loan and to whome?
     self.status.set_text(_("Book updated."))
     return self.orig_book.compare(self.mybook)
 
   def on_button_update_clicked(self, widget):
     ''' Update the database with new info or add if not already in.'''
-    if self.update_book() != 0: # Any changes?
+    if self.update_book() != 0 or self.mybook.updated: # Any changes?
       logging.debug("Something changed so an update is needed.")
       self.update_db()
       self.set_location()
@@ -358,18 +362,19 @@ class add_edit:
     db_query = sql()
     book = copy.copy(self.mybook)
     #logging.info(self.orig_book.compare(book))
-    result = db_query.get_by_id(book.id)
-    logging.debug(result)
-    logging.debug(book.is_empty())
+    result = db_query.get_by_id(self.mybook.id)
+    DEBUG(self.mybook.id)
+    DEBUG(result)
+    if self.mybook.id==0: return
     if book.is_empty(): return # Do nothing if no data
     if result == None: # If no book in DB, add it
     # Make sure we don't add an empty book.  We could also use this to
-      if not str.isdigit(book.year): book.year = 0 #DB query fix for empty date field.
+      if not str.isdigit(book.year.encode('ascii', 'ignore')): book.year = 0 #DB query fix for empty date field.
       #book.owner = getpass.getuser() # Assume owner is current logged in person
       db_query.insert_book_object(book)
       #db_query.insert_unique_author(book.authors)
-
-      self.status.set_text(_(" Book has been inserted."))
+      INFO("New book has been inserted.")
+      self.status.set_text(_("New book has been inserted."))
       self.orig_book = copy.copy(book) # So we can compare again.
 
     #check for changes if we have a copy of the original data.
