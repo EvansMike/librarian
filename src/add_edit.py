@@ -42,7 +42,7 @@ _ = gettext.gettext
 #logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', \
       level=logging.DEBUG)
-
+DEBUG = logging.debug
 
 class add_edit:
   ''' Interface to manipulate book details.
@@ -329,6 +329,7 @@ class add_edit:
     textbuffer = self.abstract.get_buffer()
     startiter, enditer = textbuffer.get_bounds()  
     self.mybook.abstract=textbuffer.get_text(startiter, enditer) 
+    DEBUG(self.mybook.abstract)
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city=self.city.get_text()
