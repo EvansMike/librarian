@@ -164,7 +164,21 @@ class librarian:
 
 
   def export_csv(self):
+    db_query = sql()
+    result, numrows = db_query.get_all_books()
+    with open('books.csv', 'wb') as csvfile:
+        csvwriter = csv.writer(csvfile, delimiter=',',
+                            quotechar='"') #, quoting=csv.QUOTE_MINIMAL)
+        for row in result:
+           csvwriter.writerow([row['mtype'],row['author'], row['title']])
+        import calibre
+        cal = calibre.calibre()
+        e_books = []
+        cal.insert_data(e_books)
+        for eb in e_books:
+           csvwriter.writerow(["ebook", eb[1], eb[2]])
     return
+    
     
   def on_button_print_clicked(self, widget):
     '''Print the entire book list to pdf then opens the default pdf viewer.
@@ -401,11 +415,11 @@ class librarian:
 ''' Run main if called directly.'''
 if __name__ == "__main__":
     args = parser.parse_args()
-    if args.export:
-        print "I is exporting yo shit to a CSV."
-        app = librarian()
-        app.export_csv()
-        quit(0)
     app = librarian()
+    if args.export:
+        print ("I is exporting yo shit to a CSV.")
+        app.export_csv()
+        print ("I is done innit.")
+        quit(0)
     gtk.main()
 
