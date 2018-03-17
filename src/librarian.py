@@ -226,13 +226,16 @@ class librarian:
     Authors names are stored in regular text, we want so get them by
     family,first name order.  This iterates through the result and
     and appends to the liststore with the author names re-ordered.
-    @param result
+    @param Result cursor from query
     @param append boolean, whether to append to list.
     '''
     db_query = sql()
-    if not append: self.booklist.clear()    
+    if not append:
+      self.booklist.clear()    
     column = self.treeview.get_column(3)
     column.set_title(_('Abstract'))
+    #column = self.treeview.get_column(0)
+    #column.set_title(_('Borrower'))
     for row in result:
       # Deal with rearranging author names to last, first
       if row['author'] != None:
@@ -247,15 +250,23 @@ class librarian:
         author = ''.join(author) # Join all elements into a string
       else:
         author = "N/A"
-      #logging.info(author)
       abstract = row['abstract']
-      # If a book is borrowed, display who by in the abtract column
-      # FIXME Not working and also need to display lender.
-      if row['borrower_id'] != None:
-        b_book = db_query.get_book_borrower_by_book_id(row['id'])
-        if b_book: abstract = b_book['name'] + " : " + str(b_book['o_date'])
+      # If a book is borrowed, display who to in the 1st column
+      # If you have lent it to someone
+      try:
+        if row['borrower'] != None:
+          column = self.treeview.get_column(0)
+          column.set_title(_('Borrower'))
+          row['mtype'] = ""
+          b_book = db_query.get_book_borrower_by_book_id(row['id'])
+          if b_book:
+            #abstract = b_book['name'] + " : " + str(b_book['o_date'])
+            row['mtype'] = b_book['name'] + " : " + str(b_book['o_date'])
+      except: pass
+            
+      ## If you've borrowed it from someone else.display who from in the abtract column
       if row['owner'] != getpass.getuser():
-        abstract += "  " + str(row['owner'])
+        abstract = "  " + str(row['owner'])
          
       self.booklist.append([row['isbn'], author, row['title'],
       abstract,
