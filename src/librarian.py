@@ -398,7 +398,7 @@ class librarian:
     logging.info(filename)
     with open(filename, 'wb') as csvfile:
       csvwriter = csv.writer(csvfile, delimiter=',',
-                            quotechar='"') #, quoting=csv.QUOTE_MINIMAL)
+                            quotechar='"')
       model = self.booklist
       myiter = model.get_iter_first()
       if myiter is not None:
@@ -410,16 +410,6 @@ class librarian:
             row.append(model.get_value(myiter, 2))
             myiter = model.iter_next(myiter)
             csvwriter.writerow(row)
-        
-    ## Now just export direct from the DB
-    '''result, numrows = db_query.get_all_books()
-    with open(filename, 'wb') as csvfile:
-        fieldnames = ["isbn","title", "author", "abstract","year", "publisher","rating"]
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, extrasaction='ignore')
-        writer.writeheader()
-        for book in result:
-            logging.debug(book)
-            writer.writerow(book)'''
     return
     
   def gtk_main_quit(self, widget):
