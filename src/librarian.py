@@ -158,6 +158,9 @@ class librarian:
 
 
   def export_csv(self):
+    '''
+    Export the entire database to CSV when called from the command line.
+    '''
     db_query = sql()
     result, numrows = db_query.get_all_books()
     with open('books.csv', 'wb') as csvfile:
@@ -175,7 +178,8 @@ class librarian:
     
     
   def on_button_print_clicked(self, widget):
-    '''Print the entire book list to pdf then opens the default pdf viewer.
+    '''
+    Print the book list we are viewing to pdf then open the default pdf viewer.
     TODO: Auto width columns
     This will likely be system specific
     '''
@@ -371,13 +375,14 @@ class librarian:
     except: pass # Do nothing
     return
 
+
   def treeview1_row_activated_cb(self, widget, path, col):
     self.on_button_query_clicked(None)
+
     
   def on_button_export_clicked(self, widget):
     '''
-    Export the entire database to CSV.  
-    from MySQL with a single command such as:
+    Export the current list view to CSV.  
     '''
     filename = None
     db_query = sql()
@@ -391,15 +396,30 @@ class librarian:
       print("Selected filepath: %s" % dialog.get_filename())
     dialog.destroy()
     logging.info(filename)
+    with open(filename, 'wb') as csvfile:
+      csvwriter = csv.writer(csvfile, delimiter=',',
+                            quotechar='"') #, quoting=csv.QUOTE_MINIMAL)
+      model = self.booklist
+      myiter = model.get_iter_first()
+      if myiter is not None:
+        while str(myiter) != 'None':
+          row = []
+          if myiter is not None:
+            row.append(model.get_value(myiter, 9))
+            row.append(model.get_value(myiter, 1))
+            row.append(model.get_value(myiter, 2))
+            myiter = model.iter_next(myiter)
+            csvwriter.writerow(row)
+        
     ## Now just export direct from the DB
-    result, numrows = db_query.get_all_books()
+    '''result, numrows = db_query.get_all_books()
     with open(filename, 'wb') as csvfile:
         fieldnames = ["isbn","title", "author", "abstract","year", "publisher","rating"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames, extrasaction='ignore')
         writer.writeheader()
         for book in result:
             logging.debug(book)
-            writer.writerow(book)
+            writer.writerow(book)'''
     return
     
   def gtk_main_quit(self, widget):
