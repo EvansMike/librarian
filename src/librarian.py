@@ -78,7 +78,6 @@ parser.add_argument('--version', action='version', version=version.__version__)
 class splashScreen():
   def __init__(self):
     import time
-    #DONT connect 'destroy' event here!
     self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
     self.window.set_decorated(False)
     self.version = "Version: " + version.__version__
@@ -95,10 +94,7 @@ class splashScreen():
     main_vbox.pack_start(self.image, True, True)
     main_vbox.pack_start(self.lbl, True, True)
     self.window.show_all()
-    while gtk.events_pending():
-      time.sleep (0.01) # This forces the window to display its contents !?
-      gtk.main_iteration()
-      
+        
 class librarian:
   '''
   A simple book tracking program that uses a webcam to scan the barcodes
@@ -106,7 +102,6 @@ class librarian:
   in the listings.  It doesn't track the "borrowing" of e-books. :)
   '''
   def __init__(self):
-    splScr = splashScreen()
     print (_("Version: "),version.__version__)
     builder = gtk.Builder()
     self.gladefile = os.path.join(os.path.dirname(__file__),"ui/librarian.glade")
@@ -152,11 +147,11 @@ class librarian:
     self.search_string = builder.get_object("entry_search")
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
     
-    self.get_book_list(1)
-    splScr.window.destroy()
-    #gtk.main()
-
-
+    self.get_book_list(1) 
+    self.window = builder.get_object("window1")
+    self.window.show_all() 
+    
+      
   def export_csv(self):
     '''
     Export the entire database to CSV when called from the command line.
@@ -168,12 +163,12 @@ class librarian:
                             quotechar='"') #, quoting=csv.QUOTE_MINIMAL)
         for row in result:
            csvwriter.writerow([row['mtype'],row['author'], row['title']])
-        import calibre
-        cal = calibre.calibre()
-        e_books = []
-        cal.insert_data(e_books)
-        for eb in e_books:
-           csvwriter.writerow(["ebook", eb[1], eb[2]])
+        #import calibre
+        #cal = calibre.calibre()
+        #e_books = []
+        #cal.insert_data(e_books)
+        #for eb in e_books:
+        #   csvwriter.writerow(["ebook", eb[1], eb[2]])
     return
     
     
@@ -419,7 +414,7 @@ class librarian:
 
 #################### END librarian #####################################
 
-''' Run main if called directly.'''
+''' Run main if called directly.
 if __name__ == "__main__":
     args = parser.parse_args()
     app = librarian()
@@ -428,5 +423,27 @@ if __name__ == "__main__":
         app.export_csv()
         print ("I is done innit.")
         quit(0)
-    gtk.main()
+'''
 
+if __name__ == "__main__":
+  args = parser.parse_args()
+  if args.export:
+        print ("I is exporting yo shit to a CSV.")
+        app = librarian()
+        app.export_csv()
+        print ("I is done innit.")
+        quit(0)
+  else:
+    import time
+    splScr = splashScreen()
+    # If you don't do this, the splash screen will show, but won't render 
+    # it's contents
+    while gtk.events_pending():
+      time.sleep (0.01) # This is needed too.
+      gtk.main_iteration()
+    #Here you can do all that nasty things that take some time.
+    #sleep(3) 
+    app = librarian()
+    #We don't need splScr anymore.
+    splScr.window.destroy() 
+    gtk.main()
