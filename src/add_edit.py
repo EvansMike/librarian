@@ -62,9 +62,7 @@ class add_edit:
     self.year =  builder.get_object("entry5")
     self.city =  builder.get_object("entry6")
     scrolled_window =  builder.get_object("scrolledwindow1")
-    #logging.debug(scrolled_window)
     self.abstract =  builder.get_object("textview_abtract") 
-    #logging.debug(self.abstract)
     self.mtype =  builder.get_object("entry8")
     self.copies = builder.get_object("entry9")
     self.lent = builder.get_object("checkbutton1")
@@ -176,7 +174,6 @@ class add_edit:
     result = db_query.get_all_borrowers()
     for row in result:
       self.lentlist.append([row["id"], row["name"], row["contact"]])
-      #self.lent_select.append_text(row[1])
       self.borrowers += 1
     self.lentlist.prepend([0, "", ""])
     #Get borrows for this book up to the # of copies
@@ -204,7 +201,6 @@ class add_edit:
           break
         n += 1
     else:
-      #self.lentlist.prepend([0, "", ""])
       self.lent_select.set_active(0)
       self.lent.set_active(False)
     pass
@@ -214,16 +210,13 @@ class add_edit:
     locations = db_query.get_locations()
     self.location_liststore.clear()
     loc = self.mybook.where
-    #logging.info(loc)
     for where in locations:
       rs = where['room'] + ' - ' + where['shelf']
       self.location_liststore.append([where['id'], rs])
-      #logging.info(where['id'])
     self.location_liststore.prepend([0, ''])
     # Now set the dropdown to the books location
     n = 0
     for lid in self.location_liststore:
-      #logging.debug([loc, lid[0],n])
       if lid[0] == loc:
         self.location_dropdown.set_active(n)
         return
@@ -231,7 +224,6 @@ class add_edit:
 
   def populate_values(self):
       for value in book.Book.values:
-        #logging.debug(value)
         self.values_liststore.append([value])
         self.values_dropdown.set_active(self.orig_book.value)
       
@@ -242,10 +234,8 @@ class add_edit:
     '''
     db_query = sql()
     idx = self.location_dropdown.get_active()
-    #logging.info(idx)
     if idx > 0:
       lid = self.location_liststore[idx][0]
-      #logging.debug(lid)
       self.mybook.where = lid
       db_query.update_book_location(self.mybook.id, lid)
     return
@@ -271,16 +261,12 @@ class add_edit:
 
   def populate(self,book_id):
     db_query = sql()
-    #logging.debug(book_id)
     row = db_query.get_by_id(book_id)
-    #logging.info(result)
-    #for row in result:
     # Populate GUI
     if row['isbn'] != None: self.isbn.set_text(row['isbn'])
     if row['author'] != None: self.author.set_text(row['author'])
     self.title.set_text(row['title'])
     abs_buffer = self.abstract.get_buffer()
-    #logging.debug(abs_buffer)
     abs_buffer.set_text(row['abstract']) 
     if row['publisher'] != None: self.publisher.set_text(row['publisher'])
     if row['city'] != None: self.city.set_text(row['city'])
@@ -303,7 +289,6 @@ class add_edit:
     self.orig_book.where = row['location']
     self.orig_book.owner = row['owner']
     self.orig_book.rating = row['rating']
-    #logging.info(self.orig_book.where)
     self.orig_book.mtype = row['mtype']
     if row['add_date'] != "":
       self.orig_book.add_date = row['add_date']
@@ -330,8 +315,6 @@ class add_edit:
     textbuffer = self.abstract.get_buffer()
     startiter, enditer = textbuffer.get_bounds()  
     self.mybook.abstract = textbuffer.get_text(startiter, enditer)
-    #DEBUG(self.mybook.abstract)
-    #DEBUG(self.orig_book.abstract)
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city=self.city.get_text()
@@ -339,14 +322,9 @@ class add_edit:
     self.mybook.owner=self.book_owner.get_text()
     self.mybook.rating = self.rating_select.get_active()
     self.mybook.value = self.values_dropdown.get_active()
-    #logging.debug(self.mybook.rating)
-    #logging.debug(self.rating_select.get_active())
     self.set_location()
-    #self.mybook.add_date=self.add_date.get_text() #TODO
     if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
 
-    #logging.info(self.mybook.year)
-    DEBUG(self.orig_book.compare(self.mybook))
     # Is the book on loan and to whome?
     self.status.set_text(_("Book updated."))
     return self.orig_book.compare(self.mybook)
@@ -361,18 +339,13 @@ class add_edit:
   def update_db(self):
     db_query = sql()
     book = copy.copy(self.mybook)
-    #logging.info(self.orig_book.compare(book))
     result = db_query.get_by_id(self.mybook.id)
-    DEBUG(self.mybook.id)
-    DEBUG(result)
     if self.mybook.id==0: return
     if book.is_empty(): return # Do nothing if no data
     if result == None: # If no book in DB, add it
     # Make sure we don't add an empty book.  We could also use this to
       if not str.isdigit(book.year.encode('ascii', 'ignore')): book.year = 0 #DB query fix for empty date field.
-      #book.owner = getpass.getuser() # Assume owner is current logged in person
       db_query.insert_book_object(book)
-      #db_query.insert_unique_author(book.authors)
       INFO("New book has been inserted.")
       self.status.set_text(_("New book has been inserted."))
       self.orig_book = copy.copy(book) # So we can compare again.
@@ -381,9 +354,7 @@ class add_edit:
     # If the book is not empty
     else:
       logging.info("Something changed so an update is needed")
-      #self.update_book()
       db_query.update_book(book, book.id)
-      #logging.info(book.mtype)
       db_query.insert_unique_author(book.authors)
       self.status.set_text(_(" Book has been updated."))
       self.orig_book = copy.copy(book) # So we can compare again.
@@ -392,7 +363,6 @@ class add_edit:
   def on_button_remove_clicked(self, widget):
     ''' Remove selected book from database '''
     db_query = sql()
-    #logging.info(str(self.mybook.id) + " about to be removed.")
     dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_QUESTION,
         gtk.BUTTONS_YES_NO, "Are you sure you want to delete this book?")
     dlg_val = dialog.run()
@@ -412,7 +382,6 @@ class add_edit:
     if not self.lentlist.get_iter_first(): return # If we can't iterate then the list is empty
     foo = self.lent_select.get_active()
     bid = self.lentlist[foo][0]
-    #logging.info(bid)
     if bid > 0:
       self.add_button.set_label(_("EDIT"))
     else:
@@ -420,7 +389,6 @@ class add_edit:
       self.add_button.set_label(_("ADD"))
     # Get list of borrows for this book
     result = db_query.get_borrows(self.mybook.id,bid)
-    #logging.info(result)
     if result == 0:
       self.lent.set_active(False)
     else:
@@ -456,22 +424,18 @@ class add_edit:
     if not self.lentlist.get_iter_first():
       return
     db_query = sql()
-    #logging.info(widget)
     # Get widget state
     # Set book as borrowed or not with borrower as key.
     # What if I have two copies and they get borrowed?
     if self.lent.get_active(): # Checked
       foo = self.lent_select.get_active()
       bid = self.lentlist[foo][0]
-      #logging.info(bid)
       if bid != 0 and self.mybook.id != 0 and self.orig_book.copies > 0:
         db_query.add_borrow(self.mybook.id, bid)
         self.mybook.borrower_id = bid
         self.status.set_text(_("Book has been marked as borrowed."))
-        #self.orig_book.copies -= 1
       else:
         self.status.set_text(_("Book has been NOT marked as borrowed."))
-        #self.lent.set_active(False)
       self.lent_date.set_text(str(self.o_date))
 
     else: # Unchecked
@@ -481,7 +445,6 @@ class add_edit:
       if bid != 0:
         result =  db_query.update_borrows(self.mybook.id, bid)
         if result:
-          #self.orig_book.copies += 1
           self.mybook.borrower_id = None
           self.status.set_text(_("Book has been marked as returned."))
         else: self.status.set_text(_("Book has been NOT marked as returned."))

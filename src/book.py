@@ -106,7 +106,6 @@ class Book(object):
     def webquery(self,isbn):
         data = self.lookup(isbn)
         self.abstract = data['abstract']
-        #self.id = data['id']
         self.isbn = data['isbn']
         self.title = data['title']
         self.authors = str(data['authors'][0])

@@ -47,6 +47,7 @@ _ = i18n.language.gettext
 logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
 #logging.disable(logging.INFO)
 DEBUG = logging.debug
+INFO = logging.info
 
 # Get system platform
 plat = sys.platform
@@ -113,16 +114,9 @@ class librarian:
     builder.connect_signals(self)
 
     self.treeview  = builder.get_object('treeview1')
-    #self.treeview.set_fixed_height_mode(True)
     self.booklist = builder.get_object("liststore1")
     self.status1 = builder.get_object("status1")
-    '''
-    column = gtk.TreeViewColumn('isbn', gtk.CellRendererText(), text=0)
-    column.set_clickable(True)
-    column.set_resizable(True)
-    column.set_sort_column_id(0)
-    self.treeview.append_column(column)
-    '''
+ 
 
     column = gtk.TreeViewColumn(_('Medium'), gtk.CellRendererText(), text=9)
     column.set_clickable(True)
@@ -213,7 +207,6 @@ class librarian:
           row.append(Paragraph(model.get_value(myiter, 9),styles["Normal"]))
           row.append(Paragraph(model.get_value(myiter, 1),styles["Normal"]))
           row.append(Paragraph(model.get_value(myiter, 2),styles["Normal"]))
-          #row.append(Paragraph(model.get_value(myiter, 3),styles["Normal"]))
           myiter = model.iter_next(myiter)
         data.append(row)
       t=Table(data,[50,180,250]) # Values are cell widths
@@ -279,12 +272,9 @@ class librarian:
     '''
     db_query = sql()
     result = {}
-    #self.booklist.clear()
     num_ebooks = 0
     if selection == ALL:
       result, numrows = db_query.get_all_books()
-      #logging.info(numrows)
-      
       self.fill_booklist(result)
       try:
         import calibre
@@ -335,7 +325,6 @@ class librarian:
     from add_edit import add_edit
     ## Get a book for editing.  SHOULD be devolved to add_edit !!
     foo,iter = self.treeview.get_selection().get_selected()
-    #logging.info(iter)
     if iter:
       # Get the data
       bid = self.booklist.get_value(iter,7)
@@ -345,7 +334,6 @@ class librarian:
         messages.pop_info(_('Cannot query e-books.  Please use calibre.' ))
         return
       adder = add_edit()
-      #logging.info(adder)
       adder.populate(bid)
       adder.display()
 
