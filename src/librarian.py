@@ -78,6 +78,7 @@ parser.add_argument('--version', action='version', version=version.__version__)
 class splashScreen():
   def __init__(self):
     import time
+    DEBUG('Splish splash')
     self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
     self.window.set_decorated(False)
     self.version = "Version: " + version.__version__
@@ -95,7 +96,7 @@ class splashScreen():
     main_vbox.pack_start(self.lbl, True, True)
     self.window.show_all()
         
-class librarian:
+class Librarian:
   '''
   A simple book tracking program that uses a webcam to scan the barcodes
   to add books.  It also tracks borrowers and can include your e-books
@@ -427,17 +428,15 @@ if __name__ == "__main__":
         print ("I is done innit.")
         quit(0)
 '''
-
-if __name__ == "__main__":
+def main():
   args = parser.parse_args()
   if args.export:
         print ("I is exporting yo shit to a CSV.")
-        app = librarian()
+        app = Librarian()
         app.export_csv()
         print ("I is done innit.")
         quit(0)
   else:
-    DEBUG("I is runnin.")
     import time
     splScr = splashScreen()
     # If you don't do this, the splash screen will show, but won't render 
@@ -447,8 +446,13 @@ if __name__ == "__main__":
       gtk.main_iteration()
     #Here you can do all that nasty things that take some time.
     #sleep(3) 
-    app = librarian()
+    app = Librarian()
     #We don't need splScr anymore.
-    print ("I is done innit.")
     splScr.window.destroy() 
     app.main()
+
+  
+if __name__ == "__main__":
+  main()
+  
+  

@@ -92,9 +92,13 @@ setup (
       license='GNU General Public License',
       packages=['librarian'],
       package_dir={'librarian': 'src'},
-      data_files=[("share/applications",["desktop/librarian.desktop"])],
-      package_data={'librarian': ['po/*', 'ui/*','librarian.png']},
-      scripts=['bin/librarian'],
+      entry_points={
+          'console_scripts': [
+              'librarian = librarian.librarian:main'
+          ]},
+      #data_files=[("share/applications",["desktop/librarian.desktop"])],
+      #package_data={'librarian': ['po/*', 'ui/*','librarian.png']},
+      #scripts=['bin/librarian'],
       cmdclass=cmdclass
 )
 
