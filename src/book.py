@@ -39,7 +39,7 @@ class Book(object):
         self.condition = ''
         self.publisher = ''
         self.abstract = ''
-        self.mtype = ''
+        self.mtype = 'book' # Unless set otherwise.
         self.year = ''
         self.city = ''
         self.copies = 0
