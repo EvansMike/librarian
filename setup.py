@@ -9,9 +9,10 @@ except: # If we can't find it build it
     import os
     from subprocess import call
     last_commit = str(os.popen("/usr/bin/git show --format='%ci %cr' | head -n 1 | awk '{print $1}'").read())
+    #last_commit = last_commit.replace('_','.').replace('\n','')
     commits = os.popen("git rev-list HEAD --count --after='" + last_commit + " 00:00'").read()
     commits = commits.replace('\n','')
-    date = last_commit.replace('-','').replace('\n','')
+    date = last_commit.replace('-','.').replace('\n','')
     vf = open('src/version.py','w')
     vf.write('__version__ = "' + str(date) + '.' + str(commits) + '"\n')
     vf.close()
@@ -94,9 +95,6 @@ setup (
       data_files=[("share/applications",["desktop/librarian.desktop"])],
       package_data={'librarian': ['po/*', 'ui/*','librarian.png']},
       scripts=['bin/librarian'],
-      install_requires=[
-          'zbar',
-      ],
       cmdclass=cmdclass
 )
 

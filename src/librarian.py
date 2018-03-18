@@ -148,9 +148,9 @@ class librarian:
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
     
     self.get_book_list(1) 
-    self.window = builder.get_object("window1")
-    self.window.show_all() 
-    
+    window = builder.get_object("window1")
+    window.show_all()
+
       
   def export_csv(self):
     '''
@@ -208,7 +208,7 @@ class librarian:
           row.append(Paragraph(model.get_value(myiter, 2),styles["Normal"]))
           myiter = model.iter_next(myiter)
         data.append(row)
-      t=Table(data,[50,180,250]) # Values are cell widths
+      t=Table(data,[100,180,200]) # Values are cell widths
       t.hAlign='LEFT' # Move WHOLE TABLE to the left, defaults to CENTRE
       t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP')])) # Apples to CELLS
       Story.append(t)
@@ -411,6 +411,9 @@ class librarian:
     gtk.main_quit()
     quit(0)
 
+  def main(self):
+    gtk.main()
+
 
 #################### END librarian #####################################
 
@@ -434,6 +437,7 @@ if __name__ == "__main__":
         print ("I is done innit.")
         quit(0)
   else:
+    DEBUG("I is runnin.")
     import time
     splScr = splashScreen()
     # If you don't do this, the splash screen will show, but won't render 
@@ -445,5 +449,6 @@ if __name__ == "__main__":
     #sleep(3) 
     app = librarian()
     #We don't need splScr anymore.
+    print ("I is done innit.")
     splScr.window.destroy() 
-    gtk.main()
+    app.main()
