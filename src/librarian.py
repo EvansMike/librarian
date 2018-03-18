@@ -75,7 +75,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--export', action='store_true', help='Export the books as a CSV file.')
 parser.add_argument('--version', action='version', version=version.__version__)
 
-class splashScreen():
+class SplashScreen():
   def __init__(self):
     import time
     DEBUG('Splish splash')
@@ -438,7 +438,7 @@ def main():
         quit(0)
   else:
     import time
-    splScr = splashScreen()
+    splScr = SplashScreen()
     # If you don't do this, the splash screen will show, but won't render 
     # it's contents
     while gtk.events_pending():
