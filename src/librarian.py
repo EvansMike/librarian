@@ -407,8 +407,6 @@ class Librarian:
     return
     
   def gtk_main_quit(self, widget):
-    # Quit when we destroy the GUI
-    #if __name__ == "__main__":
     gtk.main_quit()
     quit(0)
 
@@ -418,16 +416,7 @@ class Librarian:
 
 #################### END librarian #####################################
 
-''' Run main if called directly.
-if __name__ == "__main__":
-    args = parser.parse_args()
-    app = librarian()
-    if args.export:
-        print ("I is exporting yo shit to a CSV.")
-        app.export_csv()
-        print ("I is done innit.")
-        quit(0)
-'''
+
 def main():
   args = parser.parse_args()
   if args.export:
@@ -439,13 +428,10 @@ def main():
   else:
     import time
     splScr = SplashScreen()
-    # If you don't do this, the splash screen will show, but won't render 
-    # it's contents
     while gtk.events_pending():
-      time.sleep (0.01) # This is needed too.
+      time.sleep (0.01) # This is needed else we don't see the logo.
       gtk.main_iteration()
     #Here you can do all that nasty things that take some time.
-    #sleep(3) 
     app = Librarian()
     #We don't need splScr anymore.
     splScr.window.destroy() 
