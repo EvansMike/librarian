@@ -94,6 +94,7 @@ class Book(object):
         err_num += (self.owner != book.owner) * 1024
         err_num += (self.rating != book.rating) * 2048
         err_num += (self.value != book.value) * 2048
+        if err_num !=0: self.updated = True
         return err_num
 
     def is_empty(self):

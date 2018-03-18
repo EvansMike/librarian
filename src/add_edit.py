@@ -101,10 +101,9 @@ class add_edit:
   def on_button_close_clicked(self, widget):
     ''' Check if any changed made and pop up worning
     else close the dialog.
-    FIXME:  Don't show the dialog if there have been no changes.
     '''
     updated = self.update_book()
-    if updated == 0:
+    if self.mybook.updated == False:
       logging.info("Closing without saving.")
       if __name__ == "__main__":
         gtk.main_quit()
