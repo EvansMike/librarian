@@ -2,6 +2,7 @@
 ### setup.py ###
 
 from setuptools import setup
+
 try:
     from src import version    
 except: # If we can't find it build it
@@ -14,13 +15,15 @@ except: # If we can't find it build it
     vf = open('src/version.py','w')
     vf.write('__version__ = "' + str(date) + '.' + str(commits) + '"\n')
     vf.close()
-    from src import version
+
 # We create the package with
 # python setup.py sdist
 # For an rpm
 # python setup.py bdist_rpm
 # To install
 # python setup.py install
+
+
 from distutils.core import setup
 from distutils import cmd
 from distutils.command.install_data import install_data as _install_data
@@ -76,7 +79,7 @@ cmdclass = {
     'build_trans': build_trans,
     'install_data': install_data,
 }
-
+from src import version
 setup (
       name='librarian',
       version=version.__version__,
