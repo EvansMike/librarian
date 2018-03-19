@@ -18,27 +18,27 @@ msgstr ""
 
 #: add_edit.py:84 borrowers.py:40 guiscan.py:67
 msgid "No database connection.  Check "
-msgstr ""
+msgstr "Dim cysylltiad cronfa ddata. Gwirio"
 
 #: add_edit.py:122
 msgid "No Book found for this ISBN!"
-msgstr ""
+msgstr "Dim Llyfr ar gael ar gyfer ISBN hwn!"
 
 #: add_edit.py:235
 msgid " Book has been inserted."
-msgstr ""
+msgstr "Llyfr wedi ei fewnosod."
 
 #: add_edit.py:243
 msgid " Book has been updated."
-msgstr ""
+msgstr "Llyfr wedi cael ei ddiweddaru."
 
 #: add_edit.py:252
 msgid " Book has been removed."
-msgstr ""
+msgstr " Llyfr wedi ei ddileu."
 
 #: add_edit.py:282
 msgid "Book has been marked as borrowed."
-msgstr ""
+msgstr "Llyfr wedi ei marcio fel a fenthycwyd."
 
 #: add_edit.py:285
 msgid "Book has been NOT marked as borrowed."
