@@ -1,4 +1,5 @@
 #!/bin/env python2
+# -*- coding: utf-8 -*-
 '''
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -14,7 +15,7 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
   MA 02110-1301, USA.
-  
+
   (c) Mike Evans <mikee@saxicola.co.uk>
 
 A (in)complete home book collection manager.
@@ -33,11 +34,11 @@ import lib_print
 import messages
 import getpass
 import csv
-import argparse 
+import argparse
 
 #from db_queries import calibre
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
-# or 
+# or
 from db_queries import sql as sql
 
 import i18n
@@ -95,7 +96,7 @@ class SplashScreen():
     main_vbox.pack_start(self.image, True, True)
     main_vbox.pack_start(self.lbl, True, True)
     self.window.show_all()
-        
+
 class Librarian:
   '''
   A simple book tracking program that uses a webcam to scan the barcodes
@@ -112,7 +113,7 @@ class Librarian:
     self.treeview  = builder.get_object('treeview1')
     self.booklist = builder.get_object("liststore1")
     self.status1 = builder.get_object("status1")
- 
+
 
     column = gtk.TreeViewColumn(_('Medium'), gtk.CellRendererText(), text=9)
     column.set_clickable(True)
@@ -126,7 +127,7 @@ class Librarian:
     column.set_sort_indicator(True)
     column.set_resizable(True)
     column.set_visible(True)
-    column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE) 
+    column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
     column.set_sort_column_id(1)
     self.treeview.append_column(column)
 
@@ -136,7 +137,7 @@ class Librarian:
     column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
     column.set_sort_column_id(2)
     self.treeview.append_column(column)
-    
+
     column = gtk.TreeViewColumn(_('Rating'), gtk.CellRendererText(), text=3)
     column.set_clickable(True)
     column.set_resizable(True)
@@ -144,15 +145,15 @@ class Librarian:
     column.set_sort_column_id(3)
     self.treeview.append_column(column)
     self.status1.set_text("Version:" + version.__version__)
-    
+
     self.search_string = builder.get_object("entry_search")
     self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
-    
-    self.get_book_list(1) 
+
+    self.get_book_list(1)
     window = builder.get_object("window1")
     window.show_all()
 
-      
+
   def export_csv(self):
     '''
     Export the entire database to CSV when called from the command line.
@@ -171,8 +172,8 @@ class Librarian:
         #for eb in e_books:
         #   csvwriter.writerow(["ebook", eb[1], eb[2]])
     return
-    
-    
+
+
   def on_button_print_clicked(self, widget):
     '''
     Print the book list we are viewing to pdf then open the default pdf viewer.
@@ -185,7 +186,7 @@ class Librarian:
       from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle,KeepTogether
       from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
       from reportlab.lib.units import mm
-      
+
     except ImportError, e:
       messages.pop_info(e)
       return
@@ -222,7 +223,7 @@ class Librarian:
       os.system("/usr/bin/xdg-open " + filename)
 
   def fill_booklist(self, result, append=False):
-    ''' 
+    '''
     Authors names are stored in regular text, we want so get them by
     family,first name order.  This iterates through the result and
     and appends to the liststore with the author names re-ordered.
@@ -231,7 +232,7 @@ class Librarian:
     '''
     db_query = sql()
     if not append:
-      self.booklist.clear()    
+      self.booklist.clear()
     column = self.treeview.get_column(3)
     column.set_title(_('Abstract'))
     for row in result:
@@ -261,16 +262,16 @@ class Librarian:
             #abstract = b_book['name'] + " : " + str(b_book['o_date'])
             row['mtype'] = b_book['name'] + " : " + str(b_book['o_date'])
       except: pass
-            
+
       ## If you've borrowed it from someone else.display who from in the abtract column
       if row['owner'] != getpass.getuser():
         abstract = "  " + str(row['owner'])
-         
+
       self.booklist.append([row['isbn'], author, row['title'],
       abstract,
       row['publisher'], row['city'], str(row['year']),
       row['id'], row['copies'], row['mtype']])
-      
+
 
   def get_book_list(self, selection):
     ''' Get the book lists from the databases.
@@ -296,7 +297,7 @@ class Librarian:
     elif selection == BORROWED:
       result = db_query.get_borrowed_books()
       self.fill_booklist(result)
-    
+
 
 
 
@@ -350,11 +351,11 @@ class Librarian:
       adder = add_edit()
       adder.display()
     self.get_book_list(1) # Repopulate book list.
-    
+
   def on_button_search_clicked(self, widget):
-    ''' Get the search string from entry_search, query the DB and display 
+    ''' Get the search string from entry_search, query the DB and display
     the result.
-    
+
     '''
     db_query = sql()
     search_string = self.search_string.get_text()
@@ -373,10 +374,10 @@ class Librarian:
   def treeview1_row_activated_cb(self, widget, path, col):
     self.on_button_query_clicked(None)
 
-    
+
   def on_button_export_clicked(self, widget):
     '''
-    Export the current list view to CSV.  
+    Export the current list view to CSV.
     '''
     filename = None
     db_query = sql()
@@ -386,7 +387,7 @@ class Librarian:
     dialog.set_filter(ext)
     response = dialog.run()
     if response == gtk.RESPONSE_OK:
-      filename = dialog.get_filename() 
+      filename = dialog.get_filename()
       print("Selected filepath: %s" % dialog.get_filename())
     dialog.destroy()
     logging.info(filename)
@@ -405,7 +406,7 @@ class Librarian:
             myiter = model.iter_next(myiter)
             csvwriter.writerow(row)
     return
-    
+
   def gtk_main_quit(self, widget):
     gtk.main_quit()
     quit(0)
@@ -434,11 +435,11 @@ def main():
     #Here you can do all that nasty things that take some time.
     app = Librarian()
     #We don't need splScr anymore.
-    splScr.window.destroy() 
+    splScr.window.destroy()
     app.main()
 
-  
+
 if __name__ == "__main__":
   main()
-  
-  
+
+

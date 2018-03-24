@@ -42,11 +42,11 @@ msgstr "Llyfr wedi ei marcio fel a fenthycwyd."
 
 #: add_edit.py:285
 msgid "Book has been NOT marked as borrowed."
-msgstr ""
+msgstr "NI wedi marcio llyfr fel benthyg."
 
 #: add_edit.py:299
 msgid "Book has been marked as returned."
-msgstr ""
+msgstr "Mae llyfr wedi'i farcio fel y'i dychwelwyd."
 
 #: add_edit.py:300
 msgid "Book has been NOT marked as returned."
@@ -54,11 +54,11 @@ msgstr ""
 
 #: guiscan.py:74
 msgid "To begin press scan."
-msgstr ""
+msgstr "I ddechrau sganio'r wasg."
 
 #: guiscan.py:115
 msgid "Dodgy scan, retry?"
-msgstr ""
+msgstr "Sgan Dodgy, ewch ati?"
 
 #: guiscan.py:122
 msgid ""
