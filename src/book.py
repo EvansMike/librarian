@@ -23,7 +23,12 @@
 
 import datetime
 import getpass
+import logging
 
+logger = logging.getLogger("barscan")
+logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
+DEBUG = logging.debug
+INFO = logging.info
  
 class Book(object):
     values = ['normal', 'scarce', 'rare', 'v_rare', 'valuable', '1st edition']
@@ -106,6 +111,7 @@ class Book(object):
 
     def webquery(self,isbn):
         data = self.lookup(isbn)
+        DEBUG(data)
         if data:
             self.abstract = data['abstract']
             self.isbn = data['isbn']
@@ -117,6 +123,9 @@ class Book(object):
             self.year = data['year']
             self.edited = data['edited']
             self.updated = True
+            return data
+        else:
+            return None
         
     def lookup(self, isbn):
         import lookup_books
