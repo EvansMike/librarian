@@ -87,7 +87,7 @@ class Book(object):
         err_num += (self.publisher != book.publisher) * 8
         err_num += (self.abstract != book.abstract) * 16
         err_num += (self.mtype != book.mtype) * 32
-        #err_num += (self.year != book.year) * 64
+        err_num += (self.year != book.year) * 64
         err_num += (self.city != book.city) * 128
         err_num += (self.mtype != book.mtype) * 256
         err_num += (self.where != book.where) * 512
@@ -106,16 +106,17 @@ class Book(object):
 
     def webquery(self,isbn):
         data = self.lookup(isbn)
-        self.abstract = data['abstract']
-        self.isbn = data['isbn']
-        self.title = data['title']
-        self.authors = str(data['authors'][0])
-        self.mtype = data['type']
-        self.publisher = str(data['publisher'])
-        self.city = data['city']
-        self.year = data['year']
-        self.edited = data['edited']
-        self.updated = True
+        if data:
+            self.abstract = data['abstract']
+            self.isbn = data['isbn']
+            self.title = data['title']
+            self.authors = str(data['authors'][0])
+            self.mtype = data['type']
+            self.publisher = str(data['publisher'])
+            self.city = data['city']
+            self.year = data['year']
+            self.edited = data['edited']
+            self.updated = True
         
     def lookup(self, isbn):
         import lookup_books

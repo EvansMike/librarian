@@ -38,31 +38,34 @@ class BookLookup(object):
         if not r: return None
         content = r.json()
         DEBUG(content)
-        if content['stat'] != 'unknownId':
-            content = content['list'][0]
-            print (content)
-            book = {}
-            book['isbn'] = isbn
-            #book['id'] = isbn
-            book['title'] = content['title']
-            buf = content['author']
-            book['authors'] = [x.strip('. ') for x in buf.split(';')]
-            book['year'] = content['year']
-            try:
-                book['publisher'] = content['publisher']
-                book['city'] = content['city']
-                book['language'] = content['lang']
-                book['edited'] = ''
-            except:
-                book['publisher'] = ''
-                book['city'] = ''
-                book['language'] = ''
-                book['edited'] = ''
-                pass
-            book['type'] = 'book'
-            book['abstract'] = self.google_desc(isbn)
-            return book
-        else:
+        try:
+            if content['stat'] != 'unknownId':
+                content = content['list'][0]
+                print (content)
+                book = {}
+                book['isbn'] = isbn
+                #book['id'] = isbn
+                book['title'] = content['title']
+                buf = content['author']
+                book['authors'] = [x.strip('. ') for x in buf.split(';')]
+                book['year'] = content['year']
+                try:
+                    book['publisher'] = content['publisher']
+                    book['city'] = content['city']
+                    book['language'] = content['lang']
+                    book['edited'] = ''
+                except:
+                    book['publisher'] = ''
+                    book['city'] = ''
+                    book['language'] = ''
+                    book['edited'] = ''
+                    pass
+                book['type'] = 'book'
+                book['abstract'] = self.google_desc(isbn)
+                return book
+            else:
+                return None
+        except:
             return None
 
 

@@ -85,7 +85,7 @@ if QR_CODE:
 system = platform.system() # What are we running on.
 
 ################## BEGIN scanner class #################################
-class scanner:
+class Scanner(object):
   ''' Scanner class. Scans books, queries isbndb and adds book to database,
   or CSV.  This will work stand alone hence the separate database query
   and inserts that don't rely on librarian.py.
@@ -157,39 +157,33 @@ class scanner:
         del buff,proc
         return
     proc.visible = True
-    # read at least one barcode (or until window closed)
-    proc.process_one()
-
+    # Read one barcode (or until window closed)
+    if proc.process_one():
+        logging.info(proc.results)
+        for symbol in proc.results:
+          bar = symbol.data
+          DEBUG(bar)
+          # Check if exists and increment book count if so.
+          count = db_query.get_book_count_by_isbn(bar)
+          DEBUG(count)
+          location = self.getBookLocation(bar)
+          DEBUG(location)
+          if count > 0 and location:
+            buff.insert_at_cursor (_("\n\nYou already have " \
+                + str(count) \
+                + " in the database!\n It's located at" \
+                + location \
+                + ".\n"))
+            self.text_view.set_buffer(buff)
+          if self.abook.webquery(bar) != None:
+            logging.info(self.abook.print_book())
+            buff.set_text(self.abook.print_book())
+            return
+          else: 
+            buff.set_text (_("No data returned, retry?"))
+            self.text_view.set_buffer(buff)
     # hide the preview window
     proc.visible = False
-    logging.info(proc.results)
-
-    for symbol in proc.results:
-      bar = symbol.data
-      logging.info(bar)
-      # DONE Check if exists and increment book count if so.
-      count = db_query.get_book_count_by_isbn(bar)
-      logger.info(count)
-      location = self.getBookLocation(bar)
-      if count > 0:
-        buff.insert_at_cursor (_("\n\nYou already have " \
-            + str(count) \
-            + " in the database!\n It's located at" \
-            + location \
-            + ".\n"))
-        self.text_view.set_buffer(buff)
-      if self.abook.webquery(bar) != 1:
-        logging.info(self.abook.print_book())
-        buff.set_text(self.abook.print_book())
-        del buff,proc
-        return
-      else: # Try for a DVD lookup
-        buff.set_text (_("No data returned, retry?"))
-        self.text_view.set_buffer(buff)
-        #logging.info(self.abook.print_book())
-        buff.set_text (_("Searching for DVDs\n"))
-        self.text_view.set_buffer(buff)
-    del buff,proc
 
   def getBookLocation(self, isbn):
     db_query = sql()
@@ -359,6 +353,6 @@ class scanner:
 
 # we start here.
 if __name__ == "__main__":
-	app = scanner()
+	app = Scanner()
 	gtk.main()
 

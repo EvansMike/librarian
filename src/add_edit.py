@@ -317,6 +317,7 @@ class add_edit:
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city=self.city.get_text()
+    self.mybook.year = self.year.get_text()
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.owner=self.book_owner.get_text()
     self.mybook.rating = self.rating_select.get_active()
