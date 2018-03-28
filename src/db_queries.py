@@ -500,8 +500,9 @@ class mysql:
     return self.cur.fetchall()
 
   def get_location_by_isbn(self ,isbn):
-    self.cur.execute("SELECT * FROM locations WHERE id = (SELECT location FROM books WHERE isbn = %s);",\
-      (isbn,))
+    self.cur.execute("SELECT * FROM locations WHERE id = (SELECT location \
+            FROM books WHERE isbn = %s);",\
+            (isbn,))
     return self.cur.fetchall()
     
 ########################################################################      

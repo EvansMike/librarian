@@ -168,13 +168,14 @@ class Scanner(object):
           DEBUG(count)
           location = self.getBookLocation(bar)
           DEBUG(location)
-          if count > 0 and location:
+          if count > 0 and location != None:
             buff.insert_at_cursor (_("\n\nYou already have " \
                 + str(count) \
                 + " in the database!\n It's located at" \
                 + location \
                 + ".\n"))
             self.text_view.set_buffer(buff)
+            return
           if self.abook.webquery(bar) != None:
             logging.info(self.abook.print_book())
             buff.set_text(self.abook.print_book())
@@ -189,9 +190,10 @@ class Scanner(object):
     db_query = sql()
     location_string = None
     result = db_query.get_location_by_isbn(isbn) # Could be multiple but unlikely
+    DEBUG(result)
     for row in result:
       print row
-      location_string += row
+      location_string = row['room'] + " : " + row['shelf']
     
     return location_string
     
