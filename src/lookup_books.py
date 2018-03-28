@@ -3,9 +3,9 @@
 
 import requests
 import json
-#import logging
-#logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
-#DEBUG = logging.debug
+import logging
+logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
+DEBUG = logging.debug
 
 
 class BookLookup(object):
@@ -37,35 +37,38 @@ class BookLookup(object):
         r = self.get_response(url)
         if not r: return None
         content = r.json()
-        
-        content = content['list'][0]
-        print (content)
-        book = {}
-        book['isbn'] = isbn
-        #book['id'] = isbn
-        book['title'] = content['title']
-        buf = content['author']
-        book['authors'] = [x.strip('. ') for x in buf.split(';')]
-        book['year'] = content['year']
-        try:
-            book['publisher'] = content['publisher']
-            book['city'] = content['city']
-            book['language'] = content['lang']
-            book['edited'] = ''
-        except:
-            book['publisher'] = ''
-            book['city'] = ''
-            book['language'] = ''
-            book['edited'] = ''
-            pass
-        book['type'] = 'book'
-        book['abstract'] = self.google_desc(isbn)
-        return book
+        DEBUG(content)
+        if content['stat'] != 'unknownId':
+            content = content['list'][0]
+            print (content)
+            book = {}
+            book['isbn'] = isbn
+            #book['id'] = isbn
+            book['title'] = content['title']
+            buf = content['author']
+            book['authors'] = [x.strip('. ') for x in buf.split(';')]
+            book['year'] = content['year']
+            try:
+                book['publisher'] = content['publisher']
+                book['city'] = content['city']
+                book['language'] = content['lang']
+                book['edited'] = ''
+            except:
+                book['publisher'] = ''
+                book['city'] = ''
+                book['language'] = ''
+                book['edited'] = ''
+                pass
+            book['type'] = 'book'
+            book['abstract'] = self.google_desc(isbn)
+            return book
+        else:
+            return None
 
 
 if __name__ == '__main__':
     lookup = BookLookup()
-    data = lookup.xisbn("9780241146507")
+    data = lookup.xisbn("9781447245391")
     #print data
     #data = lookup.xisbn("1565924339")
     #print data
