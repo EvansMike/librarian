@@ -50,6 +50,8 @@ _ = gettext.gettext
 
 logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
+DEBUG = logging.debug
+INFO = logging.info
 
 
 try:
@@ -63,8 +65,7 @@ except:
 	print_("GTK Not Availible")
 	sys.exit(1)
 
-#config = gconf_config.load_config()
-#config = gconf_config.gconf_config()
+
 # Read the config file
 config = config.load_config() # For file based config
 db_user = config.db_user
@@ -188,50 +189,6 @@ class scanner:
         #logging.info(self.abook.print_book())
         buff.set_text (_("Searching for DVDs\n"))
         self.text_view.set_buffer(buff)
-        ''' This is broken, getting:
-        Traceback (most recent call last):
-          File "./guiscan.py", line 188, in on_button_scan_clicked
-            import amazonlookup
-          File "/home/mikee/Projects/librarian/src/amazonlookup.py", line 23, in <module>
-            import amazonproduct
-        ImportError: No module named amazonproduct
-
-        try:
-          import amazonlookup
-          dvd_search = amazonlookup.DVDlookup()
-          if dvd_search.lookup(bar) != 1:
-            buff.insert_at_cursor (_("Found DVD:\n"))
-            buff.insert_at_cursor(str(dvd_search.Title) + "\n")
-            buff.insert_at_cursor(str(dvd_search.Director))
-            self.text_view.set_buffer(buff)
-            self.abook.isbn = bar
-            self.abook.title = str(dvd_search.Title)
-            self.abook.authors = str(dvd_search.Director) # This isn't perfect and maybe I should use K-V pairs?
-            self.abook.mtype = str(dvd_search.ProductGroup)
-            self.abook.id = str(bar)
-            #self.abook.year = 0 # Should be available but ...
-            self.abook.owner = self.owner
-            self.abook.add_date = datetime.date.today()
-          else: # Do a CD search
-            buff.set_text (_("No DVDs.\n Searching for CDs\n"))
-            self.text_view.set_buffer(buff)
-            cd_search = amazonlookup.CDlookup() # Should be able to get more data from freedb.org
-            if cd_search.lookup(bar) != 1 and cd_search.Title != '' :
-              buff.insert_at_cursor(_("CD Found:\n"))
-              self.text_view.set_buffer(buff)
-              buff.insert_at_cursor(str(cd_search.Title) + "\n")
-              buff.insert_at_cursor(str(cd_search.Artist))
-              self.abook.title = str(cd_search.Title)
-              self.abook.authors = str(cd_search.Artist)
-              self.abook.mtype = str(cd_search.ProductGroup)
-              self.abook.id = str(bar)
-              self.abook.year = 0 # Should be available but ... 
-        except: 
-          raise
-          buff.set_text (_("Could not lookup DVD or CD on Amazon"))
-          self.text_view.set_buffer(buff)
-          del buff,proc '''
-        #return
     del buff,proc
 
   def getBookLocation(self, isbn):
@@ -297,20 +254,6 @@ class scanner:
         args = ("ISBN: " + str(self.abook.id), img, )
         self.cur.execute (sql, args)
         self.db.commit()
-      #pixmap,mask = pixbuf.render_pixmap_and_mask()
-      #img.save('tmp.png', 'png')
-      # Display it in the GUI
-      #self.qr_img.set_from_image(img, mask) # may need to be gtk.image
-      #self.qr_img.set_from_file('tmp.png') # fix this, I don't like using tmp files
-      
-      '''
-      Example data extraction code
-      cursor.execute("SELECT Data FROM Images LIMIT 1")
-      fout = open('image.png','wb')
-      fout.write(cursor.fetchone()[0])
-      fout.close()
-      '''
-
 
 
   def on_button_remove_clicked(self, widget):
