@@ -323,7 +323,7 @@ class Librarian:
     '''
     # Open the scan thang
     #logging.info("Do the scan thang")
-    from guiscan import scanner
+    from guiscan import Scanner
     s = Scanner()
     self.get_book_list(ALL) # All books
 
