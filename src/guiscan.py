@@ -303,7 +303,7 @@ class Scanner(object):
     buff = self.text_view.get_buffer()
     db_query = sql()
     last_id = db_query.insert_book_object(self.abook)
-    logging.debug(last_id);
+    DEBUG(last_id);
     # We should check this for success
     if last_id == 0:
         print ("Failed to add book to database.")

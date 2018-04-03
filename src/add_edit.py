@@ -332,7 +332,7 @@ class add_edit:
   def on_button_update_clicked(self, widget):
     ''' Update the database with new info or add if not already in.'''
     if self.update_book() != 0 or self.mybook.updated: # Any changes?
-      logging.debug("Something changed so an update is needed.")
+      DEBUG("Something changed so an update is needed.")
       self.update_db()
       self.set_location()
 
@@ -366,7 +366,7 @@ class add_edit:
     dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_QUESTION,
         gtk.BUTTONS_YES_NO, "Are you sure you want to delete this book?")
     dlg_val = dialog.run()
-    logging.debug(dlg_val)
+    DEBUG(dlg_val)
     dialog.destroy()
     del dialog
     if dlg_val == -9:return
