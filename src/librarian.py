@@ -159,7 +159,7 @@ class Librarian:
     Export the entire database to CSV when called from the command line.
     '''
     db_query = sql()
-    result, numrows = db_query.get_all_books()
+    result, numrows = db_query.get_all_books
     with open('books.csv', 'wb') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter=',',
                             quotechar='"') #, quoting=csv.QUOTE_MINIMAL)
