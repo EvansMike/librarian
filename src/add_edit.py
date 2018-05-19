@@ -98,6 +98,7 @@ class add_edit:
     gtk.main()
     pass
 
+
   def on_button_close_clicked(self, widget):
     ''' Check if any changed made and pop up worning
     else close the dialog.
@@ -204,6 +205,7 @@ class add_edit:
       self.lent.set_active(False)
     pass
 
+
   def populate_locations(self):
     db_query = sql()
     locations = db_query.get_locations()
@@ -221,6 +223,7 @@ class add_edit:
         return
       n += 1
 
+
   def populate_values(self):
       for value in book.Book.values:
         self.values_liststore.append([value])
@@ -237,13 +240,15 @@ class add_edit:
       lid = self.location_liststore[idx][0]
       self.mybook.where = lid
       db_query.update_book_location(self.mybook.id, lid)
-    return
+      return
+      
 
   def populate_rating(self, rating):
     ''' Set the rating dropdown to the current book's rating'''
     # rating = 3 # Test
     self.rating_select.set_active(rating)
     return
+
     
   def on_button_add_location_clicked_cb(self,widget):
     '''
@@ -255,7 +260,6 @@ class add_edit:
     # Update the combobox liststore
     self.populate_locations()
     self.status.set_text(_("Location changed."))
-
 
 
   def populate(self,book_id):
@@ -329,12 +333,14 @@ class add_edit:
     self.status.set_text(_("Book updated."))
     return self.orig_book.compare(self.mybook)
 
+
   def on_button_update_clicked(self, widget):
     ''' Update the database with new info or add if not already in.'''
     if self.update_book() != 0 or self.mybook.updated: # Any changes?
       DEBUG("Something changed so an update is needed.")
       self.update_db()
       self.set_location()
+
 
   def update_db(self):
     db_query = sql()
@@ -360,6 +366,7 @@ class add_edit:
       self.orig_book = copy.copy(book) # So we can compare again.
     del book
 
+
   def on_button_remove_clicked(self, widget):
     ''' Remove selected book from database '''
     db_query = sql()
@@ -373,6 +380,7 @@ class add_edit:
     db_query.remove_book(self.mybook.id)
     self.status.set_text (_(" Book has been removed."))
     logging.info("Book has been removed.")
+
 
   def on_comboboxentry1_changed(self,widget):
     ''' Do things when selection is changed
@@ -450,6 +458,7 @@ class add_edit:
         else: self.status.set_text(_("Book has been NOT marked as returned."))
     self.copies.set_text(str(self.orig_book.copies))
 
+
   def on_button_new_user_clicked(self, widget):
     ''' Add a new borrower to the database.  Need to update dropdown
     when we finish this function.  We should be able to read the contents
@@ -466,6 +475,9 @@ class add_edit:
     self.populate_borrowers()
 
 ############## END add_edit class ######################################
+
+
+
 # For testing or stand alone
 if __name__ == "__main__":
   app = add_edit()
