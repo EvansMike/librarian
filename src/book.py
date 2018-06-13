@@ -110,6 +110,9 @@ class Book(object):
         else: return False
 
     def webquery(self,isbn):
+        if isbn == '':
+            logging.warning("No ISBN provided")
+            return
         data = self.lookup(isbn)
         DEBUG(data)
         if data:
