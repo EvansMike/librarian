@@ -87,7 +87,7 @@ class BookLookup(object):
         DEBUG(book['authors'])
         book['year'] = content['Year']
         book['publisher'] = content['Publisher'] 
-        book['abstract']  = isbnlib.desc(str(ISBN))
+        book['abstract']  = isbnlib.desc(str(ISBN)).replace('\n',' ')
         book['type'] = 'book'
         return book
         
