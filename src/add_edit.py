@@ -120,11 +120,12 @@ class add_edit:
       del dialog
       self.on_destroy(widget)
       if dlg_val == gtk.RESPONSE_YES:
-        logging.info("Saving changes");  
+        INFO("Saving changes");  
         self.update_book()
         self.update_db()
       else: #no
-        self.on_button_update_clicked(widget)
+        INFO("NOT saving changes")
+        #self.on_button_update_clicked(widget)
         self.on_destroy(widget)
 
 
@@ -359,7 +360,7 @@ class add_edit:
     #check for changes if we have a copy of the original data.
     # If the book is not empty
     else:
-      logging.info("Something changed so an update is needed")
+      INFO("Something changed so an update is needed")
       db_query.update_book(book, book.id)
       db_query.insert_unique_author(book.authors)
       self.status.set_text(_(" Book has been updated."))
