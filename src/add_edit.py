@@ -105,14 +105,14 @@ class add_edit:
     '''
     updated = self.update_book()
     if self.mybook.updated == False:
-      logging.info("Closing without saving.")
+      INFO("Closing without saving.")
       if __name__ == "__main__":
         gtk.main_quit()
       else:
         self.window.hide()
     else: # pop up an are you sure dialog.
-      logging.info(updated)
-      logging.info("Opening a dialog to ask to save changes")
+      INFO(updated)
+      INFO("Opening a dialog to ask to save changes")
       dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_QUESTION,
             gtk.BUTTONS_YES_NO, "Changes have be made.\nDo you want to save changes?")
       dlg_val = dialog.run()
@@ -142,7 +142,7 @@ class add_edit:
       update the database and close the window
     '''
     try:
-      logging.info(self.isbn.get_text())
+      INFO(self.isbn.get_text())
       self.mybook.webquery(self.isbn.get_text())
       if self.mybook.isbn != "":
           self.isbn.set_text(self.mybook.isbn)
@@ -157,7 +157,7 @@ class add_edit:
     except:
       pass
     if self.mybook.title == '':
-      logging.info(_("No book found"))
+      INFO(_("No book found"))
       d = gtk.Dialog()
       d.add_buttons(gtk.STOCK_OK, 1)
       label = gtk.Label(_('No Book found for this ISBN!'))
@@ -380,7 +380,7 @@ class add_edit:
     if dlg_val == -9:return
     db_query.remove_book(self.mybook.id)
     self.status.set_text (_(" Book has been removed."))
-    logging.info("Book has been removed.")
+    INFO("Book has been removed.")
 
 
   def on_comboboxentry1_changed(self,widget):
