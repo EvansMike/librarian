@@ -45,8 +45,8 @@ import i18n
 _ = i18n.language.gettext
 
 #logger = logging.getLogger("librarian")
-logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
-logging.disable(logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
+#logging.disable(logging.DEBUG)
 DEBUG = logging.debug
 INFO = logging.info
 
@@ -75,11 +75,28 @@ NULL, ALL, BORROWED = range(3)
 parser = argparse.ArgumentParser()
 parser.add_argument('--export', action='store_true', help='Export the books as a CSV file.')
 parser.add_argument('--version', action='version', version=version.__version__)
+parser.add_argument("-v", "--verbose", help="Output INFO statements", action="store_true")
+parser.add_argument("-d", "--debug", help="Output DEBUG and INFO statements",  action="store_true")
+
+args = parser.parse_args()
+
+# Set up debugging output level
+logging.basicConfig(level=logging.INFO, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
+if args.verbose:
+    logging.disable(logging.DEBUG)
+elif args.debug:
+    pass
+    
+else:
+    logging.disable(logging.DEBUG)
+    logging.disable(logging.INFO)
+
 
 class SplashScreen():
   def __init__(self):
     import time
-    DEBUG('Splish splash')
+    INFO('Splish')
+    DEBUG('Splash')
     self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
     self.window.set_decorated(False)
     self.version = "Version: " + version.__version__
@@ -159,7 +176,7 @@ class Librarian:
     Export the entire database to CSV when called from the command line.
     '''
     db_query = sql()
-    result, numrows = db_query.get_all_books
+    result, numrows = db_query.get_all_books()
     with open('books.csv', 'wb') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter=',',
                             quotechar='"') #, quoting=csv.QUOTE_MINIMAL)
@@ -421,10 +438,10 @@ class Librarian:
 def main():
   args = parser.parse_args()
   if args.export:
-        print ("I is exporting yo shit to a CSV.")
+        print ("Exporting books to a CSV.")
         app = Librarian()
         app.export_csv()
-        print ("I is done innit.")
+        print ("Books exported.")
         quit(0)
   else:
     import time
