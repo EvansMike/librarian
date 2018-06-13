@@ -4,12 +4,12 @@
 import requests
 import json
 import logging
+import unittest
 #logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
 DEBUG = logging.debug
 
 
 class BookLookup(object):
-
     def get_response(self, url):
         ''' Get and test the response.
         @param The url of the request.
@@ -22,6 +22,7 @@ class BookLookup(object):
                 return r
             retries -= 1
         return None
+
     
     def google_desc(self, isbn):
         url = "https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn} \
@@ -30,6 +31,7 @@ class BookLookup(object):
         r = self.get_response(url)
         content = r.json()
         return content['items'][0]['volumeInfo']['description'].encode('utf8')
+
     
     def xisbn(self, isbn):
         url = "http://xisbn.worldcat.org/webservices/xid/isbn/{isbn}? \
@@ -90,12 +92,27 @@ class BookLookup(object):
         book['abstract']  = isbnlib.desc(str(ISBN)).replace('\n',' ')
         book['type'] = 'book'
         return book
-        
-        
+
+
+################################################################################
+# Test Malarky
+
+class TestBookLookup(unittest.TestCase):
+    ''' Test that we are getting what we expect from the isbnlib lookup.
+    '''
+    lookup = BookLookup()
+    data = lookup.isbnlib("1857988477")
+    
+    def test_lookup(self):
+        #lookup = BookLookup()
+        #data = lookup.isbnlib("1857988477")
+        self.assertEqual(self.data['authors'],u'Philip K. Dick')
+        self.assertEqual(self.data['isbn'],"1857988477")
+
+
+    def test_print(self):
+        print self.data
+
 
 if __name__ == '__main__':
-    lookup = BookLookup()
-    #data = lookup.xisbn("1857988477")
-    #print data
-    data = lookup.isbnlib("1857988477")
-    print data
+    unittest.main()
