@@ -4,7 +4,7 @@
 import requests
 import json
 import logging
-logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
+#logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
 DEBUG = logging.debug
 
 
@@ -67,11 +67,35 @@ class BookLookup(object):
                 return None
         except:
             return None
+        
 
+    def isbnlib(self,ISBN):
+        import isbnlib
+        book = {}
+        formatter = isbnlib.registry.bibformatters['json']
+        content = (isbnlib.meta(str(ISBN)))
+        book['publisher'] = '' # These may not exists in the results
+        book['city'] = ''
+        book['language'] =  content['Language']
+        book['edited'] = ''
+        try: book['edited'] = content['Edited']
+        except: pass
+        
+        book['isbn'] = ISBN
+        book['title'] = content['Title']
+        book['authors'] = ', '.join(content['Authors'])
+        DEBUG(book['authors'])
+        book['year'] = content['Year']
+        book['publisher'] = content['Publisher'] 
+        book['abstract']  = isbnlib.desc(str(ISBN))
+        book['type'] = 'book'
+        return book
+        
+        
 
 if __name__ == '__main__':
     lookup = BookLookup()
-    data = lookup.xisbn("9781447245391")
+    #data = lookup.xisbn("1857988477")
     #print data
-    #data = lookup.xisbn("1565924339")
-    #print data
+    data = lookup.isbnlib("1857988477")
+    print data

@@ -116,7 +116,7 @@ class Book(object):
             self.abstract = data['abstract']
             self.isbn = data['isbn']
             self.title = data['title']
-            self.authors = str(data['authors'][0])
+            self.authors = str(data['authors'])
             self.mtype = data['type']
             self.publisher = str(data['publisher'])
             self.city = data['city']
@@ -130,7 +130,7 @@ class Book(object):
     def lookup(self, isbn):
         import lookup_books
         lookup = lookup_books.BookLookup()
-        data = lookup.xisbn(str(isbn))
+        data = lookup.isbnlib(str(isbn))
         return data
 ########### END CLASS book ################
 
