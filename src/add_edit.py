@@ -104,14 +104,14 @@ class add_edit:
     else close the dialog.
     '''
     updated = self.update_book()
-    if self.mybook.updated == False:
+    DEBUG(updated)
+    if updated == 0:
       INFO("Closing without saving.")
       if __name__ == "__main__":
         gtk.main_quit()
       else:
         self.window.hide()
     else: # pop up an are you sure dialog.
-      INFO(updated)
       INFO("Opening a dialog to ask to save changes")
       dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_QUESTION,
             gtk.BUTTONS_YES_NO, "Changes have be made.\nDo you want to save changes?")
@@ -123,9 +123,9 @@ class add_edit:
         INFO("Saving changes");  
         self.update_book()
         self.update_db()
+        self.set_location()
       else: #no
         INFO("NOT saving changes")
-        #self.on_button_update_clicked(widget)
         self.on_destroy(widget)
 
 
@@ -288,7 +288,7 @@ class add_edit:
     self.orig_book.abstract = row['abstract']
     self.orig_book.publisher = row['publisher']
     self.orig_book.city = row['city']
-    self.orig_book.year = row['year']
+    self.orig_book.year = str(row['year']).strip()
     self.orig_book.copies = row['copies']
     self.orig_book.where = row['location']
     self.orig_book.owner = row['owner']
@@ -321,14 +321,16 @@ class add_edit:
     self.mybook.abstract = textbuffer.get_text(startiter, enditer)
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
-    self.mybook.city=self.city.get_text()
+    self.mybook.city = self.city.get_text().strip()
+    DEBUG(self.mybook.year)
     self.mybook.year = self.year.get_text()
-    self.mybook.mtype=self.mtype.get_text()
-    self.mybook.owner=self.book_owner.get_text()
+    DEBUG(self.mybook.year)
+    self.mybook.mtype = self.mtype.get_text()
+    self.mybook.owner = self.book_owner.get_text()
     self.mybook.rating = self.rating_select.get_active()
     self.mybook.value = self.values_dropdown.get_active()
     self.set_location()
-    if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
+    #if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
 
     # Is the book on loan and to whome?
     self.status.set_text(_("Book updated."))
