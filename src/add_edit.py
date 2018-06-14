@@ -137,26 +137,25 @@ class add_edit:
 
 
   def on_button_isbn_lookup_clicked(self,widget):
-    ''' Lookup the book on XisbnQuery
-      returns biblio.webquery.bibrecord.BibRecord
-      update the database and close the window
+    ''' Lookup the book by its ISBN
     '''
+    mybook = copy.copy(self.mybook)
     try:
       INFO(self.isbn.get_text())
-      self.mybook.webquery(self.isbn.get_text())
+      mybook.webquery(self.isbn.get_text())
       if self.mybook.isbn != "":
-          self.isbn.set_text(self.mybook.isbn)
-      self.title.set_text(self.mybook.title)
-      self.author.set_text(str(self.mybook.authors))
+          self.isbn.set_text(mybook.isbn)
+      self.title.set_text(mybook.title)
+      self.author.set_text(str(mybook.authors))
       abs_buffer = self.abstract.get_buffer()
-      abs_buffer.set_text(self.mybook.abstract)
-      self.mtype.set_text(self.mybook.mtype)
-      self.publisher.set_text(self.mybook.publisher)
-      self.city.set_text(self.mybook.city)
-      self.year.set_text(self.mybook.year)
+      abs_buffer.set_text(mybook.abstract)
+      self.mtype.set_text(mybook.mtype)
+      self.publisher.set_text(mybook.publisher)
+      self.city.set_text(mybook.city)
+      self.year.set_text(mybook.year)
     except:
       pass
-    if self.mybook.title == '':
+    if mybook.title == '':
       INFO(_("No book found"))
       d = gtk.Dialog()
       d.add_buttons(gtk.STOCK_OK, 1)
