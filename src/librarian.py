@@ -86,7 +86,6 @@ if args.verbose:
     logging.disable(logging.DEBUG)
 elif args.debug:
     pass
-    
 else:
     logging.disable(logging.DEBUG)
     logging.disable(logging.INFO)
@@ -182,12 +181,6 @@ class Librarian:
                             quotechar='"') #, quoting=csv.QUOTE_MINIMAL)
         for row in result:
            csvwriter.writerow([row['mtype'],row['author'], row['title']])
-        #import calibre
-        #cal = calibre.calibre()
-        #e_books = []
-        #cal.insert_data(e_books)
-        #for eb in e_books:
-        #   csvwriter.writerow(["ebook", eb[1], eb[2]])
     return
 
 
