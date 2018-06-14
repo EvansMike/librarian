@@ -95,7 +95,5 @@ class BookLookup(object):
 
 if __name__ == '__main__':
     lookup = BookLookup()
-    #data = lookup.xisbn("1857988477")
-    #print data
     data = lookup.isbnlib("1857988477")
     print data
