@@ -42,6 +42,7 @@ import locale
 import gettext
 import logging
 
+
 locale.setlocale(locale.LC_ALL, '')
 APP = 'librarian'
 gettext.textdomain(APP)
@@ -284,6 +285,9 @@ class mysql:
   '''
   import MySQLdb
   import MySQLdb.cursors
+  import warnings
+
+  warnings.filterwarnings('ignore', category=MySQLdb.Warning)
   def __init__(self):
     self.db = self.MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
     self.cur = self.db.cursor(self.MySQLdb.cursors.DictCursor)
