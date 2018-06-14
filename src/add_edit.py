@@ -136,7 +136,7 @@ class add_edit:
       self.window.hide()
 
 
-  def isbn_lookup(self,widget):
+  def on_button_isbn_lookup_clicked(self,widget):
     ''' Lookup the book on XisbnQuery
       returns biblio.webquery.bibrecord.BibRecord
       update the database and close the window
@@ -317,14 +317,12 @@ class add_edit:
     self.mybook.title=self.title.get_text()
     self.mybook.authors=self.author.get_text()
     textbuffer = self.abstract.get_buffer()
-    startiter, enditer = textbuffer.get_bounds()  
+    startiter, enditer = textbuffer.get_bounds()
     self.mybook.abstract = textbuffer.get_text(startiter, enditer)
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city = self.city.get_text().strip()
-    DEBUG(self.mybook.year)
     self.mybook.year = self.year.get_text()
-    DEBUG(self.mybook.year)
     self.mybook.mtype = self.mtype.get_text()
     self.mybook.owner = self.book_owner.get_text()
     self.mybook.rating = self.rating_select.get_active()
