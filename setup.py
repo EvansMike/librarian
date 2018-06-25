@@ -4,7 +4,7 @@
 from setuptools import setup
 
 try:
-    from src import version    
+    from src import version
 except: # If we can't find it build it
     import os
     from subprocess import call
@@ -97,7 +97,7 @@ setup (
               'librarian = librarian.librarian:main'
           ]},
       #data_files=[("share/applications",["desktop/librarian.desktop"])],
-      #package_data={'librarian': ['po/*', 'ui/*','librarian.png']},
+      package_data={'librarian': ['po/*', 'ui/*','librarian.png']},
       #scripts=['bin/librarian'],
       cmdclass=cmdclass
 )
