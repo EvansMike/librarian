@@ -22,6 +22,7 @@ class BookLookup(object):
                 return r
             retries -= 1
         return None
+
     
     def google_desc(self, isbn):
         url = "https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn} \
@@ -30,44 +31,7 @@ class BookLookup(object):
         r = self.get_response(url)
         content = r.json()
         return content['items'][0]['volumeInfo']['description'].encode('utf8')
-    
-    def xisbn(self, isbn):
-        url = "http://xisbn.worldcat.org/webservices/xid/isbn/{isbn}? \
-        method=getMetadata&format=json&fl=title,author,year,publisher,lang,city".format(isbn=isbn)
-        r = self.get_response(url)
-        if not r: return None
-        content = r.json()
-        DEBUG(content)
-        try:
-            if content['stat'] != 'unknownId':
-                content = content['list'][0]
-                print (content)
-                book = {}
-                book['isbn'] = isbn
-                #book['id'] = isbn
-                book['title'] = content['title']
-                buf = content['author']
-                book['authors'] = [x.strip('. ') for x in buf.split(';')]
-                book['year'] = content['year']
-                try:
-                    book['publisher'] = content['publisher']
-                    book['city'] = content['city']
-                    book['language'] = content['lang']
-                    book['edited'] = ''
-                except:
-                    book['publisher'] = ''
-                    book['city'] = ''
-                    book['language'] = ''
-                    book['edited'] = ''
-                    pass
-                book['type'] = 'book'
-                book['abstract'] = self.google_desc(isbn)
-                return book
-            else:
-                return None
-        except:
-            return None
-        
+
 
     def isbnlib(self,ISBN):
         import isbnlib
