@@ -307,7 +307,8 @@ class add_edit:
 
 
   def update_book(self):
-    ''' Update any changes from GUI
+    '''
+    Update any changes from GUI
     @return Error value from book.compare(book)
     '''
     self.orig_book = copy.copy(self.mybook) # Make a copy
@@ -326,9 +327,6 @@ class add_edit:
     self.mybook.owner = self.book_owner.get_text()
     self.mybook.rating = self.rating_select.get_active()
     self.mybook.value = self.values_dropdown.get_active()
-    self.set_location()
-    #if self.year.get_text() != '' : self.mybook.year=self.year.get_text()
-
     # Is the book on loan and to whome?
     self.status.set_text(_("Book updated."))
     return self.orig_book.compare(self.mybook)
@@ -346,12 +344,14 @@ class add_edit:
     db_query = sql()
     book = copy.copy(self.mybook)
     result = db_query.get_by_id(self.mybook.id)
-    if self.mybook.id==0: return
+    if self.mybook.id == 0: return
     if book.is_empty(): return # Do nothing if no data
     if result == None: # If no book in DB, add it
     # Make sure we don't add an empty book.  We could also use this to
       if not str.isdigit(book.year.encode('ascii', 'ignore')): book.year = 0 #DB query fix for empty date field.
-      db_query.insert_book_object(book)
+      book_id = db_query.insert_book_object(book)
+      book.id = book_id # Update the book with it's new id from the DB.
+      self.set_location()
       INFO("New book has been inserted.")
       self.status.set_text(_("New book has been inserted."))
       self.orig_book = copy.copy(book) # So we can compare again.
@@ -482,4 +482,3 @@ class add_edit:
 if __name__ == "__main__":
   app = add_edit()
   app.display()
-
