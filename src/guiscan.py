@@ -110,6 +110,7 @@ class Scanner(object):
         builder.connect_signals(self)
         self.text_view = builder.get_object("textview1")
         self.qr_img = builder.get_object("image1")
+        self.button_scan = builder.get_object("button_add")
         self.cur = None
         self.owner = getpass.getuser() # Assume the logged in person owns the book.
         try:
@@ -119,13 +120,10 @@ class Scanner(object):
             self.db = False
         if self.db:
             self.cur = self.db.cursor()
-
-
-        (dev, ep) = self.find_scanner()
-        INFO("We have a real scanner")
-        if dev:
-            self.real_scanner(dev, ep)
-
+        self.window.show_all()
+        dev, ep = self.find_scanner()
+        if dev: self.real_scanner(dev, ep)
+        
 
 ################################################################################
     def find_scanner(self):
@@ -137,9 +135,9 @@ class Scanner(object):
             return (None, None)
         # detach the kernel driver so we can use interface (one user per interface)
         reattach = False
-        print(dev.is_kernel_driver_active(0))
+        DEBUG(dev.is_kernel_driver_active(0))
         if dev.is_kernel_driver_active(0):
-            print("Detaching kernel driver")
+            DEBUG("Detaching kernel driver")
             reattach = True
             dev.detach_kernel_driver(0)
         # set the active configuration; with no arguments, the first configuration
@@ -162,11 +160,13 @@ class Scanner(object):
                   usb.util.endpoint_direction(e.bEndpointAddress) == \
                   usb.util.ENDPOINT_IN)
         assert ep is not None
+        if dev: self.button_scan.set_sensitive(False)
         return (dev, ep)
 
 
 ################################################################################
     def real_scanner(self, dev, ep):
+        import time
         DEBUG(dev)
         DEBUG(ep)
         while 1:
@@ -177,17 +177,23 @@ class Scanner(object):
                 st = st.rstrip()[1:]
                 # barcode saved to str
                 DEBUG(st)
+                if len(st) > 1 :
+                    self.add_book(None, st)
+                    DEBUG("BREAK")
+                    break
             except Exception as e:
+                DEBUG(e)
                 error_code = e.args[0]
                 # 110 is timeout code, expected
                 if error_code == 110:
                     DEBUG("device connected, waiting for input")
-            else:
+
+            '''else:
                 DEBUG(e)
                 DEBUG("device disconnected")
-                (dev, ep) = find_scanner()
+                (dev, ep) = self.find_scanner()
                 if dev is None and ep is None:
-                    time.sleep(1)
+                '''
 
 
 ################################################################################
@@ -197,6 +203,13 @@ class Scanner(object):
         TODO: Need to find how to do this on Windoze, gstreamer for both?
         TODO: If we already have a book display its location.
         '''
+        ## Is there a real scanner attached?
+        (dev, ep) = self.find_scanner()
+        self.button_scan.set_sensitive(False)
+        INFO("We have a real scanner")
+        if dev and ep:
+            isbn = self.real_scanner(dev, ep)
+            return
         db_query = sql()
         device = None
         buff = self.text_view.get_buffer()
@@ -238,11 +251,19 @@ class Scanner(object):
             logging.info(proc.results)
             for symbol in proc.results:
                 bar = symbol.data
-                DEBUG(bar)
-                # Check if exists and increment book count if so.
-                count = db_query.get_book_count_by_isbn(bar)
-                DEBUG(count)
-                location = self.getBookLocation(bar)
+                self.add_book(proc, bar)
+
+                
+################################################################################
+    def add_book(self, proc, isbn):
+        try:
+            DEBUG(isbn)
+            db_query = sql()
+            # Check if exists and increment book count if so.
+            count = db_query.get_book_count_by_isbn(isbn)
+            DEBUG(count)
+            if count:
+                location = self.getBookLocation(isbn)
                 DEBUG(location)
                 if count > 0 and location != None:
                     buff.insert_at_cursor (_("\n\nYou already have " \
@@ -252,17 +273,19 @@ class Scanner(object):
                         + ".\n"))
                     self.text_view.set_buffer(buff)
                     return
-                if self.abook.webquery(bar) != None:
-                    logging.info(self.abook.print_book())
-                    buff.set_text(self.abook.print_book())
-                    return
-                else:
-                    buff.set_text (_("No data returned, retry?"))
-                    self.text_view.set_buffer(buff)
-        # hide the preview window
-        proc.visible = False
-
-
+            if self.abook.webquery(isbn) != None:
+                logging.info(self.abook.print_book())
+                buff.set_text(self.abook.print_book())
+                return
+            else:
+                buff.set_text (_("No data returned, retry?"))
+                self.text_view.set_buffer(buff)
+            # hide the preview window
+            if proc: proc.visible = False
+        except Exception as e:
+            DEBUG(e)
+            
+        
 ################################################################################
     def getBookLocation(self, isbn):
         db_query = sql()
