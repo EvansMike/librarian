@@ -98,8 +98,8 @@ class Scanner(object):
 
     '''
     def __init__(self):
-        dev = None
-        ep = None
+        self.dev = None
+        self.ep = None
         self.abook = book.Book()
         qr_img = ""
         #vid_dev = "/dev/video0" # Need to scan for this and make it work in windows?
@@ -120,18 +120,25 @@ class Scanner(object):
             self.db = False
         if self.db:
             self.cur = self.db.cursor()
-        self.window.show_all()
-        dev, ep = self.find_scanner()
-        if dev: self.real_scanner(dev, ep)
-        
+        self.window.connect( "visibility-notify-event", self.get_scanner)
+        self.window.show()
+        gtk.main()
+
 
 ################################################################################
-    def find_scanner(self):
+    def get_scanner(self, widget, event):
+        self.dev, self.ep = self.find_scanner(self.dev, self.ep)
+        ##if self.dev:
+        #    real_scanner()
+            
+        
+################################################################################
+    def find_scanner(self, dev, ep):
         # find our zebra device
         dev = usb.core.find(idVendor = 0x05e0, idProduct = 0x0800)
         # was it found ?
         if dev is None:
-            print('Device not found (meaning it is disconnected)')
+            INFO('Device not found (meaning it is disconnected)')
             return (None, None)
         # detach the kernel driver so we can use interface (one user per interface)
         reattach = False
@@ -160,19 +167,20 @@ class Scanner(object):
                   usb.util.endpoint_direction(e.bEndpointAddress) == \
                   usb.util.ENDPOINT_IN)
         assert ep is not None
+        # We don't need the scan button with a real scanner.
         if dev: self.button_scan.set_sensitive(False)
         return (dev, ep)
 
 
 ################################################################################
-    def real_scanner(self, dev, ep):
+    def real_scanner(self):
         import time
-        DEBUG(dev)
-        DEBUG(ep)
+        DEBUG(self.dev)
+        DEBUG(self.ep)
         while 1:
             try:
                 # read data
-                data = dev.read(ep.bEndpointAddress, ep.wMaxPacketSize * 2, 1000)
+                data = self.dev.read(self.ep.bEndpointAddress, self.ep.wMaxPacketSize * 2, 1000)
                 st = ''.join(chr(i) if i > 0 and i < 128 else '' for i in data)
                 st = st.rstrip()[1:]
                 # barcode saved to str
@@ -468,4 +476,4 @@ class Scanner(object):
 # we start here.
 if __name__ == "__main__":
     app = Scanner()
-    gtk.main()
+    #gtk.main()
