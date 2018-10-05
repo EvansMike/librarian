@@ -123,9 +123,10 @@ class Scanner(object):
         self.dev, self.ep = self.find_scanner()
         self.window.show()
         if self.dev:
+            self.button_scan.set_sensitive(False)
             gtk.gdk.threads_init()
             thread = threading.Thread(target=self.real_scanner)
-            thread.daemon = True
+            #thread.daemon = True
             thread.start()
         gtk.main()
         
@@ -188,6 +189,7 @@ class Scanner(object):
 
 ################################################################################
     def real_scanner(self):
+        import re
         lu = False
         print "Waiting to read..."
         st = None
@@ -203,7 +205,6 @@ class Scanner(object):
                 if not lu:
                     print "Waiting to read..."
                 lu = True
-
             except usb.core.USBError as e:
                 if e.args == (110,'Operation timed out') and lu:
                     if len(data) < DATA_SIZE:
@@ -212,8 +213,13 @@ class Scanner(object):
                     else:
                         st = 'Nope'
                         break   # Code lu
-            #INFO(st)
-            if st: self.add_book(None, st)
+            
+            if st:
+                regex = re.compile('[^a-zA-Z0-9]')
+                st = regex.sub('', st)
+                DEBUG(st)
+                self.add_book(None, st)
+                
 
 ################################################################################
     def on_button_scan_clicked(self, widget):
@@ -273,14 +279,14 @@ class Scanner(object):
                 
 ################################################################################
     def add_book(self, proc, isbn):
-        try:
-            #buff = self.text_view.get_buffer()
-            DEBUG(isbn)
-            db_query = sql()
-            # Check if exists and increment book count if so.
-            count = db_query.get_book_count_by_isbn(isbn)
-            DEBUG(count)
-            if count:
+        #buff = self.text_view.get_buffer()
+        DEBUG(isbn)
+        db_query = sql()
+        # Check if exists and increment book count if so.
+        count = db_query.get_book_count_by_isbn(isbn)
+        DEBUG(count)
+        if count:
+            try:
                 location = self.getBookLocation(isbn)
                 DEBUG(location)
                 if count > 0 and location != None:
@@ -292,12 +298,14 @@ class Scanner(object):
                         + ".\n"))
                     self.text_view.set_buffer(buff)
                     return
+            except Exception as e:
+                DEBUG(e)
+        try: 
             if self.abook.webquery(isbn) != None:
                 INFO(self.abook.print_book())
                 buff = self.text_view.get_buffer()
                 buff.set_text(self.abook.print_book())
                 self.text_view.set_buffer(buff)
-                return
             else:
                 buff.set_text (_("No data returned, retry?"))
                 self.text_view.set_buffer(buff)
@@ -305,10 +313,10 @@ class Scanner(object):
             if proc: proc.visible = False
         except Exception as e:
             buff = self.text_view.get_buffer()
-            buff.set_text(repr(e.message))
+            buff.set_text("No book with ISBN " + isbn + " found")
+            #buff.set_text(repr(e.message))
             self.text_view.set_buffer(buff)
             DEBUG(e)
-            
         
 ################################################################################
     def getBookLocation(self, isbn):
