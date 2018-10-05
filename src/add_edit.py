@@ -22,6 +22,8 @@ TODO:
   TODO: Make the GUI into a proper dialog.
 '''
 
+import usb.core
+import usb.util
 import MySQLdb
 import sys, os
 import logging
@@ -49,6 +51,8 @@ class add_edit:
   ''' Interface to manipulate book details.
   '''
   def __init__(self):
+    self.dev = None
+    self.ep = None
     self.borrowers = 0
     builder = gtk.Builder()
     self.gladefile = os.path.join(os.path.dirname(__file__),"ui/edit_book.glade")
@@ -90,7 +94,7 @@ class add_edit:
 
     self.lent_select.set_model( self.lentlist)
     self.lent_select.set_text_column(1)
-
+    self.dev, self.ep = self.find_scanner()
     self.o_date = ''
 
 
@@ -99,6 +103,47 @@ class add_edit:
     pass
 
 
+  def find_scanner(self):
+    # find our zebra device
+    dev = usb.core.find(idVendor = 0x05e0, idProduct = 0x0800)
+    # was it found ?
+    if dev is None:
+        INFO('Device not found (meaning it is disconnected)')
+        return (None, None)
+    dev.reset()
+    # detach the kernel driver so we can use interface (one user per interface)
+    if dev.is_kernel_driver_active(0):
+        try:
+            dev.detach_kernel_driver(0)
+            INFO("kernel driver detached")
+        except usb.core.USBError as e:
+            sys.exit("Could not detach kernel driver: %s" % str(e))
+            dev.reset()
+    # set the active configuration; with no arguments, the first configuration
+    # will be the active one
+    try:
+        dev.set_configuration()
+    except Exception as e:
+        print e
+    # get an endpoint instance
+    cfg = dev.get_active_configuration()
+    interface_number = cfg[(0, 0)].bInterfaceNumber
+    alternate_setting = usb.control.get_interface(dev, interface_number)
+    intf = usb.util.find_descriptor(
+          cfg, bInterfaceNumber = interface_number,
+          bAlternateSetting = alternate_setting
+    )
+
+    ep = usb.util.find_descriptor(
+          intf,
+          # match the first OUT endpoint
+          custom_match = \
+          lambda e: \
+              usb.util.endpoint_direction(e.bEndpointAddress) == \
+              usb.util.ENDPOINT_IN)
+    assert ep is not None
+    # We don't need the scan button with a real scanner.
+    return (dev, ep)
 
 
   def on_button_close_clicked(self, widget):

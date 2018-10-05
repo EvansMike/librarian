@@ -62,7 +62,7 @@
             <property name="can_focus">False</property>
             <property name="homogeneous">True</property>
             <child>
-              <object class="GtkButton" id="button_add">
+              <object class="GtkButton" id="button_scan">
                 <property name="label" translatable="yes">SCAN</property>
                 <property name="width_request">129</property>
                 <property name="height_request">43</property>

@@ -110,7 +110,7 @@ class Scanner(object):
         builder.connect_signals(self)
         self.text_view = builder.get_object("textview1")
         self.qr_img = builder.get_object("image1")
-        self.button_scan = builder.get_object("button_add")
+        self.button_scan = builder.get_object("button_scan")
         self.cur = None
         self.owner = getpass.getuser() # Assume the logged in person owns the book.
         try:
@@ -120,36 +120,47 @@ class Scanner(object):
             self.db = False
         if self.db:
             self.cur = self.db.cursor()
-        self.window.connect( "visibility-notify-event", self.get_scanner)
+        self.dev, self.ep = self.find_scanner()
+        #self.window.connect( "visibility-notify-event", self.get_scanner)
         self.window.show()
+        #self.real_scanner(False)
         gtk.main()
 
 
 ################################################################################
     def get_scanner(self, widget, event):
-        self.dev, self.ep = self.find_scanner(self.dev, self.ep)
-        ##if self.dev:
-        #    real_scanner()
-            
+        self.window.connect( "visibility-notify-event", self.null)
+        self.dev, self.ep = self.find_scanner()
+        if self.dev:
+            self.real_scanner()
+        usb.util.dispose_resources(self.dev)
+    def null(self, widget, event):
+        return
+
         
 ################################################################################
-    def find_scanner(self, dev, ep):
+    def find_scanner(self):
         # find our zebra device
         dev = usb.core.find(idVendor = 0x05e0, idProduct = 0x0800)
         # was it found ?
         if dev is None:
             INFO('Device not found (meaning it is disconnected)')
             return (None, None)
+        dev.reset()
         # detach the kernel driver so we can use interface (one user per interface)
-        reattach = False
-        DEBUG(dev.is_kernel_driver_active(0))
         if dev.is_kernel_driver_active(0):
-            DEBUG("Detaching kernel driver")
-            reattach = True
-            dev.detach_kernel_driver(0)
+            try:
+                dev.detach_kernel_driver(0)
+                INFO("kernel driver detached")
+            except usb.core.USBError as e:
+                sys.exit("Could not detach kernel driver: %s" % str(e))
+                #dev.reset()
         # set the active configuration; with no arguments, the first configuration
         # will be the active one
-        dev.set_configuration()
+        try:
+            dev.set_configuration()
+        except Exception as e:
+            print e
         # get an endpoint instance
         cfg = dev.get_active_configuration()
         interface_number = cfg[(0, 0)].bInterfaceNumber
@@ -168,41 +179,44 @@ class Scanner(object):
                   usb.util.ENDPOINT_IN)
         assert ep is not None
         # We don't need the scan button with a real scanner.
-        if dev: self.button_scan.set_sensitive(False)
         return (dev, ep)
 
 
 ################################################################################
     def real_scanner(self):
-        import time
-        DEBUG(self.dev)
-        DEBUG(self.ep)
+        data = []
+        lu = False
+        print "Waiting to read..."
+        lecture=''
+        st = None
+        DATA_SIZE = 3
+        
         while 1:
             try:
                 # read data
                 data = self.dev.read(self.ep.bEndpointAddress, self.ep.wMaxPacketSize * 2, 1000)
                 st = ''.join(chr(i) if i > 0 and i < 128 else '' for i in data)
                 st = st.rstrip()[1:]
-                # barcode saved to str
-                DEBUG(st)
-                if len(st) > 1 :
-                    self.add_book(None, st)
-                    DEBUG("BREAK")
-                    break
-            except Exception as e:
-                DEBUG(e)
-                error_code = e.args[0]
-                # 110 is timeout code, expected
-                if error_code == 110:
-                    DEBUG("device connected, waiting for input")
 
-            '''else:
-                DEBUG(e)
-                DEBUG("device disconnected")
-                (dev, ep) = self.find_scanner()
-                if dev is None and ep is None:
-                '''
+                if not lu:
+                    print "Waiting to read..."
+                lu = True
 
+            except usb.core.USBError as e:
+                if e.args == (110,'Operation timed out') and lu:
+                    if len(data) < DATA_SIZE:
+                        #print "Lecture incorrect, recommence. (%d bytes)" % len(data)
+                        #print "Data: %s" % ''.join(map(hex, data))
+                        #data = []
+                        lu = False
+                        continue
+                    else:
+                        #for n in range(0,len(data),16):
+                            #print ' '.join(map(hex,data[n:n+16]))
+                        st = 'Nope'
+                        break   # Code lu
+            #INFO(st)
+            if st: self.add_book(None, st)
 
 ################################################################################
     def on_button_scan_clicked(self, widget):
@@ -212,12 +226,10 @@ class Scanner(object):
         TODO: If we already have a book display its location.
         '''
         ## Is there a real scanner attached?
-        (dev, ep) = self.find_scanner()
-        self.button_scan.set_sensitive(False)
-        INFO("We have a real scanner")
-        if dev and ep:
-            isbn = self.real_scanner(dev, ep)
+        if self.dev:
+            self.real_scanner()
             return
+        proc = None
         db_query = sql()
         device = None
         buff = self.text_view.get_buffer()
@@ -265,6 +277,7 @@ class Scanner(object):
 ################################################################################
     def add_book(self, proc, isbn):
         try:
+            #buff = self.text_view.get_buffer()
             DEBUG(isbn)
             db_query = sql()
             # Check if exists and increment book count if so.
@@ -274,6 +287,7 @@ class Scanner(object):
                 location = self.getBookLocation(isbn)
                 DEBUG(location)
                 if count > 0 and location != None:
+                    buff = self.text_view.get_buffer()
                     buff.insert_at_cursor (_("\n\nYou already have " \
                         + str(count) \
                         + " in the database!\n It's located at" \
@@ -282,8 +296,10 @@ class Scanner(object):
                     self.text_view.set_buffer(buff)
                     return
             if self.abook.webquery(isbn) != None:
-                logging.info(self.abook.print_book())
+                INFO(self.abook.print_book())
+                buff = self.text_view.get_buffer()
                 buff.set_text(self.abook.print_book())
+                self.text_view.set_buffer(buff)
                 return
             else:
                 buff.set_text (_("No data returned, retry?"))
@@ -291,6 +307,9 @@ class Scanner(object):
             # hide the preview window
             if proc: proc.visible = False
         except Exception as e:
+            buff = self.text_view.get_buffer()
+            buff.set_text(repr(e.message))
+            self.text_view.set_buffer(buff)
             DEBUG(e)
             
         
