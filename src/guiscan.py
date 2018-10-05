@@ -46,7 +46,7 @@ import book
 import datetime
 from db_queries import sql as sql
 import getpass
-
+import threading
 
 _ = gettext.gettext
 
@@ -121,11 +121,14 @@ class Scanner(object):
         if self.db:
             self.cur = self.db.cursor()
         self.dev, self.ep = self.find_scanner()
-        #self.window.connect( "visibility-notify-event", self.get_scanner)
         self.window.show()
-        #self.real_scanner(False)
+        if self.dev:
+            gtk.gdk.threads_init()
+            thread = threading.Thread(target=self.real_scanner)
+            thread.daemon = True
+            thread.start()
         gtk.main()
-
+        
 
 ################################################################################
     def get_scanner(self, widget, event):
@@ -142,11 +145,12 @@ class Scanner(object):
     def find_scanner(self):
         # find our zebra device
         dev = usb.core.find(idVendor = 0x05e0, idProduct = 0x0800)
+        dev.reset()
         # was it found ?
         if dev is None:
             INFO('Device not found (meaning it is disconnected)')
             return (None, None)
-        dev.reset()
+        
         # detach the kernel driver so we can use interface (one user per interface)
         if dev.is_kernel_driver_active(0):
             try:
@@ -178,16 +182,14 @@ class Scanner(object):
                   usb.util.endpoint_direction(e.bEndpointAddress) == \
                   usb.util.ENDPOINT_IN)
         assert ep is not None
-        # We don't need the scan button with a real scanner.
+        # We don't need the scan button with a real scanner, but...
         return (dev, ep)
 
 
 ################################################################################
     def real_scanner(self):
-        data = []
         lu = False
         print "Waiting to read..."
-        lecture=''
         st = None
         DATA_SIZE = 3
         
@@ -205,14 +207,9 @@ class Scanner(object):
             except usb.core.USBError as e:
                 if e.args == (110,'Operation timed out') and lu:
                     if len(data) < DATA_SIZE:
-                        #print "Lecture incorrect, recommence. (%d bytes)" % len(data)
-                        #print "Data: %s" % ''.join(map(hex, data))
-                        #data = []
                         lu = False
                         continue
                     else:
-                        #for n in range(0,len(data),16):
-                            #print ' '.join(map(hex,data[n:n+16]))
                         st = 'Nope'
                         break   # Code lu
             #INFO(st)
