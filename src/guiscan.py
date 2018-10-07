@@ -291,9 +291,9 @@ class Scanner(object):
                 DEBUG(location)
                 if count > 0 and location != None:
                     buff = self.text_view.get_buffer()
-                    buff.insert_at_cursor (_("\n\nYou already have " \
+                    buff.insert_at_cursor (_("You already have " \
                         + str(count) \
-                        + " in the database!\n It's located at" \
+                        + " copies in the database!\n It's located at: " \
                         + location \
                         + ".\n"))
                     self.text_view.set_buffer(buff)
