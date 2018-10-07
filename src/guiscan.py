@@ -98,6 +98,7 @@ class Scanner(object):
 
     '''
     def __init__(self):
+        self.closing = False
         self.dev = None
         self.ep = None
         self.abook = book.Book()
@@ -151,7 +152,7 @@ class Scanner(object):
         if dev is None:
             INFO('Device not found (meaning it is disconnected)')
             return (None, None)
-        
+        #DEBUG(dev)
         # detach the kernel driver so we can use interface (one user per interface)
         if dev.is_kernel_driver_active(0):
             try:
@@ -191,11 +192,10 @@ class Scanner(object):
     def real_scanner(self):
         import re
         lu = False
-        print "Waiting to read..."
+        INFO("Waiting to read...")
         st = None
         DATA_SIZE = 3
-        
-        while 1:
+        while not self.closing:
             try:
                 # read data
                 data = self.dev.read(self.ep.bEndpointAddress, self.ep.wMaxPacketSize * 2, 1000)
@@ -203,7 +203,7 @@ class Scanner(object):
                 st = st.rstrip()[1:]
 
                 if not lu:
-                    print "Waiting to read..."
+                    INFO("Waiting to read...")
                 lu = True
             except usb.core.USBError as e:
                 if e.args == (110,'Operation timed out') and lu:
@@ -220,7 +220,6 @@ class Scanner(object):
                 DEBUG(st)
                 self.add_book(None, st)
                 
-
 ################################################################################
     def on_button_scan_clicked(self, widget):
         ''' Do the scan, query the database and store the results.
@@ -317,6 +316,7 @@ class Scanner(object):
             #buff.set_text(repr(e.message))
             self.text_view.set_buffer(buff)
             DEBUG(e)
+        self.real_scanner()
         
 ################################################################################
     def getBookLocation(self, isbn):
@@ -488,6 +488,7 @@ class Scanner(object):
         # Quit when we destroy the GUI only if main application, else don't quit
         if __name__ == "__main__":
             gtk.main_quit()
+            self.closing = True
             quit(0)
         else:
             self.window.hide()
@@ -500,4 +501,5 @@ class Scanner(object):
 # we start here.
 if __name__ == "__main__":
     app = Scanner()
+    app.closing = False
     #gtk.main()
