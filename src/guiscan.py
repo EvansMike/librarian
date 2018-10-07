@@ -502,5 +502,3 @@ class Scanner(object):
 # we start here.
 if __name__ == "__main__":
     app = Scanner()
-    app.closing = False
-    #gtk.main()
