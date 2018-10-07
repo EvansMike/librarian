@@ -328,6 +328,7 @@ class add_edit:
     self.mybook.owner = self.book_owner.get_text()
     self.mybook.rating = self.rating_select.get_active()
     self.mybook.value = self.values_dropdown.get_active()
+    self.set_location()
     # Is the book on loan and to whome?
     self.status.set_text(_("Book updated."))
     return self.orig_book.compare(self.mybook)
@@ -338,7 +339,6 @@ class add_edit:
     if self.update_book() != 0 or self.mybook.updated: # Any changes?
       DEBUG("Something changed so an update is needed.")
       self.update_db()
-    self.set_location() #Always
 
 
   def update_db(self):
