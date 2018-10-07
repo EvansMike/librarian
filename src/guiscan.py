@@ -47,6 +47,7 @@ import datetime
 from db_queries import sql as sql
 import getpass
 import threading
+import signal
 
 _ = gettext.gettext
 
@@ -98,6 +99,7 @@ class Scanner(object):
 
     '''
     def __init__(self):
+        signal.signal(signal.SIGINT, self.on_sig_int)
         self.closing = False
         self.dev = None
         self.ep = None
@@ -127,7 +129,6 @@ class Scanner(object):
             self.button_scan.set_sensitive(False)
             gtk.gdk.threads_init()
             thread = threading.Thread(target=self.real_scanner)
-            #thread.daemon = True
             thread.start()
         gtk.main()
         
@@ -214,7 +215,9 @@ class Scanner(object):
                     else:
                         st = 'Nope'
                         break   # Code lu
-            
+            except (KeyboardInterrupt, SystemExit):
+                self.gtk_main_quit()
+        
             if st:
                 regex = re.compile('[^a-zA-Z0-9]')
                 st = regex.sub('', st)
@@ -483,7 +486,8 @@ class Scanner(object):
         #self.scanner
         pass
 
-
+    def on_sig_int(self):
+        gtk_main_quit(False)
 ################################################################################
     def gtk_main_quit(self, widget):
         # Quit when we destroy the GUI only if main application, else don't quit
