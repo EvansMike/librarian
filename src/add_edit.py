@@ -338,7 +338,7 @@ class add_edit:
     if self.update_book() != 0 or self.mybook.updated: # Any changes?
       DEBUG("Something changed so an update is needed.")
       self.update_db()
-      self.set_location()
+    self.set_location() #Always
 
 
   def update_db(self):
