@@ -147,8 +147,8 @@ class Scanner(object):
         
 ################################################################################
     def find_scanner(self):
-        # find our zebra device
-        dev = usb.core.find(idVendor = 0x05e0, idProduct = 0x0800)
+        # find our scanner device
+        dev = usb.core.find(idVendor = 0x05e0, idProduct = 0x0800) # TODO Bug#209: fix hard coded device
         dev.reset()
         # was it found ?
         if dev is None:
