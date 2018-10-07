@@ -152,7 +152,8 @@ class Scanner(object):
         if dev is None:
             INFO('Device not found (meaning it is disconnected)')
             return (None, None)
-        #DEBUG(dev)
+        DEBUG(dev.product)
+        
         # detach the kernel driver so we can use interface (one user per interface)
         if dev.is_kernel_driver_active(0):
             try:
