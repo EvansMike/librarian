@@ -129,6 +129,7 @@ class Scanner(object):
             self.button_scan.set_sensitive(False)
             gtk.gdk.threads_init()
             thread = threading.Thread(target=self.real_scanner)
+            thread.setDaemon(True)
             thread.start()
         gtk.main()
         
