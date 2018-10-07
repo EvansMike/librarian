@@ -216,9 +216,6 @@ class Scanner(object):
                     else:
                         st = 'Nope'
                         break   # Code lu
-            except (KeyboardInterrupt, SystemExit):
-                self.gtk_main_quit()
-        
             if st:
                 regex = re.compile('[^a-zA-Z0-9]')
                 st = regex.sub('', st)
