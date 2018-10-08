@@ -81,13 +81,6 @@ class mysql:
       AND borrows.borrower=borrowers.id;" % bid)
     return self.cur.fetchone()
 
-
-  def get_qrcode_count(self, isbn):
-    ''' Get a count of QR codes matching the ISBN
-    '''
-    self.cur.execute("SELECT COUNT(*) as count FROM qrcodes WHERE caption = %s;" , "ISBN: "+str(isbn))
-    return self.cur.fetchone()
-
   def get_borrowed_books(self):
     '''
     Get a list of books that have been borrowed. plus those lent to me.

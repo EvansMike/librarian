@@ -95,8 +95,13 @@ class sqlite:
     return mysql().get_all_books()
 
     '''
-    self.cur.execute("SELECT * FROM books WHERE copies > 0 order by author;")
-    return self.cur.fetchall()
+    command = "SELECT *  FROM books b INNER JOIN books_to_authors ba ON (b.id = ba.book_id) \
+    INNER JOIN book_authors a ON (ba.author_id = a.author_id) \
+    WHERE copies > 0 \
+    GROUP BY b.title ORDER BY author_last, author_ordinal;"
+    self.cur.execute(command)
+    rows = self.cur.fetchall()
+    return rows, len(rows)
 
   def get_book_count_by_isbn(self, bar):
     self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = '%s';" % bar)
@@ -107,7 +112,9 @@ class sqlite:
     Get a list of books that have been borrowed.
 
     '''
-    command = ("select * from  books, borrows  where  (books.owner!=%s \
+    import getpass
+    user = getpass.getuser()
+    command = ("select * from  books, borrows  where  (books.owner!='%s' \
     AND books.borrower_id IS NULL) \
     OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
     GROUP BY books.id;" % user)
@@ -135,7 +142,7 @@ class sqlite:
     return self.cur.fetchall()
 
   def get_borrower_by_id(self, bid):
-    self.cur.execute("select * FROM  borrows where id = '%s';",bid)
+    self.cur.execute("select * FROM  borrows where id = ?;",(bid,))
     return self.cur.fetchone()
 
   def get_borrows(self, bid, copies):
@@ -144,7 +151,18 @@ class sqlite:
         AND o_date IS NOT NULL LIMIT ?;", (bid,copies))
     return self.cur.fetchall()
 
-
+  def get_borrowing_history(self):
+    ''' Get all the books ever borrowed, by whome, when and for how long.
+    TODO; This properly.
+    '''
+    self.cur.execute ("SELECT borrows.id, title, author, name, o_date, i_date \
+                        FROM books, borrows, borrowers \
+                        WHERE books.id = borrows.book \
+                        AND borrows.borrower=borrowers.id  \
+                        AND name != 'tester' \
+                        ORDER BY o_date;")
+    return self.cur.fetchall()
+    
   def get_all_borrowers(self):
     '''
     Get all the borrowers in the database.
