@@ -100,7 +100,7 @@ class mysql:
     return
 
   def get_borrower_by_id(self, bid):
-    self.cur.execute("select * FROM  borrows where id = %s;",(bid,))
+    self.cur.execute("select * FROM  borrowers where id = %s;",(bid,))
     return self.cur.fetchone()
 
   def get_borrowers_borrowed_books(self):

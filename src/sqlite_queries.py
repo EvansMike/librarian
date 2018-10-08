@@ -142,7 +142,7 @@ class sqlite:
     return self.cur.fetchall()
 
   def get_borrower_by_id(self, bid):
-    self.cur.execute("select * FROM  borrows where id = ?;",(bid,))
+    self.cur.execute("select * FROM  borrowers where id = ?;",(bid,))
     return self.cur.fetchone()
 
   def get_borrows(self, bid, copies):
@@ -213,7 +213,7 @@ class sqlite:
     errors if the number has more than one digit.  N = number of digits.
     '''
     self.cur.execute("SELECT * FROM  books where id = '%s';" % book_id)
-    return self.cur.fetchall()
+    return self.cur.fetchone()
 
   def get_one_borrower(self,bid):
     logging.info(bid)
