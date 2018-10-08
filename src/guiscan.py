@@ -123,7 +123,8 @@ class Scanner(object):
             self.db = False
         if self.db:
             self.cur = self.db.cursor()
-        self.dev, self.ep = self.find_scanner()
+        idVendor, idProduct = self.find_scanner()
+        self.dev, self.ep = self.init_scanner(idVendor, idProduct )
         self.window.show()
         if self.dev:
             self.button_scan.set_sensitive(False)
@@ -144,18 +145,43 @@ class Scanner(object):
     def null(self, widget, event):
         return
 
-        
+
 ################################################################################
     def find_scanner(self):
+        '''
+        Get the scanner by name
+        @return idVendor, idProduct
+        '''
+        idVendor = None
+        idProduct = None
+        devs = usb.core.find(find_all=True)
+        for dev in devs:
+            try:
+                DEBUG(dev.product)
+                if "Bar Code" in dev.product:
+                    DEBUG(hex(dev.idVendor))
+                    DEBUG(hex(dev.idProduct))
+                    idVendor = dev.idVendor
+                    idProduct = dev.idProduct
+                    return idVendor, idProduct
+            except:
+                pass
+        return idVendor, idProduct
+
+        
+################################################################################
+    def init_scanner(self, vendor_id, product_id ):
         # find our scanner device
-        dev = usb.core.find(idVendor = 0x05e0, idProduct = 0x0800) # TODO Bug#209: fix hard coded device
+        dev = usb.core.find(idVendor = vendor_id, idProduct = product_id) # TODO Bug#209: fix hard coded device
+        #DEBUG(dev)
+        if not dev:
+            INFO("No scanner found!")
+            return
         dev.reset()
         # was it found ?
         if dev is None:
             INFO('Device not found (meaning it is disconnected)')
             return (None, None)
-        DEBUG(dev.product)
-        
         # detach the kernel driver so we can use interface (one user per interface)
         if dev.is_kernel_driver_active(0):
             try:
