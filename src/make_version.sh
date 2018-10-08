@@ -16,4 +16,3 @@ then
 echo "''' Version number by date and daily commits.'''" > $VERSION
 echo "__version__ = \"$DATE.$COMMITS\"" >> $VERSION
 fi
-
