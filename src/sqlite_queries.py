@@ -59,7 +59,7 @@ class sqlite:
     self.con = self.sqlite3.connect(db_lite)
     self.con.row_factory = self.sqlite3.Row
     self.cur = self.con.cursor()
-    logging.info("This connection is using sqlite3")
+    #logging.info("This connection is using sqlite3")
 
   def __del__(self):
     try:
@@ -272,5 +272,11 @@ class sqlite:
     Add a new location to the database.
     '''
     self.cur.execute("INSERT INTO locations(room,shelf) VALUES(%s, %s);",room, shelf)
+
+    def clone_table_to_test(self, table):
+        self.cur.execute("CREATE TABLE %s AS SELECT * FROM %s;",("test_"+table, table))
+
+    def drop_test_tables(self):
+        return
 
 #######################################################################

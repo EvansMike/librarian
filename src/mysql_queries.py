@@ -53,7 +53,7 @@ class mysql:
   import warnings
 
   warnings.filterwarnings('ignore', category=MySQLdb.Warning)
-  def __init__(self):
+  def __init__(self, db_base = config.db_base):
     self.db = self.MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
     self.cur = self.db.cursor(self.MySQLdb.cursors.DictCursor)
     #logging.info("This connection is using MySQL")
@@ -268,5 +268,12 @@ class mysql:
             FROM books WHERE isbn = %s) ORDER BY id;",\
             (isbn,))
     return self.cur.fetchall()
+
+    def clone_table_to_test(self, table):
+        self.cur.execute("CREATE TABLE %s AS SELECT * FROM %s;",("test_"+table, table))
+
+    def drop_test_tables(self):
+        return
+        
 
 ########################################################################

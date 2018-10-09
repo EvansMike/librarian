@@ -4,20 +4,52 @@
 # First create a sqlite3 database from mysql db
 # ./mysql2sqlite3 books -p | sqlite3 books.db
 
+import load_config as config
 import sys
 import os
 import unittest
+import subprocess
+
 
 yes = {'yes','y', 'ye', ''}
 no = {'no','n'}
-  
+# Clone to a test database
+# Read the config file
+config = config.load_config() # For file based config
+
+try:
+  db_user = config.db_user
+  db_pass = config.db_pass
+  db_base = config.db_base
+  db_host = config.db_host
+  db_lite = config.lite_db
+  use = config.use # What DB type to use
+except:
+  print "\nThere There is some error in the config file.\nCannot continue!\n\n "
+  quit()
+
 
 class TestAll(unittest.TestCase):
     import mysql_queries
     import sqlite_queries
+    def setUp(self):
+        '''try:
+            subprocess.Popen('mysqladmin create test_books -h localhost -u '+ db_user + ' -p' + db_pass, shell = True)
+            subprocess.Popen('mysqldump -h localhost -u '+ db_user + ' -p' + db_pass + '  books \
+                | mysql -h localhost -u '+ db_user + ' -p' + db_pass + 'test_books', shell = True)
+        except:
+            raise
+            quit(1)'''
+        try:
+            self.db1 = self.mysql_queries.mysql()
+            self.db2 = self.sqlite_queries.sqlite()
+        except:
+            raise
+            quit(1)
     
-    db1 = mysql_queries.mysql()
-    db2 = sqlite_queries.sqlite()
+    '''def tearDown(self):
+        subprocess.Popen('mysqladmin drop test_books -h localhost -u '+ db_user + ' -p' + db_pass, shell = True)
+    '''
         
     def test_get_all_books(self):
         r1, numrows1 = self.db1.get_all_books()
@@ -124,8 +156,10 @@ class TestAll(unittest.TestCase):
     #DANGER WILL ROBINSON, DANGER AHEAD!
     def test_insert_unique_author(self):
         authors = "Mike Test"
-        c1 = self.db1.insert_unique_author( authors)
-        c2 = self.db2.insert_unique_author( authors)
+        self.db1.clone_table_to_test(authors)
+        self.db2.clone_table_to_test(authors)
+        c1 = self.db1.insert_unique_author(authors)
+        c2 = self.db2.insert_unique_author(authors)
         
     def test_insert_book_object(self):
         import book
