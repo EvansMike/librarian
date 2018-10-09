@@ -163,6 +163,16 @@ class sqlite:
                         ORDER BY o_date;")
     return self.cur.fetchall()
     
+  def get_locations(self):
+    self.cur.execute("SELECT * FROM locations ORDER BY id")
+    return self.cur.fetchall()
+
+  def get_location_by_isbn(self ,isbn):
+    self.cur.execute("SELECT * FROM locations WHERE id = (SELECT location \
+            FROM books WHERE isbn = ?) ORDER BY id;",\
+            (isbn,))
+    return self.cur.fetchall()
+    
   def get_all_borrowers(self):
     '''
     Get all the borrowers in the database.

@@ -260,12 +260,12 @@ class mysql:
     return
 
   def get_locations(self):
-    self.cur.execute("SELECT * FROM locations")
+    self.cur.execute("SELECT * FROM locations ORDER BY id")
     return self.cur.fetchall()
 
   def get_location_by_isbn(self ,isbn):
     self.cur.execute("SELECT * FROM locations WHERE id = (SELECT location \
-            FROM books WHERE isbn = %s);",\
+            FROM books WHERE isbn = %s) ORDER BY id;",\
             (isbn,))
     return self.cur.fetchall()
 
