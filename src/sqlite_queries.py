@@ -98,7 +98,7 @@ class sqlite:
     command = "SELECT *  FROM books b INNER JOIN books_to_authors ba ON (b.id = ba.book_id) \
     INNER JOIN book_authors a ON (ba.author_id = a.author_id) \
     WHERE copies > 0 \
-    GROUP BY b.title ORDER BY author_last, author_ordinal;"
+    ORDER BY author_last, author_ordinal;"
     self.cur.execute(command)
     rows = self.cur.fetchall()
     return rows, len(rows)
@@ -159,7 +159,7 @@ class sqlite:
                         FROM books, borrows, borrowers \
                         WHERE books.id = borrows.book \
                         AND borrows.borrower=borrowers.id  \
-                        AND name != 'tester' \
+                        AND name != 'Tester' \
                         ORDER BY o_date;")
     return self.cur.fetchall()
     
