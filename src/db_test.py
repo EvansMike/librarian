@@ -123,22 +123,31 @@ class TestAll(unittest.TestCase):
     '''
     #DANGER WILL ROBINSON, DANGER AHEAD!
     def test_insert_unique_author(self):
+        authors = "Mike Test"
         c1 = self.db1.insert_unique_author( authors)
         c2 = self.db2.insert_unique_author( authors)
         
     def test_insert_book_object(self):
+        import book
+        book = book.Book()
         c1 = self.db1.insert_book_object(book)
         c2 = self.db2.insert_book_object(book)
 
     def test_update_book(self):
+        import book
+        book = book.Book()
+        bid = None
         c1 = self.db1.update_book(book, bid)
         c2 = self.db2.update_book(book, bid)
         
     def test_update_book_location(self):
+        bid = None
+        location = None
         c1 = self.db1.update_book_location(bid, location)
         c2 = self.db2.update_book_location(bid, location)
 
     def test_add_borrow(self):
+        bid = None
         c1 = self.db1.add_borrow(id, bid)
         c2 = self.db2.add_borrow(id, bid)
         
@@ -147,18 +156,26 @@ class TestAll(unittest.TestCase):
         c2 = self.db2.add_new_borrower(name, contact, notes)
         
     def test_update_borrower(self):
+        name = None
+        contact = None
+        notes = None
+        bid = None
         c1 = self.db1.update_borrower(name, contact, notes, bid)
         c2 = self.db2.update_borrower(name, contact, notes, bid)
         
     def test_update_borrows(self):
+        bid = None
         c1 = self.db1.update_borrows(id, bid)
         c2 = self.db2.update_borrows(id, bid)
         
     def test_remove_book(self):
+        bid = None
         c1 = self.db1.remove_book(bid)
         c2 = self.db2.remove_book(bid)
         
     def test_add_location(self):
+        room = None
+        self = None
         c1 = self.db1.add_location(room, shelf)
         c2 = self.db2.add_location(room, shelf)
     '''
