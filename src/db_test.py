@@ -39,25 +39,7 @@ class TestAll(unittest.TestCase):
     import sqlite_queries
     db1 = mysql_queries.mysql()
     db2 = sqlite_queries.sqlite()
-    '''def setUp(self):
-        try:
-            subprocess.Popen('mysqladmin create test_books -h localhost -u '+ db_user + ' -p' + db_pass, shell = True)
-            subprocess.Popen('mysqldump -h localhost -u '+ db_user + ' -p' + db_pass + '  books \
-                | mysql -h localhost -u '+ db_user + ' -p' + db_pass + 'test_books', shell = True)
-        except:
-            raise
-            quit(1)
-        try:
-            self.db1 = self.mysql_queries.mysql()
-            self.db2 = self.sqlite_queries.sqlite()
-        except:
-            raise
-            quit(1)
     
-    def tearDown(self):
-        #subprocess.Popen('mysqladmin drop test_books -h localhost -u '+ db_user + ' -p' + db_pass, shell = True)
-        pass
-    '''
     
         
     def test_get_all_books(self):
@@ -232,33 +214,3 @@ if __name__ == '__main__':
     print "OK. On your head be it"
     sys.argv.append('--verbose') # Make it run verbosely (hacky).
     unittest.main()
-
-'''
-list of queries to test: (from mysql_queries.py)
-  #def get_all_books(self):
-  #def get_book_count_by_isbn(self, bar):
-  #def get_book_borrower_by_book_id(self,bid):
-  #def get_borrowed_books(self):
-  #def get_borrowed_book_by_id(self, bid):
-  #def get_borrower_by_id(self, bid):
-  #def get_borrowers_borrowed_books(self):
-  #def get_borrows(self, bid, copies):
-  #def get_all_borrowers(self):
-  #def get_one_borrower(self,bid):
-  #def get_borrowing_history(self):
-  #def search_books(self, search_string):
-  #def get_by_id(self, book_id):
-  DANGER WILL ROBINSON DANGER AHEAD
-  def insert_unique_author(self, authors):
-  def insert_book_object(self, book):
-  def update_book(self, book, bid):
-  def update_book_location(self, bid, location):
-  def add_borrow(self, id, bid):
-  def add_new_borrower(self, name, contact, notes):
-  def update_borrower(self, name, contact, notes, bid):
-  def update_borrows(self, id, bid):
-  def remove_book(self, bid):
-  def add_location(self, room, shelf):
-  def get_locations(self):
-  def get_location_by_isbn(self ,isbn):
-'''
