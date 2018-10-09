@@ -3,6 +3,11 @@
 # TODO: Everything.
 # First create a sqlite3 database from mysql db
 # ./mysql2sqlite3 books -p | sqlite3 books.db
+# and a copy of the mysql database
+# mysqladmin create test_books
+# mysqldump books | mysql test_books
+
+
 
 import load_config as config
 import sys
@@ -32,14 +37,16 @@ except:
 class TestAll(unittest.TestCase):
     import mysql_queries
     import sqlite_queries
-    def setUp(self):
-        '''try:
+    db1 = mysql_queries.mysql()
+    db2 = sqlite_queries.sqlite()
+    '''def setUp(self):
+        try:
             subprocess.Popen('mysqladmin create test_books -h localhost -u '+ db_user + ' -p' + db_pass, shell = True)
             subprocess.Popen('mysqldump -h localhost -u '+ db_user + ' -p' + db_pass + '  books \
                 | mysql -h localhost -u '+ db_user + ' -p' + db_pass + 'test_books', shell = True)
         except:
             raise
-            quit(1)'''
+            quit(1)
         try:
             self.db1 = self.mysql_queries.mysql()
             self.db2 = self.sqlite_queries.sqlite()
@@ -47,9 +54,11 @@ class TestAll(unittest.TestCase):
             raise
             quit(1)
     
-    '''def tearDown(self):
-        subprocess.Popen('mysqladmin drop test_books -h localhost -u '+ db_user + ' -p' + db_pass, shell = True)
+    def tearDown(self):
+        #subprocess.Popen('mysqladmin drop test_books -h localhost -u '+ db_user + ' -p' + db_pass, shell = True)
+        pass
     '''
+    
         
     def test_get_all_books(self):
         r1, numrows1 = self.db1.get_all_books()
