@@ -2,4 +2,5 @@
 *.db
 ISBN:*
 *.geany
+src/version.py
 
