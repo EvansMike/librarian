@@ -511,6 +511,18 @@ class mysql:
             (isbn,))
     return self.cur.fetchall()
 
+  def update_to_utf8(self):
+      '''
+      Here for reference, convert datat to utf8. This takes a L O N G time.
+      '''
+    self.cur.execute("ALTER DATABASE `%s` CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci'" % 'books')
+    sql = "SELECT DISTINCT(table_name) FROM information_schema.columns WHERE table_schema = '%s'" % 'books'
+    self.cur.execute(sql)
+    results = cur.fetchall()
+    for row in results:
+        sql = "ALTER TABLE `%s` convert to character set DEFAULT COLLATE DEFAULT" % (row[0])
+        self.cur.execute(sql)
+
 ########################################################################
 class calibre:
   '''
@@ -569,4 +581,3 @@ if __name__ == "__main__":
   for book in mybooks:
     print book
   #my.get_borrowed_books()
-
