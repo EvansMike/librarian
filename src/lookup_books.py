@@ -4,6 +4,7 @@
 import requests
 import json
 import logging
+from datetime import datetime
 #logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
 DEBUG = logging.debug
 
@@ -23,7 +24,32 @@ class BookLookup(object):
             retries -= 1
         return None
 
-    
+    def googleapi(self, isbn):
+        book = {}
+        url = "https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn}&maxResults=1&fields=items".format(isbn=isbn)
+        r = self.get_response(url)
+        content = r.json()
+        book['publisher'] = '' # These may not exist in the results so set them to empty strings
+        book['city'] = ''
+        book['language'] = ''
+        book['edited'] = ''
+        book['isbn'] = isbn
+        book['authors'] = ', '.join(content['items'][0]['volumeInfo']['authors'])
+        datestring = content['items'][0]['volumeInfo']['publishedDate'].encode('utf8')
+        try:
+            dt = datetime.strptime(datestring, '%Y-%m-%d')
+            book['year'] = dt.year
+        except:
+            book['year'] = 0
+        try: book['city'] = content['items'][0]['volumeInfo']['city'].encode('utf8')
+        except: pass
+        book['publisher'] = content['items'][0]['volumeInfo']['publisher'].encode('utf8')
+        book['abstract']  = content['items'][0]['volumeInfo']['description'].encode('utf8')
+        book['title'] = content['items'][0]['volumeInfo']['title'].encode('utf8')
+        book['type'] = 'book'
+        return book
+
+        
     def google_desc(self, isbn):
         url = "https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn} \
           &fields=items/volumeInfo(description)\
@@ -37,8 +63,13 @@ class BookLookup(object):
         import isbnlib
         book = {}
         formatter = isbnlib.registry.bibformatters['json']
-        content = (isbnlib.meta(str(ISBN)))
-        book['publisher'] = '' # These may not exists in the results
+        try:
+            content = (isbnlib.meta(str(ISBN)))
+        except:
+            # Try googleAPIs?
+            book = self.googleapi(ISBN)
+            return book
+        book['publisher'] = '' # These may not exist in the results
         book['city'] = ''
         book['language'] =  content['Language']
         book['edited'] = ''
@@ -59,5 +90,7 @@ class BookLookup(object):
 
 if __name__ == '__main__':
     lookup = BookLookup()
-    data = lookup.isbnlib("1857988477")
+    #data = lookup.isbnlib("1857988477")
+    #data = lookup.isbnlib("1780893043")
+    data = lookup.googleapi("1780893043")
     print data

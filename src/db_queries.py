@@ -512,9 +512,9 @@ class mysql:
     return self.cur.fetchall()
 
   def update_to_utf8(self):
-      '''
-      Here for reference, convert datat to utf8. This takes a L O N G time.
-      '''
+    '''
+    Here for reference, convert datat to utf8. This takes a L O N G time.
+    '''
     self.cur.execute("ALTER DATABASE `%s` CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci'" % 'books')
     sql = "SELECT DISTINCT(table_name) FROM information_schema.columns WHERE table_schema = '%s'" % 'books'
     self.cur.execute(sql)

@@ -134,7 +134,8 @@ class Book(object):
     def lookup(self, isbn):
         import lookup_books
         lookup = lookup_books.BookLookup()
-        data = lookup.isbnlib(str(isbn))
+        data = lookup.googleapi(str(isbn).strip())
+        #data = lookup.isbnlib(str(isbn)).strip())
         return data
 ########### END CLASS book ################
 
