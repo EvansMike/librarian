@@ -80,23 +80,22 @@ cmdclass = {
 }
 from src import version
 setup (
-      name='librarian',
-      version=version.__version__,
-      description='Helps you catalogue your books using a webcam to scan the ISBN barcodes',
-      long_description = '',
-      author='Mike Evans',
-      author_email='mikee@saxicola.co.uk',
-      url='https://github.com/EvansMike/librarian.git',
-      license='GNU General Public License',
-      packages=['librarian'],
-      package_dir={'librarian': 'src'},
-      entry_points={
-          'console_scripts': [
-              'librarian = librarian.librarian:main'
-          ]},
-      #data_files=[("share/applications",["desktop/librarian.desktop"])],
-      package_data={'librarian': ['po/*', 'ui/*','librarian.png']},
-      #scripts=['bin/librarian'],
-      cmdclass=cmdclass
+    name='librarian',
+    version=version.__version__,
+    description='Helps you catalogue your books using a webcam to scan the ISBN barcodes',
+    long_description = '',
+    author='Mike Evans',
+    author_email='mikee@saxicola.co.uk',
+    url='https://github.com/EvansMike/librarian.git',
+    license='GNU General Public License',
+    packages=['librarian'],
+    package_dir={'librarian': 'src'},
+    entry_points={
+        'console_scripts': [
+        'librarian = librarian.librarian:main'
+        ]},
+    #data_files=[("share/applications",["desktop/librarian.desktop"])],
+    package_data={'librarian': ['po/*', 'ui/*','librarian.png']},
+    #scripts=['bin/librarian'],
+    cmdclass=cmdclass
 )
-
