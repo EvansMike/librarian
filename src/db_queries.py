@@ -401,6 +401,10 @@ class mysql:
     self.cur.execute ("SELECT * FROM  books where id = %s;",(book_id,))
     return self.cur.fetchone()
 
+  def get_by_isbn(self, isbn):
+    self.cur.execute ("SELECT * FROM  books where isbn = %s;",(isbn,))
+    return self.cur.fetchone()
+
   def insert_unique_author(self, authors):
     '''
     Insert author(s) ensuring uniqueness.
