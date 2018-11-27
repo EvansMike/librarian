@@ -390,8 +390,8 @@ class mysql:
     '''
     Get books based on author and title search.
     '''
-    self.cur.execute("SELECT * FROM books WHERE title LIKE %s OR author LIKE %s", \
-        [('%%%s%%' % search_string), ('%%%s%%' % search_string)])
+    self.cur.execute("SELECT * FROM books WHERE title LIKE %s OR author LIKE %s OR mtype LIKE %s", \
+        [('%%%s%%' % search_string), ('%%%s%%' % search_string), ('%%%s%%' % search_string)])
     return  self.cur.fetchall()
 
   def get_by_id(self, book_id):
