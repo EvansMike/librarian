@@ -48,6 +48,7 @@ from db_queries import sql as sql
 import getpass
 import threading
 import signal
+import barcode
 
 _ = gettext.gettext
 
@@ -217,8 +218,13 @@ class Scanner(object):
         return (dev, ep)
 
 
+
+
 ################################################################################
     def real_scanner(self):
+        '''
+        This will run when a real scanner is attached
+        '''
         import re
         lu = False
         INFO("Waiting to read...")
@@ -246,7 +252,14 @@ class Scanner(object):
                 regex = re.compile('[^a-zA-Z0-9]')
                 st = regex.sub('', st)
                 DEBUG(st)
-                self.add_book(None, st)
+                DEBUG(barcode.ISBN10(st).ean)
+                DEBUG(barcode.ISBN13(st).ean)
+                if barcode.ISBN10(st).ean != st and barcode.ISBN13(st).ean != st:
+                    DEBUG ("NOT an ISBN! Probably one of your weird self-generated EAN8's for DVD labels.")
+                    self.add_dvd(None, st)
+                else:
+                    self.add_book(None, st)
+                    
                 
 ################################################################################
     def on_button_scan_clicked(self, widget):
@@ -346,6 +359,26 @@ class Scanner(object):
             DEBUG(e)
         self.real_scanner()
         
+
+################################################################################
+    def add_dvd(self, proc, ean8):
+        '''
+        Add the DVD and open the dialog to edit the details.
+        @param None
+        @param ean8
+        '''
+        from add_edit import add_edit
+        adder = add_edit()
+        db_query = sql()
+        dvd = db_query.get_by_isbn(ean8)
+        if dvd:
+            DEBUG(dvd)
+            adder.populate(dvd['id'])
+        else:
+            adder.isbn.set_text(str(ean8))
+        adder.display()
+
+
 ################################################################################
     def getBookLocation(self, isbn):
         db_query = sql()

@@ -3,3 +3,4 @@
 isbnlib
 reportlab>=3.3.0
 mysqlclient>=1.3.0
+requests>=2.18.4

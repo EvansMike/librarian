@@ -413,6 +413,16 @@ class mysql:
     '''
     return self.cur.execute("INSERT IGNORE INTO authors(name) values(%s);", (authors,))
 
+
+  def insert_unique_isbn(self, isbn):
+    '''
+    Just add a bare ISBN (or ean).  We will need this later. Possibly.
+    This just emits a warning about Duplicate entry if it fails.
+    This should probably be caught and dealt with. 
+    '''
+    return self.cur.execute("INSERT IGNORE INTO books(isbn) values(%s);", (isbn,))
+    
+
   def insert_book_object(self, book):
     ''' Insert a book's details directly from a book object
     @param book.  A book object.
