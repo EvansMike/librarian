@@ -43,8 +43,10 @@ class BookLookup(object):
             book['year'] = 0
         try: book['city'] = content['items'][0]['volumeInfo']['city'].encode('utf8')
         except: pass
-        book['publisher'] = content['items'][0]['volumeInfo']['publisher'].encode('utf8')
-        book['abstract']  = content['items'][0]['volumeInfo']['description'].encode('utf8')
+        try: book['publisher'] = content['items'][0]['volumeInfo']['publisher'].encode('utf8')
+        except: pass
+        try: book['abstract']  = content['items'][0]['volumeInfo']['description'].encode('utf8')
+        except: pass
         book['title'] = content['items'][0]['volumeInfo']['title'].encode('utf8')
         book['type'] = 'book'
         return book
@@ -93,4 +95,4 @@ if __name__ == '__main__':
     #data = lookup.isbnlib("1857988477")
     #data = lookup.isbnlib("1780893043")
     data = lookup.googleapi("1780893043")
-    print data
+    print (data)
