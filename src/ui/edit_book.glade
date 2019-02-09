@@ -939,6 +939,7 @@ currently selected one</property>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="padding">12</property>
             <property name="position">5</property>
           </packing>
         </child>
