@@ -141,17 +141,17 @@ class Librarian:
 
         column = gtk.TreeViewColumn(_('Author'), gtk.CellRendererText(), text=1)
         column.set_clickable(True)
-        column.set_sort_indicator(True)
+        #column.set_sort_indicator(True)
         column.set_resizable(True)
         column.set_visible(True)
-        column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
+        #column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
         column.set_sort_column_id(1)
         self.treeview.append_column(column)
 
         column = gtk.TreeViewColumn(_('Title'), gtk.CellRendererText(), text=2)
         column.set_clickable(True)
         column.set_resizable(True)
-        column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
+        #column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
         column.set_sort_column_id(2)
         self.treeview.append_column(column)
 
@@ -300,8 +300,9 @@ class Librarian:
             try:
                 import calibre
                 e_books = calibre.calibre()
-                self.booklist, num_ebooks = e_books.insert_data2(self.booklist)
+                self.booklist, num_ebooks = e_books.insert_data(self.booklist)
             except:
+                raise
                 print ("Cannot find any e-books.\n")
                 pass # Do nothing if it's not available.
             self.status1.set_text("Book count = " + str(numrows) + ". E-book count = " +  str(num_ebooks))
