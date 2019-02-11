@@ -70,6 +70,7 @@ class calibre:
       logging.info(self.calibre_base)
     except:
       return
+    book_count = 0
     self.booklist = booklist
     conn = sqlite3.connect(self.calibre_base)
     c = conn.cursor()
@@ -80,6 +81,7 @@ class calibre:
     ;')
     # Insert data into booklist
     for row in c:
+      book_count += 1
       name = row[0]
       author = []
       author.append(name[-1]) # Last part
@@ -88,9 +90,19 @@ class calibre:
       author = ''.join(author) # Join all elements into a string
       self.booklist.append(['', row[0], row[1],
         '', '', '', '0', 0, 0, 'e-book'])
+    return self.booklist, book_count
 
-    return self.booklist
-  
+    
+  def get_comments_by_id(self, book_id):
+        '''
+        Get the comments for a book.
+        @param int book ID
+        @return Single query result.
+        '''
+        self.cur.execute("SELECT * FROM comments where book = '%s';" % book_id)
+        return self.cur.fetchone()
+
+        
   def search_calibre(self, needle, booklist = []):
     ''' Search the calibre database on the parameters given.
     The DB is searched twice for title and name.  Adding an OR clause to 
@@ -168,4 +180,3 @@ if __name__ == "__main__":
   booklist = app.insert_data2(booklist)
   for row in booklist:
     print row
-
