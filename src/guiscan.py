@@ -253,26 +253,21 @@ class Scanner(object):
                 st = regex.sub('', st)
                 DEBUG(st)
                 if len(st) == 10:
-                    
                     try:
                         DEBUG(barcode.ISBN10(st).ean)
                         barcode.ISBN13(st).ean
                     except:
                         DEBUG ("NOT an ISBN! Is this a DVD?")
                         self.add_dvd(None, st)
-                        #raise
+                        return
                 if len(st) == 13:
-                    
                     try:
                         DEBUG(barcode.ISBN13(st).ean)
                         barcode.ISBN13(st).ean
                     except:
                         DEBUG ("NOT an ISBN! Is this a DVD?")
                         self.add_dvd(None, st)
-                        #raise
-                if barcode.ISBN10(st).ean != st and barcode.ISBN13(st).ean != st:
-                    DEBUG ("NOT an ISBN! Probably one of your weird self-generated EAN8's for DVD labels.")
-                    self.add_dvd(None, st)
+                        return
                 else:
                     self.add_book(None, st)
                     
@@ -384,21 +379,29 @@ class Scanner(object):
         @param ean8
         '''
         from add_edit import add_edit
-        adder = add_edit()
+        
         db_query = sql()
         dvd = db_query.get_by_isbn(ean8)
         if dvd:
             DEBUG(dvd)
+            adder = add_edit()
             adder.populate(dvd['id'])
         else:
             import upc_lookup
+            
             lookup = upc_lookup.UPCLookup()
             data = lookup.get_response(ean8).json()
-            DEBUG(data['items'][0]['ean'])
-            adder.isbn.set_text(str(data['items'][0]['ean']))
-            adder.title.set_text(str(data['items'][0]['title']))
-            adder.mtype.set_text("DVD/CD")
-        adder.display()
+            try:
+                adder = add_edit()
+                DEBUG(data['items'][0]['ean'])
+                adder.isbn.set_text(str(data['items'][0]['ean']))
+                adder.title.set_text(str(data['items'][0]['title']))
+                adder.mtype.set_text("DVD/CD")
+                adder.display()
+            except:
+                buff = self.text_view.get_buffer()
+                buff.insert_at_cursor (_("This item doesn't exist!" ))
+                return None
 
 
 ################################################################################
