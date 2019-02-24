@@ -26,13 +26,14 @@ class UPCLookup(object):
             retries -= 1
         return None
 
-
     def get_product(self, upc):
         r = lookup.get_response(upc)
         return r.json()
 
+
+
+
 if __name__ == '__main__':
     lookup = UPCLookup()
-    #r = lookup.get_response("5035822011717")
-    #print (r.json())
-    print (lookup.get_product("5035822011717"))
+    r = lookup.get_response("5035822011717")
+    print json.dumps(r.json(), indent=2, sort_keys=True)
