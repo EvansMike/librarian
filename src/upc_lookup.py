@@ -3,6 +3,8 @@
 '''
 lookup a product using its upc
 Example: https://api.upcitemdb.com/prod/trial/lookup?upc=5035822011717
+upcitemdb.com allows 100 requests per day for free with no sign up required.
+See https://www.upcitemdb.com/wp/docs/main/development/api-rate-limits/
 '''
 import requests
 import json
@@ -13,8 +15,9 @@ DEBUG = logging.debug
 
 class UPCLookup(object):
     def get_response(self, upc):
-        ''' Get and test the response.
-        @param The url of the request.
+        '''
+        Get and test the response.
+        @param The upc of the item.
         @return The response.
         '''
         url = "https://api.upcitemdb.com/prod/trial/lookup?upc="

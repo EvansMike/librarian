@@ -96,3 +96,6 @@ if __name__ == '__main__':
     #data = lookup.isbnlib("1780893043")
     data = lookup.googleapi("1780893043")
     print (data)
+    # Try a DVD UPC
+    data = lookup.googleapi("5035822011717")
+    print (data)

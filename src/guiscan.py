@@ -252,8 +252,24 @@ class Scanner(object):
                 regex = re.compile('[^a-zA-Z0-9]')
                 st = regex.sub('', st)
                 DEBUG(st)
-                DEBUG(barcode.ISBN10(st).ean)
-                DEBUG(barcode.ISBN13(st).ean)
+                if len(st) == 10:
+                    
+                    try:
+                        DEBUG(barcode.ISBN10(st).ean)
+                        barcode.ISBN13(st).ean
+                    except:
+                        DEBUG ("NOT an ISBN! Is this a DVD?")
+                        self.add_dvd(None, st)
+                        #raise
+                if len(st) == 13:
+                    
+                    try:
+                        DEBUG(barcode.ISBN13(st).ean)
+                        barcode.ISBN13(st).ean
+                    except:
+                        DEBUG ("NOT an ISBN! Is this a DVD?")
+                        self.add_dvd(None, st)
+                        #raise
                 if barcode.ISBN10(st).ean != st and barcode.ISBN13(st).ean != st:
                     DEBUG ("NOT an ISBN! Probably one of your weird self-generated EAN8's for DVD labels.")
                     self.add_dvd(None, st)
@@ -375,7 +391,13 @@ class Scanner(object):
             DEBUG(dvd)
             adder.populate(dvd['id'])
         else:
-            adder.isbn.set_text(str(ean8))
+            import upc_lookup
+            lookup = upc_lookup.UPCLookup()
+            data = lookup.get_response(ean8).json()
+            DEBUG(data['items'][0]['ean'])
+            adder.isbn.set_text(str(data['items'][0]['ean']))
+            adder.title.set_text(str(data['items'][0]['title']))
+            adder.mtype.set_text("DVD/CD")
         adder.display()
 
 
