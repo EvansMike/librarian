@@ -256,20 +256,21 @@ class Scanner(object):
                     try:
                         DEBUG(barcode.ISBN10(st).ean)
                         barcode.ISBN13(st).ean
+                        self.add_book(None, st)
                     except:
                         DEBUG ("NOT an ISBN! Is this a DVD?")
                         self.add_dvd(None, st)
                         return
-                if len(st) == 13:
+                elif len(st) == 13:
                     try:
                         DEBUG(barcode.ISBN13(st).ean)
                         barcode.ISBN13(st).ean
+                        self.add_book(None, st)
                     except:
                         DEBUG ("NOT an ISBN! Is this a DVD?")
                         self.add_dvd(None, st)
                         return
-                else:
-                    self.add_book(None, st)
+                
                     
                 
 ################################################################################
@@ -330,6 +331,7 @@ class Scanner(object):
                 
 ################################################################################
     def add_book(self, proc, isbn):
+        from add_edit import add_edit
         #buff = self.text_view.get_buffer()
         DEBUG(isbn)
         db_query = sql()
@@ -368,7 +370,8 @@ class Scanner(object):
             #buff.set_text(repr(e.message))
             self.text_view.set_buffer(buff)
             DEBUG(e)
-        self.real_scanner()
+        #self.real_scanner()
+        self.gtk_main_quit(None)
         
 
 ################################################################################

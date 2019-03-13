@@ -441,7 +441,7 @@ class mysql:
     split_suthors = book.authors.split(",")
     ordinal = 0
     for author in split_suthors:
-        if author == '' : continue
+        if author == '' : author = "N/A"
         last = author.split()[-1]
         first = " ".join(author.split()[0:-1])
         print "Ordinal = ", ordinal, author, first, last
