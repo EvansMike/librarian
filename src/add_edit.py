@@ -345,6 +345,9 @@ class add_edit:
     db_query = sql()
     book = copy.copy(self.mybook)
     result = db_query.get_by_id(self.mybook.id)
+    DEBUG(result)
+    DEBUG(self.mybook.id)
+    DEBUG(book.is_empty())
     if self.mybook.id == 0: return
     if book.is_empty(): return # Do nothing if no data
     if result == None: # If no book in DB, add it
