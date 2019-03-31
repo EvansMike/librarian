@@ -3,4 +3,14 @@
 ISBN:*
 *.geany
 src/version.py
-
+.cfg
+*.bak
+*.*~
+*.pdf
+build
+dist
+*.csv
+*.log
+*.xml
+*.html
+Librarian.egg-info
