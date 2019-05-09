@@ -289,7 +289,7 @@ class mysql:
 
   warnings.filterwarnings('ignore', category=MySQLdb.Warning)
   def __init__(self):
-    self.db = self.MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass)
+    self.db = self.MySQLdb.connect(user=db_user, host=db_host, db=db_base,  passwd = db_pass)
     self.cur = self.db.cursor(self.MySQLdb.cursors.DictCursor)
     #logging.info("This connection is using MySQL")
 
