@@ -118,7 +118,7 @@ class Scanner(object):
         self.cur = None
         self.owner = getpass.getuser() # Assume the logged in person owns the book.
         try:
-            self.db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass);
+            self.db = MySQLdb.connect(user=db_user, host=db_host, db=db_base,  passwd = db_pass);
         except:
             print (_("No database connection.  Check config file"))
             self.db = False
