@@ -177,7 +177,7 @@ class Scanner(object):
         #DEBUG(dev)
         if not dev:
             INFO("No scanner found!")
-            return
+            return (None, None)
         dev.reset()
         # was it found ?
         if dev is None:
