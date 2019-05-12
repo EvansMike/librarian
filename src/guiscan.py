@@ -173,8 +173,8 @@ class Scanner(object):
 ################################################################################
     def init_scanner(self, vendor_id, product_id ):
         # find our scanner device
-        dev = usb.core.find(idVendor = vendor_id, idProduct = product_id) # TODO Bug#209: fix hard coded device
-        #DEBUG(dev)
+        dev = usb.core.find(idVendor = vendor_id, idProduct = product_id) 
+        DEBUG(dev)
         if not dev:
             INFO("No scanner found!")
             return (None, None)
