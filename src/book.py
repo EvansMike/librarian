@@ -117,7 +117,8 @@ class Book(object):
         data = self.lookup(isbn)
         DEBUG(data)
         if data:
-            self.abstract = data['abstract']
+            try:self.abstract = data['abstract']
+            except: self.abstract =''
             self.isbn = data['isbn']
             self.title = data['title']
             self.authors = str(data['authors'])

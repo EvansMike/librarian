@@ -218,8 +218,6 @@ class Scanner(object):
         return (dev, ep)
 
 
-
-
 ################################################################################
     def real_scanner(self):
         '''
@@ -255,12 +253,12 @@ class Scanner(object):
                 if len(st) == 10:
                     try:
                         DEBUG(barcode.ISBN10(st).ean)
-                        barcode.ISBN13(st).ean
+                        barcode.ISBN10(st).ean
                         self.add_book(None, st)
                     except:
                         DEBUG ("NOT an ISBN! Is this a DVD?")
                         self.add_dvd(None, st)
-                        return
+                        
                 elif len(st) == 13:
                     try:
                         DEBUG(barcode.ISBN13(st).ean)
@@ -269,8 +267,6 @@ class Scanner(object):
                     except:
                         DEBUG ("NOT an ISBN! Is this a DVD?")
                         self.add_dvd(None, st)
-                        return
-                
                     
                 
 ################################################################################
@@ -370,8 +366,6 @@ class Scanner(object):
             #buff.set_text(repr(e.message))
             self.text_view.set_buffer(buff)
             DEBUG(e)
-        #self.real_scanner()
-        self.gtk_main_quit(None)
         
 
 ################################################################################

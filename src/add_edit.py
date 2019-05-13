@@ -325,8 +325,8 @@ class add_edit:
     self.mybook.city = self.city.get_text().strip()
     year = None
     year = self.year.get_text()
-    if year : self.mybook.year
-    else: self.mybook.year = year
+    if year : self.mybook.year = year
+    else: self.mybook.year = 0
     self.mybook.mtype = self.mtype.get_text()
     self.mybook.owner = self.book_owner.get_text()
     self.mybook.rating = self.rating_select.get_active()
