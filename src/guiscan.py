@@ -366,7 +366,7 @@ class Scanner(object):
             #buff.set_text(repr(e.message))
             self.text_view.set_buffer(buff)
             DEBUG(e)
-        self.gtk_main_quit(self, None)
+        self.real_scanner()
         
 
 ################################################################################
@@ -400,8 +400,8 @@ class Scanner(object):
                 buff = self.text_view.get_buffer()
                 buff.insert_at_cursor (_("This item doesn't exist!" ))
                 return None
-        self.gtk_main_quit(self, None)
-
+        self.real_scanner()
+       
 
 ################################################################################
     def getBookLocation(self, isbn):
