@@ -352,7 +352,7 @@ class add_edit:
     DEBUG(result)
     if result == None: # If no book in DB, add it
     # Make sure we don't add an empty book.  We could also use this to
-        if not str.isdigit(book.year.encode('ascii', 'ignore')): book.year = 0 #DB query fix for empty date field.
+        if not book.year: book.year = 0 #DB query fix for empty date field.
         book_id = db_query.insert_book_object(book)
         book.id = book_id # Update the book with it's new id from the DB.
         self.set_location()
