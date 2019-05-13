@@ -323,7 +323,10 @@ class add_edit:
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city = self.city.get_text().strip()
-    self.mybook.year = self.year.get_text()
+    year = None
+    year = self.year.get_text()
+    if year : self.mybook.year
+    else: self.mybook.year = year
     self.mybook.mtype = self.mtype.get_text()
     self.mybook.owner = self.book_owner.get_text()
     self.mybook.rating = self.rating_select.get_active()
@@ -341,33 +344,31 @@ class add_edit:
       self.update_db()
 
 
-  def update_db(self):
+  def update_db(self, ):
     db_query = sql()
     book = copy.copy(self.mybook)
-    result = db_query.get_by_id(self.mybook.id)
+    DEBUG(book.id)
+    result = db_query.get_by_id(book.id)
     DEBUG(result)
-    DEBUG(self.mybook.id)
-    DEBUG(book.is_empty())
-    if self.mybook.id == 0: return
-    if book.is_empty(): return # Do nothing if no data
     if result == None: # If no book in DB, add it
     # Make sure we don't add an empty book.  We could also use this to
-      if not str.isdigit(book.year.encode('ascii', 'ignore')): book.year = 0 #DB query fix for empty date field.
-      book_id = db_query.insert_book_object(book)
-      book.id = book_id # Update the book with it's new id from the DB.
-      self.set_location()
-      INFO("New book has been inserted.")
-      self.status.set_text(_("New book has been inserted."))
-      self.orig_book = copy.copy(book) # So we can compare again.
-
-    #check for changes if we have a copy of the original data.
-    # If the book is not empty
+        if not str.isdigit(book.year.encode('ascii', 'ignore')): book.year = 0 #DB query fix for empty date field.
+        book_id = db_query.insert_book_object(book)
+        book.id = book_id # Update the book with it's new id from the DB.
+        self.set_location()
+        INFO("New book has been inserted.")
+        DEBUG(book_id)
+        self.status.set_text(_("New book has been inserted."))
     else:
-      INFO("Something changed so an update is needed")
-      db_query.update_book(book, book.id)
-      db_query.insert_unique_author(book.authors)
-      self.status.set_text(_(" Book has been updated."))
-      self.orig_book = copy.copy(book) # So we can compare again.
+        book_id = result['id']
+        if book_id == self.mybook.id: # It already exists so we update
+            #check for changes if we have a copy of the original data.
+            # If the book is not empty
+            INFO("Book has been updated")
+            db_query.update_book(book, book.id)
+            db_query.insert_unique_author(book.authors)
+            self.status.set_text(_(" Book has been updated."))
+    self.mybook = copy.copy(book) # So we can compare again.   
     del book
 
 
@@ -417,7 +418,7 @@ class add_edit:
     textbuffer.set_text('') 
     self.publisher.set_text('')
     self.city.set_text('')
-    self.year.set_text('')
+    self.year.set_text('0')
     self.copies.set_text('')
     self.lent_select.set_active(0)
     #DEBUG(getpass.getuser())

@@ -396,7 +396,7 @@ class mysql:
 
   def get_by_id(self, book_id):
     ''' Search for book on its ID.  NB. This is NOT its ISBN
-
+    @return Dict of the book's data
     '''
     self.cur.execute ("SELECT * FROM  books where id = %s;",(book_id,))
     return self.cur.fetchone()
@@ -426,18 +426,20 @@ class mysql:
   def insert_book_object(self, book):
     ''' Insert a book's details directly from a book object
     @param book.  A book object.
-    @return Result of insert
+    @return the ID of the book
     '''
+    # If the book already has an id we dont's insert it as it's not a new book.
     self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
-      year, publisher, city, copies, mtype, add_date, owner, rating) \
-      VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
-      (book.title, book.authors, book.isbn, book.abstract, \
-      book.year, book.publisher, book.city, 1, book.mtype, book.add_date, book.owner, book.rating))
+        year, publisher, city, copies, mtype, add_date, owner, rating) \
+        VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
+        (book.title, book.authors, book.isbn, book.abstract, \
+    book.year, book.publisher, book.city, 1, book.mtype, book.add_date, book.owner, book.rating))
     self.db.commit()
 
-    self.cur.execute("SELECT LAST_INSERT_ID()")
+    self.cur.execute("SELECT LAST_INSERT_ID() AS last_id")
     last_book_id = self.cur.fetchone()
-    last_book_id = last_book_id['LAST_INSERT_ID()']
+    last_book_id = last_book_id['last_id']
+    DEBUG(last_book_id)
     split_suthors = book.authors.split(",")
     ordinal = 0
     for author in split_suthors:
@@ -458,7 +460,8 @@ class mysql:
         self.db.commit()
         ordinal += 1
 
-    return  last_book_id
+    if last_book_id: return  last_book_id
+    else: return None
 
   def update_book(self, book, bid):
     self.cur.execute("UPDATE books SET title = %s, author = %s,abstract = %s, \

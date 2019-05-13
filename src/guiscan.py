@@ -118,7 +118,7 @@ class Scanner(object):
         self.cur = None
         self.owner = getpass.getuser() # Assume the logged in person owns the book.
         try:
-            self.db = MySQLdb.connect(host=db_host, db=db_base,  passwd = db_pass);
+            self.db = MySQLdb.connect(user=db_user, host=db_host, db=db_base,  passwd = db_pass);
         except:
             print (_("No database connection.  Check config file"))
             self.db = False
@@ -173,11 +173,11 @@ class Scanner(object):
 ################################################################################
     def init_scanner(self, vendor_id, product_id ):
         # find our scanner device
-        dev = usb.core.find(idVendor = vendor_id, idProduct = product_id) # TODO Bug#209: fix hard coded device
-        #DEBUG(dev)
+        dev = usb.core.find(idVendor = vendor_id, idProduct = product_id) 
+        DEBUG(dev)
         if not dev:
             INFO("No scanner found!")
-            return
+            return (None, None)
         dev.reset()
         # was it found ?
         if dev is None:
