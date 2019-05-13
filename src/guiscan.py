@@ -395,6 +395,10 @@ class Scanner(object):
                 adder.isbn.set_text(str(data['items'][0]['ean']))
                 adder.title.set_text(str(data['items'][0]['title']))
                 adder.mtype.set_text("DVD/CD")
+                adder.populate_borrowers()
+                adder.populate_locations()
+                adder.populate_rating(row['rating'])
+                adder.populate_values()
                 adder.display()
             except:
                 buff = self.text_view.get_buffer()
