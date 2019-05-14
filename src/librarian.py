@@ -213,21 +213,21 @@ class Librarian:
         data = []
         styles=getSampleStyleSheet()
         text = Paragraph("long line",styles['Normal'])
-        styles.add(ParagraphStyle(name='Justify', alignment=TA_LEFT))
+        styles.add(ParagraphStyle(name='Justify', alignment = TA_LEFT))
         model = self.booklist
         myiter = model.get_iter_first()
         if myiter is not None:
             while str(myiter) != 'None':
                 row = []
                 if myiter is not None:
-                    row.append(Paragraph(model.get_value(myiter, 9),styles["Normal"]))
-                    row.append(Paragraph(model.get_value(myiter, 1),styles["Normal"]))
-                    row.append(Paragraph(model.get_value(myiter, 2),styles["Normal"]))
+                    row.append(Paragraph(model.get_value(myiter, 9), styles["Normal"]))
+                    row.append(Paragraph(model.get_value(myiter, 1), styles["Normal"]))
+                    row.append(Paragraph(model.get_value(myiter, 2), styles["Normal"]))
                     myiter = model.iter_next(myiter)
                 data.append(row)
-            t=Table(data,[100,180,200]) # Values are cell widths
+            t = Table(data,[100, 180, 200]) # Values are cell widths
             t.hAlign='LEFT' # Move WHOLE TABLE to the left, defaults to CENTRE
-            t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP')])) # Apples to CELLS
+            t.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')])) # Apples to CELLS
             Story.append(t)
             doc.build(Story)
 
