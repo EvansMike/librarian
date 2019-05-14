@@ -200,7 +200,7 @@ class Librarian:
             from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
             from reportlab.lib.units import mm
 
-        except ImportError, e:
+        except ImportError as e:
             messages.pop_info(e)
             return
         filename = "booklist.pdf"
