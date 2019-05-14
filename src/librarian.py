@@ -21,21 +21,23 @@
 A (in)complete home book collection manager.
 '''
 
+import argparse
 import os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.pardir))
 import copy
-import MySQLdb
-import MySQLdb.cursors
+import csv
 import sys, os
 import logging
-import book
 import locale
 import gettext
-import lib_print
-import messages
 import getpass
-import csv
-import argparse
+import MySQLdb
+import MySQLdb.cursors
+import messages
+import book
+import lib_print
+
+
 
 #from db_queries import calibre
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
