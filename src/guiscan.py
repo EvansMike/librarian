@@ -196,7 +196,7 @@ class Scanner(object):
         try:
             dev.set_configuration()
         except Exception as e:
-            print e
+            print (e)
         # get an endpoint instance
         cfg = dev.get_active_configuration()
         interface_number = cfg[(0, 0)].bInterfaceNumber
@@ -414,7 +414,7 @@ class Scanner(object):
         result = db_query.get_location_by_isbn(isbn) # Could be multiple but unlikely
         DEBUG(result)
         for row in result:
-            print row
+            print (row)
             location_string = row['room'] + " : " + row['shelf']
 
         return location_string
@@ -483,7 +483,7 @@ class Scanner(object):
         '''
         db_query = sql()
         # Remove a scanned book from the database.
-        print "You removed this book."
+        print (_("You removed this book."))
         buff = self.text_view.get_buffer()
         try:
             self.cur.execute("DELETE FROM books WHERE isbn = %s;", str(self.abook.isbn))
@@ -513,7 +513,7 @@ class Scanner(object):
         album = '' # TODO: Do this maybe as we can get the album date here
 
         for track in tracks: ## DEBUG: remove me later ##
-            print track
+            print (track)
 
         return tracks # Dictionary e.g. {'index': 12, 'length': 214.773, 'name': 'The Kick Inside'}
 
@@ -558,7 +558,7 @@ class Scanner(object):
         buff.insert_at_cursor(_( "\n\nYou added this " + str(self.abook.mtype) + ".\n"))
         self.text_view.set_buffer(buff)
         self.make_qr_code()
-        print "You added this", str(self.abook.mtype)
+        print ("You added this", str(self.abook.mtype))
 
 
 ################################################################################
