@@ -1,7 +1,7 @@
 #!/bin/env python
 # Print methods.
 
-import cups
+#import cups
 import os
 import sys
 import pipes

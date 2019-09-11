@@ -18,7 +18,12 @@
 '''
 
 import sys
-import ConfigParser
+# Get python version
+py_version = sys.version_info.major
+if py_version == 2:
+    import ConfigParser
+if py_version == 3:
+    import configparser as ConfigParser
 import logging
 import gtk
 import os, stat
@@ -104,16 +109,13 @@ class load_config:
   def print_config(self):
     ''' print some values for testing.  Take care not to expose secret data.
     '''
-    print "USER =", self.db_user
-    print "PASSWD =", self.db_pass
-    print "DBASE =", self.db_base
-    print "DB_HOST =", self.db_host
+    print ("USER =", self.db_user)
+    print ("PASSWD =", self.db_pass)
+    print ("DBASE =", self.db_base)
+    print ("DB_HOST =", self.db_host)
 
 
 # For testing
 if __name__ == "__main__":
   app = load_config()
   app.print_config()
-
-
-

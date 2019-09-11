@@ -21,12 +21,15 @@
 A (in)complete home book collection manager.
 '''
 
+
+import sys, os
+# Get python version
+py_version = sys.version_info.major
 import argparse
 import os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.pardir))
 import copy
 import csv
-import sys, os
 import logging
 import locale
 import gettext
@@ -35,7 +38,7 @@ import MySQLdb
 import MySQLdb.cursors
 import messages
 import book
-import lib_print
+#import lib_print
 
 
 
@@ -44,14 +47,18 @@ import lib_print
 # or
 from db_queries import sql as sql
 
-import i18n
-_ = i18n.language.gettext
+if py_version == 2:
+    import i18n
+    _ = i18n.language.gettext
 
 #logger = logging.getLogger("librarian")
 #logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
 #logging.disable(logging.DEBUG)
 DEBUG = logging.debug
 INFO = logging.info
+
+
+
 
 # Get system platform
 plat = sys.platform
@@ -62,16 +69,25 @@ except:
     vf.write("__version__ = \"devel\"\n")
     vf.close()
 import version
-try:
-    import pygtk
-    pygtk.require("2.0")
-except:
-    pass
-try:
-    import gtk
-except:
-    print(_("GTK Not Availible"))
-    sys.exit(1)
+
+if py_version == 2:
+    try:
+        import pygtk
+        pygtk.require("2.0")
+    except:
+        pass
+    try:
+        import gtk
+    except:
+        print(_("GTK Not Availible"))
+        sys.exit(1)
+        
+if py_version == 3:
+    import gi
+    gi.require_version('Gtk', '3.0')
+    from gi.repository import Gtk as gtk
+
+    
 
 NULL, ALL, BORROWED = range(3)
 

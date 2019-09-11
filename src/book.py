@@ -144,12 +144,12 @@ class Book(object):
 if __name__ == "__main__":
     abook = Book() 
     abook.webquery("9780241146507")
-    print abook.__dict__
-    print ""
+    print (abook.__dict__)
+    print ("")
     abook.webquery("0130104949")
-    print abook.__dict__
-    print ""
+    print (abook.__dict__)
+    print ("")
     abook.webquery("057109659X")
-    print abook.__dict__
-    print ""
+    print (abook.__dict__)
+    print ("")
     del abook
