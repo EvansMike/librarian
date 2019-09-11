@@ -189,9 +189,8 @@ class Librarian:
         self.search_string = builder.get_object("entry_search")
         if py_version == 2:   
             self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
-        if py_version == 3:
-            pass   
-            #self.booklist.set_sort_column_id(1, gtk.SortType(ASCENDING))
+        if py_version == 3:   
+            self.booklist.set_sort_column_id(1, 0)
 
         self.get_book_list(1)
         window = builder.get_object("window1")
