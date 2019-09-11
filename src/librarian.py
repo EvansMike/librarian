@@ -57,7 +57,7 @@ if py_version == 2:
 DEBUG = logging.debug
 INFO = logging.info
 
-
+_ = gettext.gettext
 
 
 # Get system platform
@@ -115,11 +115,14 @@ class SplashScreen():
         import time
         INFO('Splish')
         DEBUG('Splash')
-        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        if py_version == 2:        
+            self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+            self.window.set_position(gtk.WIN_POS_CENTER)
+        if py_version == 3:
+            self.window = gtk.Window()
         self.window.set_decorated(False)
         self.version = "Version: " + version.__version__
         self.window.set_title('LIBRARIAN')
-        self.window.set_position(gtk.WIN_POS_CENTER)
         main_vbox = gtk.VBox(False, 3)
         self.window.add(main_vbox)
         self.image = gtk.Image()
@@ -128,8 +131,8 @@ class SplashScreen():
         self.image.show()
         self.lbl = gtk.Label(self.version)
         self.lbl.set_alignment(0.5, 0.5)
-        main_vbox.pack_start(self.image, True, True)
-        main_vbox.pack_start(self.lbl, True, True)
+        main_vbox.pack_start(self.image, True, True, 0)
+        main_vbox.pack_start(self.lbl, True, True, 0)
         self.window.show_all()
 
 class Librarian:
@@ -154,7 +157,7 @@ class Librarian:
         column.set_clickable(True)
         column.set_resizable(True)
         column.set_sort_column_id(9)
-        column.sizing = gtk.TREE_VIEW_COLUMN_AUTOSIZE
+        #column.sizing = gtk.TREE_VIEW_COLUMN_AUTOSIZE
         self.treeview.append_column(column)
 
         column = gtk.TreeViewColumn(_('Author'), gtk.CellRendererText(), text=1)
@@ -178,13 +181,17 @@ class Librarian:
         column = gtk.TreeViewColumn(_('Rating'), gtk.CellRendererText(), text=3)
         column.set_clickable(True)
         column.set_resizable(True)
-        column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
+        #column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
         column.set_sort_column_id(3)
         self.treeview.append_column(column)
         self.status1.set_text("Version:" + version.__version__)
 
         self.search_string = builder.get_object("entry_search")
-        self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
+        if py_version == 2:   
+            self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
+        if py_version == 3:
+            pass   
+            #self.booklist.set_sort_column_id(1, gtk.SortType(ASCENDING))
 
         self.get_book_list(1)
         window = builder.get_object("window1")

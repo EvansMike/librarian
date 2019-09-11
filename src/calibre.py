@@ -179,4 +179,4 @@ if __name__ == "__main__":
   booklist = []
   booklist = app.insert_data2(booklist)
   for row in booklist:
-    print row
+    print (row)
