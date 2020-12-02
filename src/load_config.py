@@ -25,7 +25,6 @@ if py_version == 2:
 if py_version == 3:
     import configparser as ConfigParser
 import logging
-import gtk
 import os, stat
 import gettext
 import locale

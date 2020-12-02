@@ -8,7 +8,7 @@ import MySQLdb
 try:
   db = MySQLdb.connect(db='books',  passwd = 'pu5tu1e');
 except:
-  print "No database connection"
+  print ("No database connection")
   db = False
 #db= False # debugging
 if db: cur = db.cursor()
@@ -28,7 +28,7 @@ while row is not None:
     img = qr[2]
     size = qr[1]
     #print size
-    print str(bar)
+    print (str(bar))
     img.save('../ISBN:' + str(bar) + '.png', 'png')
     row = cur.fetchone()
 

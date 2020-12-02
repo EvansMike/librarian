@@ -33,7 +33,7 @@ while count:
     ean = barcode.EAN8(str(randint(1000000, 9999999))).ean
     if len(str(ean)) != 8: continue
     if not db_query.insert_unique_isbn(ean): continue ## Insert if not existing
-    print ean
+    print (ean)
     of.write(str(ean))
     of.write(",\n")
     count = count -1

@@ -40,7 +40,7 @@ try:
   db_lite = config.lite_db
   use = config.use # What DB type to use
 except:
-  print "\nThere There is some error in the config file.\nCannot continue!\n\n "
+  print ("\nThere There is some error in the config file.\nCannot continue!\n\n ")
   quit()
 
 

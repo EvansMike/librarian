@@ -1,4 +1,4 @@
-#!/bin/env python2
+#!/bin/env python
 # -*- coding: utf-8 -*-
 '''
   This program is free software; you can redistribute it and/or modify
@@ -130,7 +130,7 @@ class SplashScreen():
         self.image.set_from_file(self.splash_image)
         self.image.show()
         self.lbl = gtk.Label(self.version)
-        self.lbl.set_alignment(0.5, 0.5)
+        #self.lbl.set_alignment(0.5, 0.5)
         main_vbox.pack_start(self.image, True, True, 0)
         main_vbox.pack_start(self.lbl, True, True, 0)
         self.window.show_all()
@@ -326,7 +326,10 @@ class Librarian:
             try:
                 import calibre
                 e_books = calibre.calibre()
-                self.booklist, num_ebooks = e_books.insert_data(self.booklist)
+                try:
+                    self.booklist, num_ebooks = e_books.insert_data(self.booklist)
+                except:
+                    pass
             except:
                 raise
                 print ("Cannot find any e-books.\n")

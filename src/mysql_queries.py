@@ -38,7 +38,7 @@ try:
   db_lite = config.lite_db
   use = config.use # What DB type to use
 except:
-  print "\nThere There is some error in the config file.\nCannot continue!\n\n "
+  print ("\nThere There is some error in the config file.\nCannot continue!\n\n ")
   quit()
 
 
@@ -188,7 +188,7 @@ class mysql:
         if author == '' : continue
         last = author.split()[-1]
         first = " ".join(author.split()[0:-1])
-        print "Ordinal = ", ordinal, author, first, last
+        print ("Ordinal = ", ordinal, author, first, last)
         self.cur.execute("INSERT IGNORE INTO book_authors(author_last, author_first) \
                     VALUES(%s, %s)", (last, first))
         self.db.commit()
@@ -254,8 +254,8 @@ class mysql:
     Add a new location to the database.
     create table locations(id int auto_increment primary key, room text, shelf text);
     '''
-    print room,shelf
-    print self.cur.execute("INSERT INTO locations(room,shelf) VALUES(%s, %s);",(room, shelf))
+    print (room,shelf)
+    print (self.cur.execute("INSERT INTO locations(room,shelf) VALUES(%s, %s);",(room, shelf)))
     self.db.commit()
     return
 

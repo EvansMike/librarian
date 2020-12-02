@@ -51,7 +51,7 @@ class freebase_cd:
     if len(result) == 0:
         sys.exit('Unknown band')
     elif len(result) > 1:
-        print "Warning: multiple bands named " + band + ". Listing first only."
+        print ("Warning: multiple bands named " + band + ". Listing first only.")
 
     result = result[0]                    # Get first band from array of matches.
     if not result['album']:               # Exit if band has no albums
@@ -64,7 +64,7 @@ class freebase_cd:
         album_id = album['id']            #Album ID
         if not date: date = ''            
         else: date = ' [%s]' % date[0:4]  # Just the 4-digit year in brackets.
-        print "%s - %s" % (name.encode('iso-8859-1','ignore'), date)       # Print name and date.
+        print ("%s - %s" % (name.encode('iso-8859-1','ignore'), date) )      # Print name and date.
         #self.get_tracks(str(name), str(album_id))
 
     return album_id, date
@@ -117,7 +117,7 @@ class freebase_cd:
     alid = self.get_album_id("Kate Bush", "The Kick Inside")[0]
     tracks = self.get_tracks(alid)
     for track in tracks:
-      print track
+      print (track)
     return True # On success
 ################### END CLASS freebase_cd ##############################
 

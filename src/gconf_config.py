@@ -59,7 +59,7 @@ class gconf_config():
     TODO: Write a config interface.'''
     # Test if alredy exists, don't overwrite!
     if self.client.dir_exists("/apps/librarian") == True: 
-      print "Creating new config file.\n"
+      print ("Creating new config file.\n")
       
       gvalue_str = gconf.Value(gconf.VALUE_STRING)  
         
@@ -80,13 +80,13 @@ class gconf_config():
       self.client.set('/apps/librarian/AZSKEY',gvalue_str)
     
     if self.client.dir_exists("/apps/librarian") == False: 
-      print "Cannot create gconf entries!"
+      print ("Cannot create gconf entries!")
       return False
     else: return True
     
   def create_schema(self):
     ''' Create schema for key values '''
-    print "Creating schemas.\n"
+    print ("Creating schemas.\n")
     self.client.add_dir("/schemas/apps/librarian",gconf.CLIENT_PRELOAD_NONE)
     user_schema = gconf.Schema()
     passwd_schema = gconf.Schema()
@@ -129,8 +129,8 @@ class gconf_config():
       self.az_key = self.client.get('/apps/librarian/AZKEY').to_string()
       self.az_skey = self.client.get('/apps/librarian/AZSKEY').to_string()
     except: # Couldn't find the config settings
-      print "\nCannot find setup data.  Writing default values.\n"
-      print "You will need to run the config thingy.\n"
+      print ("\nCannot find setup data.  Writing default values.\n")
+      print ("You will need to run the config thingy.\n")
       #TODO: Pop up a config window here
       self.test_config() # TODO: remove when pop up window done.
       self.get_config()
@@ -141,13 +141,13 @@ class gconf_config():
   def print_config(self):
     ''' print some values for testing.  Take care not to expose secret data.
     '''
-    print "USER =", self.client.get('/apps/librarian/USER').to_string()
-    print "PASSWD =", self.client.get('/apps/librarian/PASSWD').to_string()
-    print "DBHOST =", self.client.get('/apps/librarian/DBHOST').to_string()
-    print "DBASE =", self.client.get('/apps/librarian/DBASE').to_string()
-    print "CALIBRE_DB =", self.client.get('/apps/librarian/CALIBRE_DB').to_string()
-    print "AZKEY =", self.client.get('/apps/librarian/AZKEY').to_string()
-    print "AZSKEY =", self.client.get('/apps/librarian/AZSKEY').to_string()
+    print ("USER =", self.client.get('/apps/librarian/USER').to_string())
+    print ("PASSWD =", self.client.get('/apps/librarian/PASSWD').to_string())
+    print ("DBHOST =", self.client.get('/apps/librarian/DBHOST').to_string())
+    print ("DBASE =", self.client.get('/apps/librarian/DBASE').to_string())
+    print ("CALIBRE_DB =", self.client.get('/apps/librarian/CALIBRE_DB').to_string())
+    print ("AZKEY =", self.client.get('/apps/librarian/AZKEY').to_string())
+    print ("AZSKEY =", self.client.get('/apps/librarian/AZSKEY').to_string())
   
 # test harness.  Write and read some default config values.
 if __name__ == "__main__":
@@ -156,4 +156,3 @@ if __name__ == "__main__":
   #app.create_schema()
   #state = app.test_config()
   app.print_config()
-  

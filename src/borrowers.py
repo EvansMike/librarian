@@ -27,8 +27,8 @@ try:
   import logging
   import load_config
   import sys, os
-except  ImportError, e:
-  print e
+except  ImportError (e):
+  print (e)
 
   
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
@@ -116,8 +116,8 @@ class borrowers():
       from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
       from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
       from reportlab.lib.units import mm
-    except ImportError, e:
-      print e
+    except ImportError (e):
+      print (e)
       messages.pop_info(e)
       return
     

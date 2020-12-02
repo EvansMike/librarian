@@ -39,4 +39,4 @@ class UPCLookup(object):
 if __name__ == '__main__':
     lookup = UPCLookup()
     r = lookup.get_response("5035822011717")
-    print json.dumps(r.json(), indent=2, sort_keys=True)
+    print (json.dumps(r.json(), indent=2, sort_keys=True))

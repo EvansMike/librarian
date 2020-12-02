@@ -37,7 +37,7 @@ except:
 try:
   import gtk
 except:
-  print _("GTK Not Availible")
+  print ("GTK Not Availible")
   sys.exit(1)
   
   
@@ -108,5 +108,3 @@ class location_edit():
 ''' Run main if called directly.'''
 if __name__ == "__main__":
   app = location_edit()
-
-

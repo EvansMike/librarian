@@ -30,7 +30,7 @@ try:
   db_lite = config.lite_db
   use = config.use # What DB type to use
 except:
-  print "\nThere There is some error in the config file.\nCannot continue!\n\n "
+  print ("\nThere There is some error in the config file.\nCannot continue!\n\n ")
   quit()
 
 
@@ -45,7 +45,7 @@ class TestAll(unittest.TestCase):
     def test_get_all_books(self):
         r1, numrows1 = self.db1.get_all_books()
         r2, numrows2 = self.db2.get_all_books()
-        print  numrows1, numrows2
+        print  (numrows1, numrows2)
         self.assertEqual(numrows1,numrows2)
         self.assertTrue(numrows1 == numrows2)
 
@@ -53,19 +53,19 @@ class TestAll(unittest.TestCase):
         bar = '9780099422273'
         c1 = self.db1.get_book_count_by_isbn(bar)
         c2 = self.db2.get_book_count_by_isbn(bar)
-        print c1, c2
+        print (c1, c2)
         self.assertEqual(c1,c2)
 
     def test_get_borrowed_books(self):
         c1 = self.db1.get_borrowed_books()
         c2 = self.db2.get_borrowed_books()
-        print len(c1), len(c2)
+        print (len(c1), len(c2))
         self.assertEqual(len(c1), len(c2))
 
     def test_search_books(self):
         c1 = self.db1.search_books('empire')
         c2 = self.db2.search_books('empire')
-        print len(c1), len(c2)
+        print (len(c1), len(c2))
         self.assertEqual(len(c1), len(c2))
 
 
@@ -73,27 +73,27 @@ class TestAll(unittest.TestCase):
         bid = 979
         c1 = self.db1.get_book_borrower_by_book_id(bid)
         c2 = self.db1.get_book_borrower_by_book_id(bid)
-        print c1['name'], c2['name']
+        print (c1['name'], c2['name'])
         self.assertEqual(c1['name'], c2['name'])
         
     def test_get_borrowed_book_by_id(self):
         bid = 979
         c1 = self.db1.get_borrowed_book_by_id(bid)
         c2 = self.db2.get_borrowed_book_by_id(bid)
-        print c1['id'], c2['id']
+        print (c1['id'], c2['id'])
         self.assertEqual(c1['id'], c2['id'])
         
     def test_get_borrower_by_id(self):
         bid = 5
         c1 = self.db1.get_borrower_by_id(bid)
         c2 = self.db2.get_borrower_by_id(bid)
-        print c1['name'], c2['name']
+        print (c1['name'], c2['name'])
         self.assertEqual(c1['name'], c2['name'])
         
     def test_get_borrowers_borrowed_books(self):
         c1 = self.db1.get_borrowers_borrowed_books()
         c2 = self.db2.get_borrowers_borrowed_books()
-        print len(c1), len(c2)
+        print( len(c1), len(c2))
         self.assertEqual(len(c1), len(c2))
 
         
@@ -102,13 +102,13 @@ class TestAll(unittest.TestCase):
         copies = 10
         c1 = self.db1.get_borrows(bid, copies)
         c2 = self.db2.get_borrows(bid, copies)
-        print len(c1), len(c2)
+        print (len(c1), len(c2))
         self.assertEqual(len(c1), len(c2))
         
     def test_get_all_borrowers(self):
         c1 = self.db1.get_all_borrowers()
         c2 = self.db2.get_all_borrowers()
-        print len(c1), len(c2)
+        print (len(c1), len(c2))
         self.assertEqual(len(c1), len(c2))
         
     def test_get_one_borrower(self):
@@ -120,7 +120,7 @@ class TestAll(unittest.TestCase):
     def test_get_borrowing_history(self):
         c1 = self.db1.get_borrowing_history()
         c2 = self.db2.get_borrowing_history()
-        print len(c1), len(c2)
+        print (len(c1), len(c2))
         self.assertEqual(len(c1), len(c2))
         
     def test_get_by_id(self):
@@ -132,14 +132,14 @@ class TestAll(unittest.TestCase):
     def test_get_locations(self):
         c1 = self.db1.get_locations()
         c2 = self.db2.get_locations()
-        print len(c1), len(c2)
+        print (len(c1), len(c2))
         self.assertEqual(len(c1), len(c2))
         
     def test_get_location_by_isbn(self):
         isbn = '9780099422273'
         c1 = self.db1.get_location_by_isbn(isbn)
         c2 = self.db2.get_location_by_isbn(isbn)
-        print c1[0]['room'], c2[0]['room']
+        print (c1[0]['room'], c2[0]['room'])
         self.assertEqual(c1[0]['room'], c2[0]['room'])
 
         
@@ -210,7 +210,7 @@ if __name__ == '__main__':
     sys.stdout.write(question)
     choice = raw_input().lower().strip()
     if choice in no:
-        print "Stopping"
-    print "OK. On your head be it"
+        print ("Stopping")
+    print ("OK. On your head be it")
     sys.argv.append('--verbose') # Make it run verbosely (hacky).
     unittest.main()
