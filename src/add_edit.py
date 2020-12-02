@@ -27,17 +27,16 @@ import usb.util
 import MySQLdb
 import sys, os
 import logging
-import pygtk
-pygtk.require("2.0")
-import gtk
-from biblio.webquery.xisbn import XisbnQuery
-import biblio.webquery
-import book
+
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk as gtk
+from . import book
 import copy
 import gettext
 import datetime
 import getpass
-from db_queries import sql as sql
+from .db_queries import sql as sql
 
 _ = gettext.gettext
 

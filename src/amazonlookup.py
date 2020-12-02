@@ -58,14 +58,14 @@ class DVDlookup:
   def test_look(self):
     if self.lookup(DVD_EAN) != 1:
       #assert self.Title == "The Butterfly Effect - Director's Cut [DVD]"
-      print self.Title
-      print self.Manufacturer
-      print self.Director
-      print self.Actor
-      print self.ProductGroup
-      print "\n"
+      print (self.Title)
+      print (self.Manufacturer)
+      print (self.Director)
+      print (self.Actor)
+      print (self.ProductGroup)
+      print ("\n")
     else:
-        print "Failed"
+        print ("Failed")
 
 #################### END DVDlookup CLASS ###############################
 
@@ -93,11 +93,11 @@ class CDlookup():
   def test_look(self):
     if self.lookup(CD_EAN) != 1:
       #assert self.Title == "Ain't Nothing Like the Real Thing"
-      print self.Title
-      print self.Artist
-      print self.Manufacturer
-      print self.ProductGroup
-      print "\n"
+      print (self.Title)
+      print (self.Artist)
+      print (self.Manufacturer)
+      print (self.ProductGroup)
+      print ("\n")
 
 #################### END CDlookup CLASS ###############################  
 class Booklookup():
@@ -124,10 +124,10 @@ class Booklookup():
   def test_look(self):
     if self.lookup(CD_EAN) != 1:
       #assert self.Title == "Ain't Nothing Like the Real Thing"
-      print self.Title
-      print self.Author
-      print self.Manufacturer
-      print self.ProductGroup    
+      print (self.Title)
+      print (self.Author)
+      print (self.Manufacturer)
+      print (self.ProductGroup)
 
 #################### END Booklookup CLASS ###############################     
     

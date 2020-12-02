@@ -33,18 +33,16 @@ import usb.core
 import usb.util
 import zbar
 import webbrowser
-from biblio.webquery.xisbn import XisbnQuery
-import biblio.webquery
 import platform
 import MySQLdb
 import sys, os
-import load_config as config
+from .import load_config as config
 import logging
 #import load_config as gconf_config
 import gettext
-import book
+from . import book
 import datetime
-from db_queries import sql as sql
+from .db_queries import sql as sql
 import getpass
 import threading
 import signal
@@ -58,17 +56,9 @@ DEBUG = logging.debug
 INFO = logging.info
 
 
-try:
-    import pygtk
-    pygtk.require("2.0")
-except:
-    pass
-try:
-    import gtk
-except:
-    print_("GTK Not Availible")
-    sys.exit(1)
-
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk as gtk
 
 dev = None
 ep = None
