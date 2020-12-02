@@ -365,7 +365,7 @@ class Librarian:
         '''
         # Open the scan thang
         #logging.info("Do the scan thang")
-        from guiscan import Scanner
+        from .guiscan import Scanner
         s = Scanner()
         self.get_book_list(ALL) # All books
 
@@ -374,7 +374,7 @@ class Librarian:
         '''Open the query dialog.
 
         '''
-        from add_edit import add_edit
+        from .add_edit import add_edit
         ## Get a book for editing.  SHOULD be devolved to add_edit !!
         foo,iter = self.treeview.get_selection().get_selected()
         if iter:

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.36.0 -->
 <interface>
-  <requires lib="gtk+" version="2.20"/>
-  <!-- interface-naming-policy project-wide -->
+  <requires lib="gtk+" version="3.0"/>
   <object class="GtkListStore" id="liststore1">
     <columns>
       <!-- column-name id -->
@@ -107,8 +107,8 @@
                         <property name="width_request">60</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
                         <property name="label" translatable="yes">ISBN</property>
+                        <property name="xalign">1</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -121,11 +121,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
-                        <property name="invisible_char_set">True</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
-                        <property name="primary_icon_sensitive">True</property>
-                        <property name="secondary_icon_sensitive">True</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -149,8 +146,8 @@
                         <property name="width_request">60</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
                         <property name="label" translatable="yes">Author</property>
+                        <property name="xalign">1</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -163,11 +160,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
-                        <property name="invisible_char_set">True</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
-                        <property name="primary_icon_sensitive">True</property>
-                        <property name="secondary_icon_sensitive">True</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -191,8 +185,8 @@
                         <property name="width_request">60</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
                         <property name="label" translatable="yes">Title</property>
+                        <property name="xalign">1</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -205,11 +199,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
-                        <property name="invisible_char_set">True</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
-                        <property name="primary_icon_sensitive">True</property>
-                        <property name="secondary_icon_sensitive">True</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -233,8 +224,8 @@
                         <property name="width_request">60</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
                         <property name="label" translatable="yes">Abstract </property>
+                        <property name="xalign">1</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -247,7 +238,6 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">never</property>
-                        <property name="vscrollbar_policy">automatic</property>
                         <child>
                           <object class="GtkTextView" id="textview_abtract">
                             <property name="visible">True</property>
@@ -293,8 +283,8 @@
                         <property name="width_request">70</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
                         <property name="label" translatable="yes">Publisher</property>
+                        <property name="xalign">1</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -307,11 +297,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
-                        <property name="invisible_char_set">True</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
-                        <property name="primary_icon_sensitive">True</property>
-                        <property name="secondary_icon_sensitive">True</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -335,8 +322,8 @@
                         <property name="width_request">70</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
                         <property name="label" translatable="yes">Year</property>
+                        <property name="xalign">1</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -349,11 +336,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
-                        <property name="invisible_char_set">True</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
-                        <property name="primary_icon_sensitive">True</property>
-                        <property name="secondary_icon_sensitive">True</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -377,8 +361,8 @@
                         <property name="width_request">70</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
                         <property name="label" translatable="yes">City</property>
+                        <property name="xalign">1</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -391,11 +375,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
-                        <property name="invisible_char_set">True</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
-                        <property name="primary_icon_sensitive">True</property>
-                        <property name="secondary_icon_sensitive">True</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -419,8 +400,8 @@
                         <property name="width_request">70</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
                         <property name="label" translatable="yes">Type</property>
+                        <property name="xalign">1</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -433,11 +414,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
-                        <property name="invisible_char_set">True</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
-                        <property name="primary_icon_sensitive">True</property>
-                        <property name="secondary_icon_sensitive">True</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -461,8 +439,8 @@
                         <property name="width_request">70</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
                         <property name="label" translatable="yes">Value</property>
+                        <property name="xalign">1</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -471,22 +449,9 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBoxEntry" id="comboboxentry_value">
+                      <object class="GtkComboBoxText" id="comboboxentry_value">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="model">liststore_values</property>
-                        <property name="text_column">0</property>
-                        <child internal-child="entry">
-                          <object class="GtkEntry" id="comboboxentry-entry">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">●</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                        </child>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -549,8 +514,6 @@
                     <property name="width_chars">5</property>
                     <property name="primary_icon_activatable">False</property>
                     <property name="secondary_icon_activatable">False</property>
-                    <property name="primary_icon_sensitive">True</property>
-                    <property name="secondary_icon_sensitive">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -585,22 +548,12 @@
               </packing>
             </child>
             <child>
-              <object class="GtkComboBoxEntry" id="comboboxentry1">
+              <object class="GtkComboBoxText" id="comboboxentry1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="has_tooltip">True</property>
                 <property name="tooltip_text" translatable="yes">List of borrowers.</property>
-                <property name="model">liststore1</property>
                 <signal name="changed" handler="on_comboboxentry1_changed" swapped="no"/>
-                <child internal-child="entry">
-                  <object class="GtkEntry" id="comboboxentry-entry2">
-                    <property name="can_focus">False</property>
-                    <property name="primary_icon_activatable">False</property>
-                    <property name="secondary_icon_activatable">False</property>
-                    <property name="primary_icon_sensitive">True</property>
-                    <property name="secondary_icon_sensitive">True</property>
-                  </object>
-                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -628,8 +581,8 @@ currently selected one</property>
               <object class="GtkLabel" id="label10">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">1</property>
                 <property name="label" translatable="yes">Date:</property>
+                <property name="xalign">1</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -647,8 +600,6 @@ currently selected one</property>
                 <property name="invisible_char">●</property>
                 <property name="primary_icon_activatable">False</property>
                 <property name="secondary_icon_activatable">False</property>
-                <property name="primary_icon_sensitive">True</property>
-                <property name="secondary_icon_sensitive">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -691,9 +642,9 @@ currently selected one</property>
                   <object class="GtkLabel" id="label12">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0.94999998807907104</property>
-                    <property name="yalign">0.4699999988079071</property>
                     <property name="label" translatable="yes">Book Location:</property>
+                    <property name="xalign">0.949999988079071</property>
+                    <property name="yalign">0.4699999988079071</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -702,21 +653,11 @@ currently selected one</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkComboBoxEntry" id="combobox_location">
+                  <object class="GtkComboBoxText" id="combobox_location">
                     <property name="width_request">150</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="model">liststore_locations</property>
                     <property name="add_tearoffs">True</property>
-                    <child internal-child="entry">
-                      <object class="GtkEntry" id="comboboxentry-entry4">
-                        <property name="can_focus">False</property>
-                        <property name="primary_icon_activatable">False</property>
-                        <property name="secondary_icon_activatable">False</property>
-                        <property name="primary_icon_sensitive">True</property>
-                        <property name="secondary_icon_sensitive">True</property>
-                      </object>
-                    </child>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -746,8 +687,8 @@ currently selected one</property>
                       <object class="GtkLabel" id="label13">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
                         <property name="label" translatable="yes">Owner:</property>
+                        <property name="xalign">1</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -762,8 +703,6 @@ currently selected one</property>
                         <property name="invisible_char">●</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
-                        <property name="primary_icon_sensitive">True</property>
-                        <property name="secondary_icon_sensitive">True</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -812,9 +751,9 @@ currently selected one</property>
               <object class="GtkLabel" id="label14">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">1</property>
                 <property name="xpad">9</property>
                 <property name="label" translatable="yes">Star Rating:</property>
+                <property name="xalign">1</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -823,22 +762,10 @@ currently selected one</property>
               </packing>
             </child>
             <child>
-              <object class="GtkComboBoxEntry" id="combobox_rating">
+              <object class="GtkComboBoxText" id="combobox_rating">
                 <property name="width_request">150</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="model">liststore_rating</property>
-                <property name="text_column">1</property>
-                <child internal-child="entry">
-                  <object class="GtkEntry" id="comboboxentry-rating">
-                    <property name="can_focus">False</property>
-                    <property name="invisible_char">●</property>
-                    <property name="primary_icon_activatable">False</property>
-                    <property name="secondary_icon_activatable">False</property>
-                    <property name="primary_icon_sensitive">True</property>
-                    <property name="secondary_icon_sensitive">True</property>
-                  </object>
-                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -969,6 +896,9 @@ currently selected one</property>
           </packing>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
 </interface>
