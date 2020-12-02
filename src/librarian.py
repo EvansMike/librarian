@@ -123,13 +123,13 @@ class SplashScreen():
         self.window.set_decorated(False)
         self.version = "Version: " + version.__version__
         self.window.set_title('LIBRARIAN')
-        main_vbox = gtk.VBox(False, 3)
+        main_vbox = gtk.VBox()
         self.window.add(main_vbox)
         self.image = gtk.Image()
         self.splash_image = os.path.join(os.path.dirname(__file__),"librarian.png")
         self.image.set_from_file(self.splash_image)
         self.image.show()
-        self.lbl = gtk.Label(self.version)
+        self.lbl = gtk.Label()
         #self.lbl.set_alignment(0.5, 0.5)
         main_vbox.pack_start(self.image, True, True, 0)
         main_vbox.pack_start(self.lbl, True, True, 0)
@@ -329,6 +329,7 @@ class Librarian:
                 try:
                     self.booklist, num_ebooks = e_books.insert_data(self.booklist)
                 except:
+                    DEBUG("No e-books found!")
                     pass
             except:
                 raise

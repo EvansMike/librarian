@@ -45,6 +45,7 @@ _ = gettext.gettext
 
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.INFO)
 #logging.disable(logging.INFO)
+DEBUG = logging.debug
 
 class calibre:
   ''' Do the import and insert the data into the list.
@@ -79,6 +80,7 @@ class calibre:
     where  books.id=books_authors_link.book \
     AND authors.id=books_authors_link.author \
     ;')
+    DEBUG(c)
     # Insert data into booklist
     for row in c:
       book_count += 1
@@ -177,6 +179,6 @@ if __name__ == "__main__":
   ''' Simple test harness'''
   app = calibre()
   booklist = []
-  booklist = app.insert_data2(booklist)
+  booklist = app.insert_data(booklist)
   for row in booklist:
     print (row)
