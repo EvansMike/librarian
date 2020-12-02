@@ -1,4 +1,4 @@
-#!/bin/env python2
+#!/bin/env python
 # -*- coding: utf-8 -*-
 '''
   This program is free software; you can redistribute it and/or modify
@@ -36,8 +36,8 @@ import gettext
 import getpass
 import MySQLdb
 import MySQLdb.cursors
-import messages
-import book
+from . import messages
+from . import book
 #import lib_print
 
 
@@ -45,7 +45,7 @@ import book
 #from db_queries import calibre
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
 # or
-from db_queries import sql as sql
+from .db_queries import sql as sql
 
 if py_version == 2:
     import i18n
@@ -123,14 +123,14 @@ class SplashScreen():
         self.window.set_decorated(False)
         self.version = "Version: " + version.__version__
         self.window.set_title('LIBRARIAN')
-        main_vbox = gtk.VBox(False, 3)
+        main_vbox = gtk.VBox()
         self.window.add(main_vbox)
         self.image = gtk.Image()
         self.splash_image = os.path.join(os.path.dirname(__file__),"librarian.png")
         self.image.set_from_file(self.splash_image)
         self.image.show()
-        self.lbl = gtk.Label(self.version)
-        self.lbl.set_alignment(0.5, 0.5)
+        self.lbl = gtk.Label()
+        #self.lbl.set_alignment(0.5, 0.5)
         main_vbox.pack_start(self.image, True, True, 0)
         main_vbox.pack_start(self.lbl, True, True, 0)
         self.window.show_all()
@@ -324,9 +324,13 @@ class Librarian:
             result, numrows = db_query.get_all_books()
             self.fill_booklist(result)
             try:
-                import calibre
+                from . import calibre
                 e_books = calibre.calibre()
-                self.booklist, num_ebooks = e_books.insert_data(self.booklist)
+                try:
+                    self.booklist, num_ebooks = e_books.insert_data(self.booklist)
+                except:
+                    DEBUG("No e-books found!")
+                    pass
             except:
                 raise
                 print ("Cannot find any e-books.\n")
@@ -361,7 +365,7 @@ class Librarian:
         '''
         # Open the scan thang
         #logging.info("Do the scan thang")
-        from guiscan import Scanner
+        from .guiscan import Scanner
         s = Scanner()
         self.get_book_list(ALL) # All books
 
@@ -370,7 +374,7 @@ class Librarian:
         '''Open the query dialog.
 
         '''
-        from add_edit import add_edit
+        from .add_edit import add_edit
         ## Get a book for editing.  SHOULD be devolved to add_edit !!
         foo,iter = self.treeview.get_selection().get_selected()
         if iter:

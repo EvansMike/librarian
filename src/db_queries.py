@@ -1,4 +1,5 @@
 #!/bin/env python
+# -*- coding: utf-8 -*-
 '''
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,7 +38,7 @@ TODO: Make sure all the functions do the same thing for mysql and sqlite storage
 
 import sys,os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.pardir))
-import load_config as config
+from . import load_config as config
 import locale
 import gettext
 import logging
@@ -289,7 +290,7 @@ class mysql:
 
   warnings.filterwarnings('ignore', category=MySQLdb.Warning)
   def __init__(self):
-    self.db = self.MySQLdb.connect(user=db_user, host=db_host, db=db_base,  passwd = db_pass)
+    self.db = self.MySQLdb.connect(user=db_user, host=db_host, db=db_base,  passwd = db_pass, charset='utf8')
     self.cur = self.db.cursor(self.MySQLdb.cursors.DictCursor)
     #logging.info("This connection is using MySQL")
 
@@ -298,11 +299,12 @@ class mysql:
     Get all of the books and return a list.
 
     '''
-    command = "SELECT *  FROM books b INNER JOIN books_to_authors ba ON (b.id = ba.book_id) \
+    command = "SELECT * FROM books b INNER JOIN books_to_authors ba ON (b.id = ba.book_id) \
     INNER JOIN book_authors a ON (ba.author_id = a.author_id) \
     WHERE copies > 0 \
     GROUP BY b.title ORDER BY author_last, author_ordinal;"
     numrows = self.cur.execute(command)
+    DEBUG(numrows)
     return  self.cur.fetchall(), numrows
 
 
@@ -593,8 +595,9 @@ if __name__ == "__main__":
   my = mysql()
   cali = calibre()
   # Check connection and booklist getting.
-  mybooks = lite.get_all_books()
+  #mybooks = lite.get_all_books()
   #mybooks = my.search_books("cat")
+  mybooks, numbooks = my.get_all_books()
   for book in mybooks:
     print (book)
   #my.get_borrowed_books()
