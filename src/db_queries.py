@@ -38,7 +38,7 @@ TODO: Make sure all the functions do the same thing for mysql and sqlite storage
 
 import sys,os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.pardir))
-import load_config as config
+from . import load_config as config
 import locale
 import gettext
 import logging

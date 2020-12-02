@@ -22,7 +22,7 @@ needing the set up paths to file etc.
 '''
 import sys, os
 import sqlite3
-import load_config
+from . import load_config
 import logging
 import locale
 import gettext

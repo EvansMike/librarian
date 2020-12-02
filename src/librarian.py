@@ -36,8 +36,8 @@ import gettext
 import getpass
 import MySQLdb
 import MySQLdb.cursors
-import messages
-import book
+from . import messages
+from . import book
 #import lib_print
 
 
@@ -45,7 +45,7 @@ import book
 #from db_queries import calibre
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
 # or
-from db_queries import sql as sql
+from .db_queries import sql as sql
 
 if py_version == 2:
     import i18n
@@ -324,7 +324,7 @@ class Librarian:
             result, numrows = db_query.get_all_books()
             self.fill_booklist(result)
             try:
-                import calibre
+                from . import calibre
                 e_books = calibre.calibre()
                 try:
                     self.booklist, num_ebooks = e_books.insert_data(self.booklist)
