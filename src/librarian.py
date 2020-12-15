@@ -117,6 +117,7 @@ class SplashScreen():
             self.window.set_position(gtk.WIN_POS_CENTER)
         if py_version == 3:
             self.window = gtk.Window()
+            self.window.set_position(gtk.WindowPosition.CENTER)
         self.window.set_decorated(False)
         self.version = "Version: " + version.__version__
         self.window.set_title('LIBRARIAN')
@@ -127,7 +128,11 @@ class SplashScreen():
         self.image.set_from_file(self.splash_image)
         self.image.show()
         self.lbl = gtk.Label()
-        #self.lbl.set_alignment(0.5, 0.5)
+        if py_version == 2:
+            self.lbl.set_alignment(0.5, 0.5)  
+        if py_version == 3:
+            self.lbl.set_xalign(0.5) 
+            self.lbl.set_yalign(0.5) 
         main_vbox.pack_start(self.image, True, True, 0)
         main_vbox.pack_start(self.lbl, True, True, 0)
         self.window.show_all()
