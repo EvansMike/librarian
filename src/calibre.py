@@ -150,37 +150,6 @@ class calibre:
         '', '', '', '0', 0, 0, 'e-book'])
     return mybooklist
 
-  def insert_data2(self, booklist = []):
-    ''' Use "calibredb list" command to get book list.  May make it more
-    portable and avoids user having to set dabase paths.  It does seem to
-    be slower however.
-
-    Parameters:
-    booklist -- The gtk.liststore into which the books will be added
-
-    '''
-    book_count = 0
-    import commands
-    self.booklist = booklist
-    try:  book_string = commands.getoutput("calibredb list --separator=\"\t\"")
-    except: # Calibre not installed perhaps.
-      print (_("You don't appear to have Calibre installed, or it's not in your PATH."))
-      return
-    book_list = book_string.split("\n")
-    for  line in book_list:
-      book_count += 1
-      if str((line.split("\t")[0])).isdigit():
-        name = str(line.split("\t")[2])
-        name = str(line.split("\t")[2]).strip().split()
-        #logging.info(name)
-        author = []
-        author.append(name[-1]) # Last part
-        author.append(", ") # Decoration
-        author.append(' '.join(name[0:-1])) # All except last part adding a space between them
-        author = ''.join(author) # Join all elements into a string
-        self.booklist.append(['', author ,str(line.split("\t")[1]).strip() ,
-        '', '', '', '0', 0, 0, 'e-book'])
-    return self.booklist, book_count
 
 if __name__ == "__main__":
   ''' Simple test harness'''
