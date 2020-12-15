@@ -1,4 +1,4 @@
-# Run this with pip install -r requirements.txt
+# Run this with python3 -m pip install -r requirements.txt
 #Librarian
 isbnlib
 reportlab>=3.3.0
@@ -6,4 +6,3 @@ mysqlclient>=1.3.0
 requests>=2.18.4
 pyBarcode>=0.7
 biblio.webquery>=0.5
-

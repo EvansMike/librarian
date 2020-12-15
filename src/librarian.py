@@ -425,15 +425,16 @@ class Librarian:
         db_query = sql()
         ext = gtk.FileFilter()
         ext.add_pattern("*.csv")
-        dialog = gtk.FileChooserDialog("Save CSV as", None,gtk.FILE_CHOOSER_ACTION_SAVE, (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
+        dialog = gtk.FileChooserDialog("Save CSV as", None,gtk.FileChooserAction.SAVE, \
+            (gtk.STOCK_CANCEL, gtk.ResponseType.CANCEL, gtk.STOCK_OK, gtk.ResponseType.OK))
         dialog.set_filter(ext)
         response = dialog.run()
-        if response == gtk.RESPONSE_OK:
+        if response == gtk.ResponseType.OK:
             filename = dialog.get_filename()
             print("Selected filepath: %s" % dialog.get_filename())
         dialog.destroy()
         logging.info(filename)
-        with open(filename, 'wb') as csvfile:
+        with open(filename, 'w') as csvfile:
             csvwriter = csv.writer(csvfile, delimiter=',',
                                   quotechar='"')
             model = self.booklist
