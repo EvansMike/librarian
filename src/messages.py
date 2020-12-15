@@ -42,7 +42,7 @@ def pop_no_config_file(additional_text):
   d.add_buttons(gtk.STOCK_OK, 1)
   label = gtk.Label(_('No config file found. Please edit ') + config_file)
   label.show()
-  d.vbox.pack_start(label)
+  d.vbox.pack_start(label, True, True, 0)
   answer = d.run()
   d.destroy()
 

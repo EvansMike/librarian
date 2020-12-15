@@ -384,7 +384,7 @@ class Librarian:
             bid = self.booklist.get_value(iter,7)
             # If it's an e-book then we do nothing
             if bid == 0:
-                import messages
+                from . import messages
                 messages.pop_info(_('Cannot query e-books.  Please use calibre.' ))
                 return
             adder = add_edit()
