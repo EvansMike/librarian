@@ -372,8 +372,8 @@ class add_edit:
   def on_button_remove_clicked(self, widget):
     ''' Remove selected book from database '''
     db_query = sql()
-    dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_QUESTION,
-        gtk.BUTTONS_YES_NO, "Are you sure you want to delete this book?")
+    dialog = gtk.MessageDialog(None, 0, gtk.MessageType.QUESTION,
+             gtk.ButtonsType.YES_NO, "Are you sure you want to delete this book?")
     dlg_val = dialog.run()
     DEBUG(dlg_val)
     dialog.destroy()
