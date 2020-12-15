@@ -51,7 +51,7 @@ def pop_info(text):
   d.add_buttons(gtk.STOCK_OK, 1)
   label = gtk.Label(text)
   label.show()
-  d.vbox.pack_start(label)
+  d.vbox.pack_start(label, True, True, 0)
   answer = d.run()
   d.destroy()
   return answer
