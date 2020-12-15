@@ -27,25 +27,31 @@ import logging
 import locale
 import gettext
 
-plat = sys.platform
+logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.INFO)
+#logging.disable(logging.INFO)
+DEBUG = logging.debug
 
+
+
+plat = sys.platform
+DEBUG(plat)
 #Platform dependent stuff
 if plat == "darwin":
   pass # plat = "mac"
 elif plat== "win32":
   HOME_DIR = os.getenv('HOME')
-elif plat == "linux2":
+elif plat == "linux":
   HOME_DIR = os.getenv('HOME')
+  
   pass
+  
+#HOME_DIR = os.getenv('HOME')
 
 locale.setlocale(locale.LC_ALL, '')
 APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
 
-logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s:%(message)s', level=logging.INFO)
-#logging.disable(logging.INFO)
-DEBUG = logging.debug
 
 class calibre:
   ''' Do the import and insert the data into the list.
@@ -70,6 +76,7 @@ class calibre:
       self.calibre_base = HOME_DIR + "/" + config.calibre_db
       logging.info(self.calibre_base)
     except:
+      raise
       return
     book_count = 0
     self.booklist = booklist
