@@ -86,7 +86,8 @@ class add_edit:
     self.location_dropdown.set_entry_text_column(1)
     self.values_dropdown = builder.get_object("comboboxentry_value")
     self.values_liststore = builder.get_object("liststore_values")
-
+    self.values_dropdown.set_model(self.values_liststore)
+    self.values_dropdown.set_entry_text_column(0)
     self.lent_select.set_model( self.lentlist)
     self.lent_select.set_entry_text_column(1)
     self.o_date = ''
@@ -225,7 +226,9 @@ class add_edit:
   def populate_values(self):
       for value in book.Book.values:
         self.values_liststore.append([value])
-        self.values_dropdown.set_active(self.orig_book.value)
+      DEBUG(self.mybook.value)
+      if self.orig_book.value: self.values_dropdown.set_active(self.orig_book.value)
+      else: self.values_dropdown.set_active(self.mybook.value)
       
 
   def set_location(self):

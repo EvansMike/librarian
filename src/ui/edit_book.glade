@@ -466,6 +466,8 @@
                       <object class="GtkComboBoxText" id="comboboxentry_value">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="has_entry">True</property>
+                        <property name="entry_text_column">0</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
