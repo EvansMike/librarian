@@ -63,12 +63,9 @@ _ = gettext.gettext
 # Get system platform
 plat = sys.platform
 
-try: import version
+try: from . import version
 except:
-    vf = open('version.py','w')
-    vf.write("__version__ = \"devel\"\n")
-    vf.close()
-import version
+    version.__version__ = "devel\"\n"
 
 if py_version == 2:
     try:
