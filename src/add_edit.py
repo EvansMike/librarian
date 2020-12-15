@@ -82,15 +82,13 @@ class add_edit:
     self.lent_date = builder.get_object("b_date")
     self.location_dropdown = builder.get_object("combobox_location")
     self.location_liststore = builder.get_object("liststore_locations")
-   
     self.location_dropdown.set_model(self.location_liststore)
-    self.location_dropdown.set_text_column(1)
-
+    self.location_dropdown.set_entry_text_column(1)
     self.values_dropdown = builder.get_object("comboboxentry_value")
     self.values_liststore = builder.get_object("liststore_values")
 
     self.lent_select.set_model( self.lentlist)
-    self.lent_select.set_text_column(1)
+    self.lent_select.set_entry_text_column(1)
     self.o_date = ''
 
 
@@ -113,13 +111,13 @@ class add_edit:
         self.window.hide()
     else: # pop up an are you sure dialog.
       INFO("Opening a dialog to ask to save changes")
-      dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_QUESTION,
-            gtk.BUTTONS_YES_NO, "Changes have be made.\nDo you want to save changes?")
+      dialog = gtk.MessageDialog(None, 0, gtk.MessageType.QUESTION,
+             gtk.ButtonsType.YES_NO, "Changes have be made.\nDo you want to save changes?")
       dlg_val = dialog.run()
       dialog.destroy()
       del dialog
       self.on_destroy(widget)
-      if dlg_val == gtk.RESPONSE_YES:
+      if dlg_val == gtk.ResponseType.YES:
         INFO("Saving changes");  
         self.update_book()
         self.update_db()
@@ -318,7 +316,7 @@ class add_edit:
     self.mybook.authors=self.author.get_text()
     textbuffer = self.abstract.get_buffer()
     startiter, enditer = textbuffer.get_bounds()
-    self.mybook.abstract = textbuffer.get_text(startiter, enditer)
+    self.mybook.abstract = textbuffer.get_text(startiter, enditer, True)
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city = self.city.get_text().strip()
