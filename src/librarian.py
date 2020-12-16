@@ -93,6 +93,8 @@ parser.add_argument('--export', action='store_true', help='Export the books as a
 parser.add_argument('--version', action='version', version=version.__version__)
 parser.add_argument("-v", "--verbose", help="Output INFO statements", action="store_true")
 parser.add_argument("-d", "--debug", help="Output DEBUG and INFO statements",  action="store_true")
+parser.add_argument("-n", "--no_ebooks", help="Don't include e-books",  action="store_true")
+
 
 args = parser.parse_args()
 
@@ -325,18 +327,19 @@ class Librarian:
         if selection == ALL:
             result, numrows = db_query.get_all_books()
             self.fill_booklist(result)
-            try:
-                from . import calibre
-                e_books = calibre.calibre()
+            if not args.no_ebooks:
                 try:
-                    self.booklist, num_ebooks = e_books.insert_data(self.booklist)
+                    from . import calibre
+                    e_books = calibre.calibre()
+                    try:
+                        self.booklist, num_ebooks = e_books.insert_data(self.booklist)
+                    except:
+                        DEBUG("No e-books found!")
+                        pass
                 except:
-                    DEBUG("No e-books found!")
-                    pass
-            except:
-                raise
-                print ("Cannot find any e-books.\n")
-                pass # Do nothing if it's not available.
+                    raise
+                    print ("Cannot find any e-books.\n")
+                    pass # Do nothing if it's not available.
             self.status1.set_text("Book count = " + str(numrows) + ". E-book count = " +  str(num_ebooks))
         elif selection == BORROWED:
             result = db_query.get_borrowed_books()
