@@ -82,15 +82,14 @@ class add_edit:
     self.lent_date = builder.get_object("b_date")
     self.location_dropdown = builder.get_object("combobox_location")
     self.location_liststore = builder.get_object("liststore_locations")
-   
     self.location_dropdown.set_model(self.location_liststore)
-    self.location_dropdown.set_text_column(1)
-
+    self.location_dropdown.set_entry_text_column(1)
     self.values_dropdown = builder.get_object("comboboxentry_value")
     self.values_liststore = builder.get_object("liststore_values")
-
+    self.values_dropdown.set_model(self.values_liststore)
+    self.values_dropdown.set_entry_text_column(0)
     self.lent_select.set_model( self.lentlist)
-    self.lent_select.set_text_column(1)
+    self.lent_select.set_entry_text_column(1)
     self.o_date = ''
 
 
@@ -113,13 +112,13 @@ class add_edit:
         self.window.hide()
     else: # pop up an are you sure dialog.
       INFO("Opening a dialog to ask to save changes")
-      dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_QUESTION,
-            gtk.BUTTONS_YES_NO, "Changes have be made.\nDo you want to save changes?")
+      dialog = gtk.MessageDialog(None, 0, gtk.MessageType.QUESTION,
+             gtk.ButtonsType.YES_NO, "Changes have be made.\nDo you want to save changes?")
       dlg_val = dialog.run()
       dialog.destroy()
       del dialog
       self.on_destroy(widget)
-      if dlg_val == gtk.RESPONSE_YES:
+      if dlg_val == gtk.ResponseType.YES:
         INFO("Saving changes");  
         self.update_book()
         self.update_db()
@@ -227,7 +226,9 @@ class add_edit:
   def populate_values(self):
       for value in book.Book.values:
         self.values_liststore.append([value])
-        self.values_dropdown.set_active(self.orig_book.value)
+      DEBUG(self.mybook.value)
+      if self.orig_book.value: self.values_dropdown.set_active(self.orig_book.value)
+      else: self.values_dropdown.set_active(self.mybook.value)
       
 
   def set_location(self):
@@ -318,7 +319,7 @@ class add_edit:
     self.mybook.authors=self.author.get_text()
     textbuffer = self.abstract.get_buffer()
     startiter, enditer = textbuffer.get_bounds()
-    self.mybook.abstract = textbuffer.get_text(startiter, enditer)
+    self.mybook.abstract = textbuffer.get_text(startiter, enditer, True)
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city = self.city.get_text().strip()
@@ -374,8 +375,8 @@ class add_edit:
   def on_button_remove_clicked(self, widget):
     ''' Remove selected book from database '''
     db_query = sql()
-    dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_QUESTION,
-        gtk.BUTTONS_YES_NO, "Are you sure you want to delete this book?")
+    dialog = gtk.MessageDialog(None, 0, gtk.MessageType.QUESTION,
+             gtk.ButtonsType.YES_NO, "Are you sure you want to delete this book?")
     dlg_val = dialog.run()
     DEBUG(dlg_val)
     dialog.destroy()

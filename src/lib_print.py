@@ -16,7 +16,7 @@ class printer:
   def print_strings (self, afile):
     if not afile:
       return
-    if sys.platform == 'linux2':
+    if sys.platform == 'linux':
       ''' Is this linux? '''
       self.con.printFile(self.printer, afile, "", {"PageSize":"A4"})
       pass

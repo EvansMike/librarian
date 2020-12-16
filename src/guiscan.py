@@ -59,6 +59,7 @@ INFO = logging.info
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk as gtk
+from gi.repository import Gdk as gdk
 
 dev = None
 ep = None
@@ -119,7 +120,7 @@ class Scanner(object):
         self.window.show()
         if self.dev:
             self.button_scan.set_sensitive(False)
-            gtk.gdk.threads_init()
+            #gdk.threads_init()
             thread = threading.Thread(target=self.real_scanner)
             thread.setDaemon(True)
             thread.start()
@@ -255,8 +256,10 @@ class Scanner(object):
                         barcode.ISBN13(st).ean
                         self.add_book(None, st)
                     except:
+                        raise
                         DEBUG ("NOT an ISBN! Is this a DVD?")
-                        self.add_dvd(None, st)
+                        pass
+                        #self.add_dvd(None, st)
                     
                 
 ################################################################################
@@ -317,7 +320,7 @@ class Scanner(object):
                 
 ################################################################################
     def add_book(self, proc, isbn):
-        from add_edit import add_edit
+        from .add_edit import add_edit
         #buff = self.text_view.get_buffer()
         DEBUG(isbn)
         db_query = sql()
@@ -352,7 +355,7 @@ class Scanner(object):
             if proc: proc.visible = False
         except Exception as e:
             buff = self.text_view.get_buffer()
-            buff.set_text("No book with ISBN " + isbn + " found")
+            buff.set_text("{}{}{}".format("No book with ISBN ", isbn, " found"))
             #buff.set_text(repr(e.message))
             self.text_view.set_buffer(buff)
             DEBUG(e)
@@ -366,7 +369,7 @@ class Scanner(object):
         @param None
         @param ean8
         '''
-        from add_edit import add_edit
+        from .add_edit import add_edit
         
         db_query = sql()
         dvd = db_query.get_by_isbn(ean8)
@@ -375,7 +378,7 @@ class Scanner(object):
             adder = add_edit()
             adder.populate(dvd['id'])
         else:
-            import upc_lookup
+            from . import upc_lookup
             
             lookup = upc_lookup.UPCLookup()
             data = lookup.get_response(ean8).json()

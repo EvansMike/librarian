@@ -63,12 +63,9 @@ _ = gettext.gettext
 # Get system platform
 plat = sys.platform
 
-try: import version
+try: from . import version
 except:
-    vf = open('version.py','w')
-    vf.write("__version__ = \"devel\"\n")
-    vf.close()
-import version
+    version.__version__ = "devel\"\n"
 
 if py_version == 2:
     try:
@@ -120,6 +117,7 @@ class SplashScreen():
             self.window.set_position(gtk.WIN_POS_CENTER)
         if py_version == 3:
             self.window = gtk.Window()
+            self.window.set_position(gtk.WindowPosition.CENTER)
         self.window.set_decorated(False)
         self.version = "Version: " + version.__version__
         self.window.set_title('LIBRARIAN')
@@ -130,7 +128,11 @@ class SplashScreen():
         self.image.set_from_file(self.splash_image)
         self.image.show()
         self.lbl = gtk.Label()
-        #self.lbl.set_alignment(0.5, 0.5)
+        if py_version == 2:
+            self.lbl.set_alignment(0.5, 0.5)  
+        if py_version == 3:
+            self.lbl.set_xalign(0.5) 
+            self.lbl.set_yalign(0.5) 
         main_vbox.pack_start(self.image, True, True, 0)
         main_vbox.pack_start(self.lbl, True, True, 0)
         self.window.show_all()
@@ -382,7 +384,7 @@ class Librarian:
             bid = self.booklist.get_value(iter,7)
             # If it's an e-book then we do nothing
             if bid == 0:
-                import messages
+                from . import messages
                 messages.pop_info(_('Cannot query e-books.  Please use calibre.' ))
                 return
             adder = add_edit()
@@ -425,15 +427,16 @@ class Librarian:
         db_query = sql()
         ext = gtk.FileFilter()
         ext.add_pattern("*.csv")
-        dialog = gtk.FileChooserDialog("Save CSV as", None,gtk.FILE_CHOOSER_ACTION_SAVE, (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
+        dialog = gtk.FileChooserDialog("Save CSV as", None,gtk.FileChooserAction.SAVE, \
+            (gtk.STOCK_CANCEL, gtk.ResponseType.CANCEL, gtk.STOCK_OK, gtk.ResponseType.OK))
         dialog.set_filter(ext)
         response = dialog.run()
-        if response == gtk.RESPONSE_OK:
+        if response == gtk.ResponseType.OK:
             filename = dialog.get_filename()
             print("Selected filepath: %s" % dialog.get_filename())
         dialog.destroy()
         logging.info(filename)
-        with open(filename, 'wb') as csvfile:
+        with open(filename, 'w') as csvfile:
             csvwriter = csv.writer(csvfile, delimiter=',',
                                   quotechar='"')
             model = self.booklist

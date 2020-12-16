@@ -58,7 +58,7 @@ class Book(object):
 
     def print_book(self):
         ## Return some book details as a string for printing.  Mostly a debug thing.
-        bookstring = self.isbn + "\n" + self.authors + "\n" + self.title
+        bookstring = "{}{}{}{}{}".format(self.isbn,"\n",self.authors,"\n",self.title)
         return bookstring
 
     def add_details(self,details_list):
@@ -133,7 +133,7 @@ class Book(object):
             return None
         
     def lookup(self, isbn):
-        import lookup_books
+        from . import lookup_books
         lookup = lookup_books.BookLookup()
         data = lookup.googleapi(str(isbn).strip())
         #data = lookup.isbnlib(str(isbn)).strip())
