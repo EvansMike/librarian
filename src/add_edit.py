@@ -144,15 +144,16 @@ class add_edit:
       mybook.webquery(self.isbn.get_text())
       if self.mybook.isbn != "":
           self.isbn.set_text(mybook.isbn)
-      self.title.set_text(mybook.title)
-      self.author.set_text(str(mybook.authors))
+      self.title.set_text(mybook.title.decode("utf-8"))
+      self.author.set_text(mybook.authors)
       abs_buffer = self.abstract.get_buffer()
-      abs_buffer.set_text(mybook.abstract)
-      self.mtype.set_text(mybook.mtype)
-      self.publisher.set_text(mybook.publisher)
-      self.city.set_text(mybook.city)
-      self.year.set_text(mybook.year)
+      abs_buffer.set_text(mybook.abstract.decode("utf-8"))
+      self.mtype.set_text(str(mybook.mtype))
+      self.publisher.set_text(str(mybook.publisher))
+      self.city.set_text(str(mybook.city))
+      self.year.set_text(str(mybook.year))
     except:
+      raise
       pass
     if mybook.title == '':
       INFO(_("No book found"))

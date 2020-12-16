@@ -340,6 +340,8 @@ class Librarian:
                     raise
                     print ("Cannot find any e-books.\n")
                     pass # Do nothing if it's not available.
+            else:
+                num_ebooks = "Not shown"
             self.status1.set_text("Book count = " + str(numrows) + ". E-book count = " +  str(num_ebooks))
         elif selection == BORROWED:
             result = db_query.get_borrowed_books()
