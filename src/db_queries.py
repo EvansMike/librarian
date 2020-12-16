@@ -290,9 +290,24 @@ class mysql:
 
   warnings.filterwarnings('ignore', category=MySQLdb.Warning)
   def __init__(self):
-    self.db = self.MySQLdb.connect(user=db_user, host=db_host, db=db_base,  passwd = db_pass, charset='utf8')
+    try:
+        self.db = self.MySQLdb.connect(user=db_user, host=db_host, db=db_base,  passwd = db_pass, charset='utf8')
+    except: # Maybe the DB doesn't exist
+        self.create_database()
+        # If that fails then re-raise and quit
+        raise
+        quit(1)
     self.cur = self.db.cursor(self.MySQLdb.cursors.DictCursor)
     #logging.info("This connection is using MySQL")
+
+  def create_database(self):
+      '''
+      Create the databse tables.  Database has to already exist in MySQl or Mariadb with matching
+      data in $(HOME)/.librarian.cfg
+      '''
+      command = ""
+      self.cur.execute(command)
+      
 
   def get_all_books(self):
     '''

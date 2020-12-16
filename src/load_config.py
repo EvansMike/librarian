@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/bin/env python3
 # Get config data from file
 '''
   This program is free software; you can redistribute it and/or modify
@@ -45,7 +45,7 @@ home = os.environ['HOME']
 
 class load_config:
   ''' Load the config data for use by applications.
-  If a config file is not found it writes a stub file to the current dir
+  If a config file is not found it writes a stub dot file to the users home directory
   and informs the user to about filling the config fields.'''
   def __init__(self):
     self.get_config()
