@@ -149,7 +149,7 @@ class add_edit:
       abs_buffer = self.abstract.get_buffer()
       abs_buffer.set_text(mybook.abstract.decode("utf-8"))
       self.mtype.set_text(str(mybook.mtype))
-      self.publisher.set_text(str(mybook.publisher))
+      self.publisher.set_text(mybook.publisher.decode("utf-8"))
       self.city.set_text(str(mybook.city))
       self.year.set_text(str(mybook.year))
     except:
