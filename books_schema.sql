@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 5.5.35, for Linux (i686)
+-- MariaDB dump 10.18  Distrib 10.4.17-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: books
 -- ------------------------------------------------------
--- Server version	5.5.35
+-- Server version	10.4.17-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -27,7 +27,7 @@ CREATE TABLE `authors` (
   `name` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`(50))
-) ENGINE=MyISAM AUTO_INCREMENT=270 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=314 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,11 +39,11 @@ DROP TABLE IF EXISTS `book_authors`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `book_authors` (
   `author_id` int(11) NOT NULL AUTO_INCREMENT,
-  `author_last` text,
-  `author_first` text,
+  `author_last` text DEFAULT NULL,
+  `author_first` text DEFAULT NULL,
   PRIMARY KEY (`author_id`),
   UNIQUE KEY `book_authors_unique_idx` (`author_last`(10),`author_first`(10))
-) ENGINE=InnoDB AUTO_INCREMENT=3605 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3725 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,28 +55,28 @@ DROP TABLE IF EXISTS `books`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` text,
-  `author` text,
-  `isbn` text,
-  `cover` text,
+  `title` text DEFAULT NULL,
+  `author` text DEFAULT NULL,
+  `isbn` text DEFAULT NULL,
+  `cover` text DEFAULT NULL,
   `location` int(11) DEFAULT NULL,
   `p_date` date DEFAULT NULL,
-  `city` text,
-  `publisher` text,
-  `abstract` text,
-  `copies` int(11) DEFAULT '0',
+  `city` text DEFAULT NULL,
+  `publisher` text DEFAULT NULL,
+  `abstract` text DEFAULT NULL,
+  `copies` int(11) DEFAULT 0,
   `year` int(11) DEFAULT NULL,
-  `mtype` text,
+  `mtype` text DEFAULT NULL,
   `author_id` int(11) DEFAULT NULL,
   `add_date` datetime DEFAULT NULL,
   `sale_status` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `borrower_id` int(11) DEFAULT NULL,
   `owner` varchar(60) DEFAULT NULL,
-  `rating` int(11) DEFAULT '0',
-  `value` int(11) DEFAULT '0',
+  `rating` int(11) DEFAULT 0,
+  `value` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=934 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1069 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `books_to_authors` (
   `book_id` int(11) NOT NULL,
   `author_id` int(11) NOT NULL,
   `author_ordinal` int(11) NOT NULL,
-  `author_role` text
+  `author_role` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -103,11 +103,11 @@ DROP TABLE IF EXISTS `borrowers`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `borrowers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text,
-  `contact` text,
-  `notes` text,
+  `name` text DEFAULT NULL,
+  `contact` text DEFAULT NULL,
+  `notes` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ CREATE TABLE `borrows` (
   `book` int(11) NOT NULL,
   `borrower` int(11) NOT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=159 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,8 +153,8 @@ DROP TABLE IF EXISTS `config`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text,
-  `value` text,
+  `name` text DEFAULT NULL,
+  `value` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -168,8 +168,8 @@ DROP TABLE IF EXISTS `customers`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text,
-  `address` text,
+  `name` text DEFAULT NULL,
+  `address` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -215,10 +215,10 @@ DROP TABLE IF EXISTS `locations`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `locations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `room` text,
-  `shelf` text,
+  `room` text DEFAULT NULL,
+  `shelf` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,7 +230,7 @@ DROP TABLE IF EXISTS `mtype`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mtype` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `type` text,
+  `type` text DEFAULT NULL,
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -257,4 +257,4 @@ CREATE TABLE `rating` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-18 14:38:23
+-- Dump completed on 2020-12-16 11:13:37
