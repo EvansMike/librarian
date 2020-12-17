@@ -70,16 +70,16 @@ class Book(object):
         '''
         try:
             self.isbn = details_list[0]
-            self.authors = details_list[1]
-            self.title = details_list[2]
-            self.publisher = details_list[5]
-            self.abstract = details_list[4]
-            self.mtype = details_list[3]
+            self.authors = details_list[1].decode("utf-8")
+            self.title = details_list[2].decode("utf-8")
+            self.publisher = details_list[5].decode("utf-8")
+            self.abstract = details_list[4].decode("utf-8")
+            self.mtype = details_list[3].decode("utf-8")
             self.year = details_list[6]
-            self.city = details_list[7]
+            self.city = details_list[7].decode("utf-8")
             self.copies = details_list[8]
-            self.where = details_list[9]
-            self.edited = details_list[10]
+            self.where = details_list[9].decode("utf-8")
+            self.edited = details_list[10].decode("utf-8")
         except: return -1
         return 0
 
@@ -120,10 +120,10 @@ class Book(object):
             try:self.abstract = data['abstract']
             except: self.abstract =''
             self.isbn = data['isbn']
-            self.title = data['title']
+            self.title = data['title'].decode("utf-8")
             self.authors = str(data['authors'])
             self.mtype = data['type']
-            self.publisher = str(data['publisher'])
+            self.publisher = str(data['publisher'].decode("utf-8"))
             self.city = data['city']
             self.year = data['year']
             self.edited = data['edited']

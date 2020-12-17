@@ -354,6 +354,7 @@ class Scanner(object):
             # hide the preview window
             if proc: proc.visible = False
         except Exception as e:
+            raise
             buff = self.text_view.get_buffer()
             buff.set_text("{}{}{}".format("No book with ISBN ", isbn, " found"))
             #buff.set_text(repr(e.message))
@@ -444,7 +445,7 @@ class Scanner(object):
               Change output dir
         DONE: Store images in the DB
         '''
-        from db_queries import sql as sql
+        from .db_queries import sql as sql
         db_query = sql()
         if QR_CODE:
             import getpass
