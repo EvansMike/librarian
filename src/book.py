@@ -120,10 +120,10 @@ class Book(object):
             try:self.abstract = data['abstract']
             except: self.abstract =''
             self.isbn = data['isbn']
-            self.title = data['title'].decode("utf-8")
+            self.title = data['title'] 
             self.authors = str(data['authors'])
             self.mtype = data['type']
-            self.publisher = str(data['publisher'].decode("utf-8"))
+            self.publisher = str(data['publisher'])
             self.city = data['city']
             self.year = data['year']
             self.edited = data['edited']

@@ -35,19 +35,19 @@ class BookLookup(object):
         book['edited'] = ''
         book['isbn'] = isbn
         book['authors'] = ', '.join(content['items'][0]['volumeInfo']['authors'])
-        datestring = content['items'][0]['volumeInfo']['publishedDate'].encode('utf8')
+        datestring = content['items'][0]['volumeInfo']['publishedDate']
         try:
             dt = datetime.strptime(datestring, '%Y-%m-%d')
             book['year'] = dt.year
         except:
             book['year'] = 0
-        try: book['city'] = content['items'][0]['volumeInfo']['city'].encode('utf8')
+        try: book['city'] = content['items'][0]['volumeInfo']['city'] 
         except: pass
-        try: book['publisher'] = content['items'][0]['volumeInfo']['publisher'].encode('utf8')
+        try: book['publisher'] = content['items'][0]['volumeInfo']['publisher'] 
         except: pass
-        try: book['abstract']  = content['items'][0]['volumeInfo']['description'].encode('utf8')
+        try: book['abstract']  = content['items'][0]['volumeInfo']['description'] 
         except: pass
-        book['title'] = content['items'][0]['volumeInfo']['title'].encode('utf8')
+        book['title'] = content['items'][0]['volumeInfo']['title'] 
         book['type'] = 'book'
         return book
 
@@ -58,7 +58,7 @@ class BookLookup(object):
           &maxResults=1".format(isbn=isbn)
         r = self.get_response(url)
         content = r.json()
-        return content['items'][0]['volumeInfo']['description'].encode('utf8')
+        return content['items'][0]['volumeInfo']['description'] 
 
 
     def isbnlib(self,ISBN):
