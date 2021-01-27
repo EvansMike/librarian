@@ -201,6 +201,17 @@ class Librarian:
         window.show_all()
 
 
+    def window1_focus_in_event_cb(self, window, event):
+        '''
+        This should update whatever list is being displayed
+        '''
+        DEBUG("Now update everything!")
+        #TODO
+        
+        
+        return
+        
+    
     def export_csv(self):
         '''
         Export the entire database to CSV when called from the command line.
@@ -291,12 +302,19 @@ class Librarian:
             else:
                 author = "N/A"
             abstract = row['abstract']
+            column = self.treeview.get_column(0)
+            column.set_title(_('Medium'))
+            column.set_min_width(50)
+            column.set_sizing(gtk.TreeViewColumnSizing.AUTOSIZE)
+            
             # If a book is borrowed, display who to in the 1st column
             # If you have lent it to someone
             try:
                 if row['borrower'] != None:
                     column = self.treeview.get_column(0)
                     column.set_title(_('Borrower'))
+                    column.set_min_width(50)
+                    column.set_sizing(gtk.TreeViewColumnSizing.AUTOSIZE)
                     row['mtype'] = ""
                     b_book = db_query.get_book_borrower_by_book_id(row['id'])
                     if b_book:
@@ -312,6 +330,7 @@ class Librarian:
             abstract,
             row['publisher'], row['city'], str(row['year']),
             row['id'], row['copies'], row['mtype']])
+        
 
 
     def get_book_list(self, selection):

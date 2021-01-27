@@ -36,6 +36,7 @@
     <property name="window_position">center</property>
     <property name="gravity">center</property>
     <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
+    <signal name="focus-in-event" handler="window1_focus_in_event_cb" swapped="no"/>
     <child>
       <object class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
@@ -76,7 +77,6 @@
                 <child>
                   <object class="GtkButton" id="button1">
                     <property name="label" translatable="yes">_ALL BOOKS</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="width_request">80</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -93,7 +93,6 @@
                 <child>
                   <object class="GtkButton" id="button2">
                     <property name="label" translatable="yes">_LOANED BOOKS</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="width_request">80</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -110,7 +109,6 @@
                 <child>
                   <object class="GtkButton" id="button3">
                     <property name="label" translatable="yes">_SCAN NEW</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="width_request">80</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -127,7 +125,6 @@
                 <child>
                   <object class="GtkButton" id="button4">
                     <property name="label" translatable="yes">Q_UERY</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="width_request">80</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -144,7 +141,6 @@
                 <child>
                   <object class="GtkButton" id="button_print">
                     <property name="label" translatable="yes">PRINT _LIST</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -160,7 +156,6 @@
                 <child>
                   <object class="GtkButton" id="button_export">
                     <property name="label" translatable="yes">_EXPORT CSV</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -177,7 +172,6 @@
                 <child>
                   <object class="GtkButton" id="button_quit">
                     <property name="label" translatable="yes">_QUIT</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -210,7 +204,6 @@
                 <child>
                   <object class="GtkButton" id="button_search">
                     <property name="label" translatable="yes">_SEARCH</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
