@@ -547,7 +547,6 @@ class Scanner(object):
                 self.cur.execute("INSERT INTO cd_tracks(cdid,tracknum,trackname,tracklen) \
                     VALUES(%s,%s,%s,%s);", \
                     [cdid, track['index'],track['name'],str(track['length'])])
-                #self.db.commit()
             self.cur.execute("UPDATE books SET year = %s WHERE id = %s",[self.abook.year, cdid])
             self.db.commit()
         buff = self.text_view.get_buffer()
@@ -555,10 +554,16 @@ class Scanner(object):
         self.text_view.set_buffer(buff)
         self.make_qr_code()
         INFO ("You added this {}".format(str(self.abook.mtype)))
+        # Open add_edit so we can add any more details like location.
+        from .add_edit import add_edit
+        adder = add_edit()
+        adder.populate(last_id)
+        adder.display()
         # Clear the display and create a fresh book.
         buff.set_text("")
         self.text_view.set_buffer(buff)
         self.abook = book.Book() # New fresh book.
+        
 
 ################################################################################
     def append_text(self, text):
