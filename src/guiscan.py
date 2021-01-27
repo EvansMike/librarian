@@ -339,7 +339,7 @@ class Scanner(object):
                         + location \
                         + ".\n"))
                     self.text_view.set_buffer(buff)
-                    return
+                    #return
             except Exception as e:
                 DEBUG(e)
         try: 
@@ -553,7 +553,11 @@ class Scanner(object):
         self.text_view.set_buffer(buff)
         self.make_qr_code()
         print ("You added this", str(self.abook.mtype))
-
+        '''from .add_edit import add_edit
+        bid = lastid
+        adder = add_edit()
+        adder.populate(bid)
+        adder.display()'''
 
 ################################################################################
     def append_text(self, text):
