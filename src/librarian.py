@@ -86,7 +86,7 @@ if py_version == 3:
 
     
 
-NULL, ALL, BORROWED = range(3)
+NULL, ALL, BORROWED, SEARCHED = range(4)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--export', action='store_true', help='Export the books as a CSV file.')
@@ -146,6 +146,7 @@ class Librarian:
     in the listings.  It doesn't track the "borrowing" of e-books. :)
     '''
     def __init__(self):
+        self.listtype = ALL # By default this is how it starts up
         print (_("Version: "),version.__version__)
         builder = gtk.Builder()
         self.gladefile = os.path.join(os.path.dirname(__file__),"ui/librarian.glade")
@@ -206,9 +207,12 @@ class Librarian:
         This should update whatever list is being displayed
         '''
         DEBUG("Now update everything!")
+        # Just refill the list with ALL the books since currently we don't know what the list is of.
+        if self.listtype == SEARCHED:
+            self.on_button_search_clicked(self)
+        else:
+            self.get_book_list(self.booklist)
         #TODO
-        
-        
         return
         
     
@@ -340,6 +344,7 @@ class Librarian:
         selection -- BORRORWED or ALL Which set to get.
 
         '''
+        self.listtype = selection
         db_query = sql()
         result = {}
         num_ebooks = 0
@@ -420,11 +425,13 @@ class Librarian:
             adder.display()
         self.get_book_list(1) # Repopulate book list.
 
+
     def on_button_search_clicked(self, widget):
         ''' Get the search string from entry_search, query the DB and display
         the result.
 
         '''
+        self.listtype = SEARCHED
         db_query = sql()
         search_string = self.search_string.get_text()
         if search_string == "": return
