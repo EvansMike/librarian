@@ -326,28 +326,30 @@ class Scanner(object):
         db_query = sql()
         # Check if exists and increment book count if so.
         count = db_query.get_book_count_by_isbn(isbn)
-        DEBUG(count)
-        if count:
-            try:
-                location = self.getBookLocation(isbn)
-                DEBUG(location)
-                if count > 0 and location != None:
-                    buff = self.text_view.get_buffer()
-                    buff.insert_at_cursor (_("You already have " \
-                        + str(count) \
-                        + " copies in the database!\n It's located at: " \
-                        + location \
-                        + ".\n"))
-                    self.text_view.set_buffer(buff)
-                    #return
-            except Exception as e:
-                DEBUG(e)
+        DEBUG(count > 1)
+        
         try: 
             if self.abook.webquery(isbn) != None:
                 INFO(self.abook.print_book())
                 buff = self.text_view.get_buffer()
                 buff.set_text(self.abook.print_book())
                 self.text_view.set_buffer(buff)
+                if count:
+                    try:
+                        location = self.getBookLocation(isbn)
+                        DEBUG(location)
+                        if count > 0 and location != None:
+                            buff = self.text_view.get_buffer()
+                            buff.insert_at_cursor (_("\nYou already have " \
+                                + str(count) \
+                                + " copies in the database!\nLocated at:\n" \
+                                + location \
+                                + "\n"))
+                            self.text_view.set_buffer(buff)
+                            #return
+                    except Exception as e:
+                        raise
+                        DEBUG(e)
             else:
                 buff.set_text (_("No data returned, retry?"))
                 self.text_view.set_buffer(buff)
@@ -360,6 +362,7 @@ class Scanner(object):
             #buff.set_text(repr(e.message))
             self.text_view.set_buffer(buff)
             DEBUG(e)
+        
         self.real_scanner()
         
 
@@ -404,13 +407,12 @@ class Scanner(object):
 ################################################################################
     def getBookLocation(self, isbn):
         db_query = sql()
-        location_string = None
+        location_string = ""
         result = db_query.get_location_by_isbn(isbn) # Could be multiple but unlikely
         DEBUG(result)
         for row in result:
             print (row)
-            location_string = row['room'] + " : " + row['shelf']
-
+            location_string += row['room'] + " : " + row['shelf'] + "\n"
         return location_string
 
 
@@ -552,12 +554,11 @@ class Scanner(object):
         buff.insert_at_cursor(_( "\n\nYou added this " + str(self.abook.mtype) + ".\n"))
         self.text_view.set_buffer(buff)
         self.make_qr_code()
-        print ("You added this", str(self.abook.mtype))
-        '''from .add_edit import add_edit
-        bid = lastid
-        adder = add_edit()
-        adder.populate(bid)
-        adder.display()'''
+        INFO ("You added this {}".format(str(self.abook.mtype)))
+        # Clear the display and create a fresh book.
+        buff.set_text("")
+        self.text_view.set_buffer(buff)
+        self.abook = book.Book() # New fresh book.
 
 ################################################################################
     def append_text(self, text):

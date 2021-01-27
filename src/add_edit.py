@@ -386,6 +386,7 @@ class add_edit:
     db_query.remove_book(self.mybook.id)
     self.status.set_text (_(" Book has been removed."))
     INFO("Book has been removed.")
+    self.on_destroy(widget)
 
 
   def on_comboboxentry1_changed(self,widget):
