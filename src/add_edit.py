@@ -144,12 +144,12 @@ class add_edit:
       mybook.webquery(self.isbn.get_text())
       if self.mybook.isbn != "":
           self.isbn.set_text(mybook.isbn)
-      self.title.set_text(mybook.title.decode("utf-8"))
+      self.title.set_text(mybook.title) #.decode("utf-8"))
       self.author.set_text(mybook.authors)
       abs_buffer = self.abstract.get_buffer()
-      abs_buffer.set_text(mybook.abstract.decode("utf-8"))
+      abs_buffer.set_text(mybook.abstract) # .decode("utf-8"))
       self.mtype.set_text(str(mybook.mtype))
-      self.publisher.set_text(mybook.publisher.decode("utf-8"))
+      self.publisher.set_text(mybook.publisher) # .decode("utf-8"))
       self.city.set_text(str(mybook.city))
       self.year.set_text(str(mybook.year))
     except:
