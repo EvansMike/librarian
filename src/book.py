@@ -36,6 +36,7 @@ class Book(object):
     def __init__(self):
         self.id = ''
         self.isbn = ''
+        self.ddc = '' # Dewi Decimal classification
         self.authors = ''
         self.edited = False
         self.title = ''
@@ -135,8 +136,8 @@ class Book(object):
     def lookup(self, isbn):
         from . import lookup_books
         lookup = lookup_books.BookLookup()
-        data = lookup.googleapi(str(isbn).strip())
-        #data = lookup.isbnlib(str(isbn)).strip())
+        #data = lookup.googleapi(str(isbn).strip())
+        data = lookup.isbnlib(str(isbn))
         return data
 ########### END CLASS book ################
 

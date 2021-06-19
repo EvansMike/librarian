@@ -45,7 +45,7 @@ class BookLookup(object):
         except: pass
         try: book['publisher'] = content['items'][0]['volumeInfo']['publisher'] 
         except: pass
-        try: book['abstract']  = content['items'][0]['volumeInfo']['description'] 
+        try: book['abstract']  = content['items'][0]['volumeInfo']['description'].replace('\n',' ')
         except: pass
         book['title'] = content['items'][0]['volumeInfo']['title'] 
         book['type'] = 'book'
@@ -64,9 +64,9 @@ class BookLookup(object):
     def isbnlib(self,ISBN):
         import isbnlib
         book = {}
-        formatter = isbnlib.registry.bibformatters['json']
         try:
-            content = (isbnlib.meta(str(ISBN)))
+            content = isbnlib.meta(str(ISBN))
+            classi = isbnlib.classify(str(ISBN))
         except:
             # Try googleAPIs?
             book = self.googleapi(ISBN)
