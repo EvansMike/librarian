@@ -395,10 +395,11 @@ class Librarian:
 
         '''
         # Open the scan thang
-        #logging.info("Do the scan thang")
+        logging.debug("Do the scan thang")
         from .guiscan import Scanner
         s = Scanner()
-        self.get_book_list(ALL) # All books
+        DEBUG("Opening the scan window")
+        #self.get_book_list(ALL) # All books
 
 
     def on_button_query_clicked(self, widget):

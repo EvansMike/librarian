@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/bin/env python3
 '''
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ from .db_queries import sql as sql
 import getpass
 import threading
 import signal
-import barcode
+import barcodenumber
 
 _ = gettext.gettext
 
@@ -241,26 +241,14 @@ class Scanner(object):
                 regex = re.compile('[^a-zA-Z0-9]')
                 st = regex.sub('', st)
                 DEBUG(st)
-                if len(st) == 10:
-                    try:
-                        DEBUG(barcode.ISBN10(st).ean)
-                        barcode.ISBN10(st).ean
-                        self.add_book(None, st)
-                    except:
-                        DEBUG ("NOT an ISBN! Is this a DVD?")
-                        self.add_dvd(None, st)
-                        
-                elif len(st) == 13:
-                    try:
-                        DEBUG(barcode.ISBN13(st).ean)
-                        barcode.ISBN13(st).ean
-                        self.add_book(None, st)
-                    except:
-                        raise
-                        DEBUG ("NOT an ISBN! Is this a DVD?")
-                        pass
-                        #self.add_dvd(None, st)
-                    
+                # Next part just checks for a valid barcode.
+                DEBUG(barcodenumber.check_code('ean13',st))
+                DEBUG(barcodenumber.check_code('ean10',st))
+                if barcodenumber.check_code('ean10',st) or barcodenumber.check_code('ean13',st):
+                    self.add_book(None, st)
+                else:
+                    INFO("NOT an ISBN!")
+
                 
 ################################################################################
     def on_button_scan_clicked(self, widget):
