@@ -169,11 +169,11 @@ class Scanner(object):
         if not dev:
             INFO("No scanner found!")
             return (None, None)
-        dev.reset()
         # was it found ?
         if dev is None:
             INFO('Device not found (meaning it is disconnected)')
             return (None, None)
+        dev.reset()
         # detach the kernel driver so we can use interface (one user per interface)
         if dev.is_kernel_driver_active(0):
             try:
@@ -191,19 +191,30 @@ class Scanner(object):
         # get an endpoint instance
         cfg = dev.get_active_configuration()
         interface_number = cfg[(0, 0)].bInterfaceNumber
-        alternate_setting = usb.control.get_interface(dev, interface_number) # Bug-314
-        intf = usb.util.find_descriptor(
-              cfg, bInterfaceNumber = interface_number,
-              bAlternateSetting = alternate_setting
+        try:
+            alternate_setting = usb.control.get_interface(dev, interface_number) # Bug-314
+        except usb.USBError as usberr:
+            if usberr.errno == 16:
+                alternate_setting = None
+            else:
+                raise
+        intf = None
+        if alternate_setting:
+            intf = usb.util.find_descriptor(
+                cfg, bInterfaceNumber = interface_number,
+                bAlternateSetting = alternate_setting
         )
+        else:
+            intf = usb.util.find_descriptor(
+                cfg, bInterfaceNumber = interface_number)
 
         ep = usb.util.find_descriptor(
-              intf,
-              # match the first OUT endpoint
-              custom_match = \
-              lambda e: \
-                  usb.util.endpoint_direction(e.bEndpointAddress) == \
-                  usb.util.ENDPOINT_IN)
+            intf,
+            # match the first OUT endpoint
+            custom_match = \
+            lambda e: \
+                usb.util.endpoint_direction(e.bEndpointAddress) == \
+                usb.util.ENDPOINT_IN)
         assert ep is not None
         # We don't need the scan button with a real scanner, but...
         return (dev, ep)
