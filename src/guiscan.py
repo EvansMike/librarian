@@ -191,7 +191,7 @@ class Scanner(object):
         # get an endpoint instance
         cfg = dev.get_active_configuration()
         interface_number = cfg[(0, 0)].bInterfaceNumber
-        alternate_setting = usb.control.get_interface(dev, interface_number)
+        alternate_setting = usb.control.get_interface(dev, interface_number) # Bug-314
         intf = usb.util.find_descriptor(
               cfg, bInterfaceNumber = interface_number,
               bAlternateSetting = alternate_setting
