@@ -1,6 +1,6 @@
 # Run this with python3 -m pip install -r requirements.txt
 #Librarian
-isbnlib
+isbnlib=>3.10.8
 reportlab>=3.3.0
 mysqlclient>=1.3.0
 requests>=2.18.4
