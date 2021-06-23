@@ -156,8 +156,10 @@ class Librarian:
         self.treeview  = builder.get_object('treeview1')
         self.booklist = builder.get_object("liststore1")
         self.status1 = builder.get_object("status1")
-
-
+        self.scrolledwindow1 = builder.get_object("scrolledwindow1")
+        # Disable ovelrlay scrolling as it covers the last line in the display.
+        self.scrolledwindow1.set_overlay_scrolling(0)
+        
         column = gtk.TreeViewColumn(_('Medium'), gtk.CellRendererText(), text=9)
         column.set_clickable(True)
         column.set_resizable(True)
@@ -366,7 +368,7 @@ class Librarian:
                     pass # Do nothing if it's not available.
             else:'''
             num_ebooks = "Not shown"
-            self.status1.set_text("Book count = " + str(numrows) + ". E-book count = " +  str(num_ebooks))
+            self.status1.set_text("Book count = " + str(numrows)) # + ". E-book count = " +  str(num_ebooks))
         elif selection == BORROWED:
             result = db_query.get_borrowed_books()
             self.fill_booklist(result)
