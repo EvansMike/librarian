@@ -20,20 +20,23 @@
 Add and edit borrowers.
 '''
 try:
-  import gtk
   import MySQLdb
-  import ConfigParser
   import gettext
   import logging
-  import load_config
+  from .import load_config as config
   import sys, os
-except  ImportError (e):
+except  ImportError as e:
   print (e)
-
+  raise
+  
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk as gtk
+from gi.repository import Gdk as gdk
   
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
 # or 
-from db_queries import sql as sql
+from .db_queries import sql as sql
 
 APP = 'librarian'
 gettext.textdomain(APP)
@@ -43,7 +46,7 @@ logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(messag
 #logging.disable(logging.INFO) # Uncomment to disable info messages
 
 
-config = load_config.load_config()
+config = config.load_config()
 db_user = config.db_user
 db_pass = config.db_pass
 db_base = config.db_base
