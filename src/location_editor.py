@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/bin/env python3
 '''
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -23,28 +23,19 @@ Edit and store the locations of your books.
 
 import os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.pardir))
-from db_queries import sql as sql
+from .db_queries import sql as sql
 import logging
-import book
+from .import book
 import gettext
-#import load_config
 
-try:
-  import pygtk
-  pygtk.require("2.0")
-except:
-  pass
-try:
-  import gtk
-except:
-  print ("GTK Not Availible")
-  sys.exit(1)
-  
-  
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk as gtk
+from gi.repository import Gdk as gdk
+
 APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
-
 
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG) 
 
