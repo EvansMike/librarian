@@ -57,8 +57,7 @@ class location_edit():
     self.shelf_entry = builder.get_object("entry_shelf")
     builder.connect_signals(self)
     self.populate_dialog()
-    self.window.show()
-     
+    self.window.show_all()
      
   def run(self):
     self.window.run()
@@ -99,3 +98,4 @@ class location_edit():
 ''' Run main if called directly.'''
 if __name__ == "__main__":
   app = location_edit()
+  app.run()

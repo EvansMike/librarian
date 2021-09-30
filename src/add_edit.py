@@ -472,7 +472,7 @@ class add_edit:
     of comboboxentry1(self.lent_select) and use that as a user name.
 
     '''
-    import borrowers
+    from . import borrowers
     try:
       foo = self.lent_select.get_active()
       bid = self.lentlist[foo][0]

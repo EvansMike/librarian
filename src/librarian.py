@@ -157,7 +157,7 @@ class Librarian:
         self.booklist = builder.get_object("liststore1")
         self.status1 = builder.get_object("status1")
         self.scrolledwindow1 = builder.get_object("scrolledwindow1")
-        # Disable ovelrlay scrolling as it covers the last line in the display.
+        # Disable overlay scrolling as it covers the last line in the display.
         self.scrolledwindow1.set_overlay_scrolling(0)
         
         column = gtk.TreeViewColumn(_('Medium'), gtk.CellRendererText(), text=9)
