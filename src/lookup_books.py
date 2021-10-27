@@ -71,22 +71,24 @@ class BookLookup(object):
             # Try googleAPIs?
             book = self.googleapi(ISBN)
             return book
-        book['publisher'] = '' # These may not exist in the results
-        book['city'] = ''
-        book['language'] =  content['Language']
-        book['edited'] = ''
-        try: book['edited'] = content['Edited']
-        except: pass
-        
-        book['isbn'] = ISBN
-        book['title'] = content['Title']
-        book['authors'] = ', '.join(content['Authors'])
-        DEBUG(book['authors'])
-        book['year'] = content['Year']
-        book['publisher'] = content['Publisher'] 
-        book['abstract']  = isbnlib.desc(str(ISBN)).replace('\n',' ')
-        book['type'] = 'book'
-        return book
+        print(book)
+        try:
+            book['publisher'] = '' # These may not exist in the results
+            book['city'] = ''
+            book['language'] = content['Language']
+            book['language'] = ''
+            book['edited'] = content['Edited']
+            book['isbn'] = ISBN
+            book['title'] = content['Title']
+            book['authors'] = ', '.join(content['Authors'])
+            DEBUG(book['authors'])
+            book['year'] = content['Year']
+            book['publisher'] = content['Publisher'] 
+            book['abstract']  = isbnlib.desc(str(ISBN)).replace('\n',' ')
+            book['type'] = 'book'
+            return book
+        except:
+            return None
         
         
 
@@ -94,8 +96,8 @@ if __name__ == '__main__':
     lookup = BookLookup()
     #data = lookup.isbnlib("1857988477")
     #data = lookup.isbnlib("1780893043")
-    data = lookup.googleapi("1780893043")
+    data = lookup.googleapi("9781583226988")
     print (data)
     # Try a DVD UPC
-    data = lookup.googleapi("5035822011717")
-    print (data)
+    #data = lookup.googleapi("5035822011717")
+    #print (data)

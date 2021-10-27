@@ -131,13 +131,15 @@ class Book(object):
             self.updated = True
             return data
         else:
+            DEBUG(data)
             return None
         
     def lookup(self, isbn):
         from . import lookup_books
         lookup = lookup_books.BookLookup()
-        #data = lookup.googleapi(str(isbn).strip())
         data = lookup.isbnlib(str(isbn))
+        if data == None:
+            data = lookup.googleapi(str(isbn).strip())
         return data
 ########### END CLASS book ################
 
