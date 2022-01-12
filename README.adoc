@@ -1,6 +1,6 @@
 == README FIRST
 
-Requires some flavour of Linux and Python >= 2.7.  
+Requires some flavour of Linux and Python >= 3.0.  
 Windows users will have to figure out how it works themselves and edit 
 the code to suit.
 
@@ -37,6 +37,7 @@ Install with: (On a Fedora system) using sudo probably.
 pip install biblio.webquery # NB. Not required for latest code.
 yum install zbar-pygtk pygtk MySQL-python # If you're using Fedora
 python setup.py install
+or pip3 install .
 ----
 
 
@@ -49,13 +50,13 @@ with the contents
 [source,bash]
 ATTRS{idVendor}=="05e0", ATTRS{idProduct}=="0800", ENV{ID_MM_DEVICE_IGNORE}="1" , GROUP="dialout"
 
-and plug in the scanner.  Chack dmesg to check the ID values.
+and plug in the scanner.  Check dmesg to check the ID values. Add yourself to the dialout group too.
 
 A Python module at https://github.com/dayjaby/zebra-scanner may make the scanner code
 simpler and may be used in future versions. Or maybe not having just tested it. :(
 
-I wanted to catalog all my books using their barcodes as input and track who
-borrows my books.  That's all.  I looked online for a program that would
+I wanted to catalogue all my books using their barcodes as input and track who
+borrows my books.  That's all.  I looked on-line for a program that would
 do just that and couldn't find any that supported barcode input.  The idea
 of typing in book details didn't appeal, so wrote this.
 
@@ -90,6 +91,7 @@ QRcodes for anything. :)
 Older books without bar codes can be manually input via the Query/Edit book
 window.  It's a bit of a pain though if you have lots of books.
 
+
 === DB Notes
 To get a list of borrowed books from mysql:
 
@@ -108,6 +110,9 @@ The sqlite2 database file is created from the database.schema.sql file with:
 ./mysql2sqlite3 --no-data  -p books | sqlite3 database_schema.db
 ----
 
+Note though that the sqlite code is behind and out of sync with the MySQL code.
+
+
 Setting user database password stuff is up to you for the moment.  
 I will add a GUI. NOTE:  Passwords are stored as plain text in the config file.  
 On first run a default .db_config.cnf file is
@@ -115,8 +120,12 @@ written in your home directory, note that this is a hidden dot-file.
 This must edited with the details of your database plus any other preferences.
 
 To create the tables you will need the books_schema.sql  file from the sources.
-After creating the database run: mysql <-p> books < books_schema.sql to 
-create the tables.  The -p is required if your DB is password protected.
+After creating the database run:
+
+[source,bash]
+mysql -p books < books_schema.sql
+
+to create the tables.  The -p is required if your DB is password protected.
 Obviously you can call the DB anything you like, it doesn't have to be 
 books, as long as the .db_config.cfg file contains matching details.
 
