@@ -74,18 +74,15 @@ class BookLookup(object):
         print(book)
         try:
             book['publisher'] = '' # These may not exist in the results
-            try: book['city'] = content['City']
-            except: book['city'] = ''
-            try: book['language'] = content['Language']
-            except: book['language'] = ''
-            try: book['edited'] = content['Edited']
-            except: book['edited'] = ''
+            book['city'] = content.get('City','')
+            book['language'] = content.get('Language','')
+            book['edited'] = content.get('Edited','')
             book['isbn'] = ISBN
-            book['title'] = content['Title']
+            book['title'] = content.get('Title','')
             book['authors'] = ', '.join(content['Authors'])
             DEBUG(book['authors'])
-            book['year'] = content['Year']
-            book['publisher'] = content['Publisher'] 
+            book['year'] = content.get('Year',0)
+            book['publisher'] = content.get('Publisher','') 
             book['abstract']  = isbnlib.desc(str(ISBN)).replace('\n',' ')
             book['type'] = 'book'
             return book
@@ -97,7 +94,7 @@ class BookLookup(object):
 
 if __name__ == '__main__':
     lookup = BookLookup()
-    #data = lookup.isbnlib("1857988477")
+    data = lookup.isbnlib("1857988477")
     data = lookup.isbnlib("9781781089163")
     #data = lookup.googleapi("9781781089163")
     print (data)
