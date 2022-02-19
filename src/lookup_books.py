@@ -77,7 +77,10 @@ class BookLookup(object):
             book['city'] = ''
             book['language'] = content['Language']
             book['language'] = ''
-            book['edited'] = content['Edited']
+            try:
+                book['edited'] = content['Edited']
+            except:
+                book['edited'] = ''
             book['isbn'] = ISBN
             book['title'] = content['Title']
             book['authors'] = ', '.join(content['Authors'])
@@ -88,6 +91,7 @@ class BookLookup(object):
             book['type'] = 'book'
             return book
         except:
+            raise
             return None
         
         
@@ -95,8 +99,8 @@ class BookLookup(object):
 if __name__ == '__main__':
     lookup = BookLookup()
     #data = lookup.isbnlib("1857988477")
-    #data = lookup.isbnlib("1780893043")
-    data = lookup.googleapi("9781583226988")
+    data = lookup.isbnlib("9781781089163")
+    #data = lookup.googleapi("9781781089163")
     print (data)
     # Try a DVD UPC
     #data = lookup.googleapi("5035822011717")

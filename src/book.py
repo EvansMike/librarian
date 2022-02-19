@@ -46,7 +46,7 @@ class Book(object):
         self.publisher = ''
         self.abstract = ''
         self.mtype = 'book' # Unless set otherwise.
-        self.year = ''
+        self.year = 0
         self.city = ''
         self.copies = 0
         self.where = 0 # Which shelf is it on?
@@ -146,9 +146,10 @@ class Book(object):
 # Test harness
 if __name__ == "__main__":
     abook = Book() 
-    abook.webquery("9780241146507")
+    abook.webquery("9781781089163")
     print (abook.__dict__)
     print ("")
+    quit(0)
     abook.webquery("0130104949")
     print (abook.__dict__)
     print ("")
