@@ -74,13 +74,12 @@ class BookLookup(object):
         print(book)
         try:
             book['publisher'] = '' # These may not exist in the results
-            book['city'] = ''
-            book['language'] = content['Language']
-            book['language'] = ''
-            try:
-                book['edited'] = content['Edited']
-            except:
-                book['edited'] = ''
+            try: book['city'] = content['City']
+            except: book['city'] = ''
+            try: book['language'] = content['Language']
+            except: book['language'] = ''
+            try: book['edited'] = content['Edited']
+            except: book['edited'] = ''
             book['isbn'] = ISBN
             book['title'] = content['Title']
             book['authors'] = ', '.join(content['Authors'])
