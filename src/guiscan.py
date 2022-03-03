@@ -194,7 +194,7 @@ class Scanner(object):
                     self.add_book(None, st)
                 elif barcodenumber.check_code_ean13(st):
                     self.add_dvd(None, st)
-                    INFO("Not an ISBN, a DVD/CD perhaps")
+                    INFO("Not an ISBN, a DVD or CD perhaps")
 
                 
 ################################################################################
@@ -271,11 +271,10 @@ class Scanner(object):
                         DEBUG(location)
                         if count > 0 and location != None:
                             buff = self.text_view.get_buffer()
-                            buff.insert_at_cursor (_("\nYou already have " \
-                                + str(count) \
-                                + " copies in the database!\nLocated at:\n" \
-                                + location \
-                                + "\n"))
+                            buff.insert_at_cursor (_(f"\nYou already have \
+                                {str(count)} \
+                                copies in the database!\nLocated at:\n \
+                                {location}\n"))
                             self.text_view.set_buffer(buff)
                             #return
                     except Exception as e:
@@ -289,7 +288,7 @@ class Scanner(object):
         except Exception as e:
             raise
             buff = self.text_view.get_buffer()
-            buff.set_text("{}{}{}".format("No book with ISBN ", isbn, " found"))
+            buff.set_text(f"No book with ISBN {isbn} found"))
             #buff.set_text(repr(e.message))
             self.text_view.set_buffer(buff)
             DEBUG(e)
@@ -325,7 +324,7 @@ class Scanner(object):
         DEBUG(result)
         for row in result:
             print (row)
-            location_string += row['room'] + " : " + row['shelf'] + "\n"
+            location_string += f"{row['room']} : {row['shelf']} \n"
         return location_string
 
 
@@ -368,10 +367,10 @@ class Scanner(object):
             import getpass
             user = getpass.getuser()
             # Do the QR thang
-            qr_data = 'ISBN:'+ str(self.abook.id) \
-              + ';TITLE:' +  str(self.abook.title) \
-              + ';AUTHORS:' + str(self.abook.authors) \
-              + ";OWNER:" + user
+            qr_data = f"ISBN: {str(self.abook.id)}; \
+                TITLE: {str(self.abook.title)}; \
+                AUTHORS: {str(self.abook.authors)}; \
+                OWNER: {user};"
             qr = qrencode.encode(qr_data)
             # Rescale using the size and add a 1 px border
             size = qr[1]
@@ -465,10 +464,10 @@ class Scanner(object):
             self.cur.execute("UPDATE books SET year = %s WHERE id = %s",[self.abook.year, cdid])
             self.db.commit()
         buff = self.text_view.get_buffer()
-        buff.insert_at_cursor(_( "\n\nYou added this " + str(self.abook.mtype) + ".\n"))
+        buff.insert_at_cursor(_( f"\n\nYou added this {str(self.abook.mtype)}.\n"))
         self.text_view.set_buffer(buff)
         self.make_qr_code()
-        INFO ("You added this {}".format(str(self.abook.mtype)))
+        INFO (f"You added this {str(self.abook.mtype)}"))
         # Open add_edit so we can add any more details like location.
         from .add_edit import add_edit
         adder = add_edit()
