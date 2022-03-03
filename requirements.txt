@@ -7,3 +7,4 @@ requests>=2.18.4
 biblio.webquery>=0.5
 barcodenumber>=0.5.0
 hidapi
+zbar-py
