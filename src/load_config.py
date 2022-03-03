@@ -83,6 +83,7 @@ class load_config:
       parser.set('qr_code', 'QR_CODE', 'False')
       parser.set('amazon_aws','AWS_KEY','AWS_KEY')
       parser.set('amazon_aws','SECRET_KEY','SECRET_KEY')
+      parser.set('UPCdatabase','upc_key')
       parser.write(f)
       # Set access mode to owner only
       os.fchmod(f.fileno(),stat.S_IREAD|stat.S_IWRITE)
