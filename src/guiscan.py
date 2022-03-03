@@ -29,6 +29,7 @@ biblio.webquery
 #   Change author name parsing.  Also parse to authors table for future normalisation.
 #     Biblio lookup returns a list of authors.
 
+import hid
 import usb.core
 import usb.util
 import zbar
@@ -118,113 +119,41 @@ class Scanner(object):
             self.db = False
         if self.db:
             self.cur = self.db.cursor()
-        idVendor, idProduct = self.find_scanner()
-        self.dev, self.ep = self.init_scanner(idVendor, idProduct )
+        self.scanner = self.find_hid_scanner()
         self.window.show()
-        if self.dev:
+        if self.scanner:
             self.button_scan.set_sensitive(False)
-            #gdk.threads_init()
             thread = threading.Thread(target=self.real_scanner)
             thread.setDaemon(True)
             thread.start()
-        gtk.main()
-        
-
-################################################################################
-    def get_scanner(self, widget, event):
-        self.window.connect( "visibility-notify-event", self.null)
-        self.dev, self.ep = self.find_scanner()
-        if self.dev:
-            self.real_scanner()
-        usb.util.dispose_resources(self.dev)
-    def null(self, widget, event):
-        return
-
-
-################################################################################
-    def find_scanner(self):
-        '''
-        Get the scanner by name
-        @return idVendor, idProduct
-        '''
-        idVendor = None
-        idProduct = None
-        devs = usb.core.find(find_all=True)
-        for dev in devs:
-            try:
-                DEBUG(dev.product)
-                if "Bar Code" in dev.product:
-                    DEBUG(hex(dev.idVendor))
-                    DEBUG(hex(dev.idProduct))
-                    idVendor = dev.idVendor
-                    idProduct = dev.idProduct
-                    return idVendor, idProduct
-            except:
-                pass
-        return idVendor, idProduct
-
-
-################################################################################
-    
-        
-    
-################################################################################
-    def init_scanner(self, vendor_id, product_id ):
-        # find our scanner device
-        dev = usb.core.find(idVendor = vendor_id, idProduct = product_id) 
-        DEBUG(dev)
-        if not dev:
-            INFO("No scanner found!")
-            return (None, None)
-        # was it found ?
-        if dev is None:
-            INFO('Device not found (meaning it is disconnected)')
-            return (None, None)
-        dev.reset()
-        # detach the kernel driver so we can use interface (one user per interface)
-        if dev.is_kernel_driver_active(0):
-            try:
-                dev.detach_kernel_driver(0)
-                INFO("kernel driver detached")
-            except usb.core.USBError as e:
-                sys.exit("Could not detach kernel driver: %s" % str(e))
-                #dev.reset()
-        # set the active configuration; with no arguments, the first configuration
-        # will be the active one
-        try:
-            dev.set_configuration()
-        except Exception as e:
-            print (e)
-        # get an endpoint instance
-        cfg = dev.get_active_configuration()
-        interface_number = cfg[(0, 0)].bInterfaceNumber
-        try:
-            alternate_setting = usb.control.get_interface(dev, interface_number) # Bug-314
-        except usb.USBError as usberr:
-            if usberr.errno == 16:
-                alternate_setting = None
-            else:
-                raise
-        intf = None
-        if alternate_setting:
-            intf = usb.util.find_descriptor(
-                cfg, bInterfaceNumber = interface_number,
-                bAlternateSetting = alternate_setting
-        )
         else:
-            intf = usb.util.find_descriptor(
-                cfg, bInterfaceNumber = interface_number)
+            # Use a web cam TODO
+            pass
+        gtk.main()
 
-        ep = usb.util.find_descriptor(
-            intf,
-            # match the first OUT endpoint
-            custom_match = \
-            lambda e: \
-                usb.util.endpoint_direction(e.bEndpointAddress) == \
-                usb.util.ENDPOINT_IN)
-        assert ep is not None
-        # We don't need the scan button with a real scanner, but...
-        return (dev, ep)
+
+
+################################################################################
+    def find_hid_scanner(self):
+        '''
+        Do make sure to close the scanner on exit and exit the hid api when the window closes.
+        by putting:
+        self.scanner.close()
+        hid.hidapi_exit()
+        in the window close method.
+        '''
+        scanner = None
+        devices = hid.enumerate()
+        for d in devices:
+            if 'Scanner' in d['product_string']:
+                scanner = hid.device()
+                scanner.open_path(d['path']) # Remember to close this after use.
+                #self.scanner.set_nonblocking(True)
+                break # Stop looking
+            if scanner == None:
+                hid.hidapi_exit()
+                return None
+        return scanner
 
 
 ################################################################################
@@ -235,26 +164,23 @@ class Scanner(object):
         import re
         lu = False
         INFO("Waiting to read...")
-        st = None
+        st = ''
         DATA_SIZE = 3
         while not self.closing:
             try:
-                # read data
-                data = self.dev.read(self.ep.bEndpointAddress, self.ep.wMaxPacketSize * 2, 1000)
-                st = ''.join(chr(i) if i > 0 and i < 128 else '' for i in data)
-                st = st.rstrip()[1:]
-
-                if not lu:
-                    INFO("Waiting to read...")
-                lu = True
-            except usb.core.USBError as e:
-                if e.args == (110,'Operation timed out') and lu:
-                    if len(data) < DATA_SIZE:
-                        lu = False
-                        continue
-                    else:
-                        st = 'Nope'
-                        break   # Code lu
+                buff = self.scanner.read(22) # Waits for data.
+            except :
+                #raise
+                return None
+            if len(buff) == 0:
+                return None
+            #DEBUG(buff)
+            for c in buff:
+                if c == 22:
+                    done =  True
+                elif  48 <= c <= 57:
+                    st += chr(c)
+            DEBUG(st)
             if st:
                 regex = re.compile('[^a-zA-Z0-9]')
                 st = regex.sub('', st)
@@ -370,7 +296,6 @@ class Scanner(object):
             #buff.set_text(repr(e.message))
             self.text_view.set_buffer(buff)
             DEBUG(e)
-        
         self.real_scanner()
         
 
@@ -567,15 +492,21 @@ class Scanner(object):
         pass
 
     def on_sig_int(self):
+        self.scanner.close()
+        hid.hidapi_exit()
         gtk_main_quit(False)
 ################################################################################
     def gtk_main_quit(self, widget):
         # Quit when we destroy the GUI only if main application, else don't quit
         if __name__ == "__main__":
+            self.scanner.close()
+            hid.hidapi_exit()
             gtk.main_quit()
             self.closing = True
             quit(0)
         else:
+            self.scanner.close()
+            hid.hidapi_exit()
             self.window.hide()
             del self
         pass
