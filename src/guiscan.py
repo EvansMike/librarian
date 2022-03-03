@@ -271,10 +271,7 @@ class Scanner(object):
                         DEBUG(location)
                         if count > 0 and location != None:
                             buff = self.text_view.get_buffer()
-                            buff.insert_at_cursor (_(f"\nYou already have \
-                                {str(count)} \
-                                copies in the database!\nLocated at:\n \
-                                {location}\n"))
+                            buff.insert_at_cursor (_(f"\nYou already have {str(count)} copies!\nLocated at:\n{location}\n"))
                             self.text_view.set_buffer(buff)
                             #return
                     except Exception as e:
@@ -288,7 +285,7 @@ class Scanner(object):
         except Exception as e:
             raise
             buff = self.text_view.get_buffer()
-            buff.set_text(f"No book with ISBN {isbn} found"))
+            buff.set_text(f"No book with ISBN {isbn} found")
             #buff.set_text(repr(e.message))
             self.text_view.set_buffer(buff)
             DEBUG(e)
@@ -467,7 +464,7 @@ class Scanner(object):
         buff.insert_at_cursor(_( f"\n\nYou added this {str(self.abook.mtype)}.\n"))
         self.text_view.set_buffer(buff)
         self.make_qr_code()
-        INFO (f"You added this {str(self.abook.mtype)}"))
+        INFO (f"You added this {str(self.abook.mtype)}")
         # Open add_edit so we can add any more details like location.
         from .add_edit import add_edit
         adder = add_edit()
