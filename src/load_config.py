@@ -100,6 +100,7 @@ class load_config:
       self.qr_code = config.get('qr_code','QR_CODE')
       self.az_key = config.get('amazon_aws','AWS_KEY')
       self.az_skey = config.get('amazon_aws','SECRET_KEY')
+      self.upc_key = config.get('UPCdatabase','upc_key')
       try:
         self.calibre_db = config.get('calibre','CALIBRE_DB')
       except:

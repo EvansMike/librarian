@@ -74,6 +74,9 @@ db_host = config.db_host
 # Do we produce a QR code?
 QR_CODE = config.qr_code
 
+# For DVD lookups etc.
+upc_key = config.upc_key
+
 
 if QR_CODE:
     try:
@@ -160,7 +163,11 @@ class Scanner(object):
                 pass
         return idVendor, idProduct
 
+
+################################################################################
+    
         
+    
 ################################################################################
     def init_scanner(self, vendor_id, product_id ):
         # find our scanner device
@@ -253,12 +260,14 @@ class Scanner(object):
                 st = regex.sub('', st)
                 DEBUG(st)
                 # Next part just checks for a valid barcode.
-                DEBUG(barcodenumber.check_code('ean13',st))
-                DEBUG(barcodenumber.check_code('ean10',st))
-                if barcodenumber.check_code('ean10',st) or barcodenumber.check_code('ean13',st):
+                DEBUG(barcodenumber.check_code_upc(st))
+                DEBUG(barcodenumber.check_code_isbn(st))
+                DEBUG(barcodenumber.check_code_ean13(st))
+                if barcodenumber.check_code_isbn(st):
                     self.add_book(None, st)
-                else:
-                    INFO("NOT an ISBN!")
+                elif barcodenumber.check_code_ean13(st):
+                    self.add_dvd(None, st)
+                    INFO("Not an ISBN, a DVD/CD perhaps")
 
                 
 ################################################################################
@@ -366,16 +375,16 @@ class Scanner(object):
         
 
 ################################################################################
-    def add_dvd(self, proc, ean8):
+    def add_dvd(self, proc, ean):
         '''
         Add the DVD and open the dialog to edit the details.
-        @param None
-        @param ean8
+        @param ean
+        @paran UPC database access key.
         '''
         from .add_edit import add_edit
         
         db_query = sql()
-        dvd = db_query.get_by_isbn(ean8)
+        dvd = db_query.get_by_isbn(ean)
         if dvd:
             DEBUG(dvd)
             adder = add_edit()
@@ -384,7 +393,25 @@ class Scanner(object):
             from . import upc_lookup
             
             lookup = upc_lookup.UPCLookup()
-            data = lookup.get_response(ean8).json()
+            data = lookup.get_response(ean, upc_key) 
+            DEBUG(data)
+            try:
+                adder = add_edit()
+                DEBUG(data['ean'])
+                #adder.isbn.set_text(str(data['ean']))
+                #adder.title.set_text(str(data['description']))
+                #adder.mtype.set_text("DVD/CD")
+                #adder.populate_borrowers()
+                #adder.populate_locations()
+                #adder.populate_rating()
+                #adder.populate_values()
+                adder.display()
+            except Exception as e:
+                DEBUG(e)
+                buff = self.text_view.get_buffer()
+                buff.insert_at_cursor (_("This item doesn't exist!" ))
+                return None
+            '''
             try:
                 adder = add_edit()
                 DEBUG(data['items'][0]['ean'])
@@ -400,6 +427,7 @@ class Scanner(object):
                 buff = self.text_view.get_buffer()
                 buff.insert_at_cursor (_("This item doesn't exist!" ))
                 return None
+                '''
         self.real_scanner()
        
 

@@ -245,7 +245,7 @@ class add_edit:
       return
       
 
-  def populate_rating(self, rating):
+  def populate_rating(self, rating=3):
     ''' Set the rating dropdown to the current book's rating'''
     # rating = 3 # Test
     self.rating_select.set_active(rating)

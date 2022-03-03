@@ -86,7 +86,7 @@ class BookLookup(object):
             book['abstract']  = isbnlib.desc(str(ISBN)).replace('\n',' ')
             book['type'] = 'book'
             return book
-        except:
+        except Exception:
             raise
             return None
         
@@ -94,7 +94,7 @@ class BookLookup(object):
 
 if __name__ == '__main__':
     lookup = BookLookup()
-    data = lookup.isbnlib("1857988477")
+    #data = lookup.isbnlib("1857988477")
     data = lookup.isbnlib("9781781089163")
     #data = lookup.googleapi("9781781089163")
     print (data)
