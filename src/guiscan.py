@@ -119,6 +119,7 @@ class Scanner(object):
             self.db = False
         if self.db:
             self.cur = self.db.cursor()
+        self.scanner = None
         self.scanner = self.find_hid_scanner()
         self.window.show()
         if self.scanner:
@@ -204,8 +205,7 @@ class Scanner(object):
         TODO: If we already have a book display its location.
         '''
         ## Is there a real scanner attached?
-        if self.dev:
-            self.real_scanner()
+        if self.scanner:
             return
         proc = None
         db_query = sql()
@@ -217,6 +217,7 @@ class Scanner(object):
             try:
                 for i in self.getVideoDevices(): # Get the first found device.
                     device = i[1]
+                    if device: break
             except:
                 buff.set_text (_("Cannot find camera on this Operating system."))
                 self.text_view.set_buffer(buff)
@@ -231,18 +232,14 @@ class Scanner(object):
             self.text_view.set_buffer(buff)
             del buff,proc
             return
+        INFO(device)
         # create a Processor
         proc = zbar.Processor()
         # configure the Processor
         proc.parse_config('enable')
         buff = self.text_view.get_buffer()
         # enable the preview window
-        try: proc.init(device)
-        except:
-            buff.set_text (_("No camera present!"))
-            self.text_view.set_buffer(buff)
-            del buff,proc
-            return
+        proc.init(device)
         proc.visible = True
         # Read one barcode (or until window closed)
         if proc.process_one():
@@ -349,6 +346,8 @@ class Scanner(object):
                     os.path.join("/dev/v4l/by-id", dev)
                 ])
             videoDevices.append(dev)
+        DEBUG( videoDevices)
+        return videoDevices
 
 
 ################################################################################
@@ -499,14 +498,20 @@ class Scanner(object):
     def gtk_main_quit(self, widget):
         # Quit when we destroy the GUI only if main application, else don't quit
         if __name__ == "__main__":
-            self.scanner.close()
-            hid.hidapi_exit()
+            try:
+                self.scanner.close()
+                hid.hidapi_exit()
+            except:
+                pass
             gtk.main_quit()
             self.closing = True
             quit(0)
         else:
-            self.scanner.close()
-            hid.hidapi_exit()
+            try:
+                self.scanner.close()
+                hid.hidapi_exit()
+            except:
+                pass
             self.window.hide()
             del self
         pass
