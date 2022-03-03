@@ -310,6 +310,11 @@ class Scanner(object):
             self.abook.title = data['description']
             self.abook.isbn = ean
             self.abook.mtype = 'DVD/CD'
+        else:
+            buff = self.text_view.get_buffer()
+            buff.set_text(f"This EAN: {ean}, has not been registered with\nhttps://www.upcdatabase.com\nPlease consider adding it to their database.")
+
+            self.text_view.set_buffer(buff)
         self.real_scanner()
        
 
