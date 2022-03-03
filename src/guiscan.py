@@ -378,56 +378,20 @@ class Scanner(object):
     def add_dvd(self, proc, ean):
         '''
         Add the DVD and open the dialog to edit the details.
+        @param = None
         @param ean
-        @paran UPC database access key.
         '''
-        from .add_edit import add_edit
-        
-        db_query = sql()
-        dvd = db_query.get_by_isbn(ean)
-        if dvd:
-            DEBUG(dvd)
-            adder = add_edit()
-            adder.populate(dvd['id'])
-        else:
-            from . import upc_lookup
-            
-            lookup = upc_lookup.UPCLookup()
-            data = lookup.get_response(ean, upc_key) 
-            DEBUG(data)
-            try:
-                adder = add_edit()
-                DEBUG(data['ean'])
-                #adder.isbn.set_text(str(data['ean']))
-                #adder.title.set_text(str(data['description']))
-                #adder.mtype.set_text("DVD/CD")
-                #adder.populate_borrowers()
-                #adder.populate_locations()
-                #adder.populate_rating()
-                #adder.populate_values()
-                adder.display()
-            except Exception as e:
-                DEBUG(e)
-                buff = self.text_view.get_buffer()
-                buff.insert_at_cursor (_("This item doesn't exist!" ))
-                return None
-            '''
-            try:
-                adder = add_edit()
-                DEBUG(data['items'][0]['ean'])
-                adder.isbn.set_text(str(data['items'][0]['ean']))
-                adder.title.set_text(str(data['items'][0]['title']))
-                adder.mtype.set_text("DVD/CD")
-                adder.populate_borrowers()
-                adder.populate_locations()
-                adder.populate_rating(row['rating'])
-                adder.populate_values()
-                adder.display()
-            except:
-                buff = self.text_view.get_buffer()
-                buff.insert_at_cursor (_("This item doesn't exist!" ))
-                return None
-                '''
+        from . import upc_lookup
+        lookup = upc_lookup.UPCLookup()
+        data = lookup.get_response(ean, upc_key)
+        DEBUG(data)
+        if data:
+            buff = self.text_view.get_buffer()
+            buff.set_text(f"DVD {data['description']}")
+            self.text_view.set_buffer(buff)
+            self.abook.title = data['description']
+            self.abook.isbn = ean
+            self.abook.mtype = 'DVD/CD'
         self.real_scanner()
        
 

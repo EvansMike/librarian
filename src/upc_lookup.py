@@ -25,6 +25,7 @@ class UPCLookup(object):
         'found': True, 'lastModifiedUTC': <DateTime '2011-04-30T06:05:37' at 0x7f9172379220>,
         'message': 'Database entry found', 'size': '1 DVD', 'issuerCountryCode': 'se'}
         '''
+        #return None
         print(len(code))
         params = {'rpc_key': upc_key}
         s = ServerProxy('https://www.upcdatabase.com/xmlrpc')
