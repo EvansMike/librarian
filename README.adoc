@@ -15,7 +15,6 @@ MySQLdb - For MySQl database or
 sqlite3  - Optional for sqlite database
 reportlab - For PDF report generation
 qrencode - Optional, for QR code generation
-usb - For using a "real" scanner. So far it is hard coded for a Wasp USB scanner and needs /etc/udev/rules.d/ adding
 ....
 
 
@@ -144,6 +143,17 @@ To get who borrowed what and for how long:
       WHERE borrows.borrower=borrowers.id 
       AND books.id=borrows.book;
 ----      
+
+
+
+=== Update:  2022-03-04
+
+I'm using https://www.upcdatabase.com for UPC lookups for DVDs in this version.  This is not ideal
+and an API key is required. It's very cheap and the usage limit regenerates daily up to a limit.
+For low use you may never hit that limit.  Please add any that are not present to the database
+at that URL.
+
+I'm looking for a better free/cheap database. Help?
 
 
 === Update:  2018-06-13
