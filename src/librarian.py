@@ -208,7 +208,7 @@ class Librarian:
         '''
         This should update whatever list is being displayed
         '''
-        DEBUG("Now update everything!")
+        #DEBUG("Now update everything!")
         # Just refill the list with ALL the books since currently we don't know what the list is of.
         if self.listtype == SEARCHED:
             self.on_button_search_clicked(self)
@@ -368,7 +368,7 @@ class Librarian:
                     pass # Do nothing if it's not available.
             else:'''
             num_ebooks = "Not shown"
-            self.status1.set_text("Book count = {str(numrows)}") # + ". E-book count = " +  str(num_ebooks))
+            self.status1.set_text(f"Book count = {str(numrows)}") # + ". E-book count = " +  str(num_ebooks))
         elif selection == BORROWED:
             result = db_query.get_borrowed_books()
             self.fill_booklist(result)

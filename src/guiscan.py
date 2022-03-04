@@ -168,6 +168,7 @@ class Scanner(object):
         st = ''
         DATA_SIZE = 3
         while not self.closing:
+            st = ''
             try:
                 buff = self.scanner.read(22) # Waits for data.
             except :
@@ -303,25 +304,28 @@ class Scanner(object):
         db_query = sql()
         count = db_query.get_book_count_by_isbn(ean)
         DEBUG(count)
+        buff = self.text_view.get_buffer()
+        buff.set_text("")
+        self.text_view.set_buffer(buff)
         if count == 0:
             from . import upc_lookup
             lookup = upc_lookup.UPCLookup()
             data = lookup.get_response(ean, upc_key)
             DEBUG(data)
             if data:
-                buff = self.text_view.get_buffer()
                 buff.set_text(f"DVD {data['description']}")
                 self.text_view.set_buffer(buff)
                 self.abook.title = data['description']
                 self.abook.isbn = ean
-                self.abook.mtype = 'DVD/CD'
+                self.abook.mtype = data['size']
             else:
-                buff = self.text_view.get_buffer()
                 buff.set_text(f"This EAN: {ean}, has not been registered with\nhttps://www.upcdatabase.com\nPlease consider adding it to their database.")
                 self.text_view.set_buffer(buff)
+                self.abook.isbn = ean
+                self.abook.mtype = 'DVD'
+                self.abook.title = ''
         else:
             data = db_query.get_by_isbn(ean)
-            buff = self.text_view.get_buffer()
             buff.set_text(f"This item already exists in the database\n{data['title']}, {data['mtype']}")
             self.text_view.set_buffer(buff)
             self.abook.title = data['title']
