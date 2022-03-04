@@ -299,22 +299,34 @@ class Scanner(object):
         @param = None
         @param ean
         '''
-        from . import upc_lookup
-        lookup = upc_lookup.UPCLookup()
-        data = lookup.get_response(ean, upc_key)
-        DEBUG(data)
-        if data:
-            buff = self.text_view.get_buffer()
-            buff.set_text(f"DVD {data['description']}")
-            self.text_view.set_buffer(buff)
-            self.abook.title = data['description']
-            self.abook.isbn = ean
-            self.abook.mtype = 'DVD/CD'
+        # Check if exists and increment book count if so.
+        db_query = sql()
+        count = db_query.get_book_count_by_isbn(ean)
+        DEBUG(count)
+        if count == 0:
+            from . import upc_lookup
+            lookup = upc_lookup.UPCLookup()
+            data = lookup.get_response(ean, upc_key)
+            DEBUG(data)
+            if data:
+                buff = self.text_view.get_buffer()
+                buff.set_text(f"DVD {data['description']}")
+                self.text_view.set_buffer(buff)
+                self.abook.title = data['description']
+                self.abook.isbn = ean
+                self.abook.mtype = 'DVD/CD'
+            else:
+                buff = self.text_view.get_buffer()
+                buff.set_text(f"This EAN: {ean}, has not been registered with\nhttps://www.upcdatabase.com\nPlease consider adding it to their database.")
+                self.text_view.set_buffer(buff)
         else:
+            data = db_query.get_by_isbn(ean)
             buff = self.text_view.get_buffer()
-            buff.set_text(f"This EAN: {ean}, has not been registered with\nhttps://www.upcdatabase.com\nPlease consider adding it to their database.")
-
+            buff.set_text(f"This item already exists in the database\n{data['title']}, {data['mtype']}")
             self.text_view.set_buffer(buff)
+            self.abook.title = data['title']
+            self.abook.isbn = data['isbn']
+            self.abook.mtype = data['mtype']
         self.real_scanner()
        
 
