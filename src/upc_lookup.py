@@ -1,10 +1,7 @@
 #!/bin/env python
 # -*- coding: utf-8 -*-
 '''
-lookup a product using its upc
-Example: https://api.upcitemdb.com/prod/trial/lookup?upc=5035822011717
-upcitemdb.com allows 100 requests per day for free with no sign up required.
-See https://www.upcitemdb.com/wp/docs/main/development/api-rate-limits/
+lookup a product using its upc at https://www.upcdatabase.com/
 '''
 import requests
 import json
@@ -25,7 +22,8 @@ class UPCLookup(object):
         'found': True, 'lastModifiedUTC': <DateTime '2011-04-30T06:05:37' at 0x7f9172379220>,
         'message': 'Database entry found', 'size': '1 DVD', 'issuerCountryCode': 'se'}
         '''
-        #return None
+        if not upc_key: # You need a key.
+            return
         print(len(code))
         params = {'rpc_key': upc_key}
         s = ServerProxy('https://www.upcdatabase.com/xmlrpc')

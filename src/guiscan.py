@@ -331,6 +331,7 @@ class Scanner(object):
             self.abook.title = data['title']
             self.abook.isbn = data['isbn']
             self.abook.mtype = data['mtype']
+        self.abook.owner = self.owner
         self.real_scanner()
        
 

@@ -26,7 +26,7 @@ class BookLookup(object):
 
     def googleapi(self, isbn):
         book = {}
-        url = "https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn}&maxResults=1&fields=items".format(isbn=isbn)
+        url = f"https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn}&maxResults=1&fields=items"
         r = self.get_response(url)
         content = r.json()
         book['publisher'] = '' # These may not exist in the results so set them to empty strings
