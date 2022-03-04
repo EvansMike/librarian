@@ -104,6 +104,12 @@ SELECT o_date, title, author, borrowers.name
   AND borrows.i_date IS NULL;
 ----
 
+
+Or to get a list of DVDs into a CSV file from the linux command line:
+[source,bash]
+mysql books -e "SELECT isbn, quote(title), mtype FROM books WHERE isbn != '' AND mtype LIKE '%DVD%'" > ~/DVD.csv
+
+
 The sqlite2 database file is created from the database.schema.sql file with:
 [source,bash]
 ----
