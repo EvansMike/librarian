@@ -22,7 +22,7 @@ import MySQLdb.cursors
 from . import messages
 import os
 import sys
-
+import tempfile
 
 
 # Set up debugging output level
@@ -36,6 +36,7 @@ else:
     logging.disable(logging.INFO)
 '''
 DEBUG = logging.debug
+INFO  = logging.info
 
 
 
@@ -48,7 +49,7 @@ class Bookmark():
 
     def print_bookmark(self):
         '''
-        OPtions for Epson are:
+        Options for Epson Thermal Receipt printer are:
         PageSize/Media Size: RP82.5x297 RP80x297 RP60x297 RP58x297 RP82.5x2000 *RP80x2000 RP60x2000 RP58x2000 A4 LT Custom.WIDTHxHEIGHT
         TmxPrintSpeed/Print Speed: Auto 1 2 3 *4
         TmxPaperReduction/Paper Reduction: Off *Top Bottom Both
@@ -63,7 +64,7 @@ class Bookmark():
         TmxSoundPattern/Sound Pattern: Internal *A B C D E
         TmxBuzzerRepeat/Buzzer Repeat: *1 2 3 5
         TmxDrawerControl/Cash Drawer: *None Drawer#1,Before Drawer#1,After Drawer#2,Before Drawer#2,After
-TmxPulseOnTime/Pulse On Time: *20,10,100 40,20,100 60,30,120 80,40,160 100,50,200 120,60,240
+        TmxPulseOnTime/Pulse On Time: *20,10,100 40,20,100 60,30,120 80,40,160 100,50,200 120,60,240
         '''
         filename = "spool"
         with open(filename, 'w') as sp:
@@ -74,14 +75,13 @@ TmxPulseOnTime/Pulse On Time: *20,10,100 40,20,100 60,30,120 80,40,160 100,50,20
             sp.write("Owner: Mike Evans\n")
             sp.write("Purchase Date: 2022-04-02\n\n")
             sp.write("Borrower: Med Barker\n")
-            sp.write("Borrowed : 2018-06-14 14:47:11\n\n\n")
-        
-        epson_paper = {'PageSize':'Custom.190x250','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
+            sp.write("Borrowed : 2018-06-14 14:47:11\n\n\n\n")
+        epson_paper = {'TmxMaxBandWidth':'640','PageSize':'Custom.190x300','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
         conn = cups.Connection()
         printers = conn.getPrinters()
         conn.setDefault('USB(ESDPRT001)_TM-T88V') # This need to be better. Probably a dialog.
-        conn.printFile(conn.getDefault(), filename, " ", epson_paper)
-        #conn.startDocument(conn.getDefault(), 1, 'Bookmark', epson_paper)
+        DEBUG(conn.printFile(conn.getDefault(), filename, " ", epson_paper))
+        os.remove(filename) # No longer needed
         return
 
 
