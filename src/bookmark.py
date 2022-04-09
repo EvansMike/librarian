@@ -47,7 +47,7 @@ class Bookmark():
         return
 
 
-    def print_bookmark(self):
+    def print_bookmark(self, abook):
         '''
         Options for Epson Thermal Receipt printer are:
         PageSize/Media Size: RP82.5x297 RP80x297 RP60x297 RP58x297 RP82.5x2000 *RP80x2000 RP60x2000 RP58x2000 A4 LT Custom.WIDTHxHEIGHT
@@ -66,16 +66,25 @@ class Bookmark():
         TmxDrawerControl/Cash Drawer: *None Drawer#1,Before Drawer#1,After Drawer#2,Before Drawer#2,After
         TmxPulseOnTime/Pulse On Time: *20,10,100 40,20,100 60,30,120 80,40,160 100,50,200 120,60,240
         '''
+        db_query = sql()
+        #DEBUG(abook.id)
+        borrower = db_query.get_book_borrower_by_book_id(abook.id)
+        DEBUG(borrower)
+        DEBUG(abook.isbn)
         filename = "spool"
         with open(filename, 'w') as sp:
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
-            sp.write("ISBN: 0713661682\n")
-            sp.write("Author: Rob Mundle\n")
-            sp.write("Title: Fatal Storm - The 54th Sydney to Hobart Yacht Race\n")
+            sp.write(f"ISBN: {abook.isbn}\n")
+            sp.write(f"Author: {abook.authors}\n")
+            sp.write(f"Title: {abook.title}\n")
             sp.write("Owner: Mike Evans\n")
-            sp.write("Purchase Date: 2022-04-02\n\n")
-            sp.write("Borrower: Med Barker\n")
-            sp.write("Borrowed: 2018-06-14 14:47:11\n\n\n\n")
+            sp.write(f"Purchase Date: {abook.add_date}\n\n")
+            try:
+                sp.write(f"Borrower: {borrower['name']}\n")
+                sp.write(f"Borrowed: {borrower['o_date']}\n\n\n\n")
+            except: # If not borrowed.
+                sp.write(f"\n\n\n\n")
+                
         epson_paper = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x300','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
         conn = cups.Connection()
         printers = conn.getPrinters()
@@ -95,4 +104,4 @@ class Bookmark():
 
 if __name__ == '__main__':
     bookmark = Bookmark()
-    bookmark.print_bookmark()
+    bookmark.print_bookmark(None)

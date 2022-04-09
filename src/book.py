@@ -141,6 +141,8 @@ class Book(object):
         if data == None:
             data = lookup.googleapi(str(isbn).strip())
         return data
+
+        
 ########### END CLASS book ################
 
 # Test harness

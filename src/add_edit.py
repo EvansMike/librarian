@@ -102,6 +102,9 @@ class add_edit:
       '''
       Print a bookmark.
       '''
+      from . import bookmark
+      bm = bookmark.Bookmark()
+      bm.print_bookmark(self.mybook)
       return
       
 
@@ -133,6 +136,7 @@ class add_edit:
       else: #no
         INFO("NOT saving changes")
         self.on_destroy(widget)
+    self.on_button_print_clicked(None) # FOR TESTING
 
 
   def on_destroy(self,widget):
