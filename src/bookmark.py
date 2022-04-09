@@ -111,11 +111,11 @@ class Bookmark():
         result = pd.run(
             Gtk.PrintOperationAction.PRINT_DIALOG, None)
         DEBUG(result)  # handle errors etc.
-        settings = Gtk.PrintSettings()
+        settings = pd.get_print_settings()
         DEBUG(settings.get_printer())
-        if result == Gtk.PrintOperationResult.CANCEL:
-            return None
-        return 'USB(ESDPRT001)_TM-T88V' ## Argghhhhh!
+        #if result == Gtk.PrintOperationResult.CANCEL:
+        #    return None
+        return settings.get_printer()
 
 
 
