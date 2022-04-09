@@ -16,6 +16,9 @@ Not necessarily in that or order though
 from . import book
 import cups
 from .db_queries import sql as sql
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 import logging
 import MySQLdb
 import MySQLdb.cursors
@@ -66,6 +69,9 @@ class Bookmark():
         TmxDrawerControl/Cash Drawer: *None Drawer#1,Before Drawer#1,After Drawer#2,Before Drawer#2,After
         TmxPulseOnTime/Pulse On Time: *20,10,100 40,20,100 60,30,120 80,40,160 100,50,200 120,60,240
         '''
+        if abook == None:
+            INFO("Nothing to do, no book!")
+            return
         db_query = sql()
         #DEBUG(abook.id)
         borrower = db_query.get_book_borrower_by_book_id(abook.id)
@@ -84,19 +90,32 @@ class Bookmark():
                 sp.write(f"Borrowed: {borrower['o_date']}\n\n\n\n")
             except: # If not borrowed.
                 sp.write(f"\n\n\n\n")
-                
+        printer = self.select_printer()
+        if printer == None:
+            return
         epson_paper = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x300','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
         conn = cups.Connection()
         printers = conn.getPrinters()
-        conn.setDefault('USB(ESDPRT001)_TM-T88V') # This need to be better. Probably a dialog.
+        conn.setDefault(printer) # This need to be better. Probably a dialog.
         DEBUG(conn.printFile(conn.getDefault(), filename, " ", epson_paper))
         os.remove(filename) # No longer needed
         return
 
 
-    def get_book_by_id():
-        #self.book = ...
-        return
+    def select_printer(self):
+        printer = None
+        pd = Gtk.PrintOperation()
+        DEBUG(pd.get_print_settings())
+        pd.set_n_pages(1)
+        #pd.connect("draw_page", self.draw_page)
+        result = pd.run(
+            Gtk.PrintOperationAction.PRINT_DIALOG, None)
+        DEBUG(result)  # handle errors etc.
+        settings = Gtk.PrintSettings()
+        DEBUG(settings.get_printer())
+        if result == Gtk.PrintOperationResult.CANCEL:
+            return None
+        return 'USB(ESDPRT001)_TM-T88V' ## Argghhhhh!
 
 
 
