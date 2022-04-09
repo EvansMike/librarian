@@ -73,10 +73,7 @@ class Bookmark():
             INFO("Nothing to do, no book!")
             return
         db_query = sql()
-        #DEBUG(abook.id)
         borrower = db_query.get_book_borrower_by_book_id(abook.id)
-        DEBUG(borrower)
-        DEBUG(abook.isbn)
         filename = "spool"
         with open(filename, 'w') as sp:
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
@@ -97,7 +94,7 @@ class Bookmark():
         conn = cups.Connection()
         printers = conn.getPrinters()
         conn.setDefault(printer) # This need to be better. Probably a dialog.
-        DEBUG(conn.printFile(conn.getDefault(), filename, " ", epson_paper))
+        #DEBUG(conn.printFile(conn.getDefault(), filename, " ", epson_paper))
         os.remove(filename) # No longer needed
         return
 
@@ -105,16 +102,11 @@ class Bookmark():
     def select_printer(self):
         printer = None
         pd = Gtk.PrintOperation()
-        DEBUG(pd.get_print_settings())
         pd.set_n_pages(1)
-        #pd.connect("draw_page", self.draw_page)
         result = pd.run(
             Gtk.PrintOperationAction.PRINT_DIALOG, None)
-        DEBUG(result)  # handle errors etc.
         settings = pd.get_print_settings()
         DEBUG(settings.get_printer())
-        #if result == Gtk.PrintOperationResult.CANCEL:
-        #    return None
         return settings.get_printer()
 
 
