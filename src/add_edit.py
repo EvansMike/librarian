@@ -98,6 +98,13 @@ class add_edit:
     pass
 
 
+  def on_button_print_clicked(self, widget):
+      '''
+      Print a bookmark.
+      '''
+      return
+      
+
   def on_button_close_clicked(self, widget):
     ''' Check if any changed made and pop up worning
     else close the dialog.

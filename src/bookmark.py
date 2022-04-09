@@ -71,12 +71,12 @@ class Bookmark():
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
             sp.write("ISBN: 0713661682\n")
             sp.write("Author: Rob Mundle\n")
-            sp.write("Title: Fatal Storm : The 54th Sydney to Hobart yacht race\n")
+            sp.write("Title: Fatal Storm - The 54th Sydney to Hobart Yacht Race\n")
             sp.write("Owner: Mike Evans\n")
             sp.write("Purchase Date: 2022-04-02\n\n")
             sp.write("Borrower: Med Barker\n")
-            sp.write("Borrowed : 2018-06-14 14:47:11\n\n\n\n")
-        epson_paper = {'TmxMaxBandWidth':'640','PageSize':'Custom.190x300','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
+            sp.write("Borrowed: 2018-06-14 14:47:11\n\n\n\n")
+        epson_paper = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x300','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
         conn = cups.Connection()
         printers = conn.getPrinters()
         conn.setDefault('USB(ESDPRT001)_TM-T88V') # This need to be better. Probably a dialog.

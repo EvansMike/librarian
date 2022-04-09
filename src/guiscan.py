@@ -15,18 +15,9 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
   MA 02110-1301, USA.
 '''
-'''
-Usage:
-printf "$(python barscan.py)"
-Requires:
-zbar-pygtk
-biblio.webquery
-'''
-# TODO we don't always get a title and author from a single lookup
-# need to test this and try alternate lookup.
+
 # TODO Needs a live internet connection!  No good for portable apps. without wireless.
 #   Need a db update app.
-#   Change author name parsing.  Also parse to authors table for future normalisation.
 #     Biblio lookup returns a list of authors.
 
 import hid
@@ -39,7 +30,6 @@ import MySQLdb
 import sys, os
 from .import load_config as config
 import logging
-#import load_config as gconf_config
 import gettext
 from . import book
 import datetime
@@ -149,7 +139,6 @@ class Scanner(object):
             if 'Scanner' in d['product_string']:
                 scanner = hid.device()
                 scanner.open_path(d['path']) # Remember to close this after use.
-                #self.scanner.set_nonblocking(True)
                 break # Stop looking
             if scanner == None:
                 hid.hidapi_exit()
@@ -178,7 +167,7 @@ class Scanner(object):
                 return None
             #DEBUG(buff)
             for c in buff:
-                if c == 22:
+                if c == 22 or c == 13: # Seems to be end of data char
                     done =  True
                 elif  48 <= c <= 57:
                     st += chr(c)
@@ -313,11 +302,11 @@ class Scanner(object):
             data = lookup.get_response(ean, upc_key)
             DEBUG(data)
             if data:
-                buff.set_text(f"DVD {data['description']}")
+                buff.set_text(f"{data['size']} {data['description']}")
                 self.text_view.set_buffer(buff)
                 self.abook.title = data['description']
                 self.abook.isbn = ean
-                self.abook.mtype = data['size']
+                self.abook.mtype = data['mtype']
             else:
                 buff.set_text(f"This EAN: {ean}, has not been registered with\nhttps://www.upcdatabase.com\nPlease consider adding it to their database.")
                 self.text_view.set_buffer(buff)
