@@ -82,20 +82,21 @@ class Bookmark():
             sp.write(f"ISBN: {abook.isbn}\n")
             sp.write(textwrap.fill(f"Author: {abook.authors}\n",width=26,replace_whitespace=False) + "\n")
             sp.write(textwrap.fill(f"Title: {abook.title}\n",width=26,replace_whitespace=False) + "\n")
-            sp.write("Owner: Mike Evans\n")
+            sp.write(f"Owner: {abook.owner.title()}\n")
             if abook.add_date != None:
                 sp.write(f"Added: {abook.add_date.strftime('%Y-%m-%d')}\n\n")
             try:
                 sp.write(f"Borrowed: {borrower['o_date'].strftime('%Y-%m-%d')}\n")
-                sp.write(f"Borrower: {borrower['name']}\n")
+                sp.write(f"Borrower: {borrower['name']}\n\n")
+                sp.write(textwrap.fill(f"Please return book after reading.",width=26))
             except: # If not borrowed.
-                sp.write(f"\n")
+                sp.write(f"\n\n")
             sp.write("\n\n")
-            sp.write(" ┏┓\n")
-            sp.write(" ┃┃╱╲ In\n")
-            sp.write(" ┃╱╱╲╲ this\n")
-            sp.write(" ╱╱╭╮╲╲ house\n")
-            sp.write(" ▔▏┗┛▕▔      we\n")
+            sp.write("  ┏┓\n")
+            sp.write("  ┃┃╱╲ In\n")
+            sp.write("  ┃╱╱╲╲ this\n")
+            sp.write("  ╱╱╭╮╲╲ house\n")
+            sp.write("  ▔▏┗┛▕▔      we\n")
             sp.write(" ╱▔▔▔▔▔▔▔▔▔▔╲ read\n")
             sp.write("/╱┏┳┓ ╭╮ ┏┳┓╲╲ books!\n")
             sp.write("▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n")
@@ -105,7 +106,7 @@ class Bookmark():
         printer = self.select_printer()
         if printer == None:
             return
-        epson_paper = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x400','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
+        epson_paper = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
         #printers = conn.getPrinters()
         conn.setDefault(printer)
         conn.printFile(conn.getDefault(), filename, " ", epson_paper)

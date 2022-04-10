@@ -24,6 +24,8 @@
 import datetime
 import getpass
 import logging
+import os
+import pwd
 
 logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
@@ -52,7 +54,7 @@ class Book(object):
         self.where = 0 # Which shelf is it on?
         self.add_date = datetime.date.today()
         self.borrower_id = None
-        self.owner = getpass.getuser() # Assume owner is current logged in person
+        self.owner = pwd.getpwuid(os.getuid())[4].split(',')[0] #getpass.getuser() # Assume owner is current logged in person
         self.rating = 0 # Stars out of 5?
         self.value = self.values[0]; # Assume lowest value class
         self.updated = False # Book data updated locally.

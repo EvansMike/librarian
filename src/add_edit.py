@@ -434,17 +434,14 @@ class add_edit:
     self.year.set_text('0')
     self.copies.set_text('')
     self.lent_select.set_active(0)
-    #DEBUG(getpass.getuser())
-    self.book_owner.set_text(str(getpass.getuser())) # Assume the user is the book owner.
   
     # Create a new empty book
-    import book
     self.orig_book = book.Book()
     self.mybook = copy.copy(self.orig_book)
     self.populate_borrowers()
     self.populate_locations()
     self.status.set_text(_("Everything cleared.  Enter new book's details."))
-
+    self.book_owner.set_text(str(self.mybook.owner))
 
   def on_checkbutton1_toggled(self, widget):
     if not self.lentlist.get_iter_first():
