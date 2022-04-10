@@ -96,7 +96,7 @@ class Bookmark():
             sp.write("  ┃┃╱╲ In\n")
             sp.write("  ┃╱╱╲╲ this\n")
             sp.write("  ╱╱╭╮╲╲ house\n")
-            sp.write("  ▔▏┗┛▕▔      we\n")
+            sp.write("  ▔▏┗┛▕▔     we\n")
             sp.write(" ╱▔▔▔▔▔▔▔▔▔▔╲ read\n")
             sp.write("/╱┏┳┓ ╭╮ ┏┳┓╲╲ books!\n")
             sp.write("▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n")
