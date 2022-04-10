@@ -83,7 +83,8 @@ class Bookmark():
             sp.write(textwrap.fill(f"Author: {abook.authors}\n",width=26,replace_whitespace=False) + "\n")
             sp.write(textwrap.fill(f"Title: {abook.title}\n",width=26,replace_whitespace=False) + "\n")
             sp.write("Owner: Mike Evans\n")
-            sp.write(f"Added: {abook.add_date.strftime('%Y-%m-%d')}\n\n")
+            if abook.add_date != None:
+                sp.write(f"Added: {abook.add_date.strftime('%Y-%m-%d')}\n\n")
             try:
                 sp.write(f"Borrowed: {borrower['o_date'].strftime('%Y-%m-%d')}\n")
                 sp.write(f"Borrower: {borrower['name']}\n")
@@ -99,7 +100,7 @@ class Bookmark():
             sp.write("/╱┏┳┓ ╭╮ ┏┳┓╲╲ books!\n")
             sp.write("▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n")
             sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
-            sp.write(f"\n\n{'-' * 27}\n")
+            sp.write(f"\n\n{'-' * 26}\n")
         conn = cups.Connection()
         printer = self.select_printer()
         if printer == None:
@@ -115,7 +116,7 @@ class Bookmark():
     def select_printer(self):
         printer = None
         pd = Gtk.PrintOperation()
-        pd.set_n_pages(1)
+        pd.set_n_pages(0)
         result = pd.run(
             Gtk.PrintOperationAction.PRINT_DIALOG, None)
         settings = pd.get_print_settings()
