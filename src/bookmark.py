@@ -26,6 +26,7 @@ from . import messages
 import os
 import sys
 import tempfile
+import textwrap
 
 
 # Set up debugging output level
@@ -75,27 +76,39 @@ class Bookmark():
         db_query = sql()
         borrower = db_query.get_book_borrower_by_book_id(abook.id)
         filename = "spool"
+        book_text = "  MIKE'S LIBRARY BOOKMARK\n\n"
         with open(filename, 'w') as sp:
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
             sp.write(f"ISBN: {abook.isbn}\n")
-            sp.write(f"Author: {abook.authors}\n")
-            sp.write(f"Title: {abook.title}\n")
+            sp.write(textwrap.fill(f"Author: {abook.authors}\n",width=26,replace_whitespace=False) + "\n")
+            sp.write(textwrap.fill(f"Title: {abook.title}\n",width=26,replace_whitespace=False) + "\n")
             sp.write("Owner: Mike Evans\n")
-            sp.write(f"Purchase Date: {abook.add_date}\n\n")
+            sp.write(f"Added: {abook.add_date.strftime('%Y-%m-%d')}\n\n")
             try:
+                sp.write(f"Borrowed: {borrower['o_date'].strftime('%Y-%m-%d')}\n")
                 sp.write(f"Borrower: {borrower['name']}\n")
-                sp.write(f"Borrowed: {borrower['o_date']}\n\n\n\n")
             except: # If not borrowed.
-                sp.write(f"\n\n\n\n")
+                sp.write(f"\n")
+            sp.write("\n\n")
+            sp.write(" ┏┓\n")
+            sp.write(" ┃┃╱╲ In\n")
+            sp.write(" ┃╱╱╲╲ this\n")
+            sp.write(" ╱╱╭╮╲╲ house\n")
+            sp.write(" ▔▏┗┛▕▔    we\n")
+            sp.write(" ╱▔▔▔▔▔▔▔▔▔▔╲ read\n")
+            sp.write("/╱┏┳┓ ╭╮ ┏┳┓╲╲ books!\n")
+            sp.write("▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n")
+            sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
+            sp.write(f"\n\n{'-' * 27}\n")
+        conn = cups.Connection()
         printer = self.select_printer()
         if printer == None:
             return
-        epson_paper = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x300','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
-        conn = cups.Connection()
-        printers = conn.getPrinters()
-        conn.setDefault(printer) # This need to be better. Probably a dialog.
-        #DEBUG(conn.printFile(conn.getDefault(), filename, " ", epson_paper))
-        os.remove(filename) # No longer needed
+        epson_paper = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x400','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
+        #printers = conn.getPrinters()
+        conn.setDefault(printer)
+        conn.printFile(conn.getDefault(), filename, " ", epson_paper)
+        #os.remove(filename) # No longer needed
         return
 
 
