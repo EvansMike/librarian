@@ -80,8 +80,8 @@ class Bookmark():
         with open(filename, 'w') as sp:
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
             sp.write(f"ISBN: {abook.isbn}\n")
-            sp.write(textwrap.fill(f"Author: {abook.authors}\n",width=26,replace_whitespace=False) + "\n")
-            sp.write(textwrap.fill(f"Title: {abook.title}\n",width=26,replace_whitespace=False) + "\n")
+            sp.write(f"{textwrap.fill(abook.authors, width=26)}\n")
+            sp.write(f"{textwrap.fill(abook.title, width=26)}\n")
             sp.write(f"Owner: {abook.owner.title()}\n")
             if abook.add_date != None:
                 sp.write(f"Added: {abook.add_date.strftime('%Y-%m-%d')}\n\n")
