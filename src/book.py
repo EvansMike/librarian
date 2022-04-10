@@ -27,6 +27,9 @@ import logging
 import os
 import pwd
 
+from . import load_config as config
+config = config.load_config() # For file based config
+
 logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
 DEBUG = logging.debug
@@ -54,7 +57,10 @@ class Book(object):
         self.where = 0 # Which shelf is it on?
         self.add_date = datetime.date.today()
         self.borrower_id = None
+        self.owner = config.librarian_name
+        self.genre = '' # Fiction, biography etc.
         self.owner = pwd.getpwuid(os.getuid())[4].split(',')[0] #getpass.getuser() # Assume owner is current logged in person
+        
         self.rating = 0 # Stars out of 5?
         self.value = self.values[0]; # Assume lowest value class
         self.updated = False # Book data updated locally.
@@ -63,28 +69,7 @@ class Book(object):
         ## Return some book details as a string for printing.  Mostly a debug thing.
         bookstring = "{}{}{}{}{}".format(self.isbn,"\n",self.authors,"\n",self.title)
         return bookstring
-
-    def add_details(self,details_list):
-        ''' A simple interface to add all details in one go.  Obviously order
-        of the elements is important! id and copies are determined by the
-        database after insertion.  The order is:
-        isbn, authors, title, abstract, mtype, publisher, year, city
-        Empty fields are allowed.
-        '''
-        try:
-            self.isbn = details_list[0]
-            self.authors = details_list[1].decode("utf-8")
-            self.title = details_list[2].decode("utf-8")
-            self.publisher = details_list[5].decode("utf-8")
-            self.abstract = details_list[4].decode("utf-8")
-            self.mtype = details_list[3].decode("utf-8")
-            self.year = details_list[6]
-            self.city = details_list[7].decode("utf-8")
-            self.copies = details_list[8]
-            self.where = details_list[9].decode("utf-8")
-            self.edited = details_list[10].decode("utf-8")
-        except: return -1
-        return 0
+        
 
     def compare(self, book):
         ''' Determine if two books differ.  Return 0 if same.'''
@@ -120,18 +105,7 @@ class Book(object):
         data = self.lookup(isbn)
         DEBUG(data)
         if data:
-            try:self.abstract = data['abstract']
-            except: self.abstract =''
-            self.isbn = data['isbn']
-            self.title = data['title'] 
-            self.authors = str(data['authors'])
-            self.mtype = data['type']
-            self.publisher = str(data['publisher'])
-            self.city = data['city']
-            self.year = data['year']
-            self.edited = data['edited']
-            self.updated = True
-            return data
+            self.__dict__.update(data)
         else:
             DEBUG(data)
             return None

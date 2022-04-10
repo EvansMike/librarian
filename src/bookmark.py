@@ -80,8 +80,10 @@ class Bookmark():
         with open(filename, 'w') as sp:
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
             sp.write(f"ISBN: {abook.isbn}\n")
-            sp.write(f"Author: {textwrap.fill(abook.authors, width=26)}\n")
-            sp.write(f"Title: {textwrap.fill(abook.title, width=26)}\n")
+            author_str = f"Author: {abook.authors}"
+            sp.write(f"{textwrap.fill(author_str, width=26)}\n")
+            title_str = f"Title: {abook.title}"
+            sp.write(f"{textwrap.fill(title_str, width=26, )}\n")
             sp.write(f"Owner: {abook.owner.title()}\n")
             if abook.add_date != None:
                 sp.write(f"Added: {abook.add_date.strftime('%Y-%m-%d')}\n\n")
@@ -117,7 +119,7 @@ class Bookmark():
     def select_printer(self):
         printer = None
         pd = Gtk.PrintOperation()
-        pd.set_n_pages(0)
+        #pd.set_n_pages(0)
         result = pd.run(
             Gtk.PrintOperationAction.PRINT_DIALOG, None)
         settings = pd.get_print_settings()

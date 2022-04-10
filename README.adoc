@@ -120,9 +120,9 @@ Note though that the sqlite code is behind and out of sync with the MySQL code.
 
 Setting user database password stuff is up to you for the moment.  
 I will add a GUI. NOTE:  Passwords are stored as plain text in the config file.  
-On first run a default .db_config.cnf file is
+On first run a default ~/.db_config.cnf file is
 written in your home directory, note that this is a hidden dot-file.  
-This must edited with the details of your database plus any other preferences.
+This must edited with the details of your database plus any other preferences listed.
 
 To create the tables you will need the books_schema.sql  file from the sources.
 After creating the database run:
