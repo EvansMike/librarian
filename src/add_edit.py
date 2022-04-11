@@ -38,6 +38,11 @@ import datetime
 import getpass
 from .db_queries import sql as sql
 
+# Read the config file
+from . import load_config as config
+config = config.load_config() # 
+
+
 _ = gettext.gettext
 
 #logger = logging.getLogger("barscan")
@@ -91,6 +96,7 @@ class add_edit:
     self.lent_select.set_model( self.lentlist)
     self.lent_select.set_entry_text_column(1)
     self.o_date = ''
+    self.bookmarks = config.bookmarks
 
 
   def display(self):
@@ -101,6 +107,7 @@ class add_edit:
   def on_button_print_clicked(self, widget):
       '''
       Print a bookmark.
+      There is no button yet. This is called from on_button_close_clicked()
       '''
       from . import bookmark
       bm = bookmark.Bookmark()
@@ -136,7 +143,9 @@ class add_edit:
       else: #no
         INFO("NOT saving changes")
         self.on_destroy(widget)
-    self.on_button_print_clicked(None) # FOR TESTING
+    DEBUG(self.bookmarks)
+    if self.bookmarks =='1':
+        self.on_button_print_clicked(None) # Print a bookmark
 
 
   def on_destroy(self,widget):

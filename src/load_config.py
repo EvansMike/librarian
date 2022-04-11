@@ -71,6 +71,8 @@ class load_config:
       parser.add_section('amazon_aws')
       parser.set('database', 'USER', 'username')
       parser.set('database', 'LIBRARIAN', 'Your librarian name')
+      parser.set('database', '# Set BOOKMARKS to 1 if you want to have this facility', '0')
+      parser.set('database', 'BOOKMARKS', '0')
       parser.set('database', 'PASSWD', 'password')
       parser.set('database', 'DB', 'db_name')
       parser.set('database', 'DBHOST', 'db_host')
@@ -99,7 +101,16 @@ class load_config:
       self.db_pass = config.get('database','PASSWD')
       self.db_base = config.get('database','DB')
       self.db_host = config.get('database','DBHOST')
-      self.librarian_name = config.get('database', 'LIBRARIAN')
+      try:
+          self.librarian_name = config.get('database', 'LIBRARIAN')
+      except: # Fallback to old system but warn
+          print("Using login name for book owner, See git log for how to fix.")
+          self.librarian_name = os.getlogin()
+          pass
+      try:
+          self.bookmarks = config.get('database','BOOKMARKS')
+      except: # Default to NOT printing bookmarks
+          self.bookmarks = 0
       self.lite_db = config.get('database','LITE_DB')
       self.use = config.get('database','USE')
       self.qr_code = config.get('qr_code','QR_CODE')
