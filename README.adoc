@@ -1,5 +1,16 @@
 == README FIRST
 
+
+I wanted to catalogue all my books using their barcodes as input and track who
+borrows my books.  That's all.  I looked on-line for a program that would
+do just that and couldn't find any that supported barcode input.  The idea
+of typing in book details didn't appeal, so wrote this.
+
+This is a simple application to catalogue your library using the ISBN barcode
+and the zbarcam application with an ordinary webcam.
+The scan triggers a lookup on the database and the book details are downloaded
+then committed to the local database.
+
 Requires some flavour of Linux and Python >= 3.0.  
 Windows users will have to figure out how it works themselves and edit 
 the code to suit.
@@ -54,16 +65,6 @@ and plug in the scanner.  Check dmesg to check the ID values. Add yourself to th
 A Python module at https://github.com/dayjaby/zebra-scanner may make the scanner code
 simpler and may be used in future versions. Or maybe not having just tested it. :(
 
-I wanted to catalogue all my books using their barcodes as input and track who
-borrows my books.  That's all.  I looked on-line for a program that would
-do just that and couldn't find any that supported barcode input.  The idea
-of typing in book details didn't appeal, so wrote this.
-
-This is a simple application to catalogue your library using the ISBN barcode
-and the zbarcam application with an ordinary webcam.
-The scan triggers a lookup on the database and the book details are downloaded
-then committed to the local database.
-
 It uses MySQL or sqlite.  The database config file is created if none exists.
 
 Use database.schema.sql, after creating the database,  to populate the database with
@@ -80,6 +81,8 @@ make it secure from prying eyes.
 Can also use sqlite.  Edit db_conf.cfg to use whatever database you like.
 Sqlite is easier to set up but not so useful if you want to access the data from 
 multiple computers.  The current state of the sqlite code needs updating and probably will not work as is.
+
+
 
 === QR Codes
 Every time you scan a book a QRcode can be generated. You may not want this behaviour.
@@ -146,25 +149,25 @@ To get who borrowed what and for how long:
 
 
 
-=== Update:  2022-03-04
+=== Update:  2022-04-12
 
-I'm using https://www.upcdatabase.com for UPC lookups for DVDs in this version.  This is not ideal
-and an API key is required. It's very cheap and the usage limit regenerates daily up to a limit.
-For low use you may never hit that limit.  Please add any that are not present to the database
-at that URL.
+I'm no longer using https://www.upcdatabase.com for UPC lookups for DVDs.
 
-I'm looking for a better free/cheap database. Help?
+It now uses https://api.upcitemdb.com and requires no API key for the free version.
+It is rate limited to 100 queries per day but this is likely to suffice for most users.
 
+I've added a fun option to print bookmarks.
+This is so that I can insert them into books I'm lending out and includes the lent data and a
+reminder to return the book after reading.
+Enable the print option in the ~/librarian.cfg file.
+It currently is specific to an Epson POS thermal printer, patches welcome!
 
-=== Update:  2018-06-13
-
-No longer using http://xisbn.worldcat.org because of https://www.oclc.org/developer/news/2018/xid-decommission.en.html 
 
 === Windows Users
 
-Apologies to MS Windows, and Mac users, I don't use MS Windows or a Mac myself so I have no way to 
+Apologies to MS Windows, and Mac users, I don't use these systems myself so I have no way to 
 develop or test code other than on Linux.  You will have to adapt the code 
-to suit.
+to suit. Patches welcome!
 
 Stuff that need fixing for MS Windows include zbarcam code in guiscan.py, 
 database connections to anything other than MySQl and sqlite3 is also not
