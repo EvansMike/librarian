@@ -53,6 +53,7 @@ class Bookmark():
 
     def print_bookmark(self, abook):
         '''
+        From: lpoptions -p 'USB(ESDPRT001)_TM-T88V'  -l
         Options for Epson Thermal Receipt printer are:
         PageSize/Media Size: RP82.5x297 RP80x297 RP60x297 RP58x297 RP82.5x2000 *RP80x2000 RP60x2000 RP58x2000 A4 LT Custom.WIDTHxHEIGHT
         TmxPrintSpeed/Print Speed: Auto 1 2 3 *4
@@ -75,13 +76,15 @@ class Bookmark():
             return
         db_query = sql()
         borrower = db_query.get_book_borrower_by_book_id(abook.id)
-        filename = "spool"
+        filename = ".spool"
         book_text = "  MIKE'S LIBRARY BOOKMARK\n\n"
         with open(filename, 'w') as sp:
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
             sp.write(f"ISBN: {abook.isbn}\n")
-            sp.write(textwrap.fill(f"Author: {abook.authors}\n",width=26,replace_whitespace=False) + "\n")
-            sp.write(textwrap.fill(f"Title: {abook.title}\n",width=26,replace_whitespace=False) + "\n")
+            author_str = f"Author: {abook.authors}"
+            sp.write(f"{textwrap.fill(author_str, width=26)}\n")
+            title_str = f"Title: {abook.title}"
+            sp.write(f"{textwrap.fill(title_str, width=26, )}\n")
             sp.write(f"Owner: {abook.owner.title()}\n")
             if abook.add_date != None:
                 sp.write(f"Added: {abook.add_date.strftime('%Y-%m-%d')}\n\n")
@@ -96,33 +99,36 @@ class Bookmark():
             sp.write("  ┃┃╱╲ In\n")
             sp.write("  ┃╱╱╲╲ this\n")
             sp.write("  ╱╱╭╮╲╲ house\n")
-            sp.write("  ▔▏┗┛▕▔      we\n")
+            sp.write("  ▔▏┗┛▕▔     we\n")
             sp.write(" ╱▔▔▔▔▔▔▔▔▔▔╲ read\n")
             sp.write("/╱┏┳┓ ╭╮ ┏┳┓╲╲ books!\n")
             sp.write("▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n")
             sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
             sp.write(f"\n\n{'-' * 26}\n")
         conn = cups.Connection()
-        printer = self.select_printer()
+        settings = self.select_printer()
+        printer = settings.get_printer()
         if printer == None:
+            DEBUG("No printer selected, or print cancelled.")
             return
-        epson_paper = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
-        #printers = conn.getPrinters()
-        conn.setDefault(printer)
-        conn.printFile(conn.getDefault(), filename, " ", epson_paper)
+        conn.getPrinterAttributes(printer.encode()) #['printer-info']
+        if printer_info == 'EPSON INVOICE': # Yes, I know hard coding is bad. I will fix this at some point.
+            options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
+        else:
+            options = {}
+        conn.printFile(settings.get_printer(), filename, " ", options)
         #os.remove(filename) # No longer needed
         return
 
 
     def select_printer(self):
-        printer = None
+        settings = None
         pd = Gtk.PrintOperation()
-        pd.set_n_pages(0)
-        result = pd.run(
-            Gtk.PrintOperationAction.PRINT_DIALOG, None)
+        #pd.set_n_pages(0)
+        result = pd.run(Gtk.PrintOperationAction.PRINT_DIALOG, None)
         settings = pd.get_print_settings()
-        DEBUG(settings.get_printer())
-        return settings.get_printer()
+        #DEBUG(settings.get_printer())
+        return settings
 
 
 
