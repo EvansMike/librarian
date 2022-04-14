@@ -70,6 +70,9 @@ class load_config:
       parser.add_section('qr_code')
       parser.add_section('amazon_aws')
       parser.set('database', 'USER', 'username')
+      parser.set('database', 'LIBRARIAN', 'Your librarian name')
+      parser.set('database', '# Set BOOKMARKS to 1 if you want to have this facility', '0')
+      parser.set('database', 'BOOKMARKS', '0')
       parser.set('database', 'PASSWD', 'password')
       parser.set('database', 'DB', 'db_name')
       parser.set('database', 'DBHOST', 'db_host')
@@ -81,9 +84,11 @@ class load_config:
       parser.set('calibre', '# Optional: Define path to Calibre database, Users home dir will be automatically determined.', '')
       parser.set('calibre', 'CALIBRE_DB', 'calibre_db')
       parser.set('qr_code', 'QR_CODE', 'False')
-      parser.set('amazon_aws','AWS_KEY','AWS_KEY')
-      parser.set('amazon_aws','SECRET_KEY','SECRET_KEY')
-      parser.set('UPCdatabase','upc_key')
+      parser.set('amazon_aws','AWS_KEY','OPTIONAL AWS_KEY')
+      parser.set('amazon_aws','SECRET_KEY','OPTIONAL SECRET_KEY')
+      parser.set('UPCdatabase','OPTIONAL upc_key')
+
+      
       parser.write(f)
       # Set access mode to owner only
       os.fchmod(f.fileno(),stat.S_IREAD|stat.S_IWRITE)
@@ -96,6 +101,19 @@ class load_config:
       self.db_pass = config.get('database','PASSWD')
       self.db_base = config.get('database','DB')
       self.db_host = config.get('database','DBHOST')
+      if self.db_pass == 'password': # Config file probably not edited.
+          print("You need to edit the configuration file at ~/.librarian.cfg")
+          quit(1) # Ideally this will open a config editor but, fuck it!
+      try:
+          self.librarian_name = config.get('database', 'LIBRARIAN')
+      except: # Fallback to old system but warn
+          print("Using login name for book owner, See git log for how to fix.")
+          self.librarian_name = os.getlogin()
+          pass
+      try:
+          self.bookmarks = config.get('database','BOOKMARKS')
+      except: # Default to NOT printing bookmarks
+          self.bookmarks = 0
       self.lite_db = config.get('database','LITE_DB')
       self.use = config.get('database','USE')
       self.qr_code = config.get('qr_code','QR_CODE')

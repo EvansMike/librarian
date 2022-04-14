@@ -25,31 +25,31 @@ class BookLookup(object):
         return None
 
     def googleapi(self, isbn):
-        book = {}
-        url = f"https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn}&maxResults=1&fields=items"
+        data = {}
+        url = f"https://www.googleapis.com/datas/v1/volumes?q=isbn+{isbn}&maxResults=1&fields=items"
         r = self.get_response(url)
         content = r.json()
-        book['publisher'] = '' # These may not exist in the results so set them to empty strings
-        book['city'] = ''
-        book['language'] = ''
-        book['edited'] = ''
-        book['isbn'] = isbn
-        book['authors'] = ', '.join(content['items'][0]['volumeInfo']['authors'])
+        data['publisher'] = '' # These may not exist in the results so set them to empty strings
+        data['city'] = ''
+        data['language'] = ''
+        data['edited'] = ''
+        data['isbn'] = isbn
+        data['authors'] = ', '.join(content['items'][0]['volumeInfo']['authors'])
         datestring = content['items'][0]['volumeInfo']['publishedDate']
         try:
             dt = datetime.strptime(datestring, '%Y-%m-%d')
-            book['year'] = dt.year
+            data['year'] = dt.year
         except:
-            book['year'] = 0
-        try: book['city'] = content['items'][0]['volumeInfo']['city'] 
+            data['year'] = 0
+        try: data['city'] = content['items'][0]['volumeInfo']['city'] 
         except: pass
-        try: book['publisher'] = content['items'][0]['volumeInfo']['publisher'] 
+        try: data['publisher'] = content['items'][0]['volumeInfo']['publisher'] 
         except: pass
-        try: book['abstract']  = content['items'][0]['volumeInfo']['description'].replace('\n',' ')
+        try: data['abstract']  = content['items'][0]['volumeInfo']['description'].replace('\n',' ')
         except: pass
-        book['title'] = content['items'][0]['volumeInfo']['title'] 
-        book['type'] = 'book'
-        return book
+        data['title'] = content['items'][0]['volumeInfo']['title'] 
+        data['type'] = 'data'
+        return data
 
         
     def google_desc(self, isbn):
@@ -63,29 +63,29 @@ class BookLookup(object):
 
     def isbnlib(self,ISBN):
         import isbnlib
-        book = {}
+        data = {}
         try:
             content = isbnlib.meta(str(ISBN))
             classi = isbnlib.classify(str(ISBN))
         except:
             # Try googleAPIs?
-            book = self.googleapi(ISBN)
-            return book
-        print(book)
+            data = self.googleapi(ISBN)
+            return data
+        print(data)
         try:
-            book['publisher'] = '' # These may not exist in the results
-            book['city'] = content.get('City','')
-            book['language'] = content.get('Language','')
-            book['edited'] = content.get('Edited','')
-            book['isbn'] = ISBN
-            book['title'] = content.get('Title','')
-            book['authors'] = ', '.join(content['Authors'])
-            DEBUG(book['authors'])
-            book['year'] = content.get('Year',0)
-            book['publisher'] = content.get('Publisher','') 
-            book['abstract']  = isbnlib.desc(str(ISBN)).replace('\n',' ')
-            book['type'] = 'book'
-            return book
+            data['publisher'] = '' # These may not exist in the results
+            data['city'] = content.get('City','')
+            data['language'] = content.get('Language','')
+            data['edited'] = content.get('Edited','')
+            data['isbn'] = ISBN
+            data['title'] = content.get('Title','')
+            data['authors'] = ', '.join(content['Authors'])
+            DEBUG(data['authors'])
+            data['year'] = content.get('Year',0)
+            data['publisher'] = content.get('Publisher','') 
+            data['abstract']  = isbnlib.desc(str(ISBN)).replace('\n',' ')
+            data['type'] = 'data'
+            return data
         except Exception:
             raise
             return None

@@ -346,16 +346,12 @@ class mysql:
     Get a list of books that have been borrowed. plus those lent to me.
     TODO Lent to me books.
     '''
-    user = pwd.getpwuid(os.getuid())[4].split(',')[0] # May be unix specific?
-    self.cur.execute ("select * from  books, borrows  where  (books.owner!=%s \
+    user = config.librarian_name
+    self.cur.execute ("SELECT * from  books, borrows  WHERE  (books.owner!=%s \
     AND books.borrower_id IS NULL) \
     OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
     GROUP BY books.id ORDER BY borrows.borrower;",  (user,))
-    #self.cur.execute ("SELECT * FROM books, borrows \
-    #    WHERE books.id = borrows.book \
-    #    AND (books.owner != %s \
-    #    AND  borrows.i_date IS NULL \
-    #    ORDER BY borrows.borrower;, (user,)")
+
     return self.cur.fetchall()
 
   def get_borrowed_book_by_id(self, bid):
