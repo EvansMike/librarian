@@ -292,7 +292,7 @@ class Librarian:
         if not append:
             self.booklist.clear()
         column = self.treeview.get_column(3)
-        column.set_title(_('Abstract'))
+        column.set_title(_('Owner'))
         for row in result:
             # Deal with rearranging author names to last, first
             if row['author'] != None:
