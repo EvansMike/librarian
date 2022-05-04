@@ -268,6 +268,7 @@ class Scanner(object):
                         raise
                         DEBUG(e)
             else:
+                buff = self.text_view.get_buffer()
                 buff.set_text (_("No data returned, retry?"))
                 self.text_view.set_buffer(buff)
             # hide the preview window

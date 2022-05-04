@@ -111,11 +111,10 @@ class Bookmark():
         if printer == None:
             DEBUG("No printer selected, or print cancelled.")
             return
-        conn.getPrinterAttributes(printer.encode()) #['printer-info']
+        printer_info = conn.getPrinterAttributes(printer.encode())['printer-info']
+        options = {}
         if printer_info == 'EPSON INVOICE': # Yes, I know hard coding is bad. I will fix this at some point.
             options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
-        else:
-            options = {}
         conn.printFile(settings.get_printer(), filename, " ", options)
         #os.remove(filename) # No longer needed
         return

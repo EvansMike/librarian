@@ -106,6 +106,7 @@ class Book(object):
         DEBUG(data)
         if data:
             self.__dict__.update(data)
+            return data
         else:
             DEBUG(data)
             return None
