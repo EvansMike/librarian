@@ -16,21 +16,7 @@ Requires some flavour of Linux and Python >= 3.0.
 Windows users will have to figure out how it works themselves and edit 
 the code to suit.
 
-....
-Also requires the python packages:
-isbnlib - For ISBN lookup  
-zbar-py  
-copy
-pygtk >= 2.0
-gtk >= 2.0
-MySQLdb - For MySQl database or
-sqlite3  - Optional for sqlite database
-reportlab - For PDF report generation
-qrencode - Optional, for QR code generation
-....
-
-
-Some of these can be installed by running:
+Requirements can be installed by running:
 [source,bash]
 pip install -r requirements.txt
 
