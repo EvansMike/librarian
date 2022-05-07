@@ -303,7 +303,7 @@ class Scanner(object):
             data = lookup.get_response(ean, upc_key)
             DEBUG(data)
             if data:
-                buff.set_text(f"{data['size']} {data['description']}")
+                buff.set_text(f"{data['description']}")
                 self.text_view.set_buffer(buff)
                 self.abook.title = data['description']
                 self.abook.isbn = ean
