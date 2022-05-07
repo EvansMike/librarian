@@ -863,7 +863,7 @@ currently selected one</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="has_tooltip">True</property>
-                <property name="tooltip_text" translatable="yes">Closing before update loses any changes.</property>
+                <property name="tooltip_text" translatable="yes">Closing before update will prompt you to save changes.</property>
                 <signal name="clicked" handler="on_button_close_clicked" swapped="no"/>
               </object>
               <packing>
