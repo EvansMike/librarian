@@ -7,9 +7,10 @@ do just that and couldn't find any that supported barcode input.  The idea
 of typing in book details didn't appeal, so wrote this.
 
 This is a simple application to catalogue your library using the ISBN barcode
-and the zbarcam application with an ordinary webcam.
+and the zbarcam application with an ordinary web-cam, originally.
+Lately I added a Wasp barcode scanner. If the software detects this then this is used.
 The scan triggers a lookup on the database and the book details are downloaded
-then committed to the local database.
+then committed to the local database after giving the user the chance to edit some fields.
 
 Requires some flavour of Linux and Python >= 3.0.  
 Windows users will have to figure out how it works themselves and edit 
@@ -44,14 +45,13 @@ Install with: (On a Fedora system) using sudo probably.
 
 [source,bash]
 ----
-pip install biblio.webquery # NB. Not required for latest code.
-yum install zbar-pygtk pygtk MySQL-python # If you're using Fedora
 python setup.py install
-or pip3 install .
+or
+pip3 install .
 ----
 
 
-If you want run a Zebra style USB scanner create 
+If you want run a Zebra | Wasp style USB scanner create 
 
 /etc/udev/rules.d/101-zebra-scanner-corescanner.rules
 
@@ -83,49 +83,22 @@ Sqlite is easier to set up but not so useful if you want to access the data from
 multiple computers.  The current state of the sqlite code needs updating and probably will not work as is.
 
 
-
-=== QR Codes
-Every time you scan a book a QRcode can be generated. You may not want this behaviour.
-BY default the behaviour is turned off in the config file.
-It seemed like a good idea at the time but I admit to never have used the 
-QRcodes for anything. :)
-
-Older books without bar codes can be manually input via the Query/Edit book
-window.  It's a bit of a pain though if you have lots of books.
-
-
-=== DB Notes
-To get a list of borrowed books from mysql:
-
-[source,sql]
-----
-SELECT o_date, title, author, borrowers.name
-  FROM borrows, borrowers, books
-  WHERE borrows.borrower = borrowers.id
-  AND books.id = borrows.book
-  AND borrows.i_date IS NULL;
-----
-
-
-Or to get a list of DVDs into a CSV file from the linux command line:
-[source,bash]
-mysql books -e "SELECT isbn, quote(title), mtype FROM books WHERE isbn != '' AND mtype LIKE '%DVD%'" > ~/DVD.csv
-
-
 The sqlite2 database file is created from the database.schema.sql file with:
 [source,bash]
 ----
 ./mysql2sqlite3 --no-data  -p books | sqlite3 database_schema.db
 ----
 
-Note though that the sqlite code is behind and out of sync with the MySQL code.
+Note though that the sqlite code is way behind and out of sync with the MySQL code.
+Contributions are welcome.
 
 
 Setting user database password stuff is up to you for the moment.  
-I will add a GUI. NOTE:  Passwords are stored as plain text in the config file.  
+I will add a GUI one day.
 On first run a default ~/.db_config.cnf file is
 written in your home directory, note that this is a hidden dot-file.  
 This must edited with the details of your database plus any other preferences listed.
+NOTE:  Passwords are stored as plain text in the config file, don't reuse passwords!  
 
 To create the tables you will need the books_schema.sql  file from the sources.
 After creating the database run:
@@ -137,15 +110,42 @@ to create the tables.  The -p is required if your DB is password protected.
 Obviously you can call the DB anything you like, it doesn't have to be 
 books, as long as the .db_config.cfg file contains matching details.
 
-To get who borrowed what and for how long:
 
-[source,sql]
-----
-  SELECT title, name, DATEDIFF(i_date,o_date) AS days 
-      FROM borrows, borrowers, books 
-      WHERE borrows.borrower=borrowers.id 
-      AND books.id=borrows.book;
-----      
+
+== Usage
+
+Start application and press SCAN NEW button on the left had side.
+This pops up a new window, if you have a real scanner scan a book's ISBN barcode.
+The text window should be populated with either the book's details, or some other message.
+To add the book press the ADD button.
+This opens a new dialog with several fields filled in.
+Hit the CLOSE button to add the book|DVD to the database.
+I should rename this button.
+
+Double clicking on a book in the list opens the Edit Book dialog.
+
+All other buttons should be self-explanatory.
+
+=== The Edit Book Dialog
+
+This allows you to edit the book's details and add your bookshelves and people to whom you lend books.
+You can rate the book here too.
+
+To lend a book, optionally add the borrower, then use the drop-down to assign the borrower.
+The DB is update with who borrowed the book and when.
+
+On pressing the CLOSE button, if you have set up a printer and configured the behaviour in the config file a printer dialog will open.
+If required, a bookmark can be printed.
+Insert this into the book before lending to gently remind the borrower to return the book.
+I have set up a till receipt printer for this.
+A printer with A5 paper also works when the print if folded in half, lengthwise.
+
+A list of borrowed books can be obtained from the mail window.
+
+If you have borrowed a book from someone else, scan it then edit the owner in the Edit book dialog.
+These will then show up in the loaned books list. Scroll to the right to see the owners.
+The list is sortable by clicking the header as usual.
+
 
 
 
