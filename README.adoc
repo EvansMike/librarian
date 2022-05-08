@@ -126,7 +126,7 @@ Insert this into the book before lending to gently remind the borrower to return
 I have set up a till receipt printer for this.
 A printer with A5 paper also works when the print if folded in half, lengthwise.
 
-A list of borrowed books can be obtained from the mail window.
+A list of borrowed books can be obtained from the main window.
 
 If you have borrowed a book from someone else, scan it then edit the owner in the Edit book dialog.
 These will then show up in the loaned books list. Scroll to the right to see the owners.
@@ -154,7 +154,3 @@ It currently is specific to an Epson POS thermal printer, patches welcome!
 Apologies to MS Windows, and Mac users, I don't use these systems myself so I have no way to 
 develop or test code other than on Linux.  You will have to adapt the code 
 to suit. Patches welcome!
-
-Stuff that need fixing for MS Windows include zbarcam code in guiscan.py, 
-database connections to anything other than MySQl and sqlite3 is also not
-currently supported.
