@@ -80,6 +80,12 @@ class UPCLookup(object):
              return None
 
 
+    def add_missing(self, book):
+        '''
+        See Bug-343
+        http://localhost/mantisbt/view.php?id=343
+        '''
+        return
 
 if __name__ == '__main__':
     lookup = UPCLookup()

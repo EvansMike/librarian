@@ -104,7 +104,7 @@ class Bookmark():
             sp.write("/╱┏┳┓ ╭╮ ┏┳┓╲╲ books!\n")
             sp.write("▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n")
             sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
-            sp.write(f"\n\n{'-' * 26}\n")
+            sp.write(f"\nSometimes watch DVDs too.\n\n{'-' * 26}\n")
         conn = cups.Connection()
         settings = self.select_printer()
         printer = settings.get_printer()
