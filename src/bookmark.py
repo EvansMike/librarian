@@ -106,7 +106,7 @@ class Bookmark():
             sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
             if abook.mtype == 'DVD':
                 sp.write(f"\nSometimes watch DVDs too.")
-            sp.write("\n\n\n\n\n{'-' * 26}\n")
+            sp.write(f"\n\n\n\n\n{'-' * 26}\n")
         conn = cups.Connection()
         settings = self.select_printer()
         printer = settings.get_printer()
