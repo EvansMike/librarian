@@ -106,9 +106,12 @@ class Bookmark():
             sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
             if abook.mtype == 'DVD':
                 sp.write(f"\nSometimes watch DVDs too.")
-            sp.write(f"\n\n\n\n\n{'-' * 26}\n")
+            sp.write(f"\n\n\n\n\n{'-' * 26}\n\n\n\n")
         conn = cups.Connection()
         settings = self.select_printer()
+        #if result == Gtk.PrintOperationResult.CANCEL: # It's ALWAYS this.
+        #    DEBUG("Printing was cancelled")
+        #    return
         printer = settings.get_printer()
         if printer == None:
             DEBUG("No printer selected, or print cancelled.")
@@ -127,8 +130,9 @@ class Bookmark():
         pd = Gtk.PrintOperation()
         #pd.set_n_pages(0)
         result = pd.run(Gtk.PrintOperationAction.PRINT_DIALOG, None)
+        DEBUG(result) #Always <enum GTK_PRINT_OPERATION_RESULT_CANCEL of type Gtk.PrintOperationResult>
         settings = pd.get_print_settings()
-        #DEBUG(settings.get_printer())
+        #DEBUG(settings)
         return settings
 
 
