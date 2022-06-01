@@ -241,45 +241,54 @@ class Scanner(object):
                 
 ################################################################################
     def add_book(self, proc, isbn):
-        from .add_edit import add_edit
-        #buff = self.text_view.get_buffer()
+        '''
+        TODO: This needs refactoring. See Bug-344 for why.
+        '''
         DEBUG(isbn)
         db_query = sql()
         # Check if exists and increment book count if so.
-        count = db_query.get_book_count_by_isbn(isbn)
-        DEBUG(count > 1)
+        data = db_query.get_by_isbn(isbn)
+        if data:
+            count = len(data)
+            DEBUG(count) 
+            try:
+                location = self.getBookLocation(isbn)
+                DEBUG(location)
+                if count > 0:
+                    buff = self.text_view.get_buffer()
+                    buff.set_text("")
+                    self.text_view.set_buffer(buff)
+                    title = data[0]['title']
+                    author = data[0]['author']
+                    self.abook.bid = data[0]['id']
+                    self.abook.isbn = isbn
+                    buff.insert_at_cursor (_(f"{title} by {author}\nYou already have {str(count)} copies!\n\
+                        Located at:\n{location}\n"))
+                    self.text_view.set_buffer(buff)
+            except Exception as e:
+                raise
+                DEBUG(e)
+        else:
+            try: 
+                if self.abook.webquery(isbn) != None:
+                    INFO(self.abook.print_book())
+                    buff = self.text_view.get_buffer()
+                    buff.set_text(self.abook.print_book())
+                    self.text_view.set_buffer(buff)
         
-        try: 
-            if self.abook.webquery(isbn) != None:
-                INFO(self.abook.print_book())
+                else:
+                    buff = self.text_view.get_buffer()
+                    buff.set_text (_("No data returned, retry?"))
+                    self.text_view.set_buffer(buff)
+                # hide the preview window
+                if proc: proc.visible = False
+            except Exception as e:
+                raise
                 buff = self.text_view.get_buffer()
-                buff.set_text(self.abook.print_book())
+                buff.set_text(f"No book with ISBN {isbn} found")
+                #buff.set_text(repr(e.message))
                 self.text_view.set_buffer(buff)
-                if count:
-                    try:
-                        location = self.getBookLocation(isbn)
-                        DEBUG(location)
-                        if count > 0 and location != None:
-                            buff = self.text_view.get_buffer()
-                            buff.insert_at_cursor (_(f"\nYou already have {str(count)} copies!\nLocated at:\n{location}\n"))
-                            self.text_view.set_buffer(buff)
-                            #return
-                    except Exception as e:
-                        raise
-                        DEBUG(e)
-            else:
-                buff = self.text_view.get_buffer()
-                buff.set_text (_("No data returned, retry?"))
-                self.text_view.set_buffer(buff)
-            # hide the preview window
-            if proc: proc.visible = False
-        except Exception as e:
-            raise
-            buff = self.text_view.get_buffer()
-            buff.set_text(f"No book with ISBN {isbn} found")
-            #buff.set_text(repr(e.message))
-            self.text_view.set_buffer(buff)
-            DEBUG(e)
+                DEBUG(e)
         self.real_scanner()
         
 
@@ -318,9 +327,9 @@ class Scanner(object):
             data = db_query.get_by_isbn(ean)
             buff.set_text(f"This item already exists in the database\n{data['title']}, {data['mtype']}")
             self.text_view.set_buffer(buff)
-            self.abook.title = data['title']
-            self.abook.isbn = data['isbn']
-            self.abook.mtype = data['mtype']
+            #self.abook.title = data['title']
+            #self.abook.isbn = data['isbn']
+            #self.abook.mtype = data['mtype']
         self.abook.owner = self.owner
         self.real_scanner()
        
@@ -397,20 +406,46 @@ class Scanner(object):
 
 ################################################################################
     def on_button_remove_clicked(self, widget):
-        '''Remove a book from the database.
-
+        '''
+        Remove a book from the database.
+        But first open a add_edit dialog and allow the user to actually do the
+        delete from there.
+        In fact the adding action should be done from there too. TODO
         '''
         db_query = sql()
+        
         # Remove a scanned book from the database.
-        print (_("You removed this book."))
         buff = self.text_view.get_buffer()
+        
+        from .add_edit import add_edit
+        adder = add_edit()
+        adder.populate(self.abook.bid)
+        adder.display()
+
+        '''data = db_query.get_by_isbn(self.abook.isbn) # May be > 1, so which one?!
+        if data:
+            for book in data:
+                if book['copies'] != 0:
+                    bid = data[0]['id']
+                    adder.populate(bid)
+                    adder.display()
+                    buff.insert_at_cursor (_( "\n\nYou removed this book."))
+                    self.text_view.set_buffer(buff)
+                    break
+        '''
+        '''
         try:
-            self.cur.execute("DELETE FROM books WHERE isbn = %s;", str(self.abook.isbn))
+            data = db_query.get_by_isbn(self.abook.isbn)
+            bid = data['id']
+            db_query.remove_book(bid)
+            #self.cur.execute("DELETE FROM books WHERE isbn = %s;", str(self.abook.isbn))
             buff.insert_at_cursor (_( "\n\nYou removed this book."))
             self.text_view.set_buffer(buff)
         except:
+            raise
             buff.insert_at_cursor (_( "\n\nCould not remove book!"))
             self.text_view.set_buffer(buff)
+        '''
 
 
      ###############################################################################
@@ -446,10 +481,16 @@ class Scanner(object):
         for instance, books printed before ISBN was invented.
         result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
              str(self.abook.isbn))
-        TODO Move all DB stuff to db_queries.py
+        TODO: Move all DB stuff to db_queries.py
+        TODO: Also refactor for Bug-344
+        We could arrive here with no book details set, just it's ID if it already exists
+        in the DB.  Which leads to a problem as we have to do a web lookup again.
         '''
         buff = self.text_view.get_buffer()
         db_query = sql()
+        # Don't this here if we already did it in add_book() because a copy not in the DB
+        if self.abook.title == '': 
+            self.abook.webquery(self.abook.isbn)
         last_id = db_query.insert_book_object(self.abook)
         DEBUG(last_id);
         # We should check this for success
@@ -458,20 +499,6 @@ class Scanner(object):
             buff.insert_at_cursor (_( "\n\nCould add this book!"))
             self.text_view.set_buffer(buff)
             return
-        # Get and insert the track listing
-        # TODO: Move DB stuff to db_queries
-        if str(self.abook.mtype) == 'Music':
-            self.cur.execute("SELECT id FROM books WHERE title=%s AND author=%s LIMIT 1;",\
-                  [str(self.abook.title), str(self.abook.authors)])
-            res = self.cur.fetchall()
-            cdid = res[0][0]
-            tracks = self.get_cd_tracks()
-            for track in tracks:
-                self.cur.execute("INSERT INTO cd_tracks(cdid,tracknum,trackname,tracklen) \
-                    VALUES(%s,%s,%s,%s);", \
-                    [cdid, track['index'],track['name'],str(track['length'])])
-            self.cur.execute("UPDATE books SET year = %s WHERE id = %s",[self.abook.year, cdid])
-            self.db.commit()
         buff = self.text_view.get_buffer()
         buff.insert_at_cursor(_( f"\n\nYou added this {str(self.abook.mtype)}.\n"))
         self.text_view.set_buffer(buff)

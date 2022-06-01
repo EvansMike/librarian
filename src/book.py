@@ -22,6 +22,7 @@
 
 
 import datetime
+from .db_queries import sql as sql
 import getpass
 import logging
 import os
@@ -56,6 +57,7 @@ class Book(object):
         self.copies = 0
         self.where = 0 # Which shelf is it on?
         self.add_date = datetime.date.today()
+        self.disposal_date = None
         self.borrower_id = None
         self.owner = config.librarian_name
         self.genre = '' # Fiction, biography etc.
@@ -69,7 +71,16 @@ class Book(object):
         ## Return some book details as a string for printing.  Mostly a debug thing.
         bookstring = "{}{}{}{}{}".format(self.isbn,"\n",self.authors,"\n",self.title)
         return bookstring
+
         
+    '''def get_by_isbn(self, isbn):
+        data = sql.get_by_isbn(self.isbn)
+        self.id = data['id']
+
+
+    def populate(self, data):
+        return
+    '''   
 
     def compare(self, book):
         ''' Determine if two books differ.  Return 0 if same.'''

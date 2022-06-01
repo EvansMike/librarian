@@ -408,20 +408,26 @@ class mysql:
     '''
     Get books based on author and title search.
     '''
-    self.cur.execute("SELECT * FROM books WHERE title LIKE %s OR author LIKE %s OR mtype LIKE %s", \
+    numrows = self.cur.execute("SELECT * FROM books WHERE title LIKE %s OR author LIKE %s OR mtype LIKE %s", \
         [('%%%s%%' % search_string), ('%%%s%%' % search_string), ('%%%s%%' % search_string)])
-    return  self.cur.fetchall()
+    if numrows != 0:
+        return  self.cur.fetchall()
+    return None
 
   def get_by_id(self, book_id):
     ''' Search for book on its ID.  NB. This is NOT its ISBN
     @return Dict of the book's data
     '''
-    self.cur.execute ("SELECT * FROM  books where id = %s;",(book_id,))
-    return self.cur.fetchone()
+    numrows = self.cur.execute ("SELECT * FROM  books where id = %s;",(book_id,))
+    if numrows != 0:
+        return self.cur.fetchone()
+    return None
 
   def get_by_isbn(self, isbn):
-    self.cur.execute ("SELECT * FROM  books where isbn = %s;",(isbn,))
-    return self.cur.fetchone()
+    numrows = self.cur.execute ("SELECT * FROM  books where isbn = %s AND copies > 0;",(isbn,))
+    if numrows != 0:
+        return self.cur.fetchall()
+    return None
 
   def insert_unique_author(self, authors):
     '''
@@ -446,7 +452,9 @@ class mysql:
     @param book.  A book object.
     @return the ID of the book
     '''
-    # If the book already has an id we dont's insert it as it's not a new book.
+    # If there's no title it's not a 'thing' so bug out.
+    if book.title == '':
+        return None
     self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
         year, publisher, city, copies, mtype, add_date, owner, rating) \
         VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
@@ -519,12 +527,13 @@ class mysql:
           [id, bid])
     self.db.commit()
 
+
   def remove_book(self, bid):
-    ''' remove a book/copy from the db.  This just decrements the copy
-    counter until copies = 0 then we remove the entry completely.
     '''
-    self.cur.execute("UPDATE books set copies = copies-1 WHERE id = %s;",(bid,))
-    self.cur.execute("DELETE FROM books WHERE copies=0;")
+    This just sets the copy counter to 0 and adds a disposal date.
+    '''
+    self.cur.execute("UPDATE books set copies = 0,  disposal_date = NOW() WHERE id = %s;",(bid,))
+    
 
   def add_location(self, room, shelf):
     '''
@@ -542,7 +551,7 @@ class mysql:
 
 
   def get_location_by_isbn(self ,isbn):
-    self.cur.execute("SELECT location FROM books WHERE isbn = %s", (isbn,))
+    self.cur.execute("SELECT location FROM books WHERE isbn = %s AND copies > 0" , (isbn,))
     locs = self.cur.fetchall()
     locations = []
     for loc in locs:
