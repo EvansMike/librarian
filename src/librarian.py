@@ -335,7 +335,7 @@ class Librarian:
             self.booklist.append([row['isbn'], author, row['title'],
             abstract,
             row['publisher'], row['city'], str(row['year']),
-            row['id'], row['copies'], row['mtype']])
+            row['id'], None, row['mtype']])
         
 
 

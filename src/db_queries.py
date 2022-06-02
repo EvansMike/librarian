@@ -129,7 +129,7 @@ class sqlite:
     return mysql().get_all_books()
 
     '''
-    self.cur.execute("SELECT * FROM books WHERE copies > 0 order by author;")
+    self.cur.execute("SELECT * FROM books WHERE disposal_date IS NULL order by author;")
     return self.cur.fetchall()
 
   def get_book_count_by_isbn(self, bar):
@@ -331,7 +331,7 @@ class mysql:
     '''
     command = "SELECT * FROM books b INNER JOIN books_to_authors ba ON (b.id = ba.book_id) \
     INNER JOIN book_authors a ON (ba.author_id = a.author_id) \
-    WHERE copies > 0 \
+    WHERE disposal_date IS NULL\
     GROUP BY b.title ORDER BY author_last, author_ordinal;"
     numrows = self.cur.execute(command)
     DEBUG(numrows)
@@ -339,7 +339,8 @@ class mysql:
 
 
   def get_book_count_by_isbn(self, bar):
-    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE isbn = %s;" , (bar,))
+    if bar == '': return None
+    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE disposal_date IS NOT NULL AND isbn = %s;" , (bar,))
     return  int (self.cur.fetchone()['count'])
 
   def get_book_borrower_by_book_id(self,bid):
@@ -422,7 +423,9 @@ class mysql:
     '''
     Get books based on author and title search.
     '''
-    numrows = self.cur.execute("SELECT * FROM books WHERE title LIKE %s OR author LIKE %s OR mtype LIKE %s", \
+    numrows = self.cur.execute("SELECT * FROM books \
+        WHERE disposal_date IS NULL AND \
+        title LIKE %s OR author LIKE %s OR mtype LIKE %s", \
         [('%%%s%%' % search_string), ('%%%s%%' % search_string), ('%%%s%%' % search_string)])
     if numrows != 0:
         return  self.cur.fetchall()
@@ -438,7 +441,7 @@ class mysql:
     return None
 
   def get_by_isbn(self, isbn):
-    numrows = self.cur.execute ("SELECT * FROM  books where isbn = %s AND copies > 0;",(isbn,))
+    numrows = self.cur.execute ("SELECT * FROM  books where isbn = %s AND disposal_date IS NULL;",(isbn,))
     if numrows != 0:
         return self.cur.fetchall()
     return None
@@ -470,10 +473,10 @@ class mysql:
     if book.title == '':
         return None
     self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
-        year, publisher, city, copies, mtype, add_date, owner, rating) \
-        VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,NOW(),%s,%s)", \
+        year, publisher, city,  mtype, add_date, owner, rating) \
+        VALUES(%s,%s,%s,%s,%s,%s,%s,%s,NOW(),%s,%s)", \
         (book.title, book.authors, book.isbn, book.abstract, \
-    book.year, book.publisher, book.city, 1, book.mtype,  book.owner, book.rating))
+    book.year, book.publisher, book.city, book.mtype,  book.owner, book.rating))
     self.db.commit()
 
     self.cur.execute("SELECT LAST_INSERT_ID() AS last_id")
@@ -547,7 +550,7 @@ class mysql:
     This just sets the copy counter to 0 and adds a disposal date.
     This will fail on old tables where column disposal_date does not exist.
     '''
-    self.cur.execute("UPDATE books set copies = 0,  disposal_date = NOW() WHERE id = %s;", (bid,))
+    self.cur.execute("UPDATE books set disposal_date = NOW() WHERE id = %s;", (bid,))
     self.db.commit()
     
 
@@ -568,7 +571,7 @@ class mysql:
 
 
   def get_location_by_isbn(self ,isbn):
-    self.cur.execute("SELECT location FROM books WHERE isbn = %s AND copies > 0" , (isbn,))
+    self.cur.execute("SELECT location FROM books WHERE isbn = %s AND disposal_date IS NULL" , (isbn,))
     locs = self.cur.fetchall()
     locations = []
     for loc in locs:

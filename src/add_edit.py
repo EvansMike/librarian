@@ -298,7 +298,8 @@ class add_edit:
     if row['year'] != None: self.year.set_text(str(row['year']))
     if row['owner'] != None: self.book_owner.set_text(str(row['owner']))
     self.mtype.set_text(str(row['mtype']))
-    self.copies.set_text(str(row['copies']))
+    copies = db_query.get_book_count_by_isbn(row['isbn'])
+    if copies: self.copies.set_text(str(copies)) # We could use this as a results of get_book_count_by_isbn(bar) 
 
     # Populate a book object
     self.orig_book.value = row['value']
@@ -310,7 +311,7 @@ class add_edit:
     self.orig_book.publisher = row['publisher']
     self.orig_book.city = row['city']
     self.orig_book.year = str(row['year']).strip()
-    self.orig_book.copies = row['copies']
+    if copies: self.orig_book.copies = copies # We could use this as a results of get_book_count_by_isbn(bar) 
     self.orig_book.where = row['location']
     self.orig_book.owner = row['owner']
     self.orig_book.rating = row['rating']
