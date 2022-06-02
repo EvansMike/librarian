@@ -43,7 +43,7 @@ CREATE TABLE `book_authors` (
   `author_first` text DEFAULT NULL,
   PRIMARY KEY (`author_id`),
   UNIQUE KEY `book_authors_unique_idx` (`author_last`(10),`author_first`(10))
-) ENGINE=InnoDB AUTO_INCREMENT=3909 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3918 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,6 @@ CREATE TABLE `books` (
   `city` text DEFAULT NULL,
   `publisher` text DEFAULT NULL,
   `abstract` text DEFAULT NULL,
-  `copies` int(11) DEFAULT 0,
   `year` int(11) DEFAULT NULL,
   `mtype` text DEFAULT NULL,
   `author_id` int(11) DEFAULT NULL,
@@ -77,7 +76,7 @@ CREATE TABLE `books` (
   `value` int(11) DEFAULT 0,
   `disposal_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1251 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1260 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,4 +274,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-02 10:55:47
+-- Dump completed on 2022-06-02 15:43:41
