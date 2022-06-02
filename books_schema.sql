@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.5.13-MariaDB, for Linux (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.15-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: books
 -- ------------------------------------------------------
--- Server version	10.5.13-MariaDB-log
+-- Server version	10.5.15-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +27,7 @@ CREATE TABLE `authors` (
   `name` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`(50))
-) ENGINE=MyISAM AUTO_INCREMENT=340 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=343 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `book_authors` (
   `author_first` text DEFAULT NULL,
   PRIMARY KEY (`author_id`),
   UNIQUE KEY `book_authors_unique_idx` (`author_last`(10),`author_first`(10))
-) ENGINE=InnoDB AUTO_INCREMENT=3894 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3909 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,8 +75,9 @@ CREATE TABLE `books` (
   `owner` varchar(60) DEFAULT NULL,
   `rating` int(11) DEFAULT 0,
   `value` int(11) DEFAULT 0,
+  `disposal_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1236 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1251 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,4 +275,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-10 21:37:31
+-- Dump completed on 2022-06-02 10:55:47
