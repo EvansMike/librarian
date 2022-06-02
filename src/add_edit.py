@@ -402,7 +402,7 @@ class add_edit:
     DEBUG(dlg_val)
     dialog.destroy()
     del dialog
-    if dlg_val == -9:return
+    if dlg_val == -9: return
     db_query.remove_book(self.mybook.id)
     self.status.set_text (_(" Book has been removed."))
     INFO(f"Book id {self.mybook.id} has been removed.")

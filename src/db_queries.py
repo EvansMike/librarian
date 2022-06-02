@@ -289,6 +289,7 @@ class mysql:
   import MySQLdb.cursors
   import warnings
 
+
   warnings.filterwarnings('ignore', category=MySQLdb.Warning)
   def __init__(self):
     try:
@@ -299,7 +300,20 @@ class mysql:
         raise
         quit(1)
     self.cur = self.db.cursor(self.MySQLdb.cursors.DictCursor)
-    #logging.info("This connection is using MySQL")
+    #DEBUG("This connection is using MySQL")
+    # Test for and insert the new column into books table. Only needs running once.
+    # There is a better way to do versioning but I can't remember it right now
+    # so this will have to do.
+    try:
+        rows = self.cur.execute("SHOW COLUMNS FROM books LIKE 'disposal_date';")
+        if rows == 0:
+            DEBUG("Adding a new column to the books table\nThis may take a while!\nPlease be patient.")
+            self.cur.execute("ALTER TABLE books ADD COLUMN disposal_date datetime")
+            self.db.commit()
+    except:
+        pass
+
+   
 
   def create_database(self):
       '''
@@ -531,9 +545,16 @@ class mysql:
   def remove_book(self, bid):
     '''
     This just sets the copy counter to 0 and adds a disposal date.
+    This will fail on old tables where column disposal_date does not exist.
     '''
-    self.cur.execute("UPDATE books set copies = 0,  disposal_date = NOW() WHERE id = %s;",(bid,))
-    
+    try:
+        self.cur.execute("UPDATE books set copies = 0,  disposal_date = NOW() WHERE id = %s;", (bid,))
+        self.db.commit()
+    except self.MySQLdb.OperationalError as meo: 
+        return
+    except TypeError:
+        raise
+
 
   def add_location(self, room, shelf):
     '''
