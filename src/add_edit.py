@@ -364,6 +364,14 @@ class add_edit:
       DEBUG("Something changed so an update is needed.")
       self.update_db()
 
+      
+  def on_button_add_clicked (self, widget):
+    # Insert a new copy of the book into the DB
+    db_query = sql()
+    last_id = db_query.insert_book_object(self.mybook)
+    self.mybook.id = last_id 
+    return
+
 
   def update_db(self, ):
     db_query = sql()

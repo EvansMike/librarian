@@ -808,7 +808,7 @@ currently selected one</property>
           <object class="GtkTable" id="table1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="n_columns">5</property>
+            <property name="n_columns">6</property>
             <property name="column_spacing">40</property>
             <child>
               <object class="GtkButton" id="button_isbn">
@@ -852,8 +852,8 @@ currently selected one</property>
                 <signal name="clicked" handler="on_button_update_clicked" swapped="no"/>
               </object>
               <packing>
-                <property name="left_attach">2</property>
-                <property name="right_attach">3</property>
+                <property name="left_attach">3</property>
+                <property name="right_attach">4</property>
                 <property name="y_options">GTK_EXPAND</property>
               </packing>
             </child>
@@ -868,8 +868,8 @@ currently selected one</property>
                 <signal name="clicked" handler="on_button_close_clicked" swapped="no"/>
               </object>
               <packing>
-                <property name="left_attach">4</property>
-                <property name="right_attach">5</property>
+                <property name="left_attach">5</property>
+                <property name="right_attach">6</property>
                 <property name="x_padding">10</property>
               </packing>
             </child>
@@ -885,8 +885,22 @@ currently selected one</property>
                 <signal name="clicked" handler="on_button_clear_clicked" swapped="no"/>
               </object>
               <packing>
-                <property name="left_attach">3</property>
-                <property name="right_attach">4</property>
+                <property name="left_attach">4</property>
+                <property name="right_attach">5</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button1">
+                <property name="label" translatable="yes">ADD COPY</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Add this as a new book, copy.</property>
+                <signal name="clicked" handler="on_button_add_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="right_attach">3</property>
               </packing>
             </child>
           </object>

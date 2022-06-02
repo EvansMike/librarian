@@ -471,9 +471,9 @@ class mysql:
         return None
     self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
         year, publisher, city, copies, mtype, add_date, owner, rating) \
-        VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", \
+        VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,NOW(),%s,%s)", \
         (book.title, book.authors, book.isbn, book.abstract, \
-    book.year, book.publisher, book.city, 1, book.mtype, book.add_date, book.owner, book.rating))
+    book.year, book.publisher, book.city, 1, book.mtype,  book.owner, book.rating))
     self.db.commit()
 
     self.cur.execute("SELECT LAST_INSERT_ID() AS last_id")
