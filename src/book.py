@@ -56,7 +56,7 @@ class Book(object):
         self.city = ''
         self.copies = 0
         self.where = 0 # Which shelf is it on?
-        self.add_date = datetime.date.today()
+        self.add_date = datetime.datetime.now()
         self.disposal_date = None
         self.borrower_id = None
         self.owner = config.librarian_name

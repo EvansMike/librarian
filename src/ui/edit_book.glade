@@ -875,7 +875,7 @@ currently selected one</property>
             </child>
             <child>
               <object class="GtkButton" id="button_clear">
-                <property name="label" translatable="yes">NEW BOOK</property>
+                <property name="label" translatable="yes">CLEAR</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>

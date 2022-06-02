@@ -246,9 +246,10 @@ class Scanner(object):
         '''
         DEBUG(isbn)
         db_query = sql()
-        # Check if exists and increment book count if so.
+        # Check if exists
         data = db_query.get_by_isbn(isbn)
-        if data:
+        self.abook.id = ''
+        if data: # It does exist in the DB.
             count = len(data)
             DEBUG(count) 
             try:
@@ -260,7 +261,7 @@ class Scanner(object):
                     self.text_view.set_buffer(buff)
                     title = data[0]['title']
                     author = data[0]['author']
-                    self.abook.bid = data[0]['id']
+                    self.abook.id = data[0]['id']
                     self.abook.isbn = isbn
                     buff.insert_at_cursor (_(f"{title} by {author}\nYou already have {str(count)} copies!\n\
                         Located at:\n{location}\n"))
@@ -268,7 +269,7 @@ class Scanner(object):
             except Exception as e:
                 raise
                 DEBUG(e)
-        else:
+        else: # It doesn't exist in the DB.
             try: 
                 if self.abook.webquery(isbn) != None:
                     INFO(self.abook.print_book())
@@ -429,65 +430,46 @@ class Scanner(object):
 
 
 ################################################################################
-    def on_button_add_clicked(self, widget):
+    def on_button_edit_clicked(self, widget):
         '''
-        Add a book, DVD or CD to the database.
-        Arguably I could have used "ON DUPLICATE KEY", using the isbn as the key,
-        here but it may happen that several books will have empty isbn values
-        for instance, books printed before ISBN was invented.
-        result = self.cur.execute ("SELECT count(isbn) as count FROM books WHERE isbn = %s;",
-             str(self.abook.isbn))
-        TODO: Move all DB stuff to db_queries.py
-        TODO: Also refactor for Bug-344
-        We could arrive here with no book details set, just it's ID if it already exists
-        in the DB.  Which leads to a problem as we have to do a web lookup again.
+        Process the book and open the add edit dialog.
         '''
+        from .add_edit import add_edit
         buff = self.text_view.get_buffer()
         db_query = sql()
-        # Don't this here if we already did it in add_book() because a copy not in the DB
-        if self.abook.title == '': 
-            self.abook.webquery(self.abook.isbn)
-        last_id = db_query.insert_book_object(self.abook)
-        DEBUG(last_id);
-        # We should check this for success
-        if last_id == 0:
-            print ("Failed to add book to database.")
-            buff.insert_at_cursor (_( "\n\nCould add this book!"))
+
+        # If a book in already in the DB do this
+        if self.abook.id != '':
+            DEBUG(self.abook.id)
+            adder = add_edit()
+            adder.populate(self.abook.id)
+            adder.display()
+            
+        else: 
+            # Book object should be populated but not in the DB yet.
+            last_id = db_query.insert_book_object(self.abook)
+            DEBUG(last_id);
+            # We should check this for success
+            if last_id == 0:
+                print ("Failed to add book to database.")
+                buff.insert_at_cursor (_( "\n\nCould not add this book!"))
+                self.text_view.set_buffer(buff)
+                return
+            buff = self.text_view.get_buffer()
+            buff.insert_at_cursor(_( f"\n\nYou added this {str(self.abook.mtype)}.\n"))
             self.text_view.set_buffer(buff)
-            return
-        buff = self.text_view.get_buffer()
-        buff.insert_at_cursor(_( f"\n\nYou added this {str(self.abook.mtype)}.\n"))
-        self.text_view.set_buffer(buff)
-        self.make_qr_code()
-        INFO (f"You added this {str(self.abook.mtype)}")
-        # Open add_edit so we can add any more details like location.
-        from .add_edit import add_edit
-        adder = add_edit()
-        adder.populate(last_id)
-        adder.display()
+            self.make_qr_code()
+            INFO (f"You have added this {str(self.abook.mtype)} to the database.")
+            # Open add_edit so we can add any more details like location.
+            adder = add_edit()
+            adder.populate(last_id)
+            adder.display()
+            
         # Clear the display and create a fresh book.
         buff.set_text("")
         self.text_view.set_buffer(buff)
         self.abook = book.Book() # New fresh book.
 
-
-################################################################################
-    def on_button_remove_clicked(self, widget):
-        '''
-        Remove a book from the database.
-        But first open a add_edit dialog and allow the user to actually do the
-        delete from there.
-        In fact the adding action should be done from there too. TODO
-        '''
-        db_query = sql()
-        
-        # Remove a scanned book from the database.
-        buff = self.text_view.get_buffer()
-        
-        from .add_edit import add_edit
-        adder = add_edit()
-        adder.populate(self.abook.bid)
-        adder.display()
 
 
 ################################################################################
