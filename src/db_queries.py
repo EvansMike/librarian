@@ -547,13 +547,9 @@ class mysql:
     This just sets the copy counter to 0 and adds a disposal date.
     This will fail on old tables where column disposal_date does not exist.
     '''
-    try:
-        self.cur.execute("UPDATE books set copies = 0,  disposal_date = NOW() WHERE id = %s;", (bid,))
-        self.db.commit()
-    except self.MySQLdb.OperationalError as meo: 
-        return
-    except TypeError:
-        raise
+    self.cur.execute("UPDATE books set copies = 0,  disposal_date = NOW() WHERE id = %s;", (bid,))
+    self.db.commit()
+    
 
 
   def add_location(self, room, shelf):

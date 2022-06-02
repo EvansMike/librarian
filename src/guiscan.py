@@ -422,30 +422,6 @@ class Scanner(object):
         adder.populate(self.abook.bid)
         adder.display()
 
-        '''data = db_query.get_by_isbn(self.abook.isbn) # May be > 1, so which one?!
-        if data:
-            for book in data:
-                if book['copies'] != 0:
-                    bid = data[0]['id']
-                    adder.populate(bid)
-                    adder.display()
-                    buff.insert_at_cursor (_( "\n\nYou removed this book."))
-                    self.text_view.set_buffer(buff)
-                    break
-        '''
-        '''
-        try:
-            data = db_query.get_by_isbn(self.abook.isbn)
-            bid = data['id']
-            db_query.remove_book(bid)
-            #self.cur.execute("DELETE FROM books WHERE isbn = %s;", str(self.abook.isbn))
-            buff.insert_at_cursor (_( "\n\nYou removed this book."))
-            self.text_view.set_buffer(buff)
-        except:
-            raise
-            buff.insert_at_cursor (_( "\n\nCould not remove book!"))
-            self.text_view.set_buffer(buff)
-        '''
 
 
      ###############################################################################
