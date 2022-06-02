@@ -404,26 +404,6 @@ class Scanner(object):
                 self.db.commit()
 
 
-################################################################################
-    def on_button_remove_clicked(self, widget):
-        '''
-        Remove a book from the database.
-        But first open a add_edit dialog and allow the user to actually do the
-        delete from there.
-        In fact the adding action should be done from there too. TODO
-        '''
-        db_query = sql()
-        
-        # Remove a scanned book from the database.
-        buff = self.text_view.get_buffer()
-        
-        from .add_edit import add_edit
-        adder = add_edit()
-        adder.populate(self.abook.bid)
-        adder.display()
-
-
-
      ###############################################################################
     def get_cd_tracks(self):
         ''' Get the cd details and store then in the DB.  We can use book class
@@ -489,7 +469,26 @@ class Scanner(object):
         buff.set_text("")
         self.text_view.set_buffer(buff)
         self.abook = book.Book() # New fresh book.
+
+
+################################################################################
+    def on_button_remove_clicked(self, widget):
+        '''
+        Remove a book from the database.
+        But first open a add_edit dialog and allow the user to actually do the
+        delete from there.
+        In fact the adding action should be done from there too. TODO
+        '''
+        db_query = sql()
         
+        # Remove a scanned book from the database.
+        buff = self.text_view.get_buffer()
+        
+        from .add_edit import add_edit
+        adder = add_edit()
+        adder.populate(self.abook.bid)
+        adder.display()
+
 
 ################################################################################
     def append_text(self, text):
