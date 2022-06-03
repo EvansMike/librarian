@@ -340,7 +340,7 @@ class mysql:
 
   def get_book_count_by_isbn(self, bar):
     if bar == '': return None
-    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE disposal_date IS NOT NULL AND isbn = %s;" , (bar,))
+    self.cur.execute("SELECT COUNT(*) as count FROM books WHERE disposal_date IS NULL AND isbn = %s;" , (bar,))
     return  int (self.cur.fetchone()['count'])
 
   def get_book_borrower_by_book_id(self,bid):
