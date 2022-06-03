@@ -461,8 +461,8 @@ class Librarian:
         db_query = sql()
         ext = gtk.FileFilter()
         ext.add_pattern("*.csv")
-        dialog = gtk.FileChooserDialog("Save CSV as", None,gtk.FileChooserAction.SAVE, \
-            (gtk.STOCK_CANCEL, gtk.ResponseType.CANCEL, gtk.STOCK_OK, gtk.ResponseType.OK))
+        dialog = gtk.FileChooserDialog(title="Save CSV as", parent=None,action=gtk.FileChooserAction.SAVE)
+        dialog.add_buttons(gtk.STOCK_CANCEL, gtk.ResponseType.CANCEL, gtk.STOCK_OK, gtk.ResponseType.OK,)
         dialog.set_filter(ext)
         response = dialog.run()
         if response == gtk.ResponseType.OK:
