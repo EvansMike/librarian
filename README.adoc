@@ -112,25 +112,11 @@ Double clicking on a book in the list opens the Edit Book dialog.
 
 All other buttons should be self-explanatory.
 
-=== The Edit Book Dialog
 
-This allows you to edit the book's details and add your bookshelves and people to whom you lend books.
-You can rate the book here too.
+== Ideas for Improvemnt
 
-To lend a book, optionally add the borrower, then use the drop-down to assign the borrower.
-The DB is update with who borrowed the book and when.
-
-On pressing the CLOSE button, if you have set up a printer and configured the behaviour in the config file a printer dialog will open.
-If required, a bookmark can be printed.
-Insert this into the book before lending to gently remind the borrower to return the book.
-I have set up a till receipt printer for this.
-A printer with A5 paper also works when the print if folded in half, lengthwise.
-
-A list of borrowed books can be obtained from the main window.
-
-If you have borrowed a book from someone else, scan it then edit the owner in the Edit book dialog.
-These will then show up in the loaned books list. Scroll to the right to see the owners.
-The list is sortable by clicking the header as usual.
+- Adding a dewy-decinal number.
+- Ideas welcome.
 
 
 

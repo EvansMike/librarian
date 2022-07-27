@@ -20,10 +20,11 @@
 #   Need a db update app.
 #     Biblio lookup returns a list of authors.
 
+import faulthandler
 import hid
 import usb.core
 import usb.util
-import zbar
+import pyzbar as zbar
 import webbrowser
 import platform
 import MySQLdb
@@ -85,6 +86,7 @@ class Scanner(object):
 
     '''
     def __init__(self):
+        faulthandler.enable()
         signal.signal(signal.SIGINT, self.on_sig_int)
         self.closing = False
         self.dev = None
@@ -110,7 +112,9 @@ class Scanner(object):
         if self.db:
             self.cur = self.db.cursor()
         self.scanner = None
+        DEBUG(self.scanner)
         self.scanner = self.find_hid_scanner()
+        DEBUG(self.scanner)
         self.window.show()
         if self.scanner:
             self.button_scan.set_sensitive(False)
@@ -513,4 +517,5 @@ class Scanner(object):
 
 # we start here.
 if __name__ == "__main__":
+    #pass
     app = Scanner()
