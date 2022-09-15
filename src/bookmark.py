@@ -11,9 +11,13 @@ _ Name of book
 
 Not necessarily in that or order though
 
+For command line printing of the last booknmark do:
+lp  -o media=Custom.80x150mm  .spool
+
 '''
 
 from . import book
+import codecs
 import cups
 from .db_queries import sql as sql
 import gi
@@ -78,7 +82,7 @@ class Bookmark():
         borrower = db_query.get_book_borrower_by_book_id(abook.id)
         filename = ".spool"
         book_text = "  MIKE'S LIBRARY BOOKMARK\n\n"
-        with open(filename, 'w') as sp:
+        with codecs.open(filename, 'w', encoding='utf-8') as sp:
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
             sp.write(f"ISBN: {abook.isbn}\n")
             author_str = f"Author: {abook.authors}"
