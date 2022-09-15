@@ -105,7 +105,7 @@ class Bookmark():
             sp.write("  ╱╱╭╮╲╲  house\n")
             sp.write("  ▔▏┗┛▕▔     we\n")
             sp.write(" ╱▔▔▔▔▔▔▔▔▔▔╲ read\n")
-            sp.write("/╱┏┳┓ ╭╮ ┏┳┓╲╲  books!\n")
+            sp.write("╱╱┏┳┓ ╭╮ ┏┳┓╲╲  books!\n")
             sp.write("▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n")
             sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
             if abook.mtype == 'DVD':
