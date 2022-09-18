@@ -80,7 +80,7 @@ class Bookmark():
             return
         db_query = sql()
         borrower = db_query.get_book_borrower_by_book_id(abook.id)
-        filename = ".spool"
+        filename = ".bookmark"
         book_text = "  MIKE'S LIBRARY BOOKMARK\n\n"
         with codecs.open(filename, 'w', encoding='utf-8') as sp:
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
@@ -110,7 +110,7 @@ class Bookmark():
             sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
             if abook.mtype == 'DVD':
                 sp.write(f"\nSometimes watch DVDs too.")
-            sp.write(f"\n\n\n\n\n{'-' * 26}\n\n\n\n")
+            sp.write(f"\n\n\n\n\n{'-' * 25}\n\n\n\n")
         conn = cups.Connection()
         settings = self.select_printer()
         #if result == Gtk.PrintOperationResult.CANCEL: # It's ALWAYS this.
@@ -140,9 +140,16 @@ class Bookmark():
         return settings
 
 
+    def test_print(self):
+        filename = ".bookmark"
+        conn = cups.Connection()
+        settings = self.select_printer()
+        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.    190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
+        conn.printFile(settings.get_printer(), filename, " ", options)
+
 
 
 
 if __name__ == '__main__':
     bookmark = Bookmark()
-    bookmark.print_bookmark(None)
+    bookmark.test_print()
