@@ -99,7 +99,7 @@ class Bookmark():
             except: # If not borrowed.
                 sp.write(f"\n\n")
             sp.write("\n\n")
-            sp.write("  ┏┓\n")
+            '''sp.write("  ┏┓\n")
             sp.write("  ┃┃╱╲ In\n")
             sp.write("  ┃╱╱╲╲ this\n")
             sp.write("  ╱╱╭╮╲╲  house\n")
@@ -107,7 +107,8 @@ class Bookmark():
             sp.write(" ╱▔▔▔▔▔▔▔▔▔▔╲ read\n")
             sp.write("╱╱┏┳┓ ╭╮ ┏┳┓╲╲  books!\n")
             sp.write("▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n")
-            sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
+            sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")'''
+            sp.write("In this house\nwe read books.")
             if abook.mtype == 'DVD':
                 sp.write(f"\nSometimes watch DVDs too.")
             sp.write(f"\n\n\n\n\n{'-' * 25}\n\n\n\n")
@@ -122,8 +123,8 @@ class Bookmark():
             return
         printer_info = conn.getPrinterAttributes(printer.encode())['printer-info']
         options = {}
-        if printer_info == 'EPSON INVOICE': # Yes, I know hard coding is bad. I will fix this at some point.
-            options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
+        if printer_info == 'EPSON_TM_BA_Printer': # Yes, I know hard coding is bad. I will fix this at some point.
+        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
         conn.printFile(settings.get_printer(), filename, " ", options)
         #os.remove(filename) # No longer needed
         return
@@ -141,6 +142,10 @@ class Bookmark():
 
 
     def test_print(self):
+        '''
+        This prints the last bookmark created in this directory.
+        Use for simplifying printer issues.
+        '''
         filename = ".bookmark"
         conn = cups.Connection()
         settings = self.select_printer()
