@@ -111,7 +111,7 @@ class Bookmark():
             sp.write("In this house\nwe read books.")
             if abook.mtype == 'DVD':
                 sp.write(f"\nSometimes watch DVDs too.")
-            sp.write(f"\n\n\n\n\n{'-' * 25}\n\n\n\n")
+            sp.write(f"{chr(10) * 10}{'-' * 25}\n\n\n\n") # chr(10) is \n and \ is not allowed in fstrings!
         conn = cups.Connection()
         settings = self.select_printer()
         #if result == Gtk.PrintOperationResult.CANCEL: # It's ALWAYS this.
@@ -123,8 +123,8 @@ class Bookmark():
             return
         printer_info = conn.getPrinterAttributes(printer.encode())['printer-info']
         options = {}
-        if printer_info == 'EPSON_TM_BA_Printer': # Yes, I know hard coding is bad. I will fix this at some point.
-        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
+        #if printer_info == 'EPSON_TM_BA_Printer': # Yes, I know hard coding is bad. I will fix this at some point.
+        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
         conn.printFile(settings.get_printer(), filename, " ", options)
         #os.remove(filename) # No longer needed
         return
