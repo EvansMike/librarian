@@ -81,7 +81,7 @@
             </child>
             <child>
               <object class="GtkButton" id="button_edit">
-                <property name="label" translatable="yes">EDIT</property>
+                <property name="label" translatable="yes">ACCEPT</property>
                 <property name="width_request">104</property>
                 <property name="height_request">43</property>
                 <property name="visible">True</property>
