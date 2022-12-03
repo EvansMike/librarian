@@ -145,7 +145,6 @@ class Scanner(object):
                 scanner.open_path(d['path']) # Remember to close this after use.
                 break # Stop looking
             if scanner == None:
-                hid.hidapi_exit()
                 return None
         return scanner
 
@@ -496,7 +495,6 @@ class Scanner(object):
         if __name__ == "__main__":
             try:
                 self.scanner.close()
-                hid.hidapi_exit()
             except:
                 pass
             gtk.main_quit()
@@ -505,7 +503,6 @@ class Scanner(object):
         else:
             try:
                 self.scanner.close()
-                hid.hidapi_exit()
             except:
                 pass
             self.window.hide()
