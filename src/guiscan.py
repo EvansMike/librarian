@@ -138,19 +138,20 @@ class Scanner(object):
         in the window close method.
         I only have the one scanner to test this adding scanners will be up to
         future coders.
+        There should probably be an array of 'product_id' to match against, defined above somewhere.
         '''
+        p_id = [2048] # To be extended with other scanners.
         scanner = None
         devices = hid.enumerate()
         DEBUG(devices)
         for d in devices:
             DEBUG(d['product_string'])
-            #if 'Scanner' in d['product_string']:
-            if d['product_id'] == 2048:
+            if d['product_id'] in p_id:
                 scanner = hid.device()
                 DEBUG(d)
                 scanner.open_path(d['path']) # Remember to close this after use.
         if scanner == None:
-            DEBUG('No suitable scanner found.')
+            print('No suitable scanner found.')
             return None
         return scanner
 
