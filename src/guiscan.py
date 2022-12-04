@@ -136,16 +136,22 @@ class Scanner(object):
         self.scanner.close()
         hid.hidapi_exit()
         in the window close method.
+        I only have the one scanner to test this adding scanners will be up to
+        future coders.
         '''
         scanner = None
         devices = hid.enumerate()
+        DEBUG(devices)
         for d in devices:
-            if 'Scanner' in d['product_string']:
+            DEBUG(d['product_string'])
+            #if 'Scanner' in d['product_string']:
+            if d['product_id'] == 2048:
                 scanner = hid.device()
+                DEBUG(d)
                 scanner.open_path(d['path']) # Remember to close this after use.
-                break # Stop looking
-            if scanner == None:
-                return None
+        if scanner == None:
+            DEBUG('No suitable scanner found.')
+            return None
         return scanner
 
 
