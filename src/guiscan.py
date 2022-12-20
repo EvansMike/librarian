@@ -157,7 +157,10 @@ class Scanner(object):
         barcode = ""
         print ("Reading barcodes from device")
         while True:
-            event = self.scanner.read_one()
+            try:
+                event = self.scanner.read_one()
+            except:
+                return
             if event != None:
                 if event.type == evdev.ecodes.EV_KEY and event.value == 1:
                     keycode = categorize(event).keycode
