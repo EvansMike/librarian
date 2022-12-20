@@ -37,21 +37,10 @@ pip3 install .
 ----
 
 
-If you want run a Zebra | Wasp style USB scanner create 
+If you want run a Zebra | Wasp style USB scanner, set it up as a keyboard input device.
+Add yourself to the dialout group.
 
-/etc/udev/rules.d/101-zebra-scanner-corescanner.rules
-
-with the contents
-
-[source,bash]
-ATTRS{idVendor}=="05e0", ATTRS{idProduct}=="0800", ENV{ID_MM_DEVICE_IGNORE}="1" , GROUP="dialout"
-
-and plug in the scanner.  Check dmesg to check the ID values. Add yourself to the dialout group too.
-
-A Python module at https://github.com/dayjaby/zebra-scanner may make the scanner code
-simpler and may be used in future versions. Or maybe not having just tested it. :(
-
-It uses MySQL or sqlite.  The database config file is created if none exists.
+It uses MySQL (or sqlite if I can be bothered).  The database config file is created if none exists.
 
 Use database.schema.sql, after creating the database,  to populate the database with
 the required tables
