@@ -117,7 +117,7 @@ class Scanner(object):
         if self.scanner:
             self.button_scan.set_sensitive(False)
             thread = threading.Thread(target=self.real_scanner)
-            thread.setDaemon=True #(True)
+            thread.setDaemon = True
             thread.start()
         else:
             # Use a web cam TODO
