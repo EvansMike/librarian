@@ -19,11 +19,9 @@
 # TODO Needs a live internet connection!  No good for portable apps. without wireless.
 #   Need a db update app.
 #     Biblio lookup returns a list of authors.
-
+import evdev
+from evdev import categorize
 import faulthandler
-import hid
-import usb.core
-import usb.util
 import pyzbar as zbar
 import webbrowser
 import platform
@@ -119,7 +117,7 @@ class Scanner(object):
         if self.scanner:
             self.button_scan.set_sensitive(False)
             thread = threading.Thread(target=self.real_scanner)
-            thread.setDaemon(True)
+            thread.setDaemon=True #(True)
             thread.start()
         else:
             # Use a web cam TODO
@@ -140,61 +138,45 @@ class Scanner(object):
         future coders.
         There should probably be an array of 'product_id' to match against, defined above somewhere.
         '''
-        p_id = [2048] # To be extended with other scanners.
-        scanner = None
-        devices = hid.enumerate()
-        DEBUG(devices)
+        device_name = "Symbol Bar Code Scanner"
+        devices = [evdev.InputDevice(fn) for fn in evdev.list_devices()]
         for d in devices:
-            DEBUG(d['product_string'])
-            if d['product_id'] in p_id:
-                scanner = hid.device()
-                DEBUG(d)
-                scanner.open_path(d['path']) # Remember to close this after use.
-        if scanner == None:
-            print('No suitable scanner found.')
-            return None
-        return scanner
-
+            DEBUG(d)
+            if device_name in d.name:
+                print("Found device " + d.name)
+                device = d
+                self.scanner = device
+                return device
+        return None
 
 ################################################################################
     def real_scanner(self):
         '''
         This will run when a real scanner is attached
         '''
-        import re
-        lu = False
-        INFO("Waiting to read...")
-        st = ''
-        DATA_SIZE = 3
-        while not self.closing:
-            st = ''
-            try:
-                buff = self.scanner.read(22) # Waits for data.
-            except :
-                #raise
-                return None
-            if len(buff) == 0:
-                return None
-            #DEBUG(buff)
-            for c in buff:
-                if c == 22 or c == 13: # Seems to be end of data char
-                    done =  True
-                elif  48 <= c <= 57:
-                    st += chr(c)
-            DEBUG(st)
-            if st:
-                regex = re.compile('[^a-zA-Z0-9]')
-                st = regex.sub('', st)
-                DEBUG(st)
-                # Next part just checks for a valid barcode.
-                DEBUG(barcodenumber.check_code_upc(st))
-                DEBUG(barcodenumber.check_code_isbn(st))
-                DEBUG(barcodenumber.check_code_ean13(st))
-                if barcodenumber.check_code_isbn(st):
-                    self.add_book(None, st)
-                elif barcodenumber.check_code_ean13(st):
-                    self.add_dvd(None, st)
-                    INFO("Not an ISBN, a DVD or CD perhaps")
+        barcode = ""
+        print ("Reading barcodes from device")
+        while True:
+            event = self.scanner.read_one()
+            if event != None:
+                if event.type == evdev.ecodes.EV_KEY and event.value == 1:
+                    keycode = categorize(event).keycode
+                    #DEBUG(keycode)
+                    if keycode == 'KEY_ENTER':
+                        #DEBUG(barcode)
+                        #DEBUG(barcodenumber.check_code_upc(barcode))
+                        #DEBUG(barcodenumber.check_code_isbn(barcode))
+                        #DEBUG(barcodenumber.check_code_ean13(barcode))
+                        if barcodenumber.check_code_isbn(barcode):
+                            self.add_book(None, barcode)
+                            break
+                        elif barcodenumber.check_code_ean13(barcode):
+                            self.add_dvd(None, barcode)
+                            INFO("Not an ISBN, a DVD or CD perhaps")
+                            break
+                    else:
+                        barcode += keycode[4:]
+        return
 
                 
 ################################################################################
@@ -335,12 +317,12 @@ class Scanner(object):
                 self.abook.mtype = 'DVD'
                 self.abook.title = ''
         else:
-            data = db_query.get_by_isbn(ean)
+            data = db_query.get_by_isbn(ean)[0]
             buff.set_text(f"This item already exists in the database\n{data['title']}, {data['mtype']}")
             self.text_view.set_buffer(buff)
             #self.abook.title = data['title']
-            #self.abook.isbn = data['isbn']
-            #self.abook.mtype = data['mtype']
+            #self.abook.isbn = data['ean']
+            #self.abook.mtype = 'DVD'
         self.abook.owner = self.owner
         self.real_scanner()
        
@@ -494,12 +476,12 @@ class Scanner(object):
 
     def on_sig_int(self):
         self.scanner.close()
-        hid.hidapi_exit()
         gtk_main_quit(False)
 ################################################################################
     def gtk_main_quit(self, widget):
         # Quit when we destroy the GUI only if main application, else don't quit
         if __name__ == "__main__":
+            print("Quitting GUIScan.")
             try:
                 self.scanner.close()
             except:
