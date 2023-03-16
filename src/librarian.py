@@ -440,12 +440,12 @@ class Librarian:
         if search_string == "": return
         result = db_query.search_books(search_string)
         self.fill_booklist(result,False)
-        # Now search the calibre database.
+        '''# Now search the calibre database.
         try:
             import calibre
             search = calibre.calibre()
             result = search.search_calibre(search_string, self.booklist) # search and add to booklist
-        except: pass # Do nothing
+        except: pass # Do nothing'''
         return
 
 
