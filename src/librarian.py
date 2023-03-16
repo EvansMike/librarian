@@ -416,7 +416,6 @@ class Librarian:
             bid = self.booklist.get_value(iter,7)
             # If it's an e-book then we do nothing
             if bid == 0:
-                from . import messages
                 messages.pop_info(_('Cannot query e-books.  Please use calibre.' ))
                 return
             adder = add_edit()
@@ -439,7 +438,11 @@ class Librarian:
         search_string = self.search_string.get_text()
         if search_string == "": return
         result = db_query.search_books(search_string)
-        self.fill_booklist(result,False)
+        if result is None: # Bug-381
+            #messages.pop_info(_('The search returned no results.' )) # This causes infinite loop!
+            DEBUG('The search returned no results.')
+        else:
+            self.fill_booklist(result,False)
         '''# Now search the calibre database.
         try:
             import calibre
