@@ -79,10 +79,12 @@ cmdclass = {
     'install_data': install_data,
 }
 from src import version
+print(version.__version__)
 setup (
     name='librarian',
     version=version.__version__,
-    description='Helps you catalogue your books using a webcam to scan the ISBN barcodes',
+    description='Helps you catalogue your books using a webcam or barcode scanner to scan the ISBN barcodes',
+    python_requires='>=3',
     long_description = '',
     author='Mike Evans',
     author_email='mikee@saxicola.co.uk',

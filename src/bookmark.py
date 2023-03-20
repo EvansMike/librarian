@@ -1,5 +1,4 @@
 #!/bin/env python3
-# -*- coding: utf-8 -*-
 '''
 Print a bookmark using the Epson receipt printer
 The paper is 80mm wide.
@@ -31,7 +30,7 @@ import os
 import sys
 import tempfile
 import textwrap
-
+from escpos import printer
 
 # Set up debugging output level
 logging.basicConfig(level=logging.INFO, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
@@ -52,6 +51,7 @@ INFO  = logging.info
 class Bookmark():
     def __init__(self):
         self.book = None # We'll get this later
+        self.p = printer.Usb(0x04b8,0x0202)
         return
 
 
@@ -82,7 +82,7 @@ class Bookmark():
         borrower = db_query.get_book_borrower_by_book_id(abook.id)
         filename = ".bookmark"
         book_text = "  MIKE'S LIBRARY BOOKMARK\n\n"
-        with codecs.open(filename, 'w', encoding='utf-8') as sp:
+        with codecs.open(filename, 'w', encoding='utf8') as sp:
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
             sp.write(f"ISBN: {abook.isbn}\n")
             author_str = f"Author: {abook.authors}"
@@ -99,7 +99,7 @@ class Bookmark():
             except: # If not borrowed.
                 sp.write(f"\n\n")
             sp.write("\n\n")
-            '''sp.write("  ┏┓\n")
+            sp.write("  ┏┓\n")
             sp.write("  ┃┃╱╲ In\n")
             sp.write("  ┃╱╱╲╲ this\n")
             sp.write("  ╱╱╭╮╲╲  house\n")
@@ -107,8 +107,8 @@ class Bookmark():
             sp.write(" ╱▔▔▔▔▔▔▔▔▔▔╲ read\n")
             sp.write("╱╱┏┳┓ ╭╮ ┏┳┓╲╲  books!\n")
             sp.write("▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n")
-            sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")'''
-            sp.write("In this house\nwe read books.")
+            sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
+            #sp.write("In this house\nwe read books.")
             if abook.mtype == 'DVD':
                 sp.write(f"\nSometimes watch DVDs too.")
             sp.write(f"{chr(10) * 10}{'-' * 25}\n\n\n\n") # chr(10) is \n and \ is not allowed in fstrings!
@@ -124,7 +124,7 @@ class Bookmark():
         printer_info = conn.getPrinterAttributes(printer.encode())['printer-info']
         options = {}
         #if printer_info == 'EPSON_TM_BA_Printer': # Yes, I know hard coding is bad. I will fix this at some point.
-        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
+        #options = #{'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom190x320','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeed#NoCut'}
         conn.printFile(settings.get_printer(), filename, " ", options)
         #os.remove(filename) # No longer needed
         return
