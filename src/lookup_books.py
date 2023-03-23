@@ -5,7 +5,7 @@ import requests
 import json
 import logging
 from datetime import datetime
-#logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
 DEBUG = logging.debug
 
 
@@ -63,15 +63,19 @@ class BookLookup(object):
 
     def isbnlib(self,ISBN):
         import isbnlib
+        from isbnlib import canonical, meta, classify
+        isbn = canonical(str(ISBN))
         data = {}
+        content = None
         try:
-            content = isbnlib.meta(str(ISBN))
-            classi = isbnlib.classify(str(ISBN))
+            content = meta(str(isbn), service='openl')
+            DEBUG(content.get('City',''))
+        #    #classi = isbnlib.classify(str(ISBN))
         except:
-            # Try googleAPIs?
-            data = self.googleapi(ISBN)
-            return data
-        print(data)
+            pass
+        #    # Try googleAPIs? BROKEN
+        #    data = self.googleapi(ISBN)
+        #    return data
         try:
             data['publisher'] = '' # These may not exist in the results
             data['city'] = content.get('City','')
@@ -85,6 +89,7 @@ class BookLookup(object):
             data['publisher'] = content.get('Publisher','') 
             data['abstract']  = isbnlib.desc(str(ISBN)).replace('\n',' ')
             data['type'] = 'data'
+            DEBUG(data)
             return data
         except Exception:
             raise
@@ -94,10 +99,10 @@ class BookLookup(object):
 
 if __name__ == '__main__':
     lookup = BookLookup()
-    #data = lookup.isbnlib("1857988477")
-    data = lookup.isbnlib("9781781089163")
+    #data = lookup.isbnlib("9781911215370")
+    data = lookup.isbnlib("9781911215370")
     #data = lookup.googleapi("9781781089163")
-    print (data)
+    #print (data)
     # Try a DVD UPC
     #data = lookup.googleapi("5035822011717")
-    #print (data)
+    print (data)
