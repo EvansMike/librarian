@@ -30,7 +30,7 @@ import os
 import sys
 import tempfile
 import textwrap
-from escpos import printer
+#from escpos import printer
 
 # Set up debugging output level
 logging.basicConfig(level=logging.INFO, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
@@ -51,13 +51,13 @@ INFO  = logging.info
 class Bookmark():
     def __init__(self):
         self.book = None # We'll get this later
-        self.p = printer.Usb(0x04b8,0x0202)
+        #self.p = printer.Usb(0x04b8,0x0202)
         return
 
 
     def print_bookmark(self, abook):
         '''
-        From: lpoptions -p 'USB(ESDPRT001)_TM-T88V'  -l
+        From: lpoptions -p 'Epson-TM-BA-Thermal' -l
         Options for Epson Thermal Receipt printer are:
         PageSize/Media Size: RP82.5x297 RP80x297 RP60x297 RP58x297 RP82.5x2000 *RP80x2000 RP60x2000 RP58x2000 A4 LT Custom.WIDTHxHEIGHT
         TmxPrintSpeed/Print Speed: Auto 1 2 3 *4
@@ -82,7 +82,7 @@ class Bookmark():
         borrower = db_query.get_book_borrower_by_book_id(abook.id)
         filename = ".bookmark"
         book_text = "  MIKE'S LIBRARY BOOKMARK\n\n"
-        with codecs.open(filename, 'w', encoding='utf8') as sp:
+        with codecs.open(filename, 'w', encoding='utf-8') as sp:
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
             sp.write(f"ISBN: {abook.isbn}\n")
             author_str = f"Author: {abook.authors}"
@@ -108,7 +108,7 @@ class Bookmark():
             sp.write("╱╱┏┳┓ ╭╮ ┏┳┓╲╲  books!\n")
             sp.write("▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n")
             sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
-            #sp.write("In this house\nwe read books.")
+            sp.write("In this house\nwe read books.")
             if abook.mtype == 'DVD':
                 sp.write(f"\nSometimes watch DVDs too.")
             sp.write(f"{chr(10) * 10}{'-' * 25}\n\n\n\n") # chr(10) is \n and \ is not allowed in fstrings!
@@ -121,11 +121,14 @@ class Bookmark():
         if printer == None:
             DEBUG("No printer selected, or print cancelled.")
             return
+        if printer == 'Print to File':
+            return
+
         printer_info = conn.getPrinterAttributes(printer.encode())['printer-info']
         options = {}
         #if printer_info == 'EPSON_TM_BA_Printer': # Yes, I know hard coding is bad. I will fix this at some point.
-        #options = #{'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom190x320','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeed#NoCut'}
-        conn.printFile(settings.get_printer(), filename, " ", options)
+        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x220','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeed#NoCut'}
+        conn.printFile(settings.get_printer(), filename, "The Bookmark", options)
         #os.remove(filename) # No longer needed
         return
 
@@ -135,7 +138,7 @@ class Bookmark():
         pd = Gtk.PrintOperation()
         #pd.set_n_pages(0)
         result = pd.run(Gtk.PrintOperationAction.PRINT_DIALOG, None)
-        DEBUG(result) #Always <enum GTK_PRINT_OPERATION_RESULT_CANCEL of type Gtk.PrintOperationResult>
+        DEBUG(pd.get_print_settings()) #Always <enum GTK_PRINT_OPERATION_RESULT_CANCEL of type Gtk.PrintOperationResult>
         settings = pd.get_print_settings()
         #DEBUG(settings)
         return settings
@@ -149,6 +152,8 @@ class Bookmark():
         filename = ".bookmark"
         conn = cups.Connection()
         settings = self.select_printer()
+        print(settings.get_printer())
+        #return
         options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.    190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
         conn.printFile(settings.get_printer(), filename, " ", options)
 
