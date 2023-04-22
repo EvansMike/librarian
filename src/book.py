@@ -48,6 +48,7 @@ class Book(object):
         self.title = ''
         self.issue = '' # For comics etc.
         self.sale_price = 0.00
+        self.purchase_price = 0.0
         self.condition = ''
         self.publisher = ''
         self.abstract = ''
