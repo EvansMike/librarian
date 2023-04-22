@@ -90,6 +90,7 @@ class Bookmark():
             title_str = f"Title: {abook.title}"
             sp.write(f"{textwrap.fill(title_str, width=26, )}\n")
             sp.write(f"Owner: {abook.owner.title()}\n")
+            sp.write(f"Cost: £{abook.purchase_price}\n")
             if abook.add_date != None:
                 sp.write(f"Added: {abook.add_date.strftime('%Y-%m-%d')}\n\n")
             try:
@@ -108,7 +109,6 @@ class Bookmark():
             sp.write("╱╱┏┳┓ ╭╮ ┏┳┓╲╲  books!\n")
             sp.write("▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n")
             sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
-            sp.write("In this house\nwe read books.")
             if abook.mtype == 'DVD':
                 sp.write(f"\nSometimes watch DVDs too.")
             sp.write(f"{chr(10) * 10}{'-' * 25}\n\n\n\n") # chr(10) is \n and \ is not allowed in fstrings!

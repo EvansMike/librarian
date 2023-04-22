@@ -99,6 +99,7 @@ class Book(object):
         err_num += (self.owner != book.owner) * 1024
         err_num += (self.rating != book.rating) * 2048
         err_num += (self.value != book.value) * 4076
+        err_num += (self.purchase_price != book.purchase_price) * 4076
         if err_num != 0: self.updated = True
         DEBUG(err_num)
         return err_num
