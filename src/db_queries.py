@@ -473,10 +473,10 @@ class mysql:
     if book.title == '':
         return None
     self.cur.execute("INSERT INTO books(title, author, isbn,abstract, \
-        year, publisher, city,  mtype, add_date, owner, rating) \
-        VALUES(%s,%s,%s,%s,%s,%s,%s,%s,NOW(),%s,%s)", \
+        year, publisher, city,  mtype, add_date, owner, rating, p_price) \
+        VALUES(%s,%s,%s,%s,%s,%s,%s,%s,NOW(),%s,%s,%s)", \
         (book.title, book.authors, book.isbn, book.abstract, \
-    book.year, book.publisher, book.city, book.mtype,  book.owner, book.rating))
+    book.year, book.publisher, book.city, book.mtype,  book.owner, book.rating, book.purchase_price))
     self.db.commit()
 
     self.cur.execute("SELECT LAST_INSERT_ID() AS last_id")

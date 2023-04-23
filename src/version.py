@@ -1,2 +1,1 @@
-# Version number by date and daily commits.
-__version__ = "2023-04-23.3"
+__version__ = "2023.04.23.1"
