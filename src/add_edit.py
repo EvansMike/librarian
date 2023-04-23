@@ -22,6 +22,8 @@ TODO:
   TODO: Make the GUI into a proper dialog.
 '''
 
+
+from decimal import Decimal
 import usb.core
 import usb.util
 import MySQLdb
@@ -67,6 +69,7 @@ class add_edit:
     self.publisher =  builder.get_object("entry4")
     self.year =  builder.get_object("entry5")
     self.city =  builder.get_object("entry6")
+    self.purchase_price = builder.get_object("p_price")
     scrolled_window =  builder.get_object("scrolledwindow1")
     self.abstract =  builder.get_object("textview_abtract") 
     self.mtype =  builder.get_object("entry8")
@@ -297,13 +300,15 @@ class add_edit:
     if row['city'] != None: self.city.set_text(row['city'])
     if row['year'] != None: self.year.set_text(str(row['year']))
     if row['owner'] != None: self.book_owner.set_text(str(row['owner']))
+    if row['p_price'] != None: self.purchase_price.set_text(str(row['p_price']))
     self.mtype.set_text(str(row['mtype']))
     copies = db_query.get_book_count_by_isbn(row['isbn'])
     if copies: self.copies.set_text(str(copies)) # We could use this as a results of get_book_count_by_isbn(bar) 
 
     # Populate a book object
     self.orig_book.value = row['value']
-    self.orig_book.isbn =row['isbn']
+    self.orig_book.purchase_price = row['p_price']
+    self.orig_book.isbn = row['isbn']
     self.orig_book.id = row['id']
     self.orig_book.authors = row['author']
     self.orig_book.title = row['title']
@@ -345,6 +350,11 @@ class add_edit:
     self.mybook.mtype=self.mtype.get_text()
     self.mybook.publisher=self.publisher.get_text()
     self.mybook.city = self.city.get_text().strip()
+    try:
+        self.mybook.purchase_price = Decimal(self.purchase_price.get_text().strip())
+    except:
+        self.mybook.purchase_price = 0.00
+
     year = None
     year = self.year.get_text()
     if year : self.mybook.year = year
