@@ -68,9 +68,7 @@ class BookLookup(object):
         data = {}
         content = None
         try:
-            content = meta(str(isbn), service='openl')
-            DEBUG(content.get('City',''))
-        #    #classi = isbnlib.classify(str(ISBN))
+            content = meta(str(isbn)) #, service='openl')
         except:
             pass
         #    # Try googleAPIs? BROKEN
@@ -84,9 +82,8 @@ class BookLookup(object):
             data['isbn'] = ISBN
             data['title'] = content.get('Title','')
             data['authors'] = ', '.join(content['Authors'])
-            DEBUG(data['authors'])
             data['year'] = content.get('Year',0)
-            data['publisher'] = content.get('Publisher','') 
+            data['publisher'] = content.get('Publisher','')
             data['abstract']  = isbnlib.desc(str(ISBN)).replace('\n',' ')
             data['type'] = 'data'
             DEBUG(data)
@@ -100,7 +97,7 @@ class BookLookup(object):
 if __name__ == '__main__':
     lookup = BookLookup()
     #data = lookup.isbnlib("9781911215370")
-    data = lookup.isbnlib("9781911215370")
+    data = lookup.isbnlib("9780008288747")
     #data = lookup.googleapi("9781781089163")
     #print (data)
     # Try a DVD UPC
