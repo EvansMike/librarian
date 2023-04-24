@@ -308,6 +308,7 @@ class add_edit:
     # Populate a book object
     self.orig_book.value = row['value']
     self.orig_book.purchase_price = row['p_price']
+    self.orig_book.add_date = row['add_date']
     self.orig_book.isbn = row['isbn']
     self.orig_book.id = row['id']
     self.orig_book.authors = row['author']
