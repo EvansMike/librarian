@@ -57,7 +57,7 @@ class Bookmark():
 
     def print_bookmark(self, abook):
         '''
-        From: lpoptions -p 'Epson-TM-BA-Thermal' -l
+        From: lpoptions -p 'Epson_Receipt' -l
         Options for Epson Thermal Receipt printer are:
         PageSize/Media Size: RP82.5x297 RP80x297 RP60x297 RP58x297 RP82.5x2000 *RP80x2000 RP60x2000 RP58x2000 A4 LT Custom.WIDTHxHEIGHT
         TmxPrintSpeed/Print Speed: Auto 1 2 3 *4
@@ -112,6 +112,7 @@ class Bookmark():
             if abook.mtype == 'DVD':
                 sp.write(f"\nSometimes watch DVDs too.")
             sp.write(f"{chr(10) * 10}{'-' * 25}\n\n\n\n") # chr(10) is \n and \ is not allowed in fstrings!
+            sp.flush()
         conn = cups.Connection()
         settings = self.select_printer()
         #if result == Gtk.PrintOperationResult.CANCEL: # It's ALWAYS this.
@@ -125,9 +126,46 @@ class Bookmark():
             return
 
         printer_info = conn.getPrinterAttributes(printer.encode())['printer-info']
-        options = {}
-        #if printer_info == 'EPSON_TM_BA_Printer': # Yes, I know hard coding is bad. I will fix this at some point.
-        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x220','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeed#NoCut'}
+
+        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x220','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeed#NoCut', 'Font':'Courier'}
+
+
+        # Alternate method to print from text string in memory.
+        '''
+        title_str = f"Title: {abook.title}"
+        author_str = f"Author: {abook.authors}"
+        buff = "  MIKE'S LIBRARY BOOKMARK\n\n"\
+                + f"ISBN: {abook.isbn}\n"\
+                + f"{textwrap.fill(author_str, width=26)}\n"\
+                + f"{textwrap.fill(title_str, width=26, )}\n"\
+                + f"Owner: {abook.owner.title()}\n"\
+                + f"Cost: £{abook.purchase_price}\n"
+        if abook.add_date != None:
+            buff + f"Added: {abook.add_date.strftime('%Y-%m-%d')}\n\n"
+        try:
+            buff += f"Borrowed: {borrower['o_date'].strftime('%Y-%m-%d')}\n"\
+                + f"Borrower: {borrower['name']}\n\n"\
+                + textwrap.fill(f"Please return book after reading.",width=26)
+        except: # If not borrowed.
+            buff += f"\n\n"
+        buff += "  ┏┓\n"\
+            + "  ┃┃╱╲ In\n"\
+            + "  ┃╱╱╲╲ this\n"\
+            + "  ╱╱╭╮╲╲  house\n"\
+            + "  ▔▏┗┛▕▔     we\n"\
+            + " ╱▔▔▔▔▔▔▔▔▔▔╲ read\n"\
+            + "╱╱┏┳┓ ╭╮ ┏┳┓╲╲  books!\n"\
+            + "▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n"\
+            + " ▔▔▔▔▔▔▔▔▔▔▔▔ \n"
+        if abook.mtype == 'DVD':
+            buff += f"\nSometimes watch DVDs too."
+        buff += f"{chr(10) * 10}{'-' * 25}\n\n\n\n" # chr(10) is \n and \ is not allowed in fstrings!
+
+        job = conn.createJob(printer, "myjob", options)
+        document = conn.startDocument(printer, job, "bookmark", cups.CUPS_FORMAT_TEXT, True)
+        result = conn.writeRequestData(bytes(buff, 'utf-8'),len(bytes(buff, 'utf-8')))
+        conn.finishDocument(printer)'''
+
         conn.printFile(settings.get_printer(), filename, "The Bookmark", options)
         #os.remove(filename) # No longer needed
         return
@@ -152,9 +190,9 @@ class Bookmark():
         filename = ".bookmark"
         conn = cups.Connection()
         settings = self.select_printer()
-        print(settings.get_printer())
+        DEBUG(settings.get_printer())
         #return
-        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.    190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut'}
+        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.    190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut', 'Font':'Courier'}
         conn.printFile(settings.get_printer(), filename, " ", options)
 
 
