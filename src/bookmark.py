@@ -81,7 +81,7 @@ class Bookmark():
         db_query = sql()
         borrower = db_query.get_book_borrower_by_book_id(abook.id)
         filename = ".bookmark"
-        book_text = "  MIKE'S LIBRARY BOOKMARK\n\n"
+        #book_text = "  MIKE'S LIBRARY BOOKMARK\n\n"
         with codecs.open(filename, 'w', encoding='utf-8') as sp:
             sp.write("  MIKE'S LIBRARY BOOKMARK\n\n")
             sp.write(f"ISBN: {abook.isbn}\n")
@@ -111,7 +111,7 @@ class Bookmark():
             sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
             if abook.mtype == 'DVD':
                 sp.write(f"\nSometimes watch DVDs too.")
-            sp.write(f"{chr(10) * 10}{'-' * 25}\n\n\n\n") # chr(10) is \n and \ is not allowed in fstrings!
+            sp.write(f"\n\n\n\n\n\n\n\n\n\n{'-' * 25}\n\n\n\n") # chr(10) is \n and \ is not allowed in fstrings!
             sp.flush()
         conn = cups.Connection()
         settings = self.select_printer()
@@ -127,7 +127,7 @@ class Bookmark():
 
         printer_info = conn.getPrinterAttributes(printer.encode())['printer-info']
 
-        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.190x220','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeed#NoCut', 'Font':'Courier'}
+        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.80x170mm','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeed#NoCut', 'Font':'Courier'}
 
 
         # Alternate method to print from text string in memory.

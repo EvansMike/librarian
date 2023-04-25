@@ -101,7 +101,7 @@ class Scanner(object):
         self.qr_img = builder.get_object("image1")
         self.button_scan = builder.get_object("button_scan")
         self.cur = None
-        self.owner = getpass.getuser() # Assume the logged in person owns the book.
+        self.owner = config.librarian_name #getpass.getuser() # Assume the logged in person owns the book.
         try:
             self.db = MySQLdb.connect(user=db_user, host=db_host, db=db_base,  passwd = db_pass);
         except:

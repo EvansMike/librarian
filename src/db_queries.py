@@ -361,11 +361,12 @@ class mysql:
     Get a list of books that have been borrowed. plus those lent to me.
     TODO Lent to me books.
     '''
-    user = config.librarian_name
+    name = config.librarian_name
+    DEBUG(name)
     self.cur.execute ("SELECT * from  books, borrows  WHERE  (books.owner!=%s \
     AND books.borrower_id IS NULL) \
     OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
-    GROUP BY books.id ORDER BY borrows.borrower;",  (user,))
+    GROUP BY books.id ORDER BY borrows.borrower;",  (name,))
 
     return self.cur.fetchall()
 
