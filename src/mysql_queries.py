@@ -87,11 +87,11 @@ class mysql:
     TODO Lent to me books.
     '''
     import getpass
-    user = getpass.getuser()
+    owner = config.librarian_name
     self.cur.execute ("select * from  books, borrows  where  (books.owner!=%s \
     AND books.borrower_id IS NULL) \
     OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
-    GROUP BY books.id;",  (user,))
+    GROUP BY books.id;",  (owner,))
     return self.cur.fetchall()
 
   def get_borrowed_book_by_id(self, bid):

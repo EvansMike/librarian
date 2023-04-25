@@ -329,7 +329,7 @@ class Librarian:
             except: pass
 
             ## If you've borrowed it from someone else.display who from in the abtract column
-            if row['owner'] != getpass.getuser():
+            if row['owner'] != config.librarian_name #.getuser():
                 abstract = "  " + str(row['owner'])
 
             self.booklist.append([row['isbn'], author, row['title'],

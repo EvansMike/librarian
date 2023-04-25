@@ -379,7 +379,7 @@ class Scanner(object):
         db_query = sql()
         if QR_CODE:
             import getpass
-            user = getpass.getuser()
+            user = config.librarian_name #getpass.getuser()
             # Do the QR thang
             qr_data = f"ISBN: {str(self.abook.id)}; \
                 TITLE: {str(self.abook.title)}; \

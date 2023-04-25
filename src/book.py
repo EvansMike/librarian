@@ -62,8 +62,6 @@ class Book(object):
         self.borrower_id = None
         self.owner = config.librarian_name
         self.genre = '' # Fiction, biography etc.
-        self.owner = pwd.getpwuid(os.getuid())[4].split(',')[0] #getpass.getuser() # Assume owner is current logged in person
-        
         self.rating = 0 # Stars out of 5?
         self.value = self.values[0]; # Assume lowest value class
         self.updated = False # Book data updated locally.
