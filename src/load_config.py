@@ -101,6 +101,7 @@ class load_config:
       self.db_pass = config.get('database','PASSWD')
       self.db_base = config.get('database','DB')
       self.db_host = config.get('database','DBHOST')
+      self.librarian_name = None
       if self.db_pass == 'password': # Config file probably not edited.
           print("You need to edit the configuration file at ~/.librarian.cfg")
           quit(1) # Ideally this will open a config editor but, fuck it!
@@ -132,6 +133,7 @@ class load_config:
     print ("PASSWD =", self.db_pass)
     print ("DBASE =", self.db_base)
     print ("DB_HOST =", self.db_host)
+    print ("LIBRARIAN =", self.librarian_name)
 
 
 # For testing

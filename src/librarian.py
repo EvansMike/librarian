@@ -39,8 +39,9 @@ import MySQLdb.cursors
 from . import messages
 from . import book
 #import lib_print
+from . import load_config
 
-
+config = load_config.load_config()
 
 #from db_queries import calibre
 #from db_queries import mysql as sql # Make this choosable for mysql and sqlite
@@ -329,7 +330,7 @@ class Librarian:
             except: pass
 
             ## If you've borrowed it from someone else.display who from in the abtract column
-            if row['owner'] != config.librarian_name #.getuser():
+            if row['owner'] != config.librarian_name:
                 abstract = "  " + str(row['owner'])
 
             self.booklist.append([row['isbn'], author, row['title'],
