@@ -40,6 +40,7 @@ from . import messages
 from . import book
 #import lib_print
 from . import load_config
+import time
 
 config = load_config.load_config()
 
@@ -440,10 +441,10 @@ class Librarian:
         if search_string == "": return
         result = db_query.search_books(search_string)
         if result is None: #  Bug-417
-            #messages.pop_info(_('The search returned no results.' )) # This causes infinite loop! But why?
+            messages.pop_info(_('The search returned no results.' )) # This causes infinite loop! But why?
             DEBUG('The search returned no results.')
-            self.search_string.set_text("No search results!") # Inform the user.
-            #DEBUG(self.search_string.has_grab())
+            #self.search_string.set_text("No search results!") # Inform the user.
+            self.get_book_list(self.booklist) # Do something else to avoid loop. This seems a reasonable task.
         else:
             self.fill_booklist(result,False)
         '''# Now search the calibre database.
