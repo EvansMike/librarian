@@ -38,7 +38,7 @@ pip3 install .
 
 
 If you want run a Zebra | Wasp style USB scanner, set it up as a keyboard input device.
-Add yourself to the dialout group.
+Add yourself to the dialout and input groups.
 
 It uses MySQL (or sqlite if I can be bothered).  The database config file is created if none exists.
 
