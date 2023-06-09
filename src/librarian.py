@@ -201,8 +201,8 @@ class Librarian:
             self.booklist.set_sort_column_id(1, 0)
 
         self.get_book_list(1)
-        window = builder.get_object("window1")
-        window.show_all()
+        self.window = builder.get_object("window1")
+        self.window.show_all()
 
 
     def window1_focus_in_event_cb(self, window, event):
@@ -439,9 +439,11 @@ class Librarian:
         search_string = self.search_string.get_text()
         if search_string == "": return
         result = db_query.search_books(search_string)
-        if result is None: # Bug-381
-            #messages.pop_info(_('The search returned no results.' )) # This causes infinite loop!
+        if result is None: #  Bug-417
+            #messages.pop_info(_('The search returned no results.' )) # This causes infinite loop! But why?
             DEBUG('The search returned no results.')
+            self.search_string.set_text("No search results!") # Inform the user.
+            #DEBUG(self.search_string.has_grab())
         else:
             self.fill_booklist(result,False)
         '''# Now search the calibre database.

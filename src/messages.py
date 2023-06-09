@@ -29,7 +29,7 @@ py_version = sys.version_info.major
 if py_version == 3:
     import gi
     gi.require_version('Gtk', '3.0')
-    from gi.repository import Gtk as gtk
+    from gi.repository import Gtk as gtk,  GLib
 else:
     import gtk
 
