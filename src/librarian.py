@@ -444,7 +444,7 @@ class Librarian:
             messages.pop_info(_('The search returned no results.' )) # This causes infinite loop! But why?
             DEBUG('The search returned no results.')
             #self.search_string.set_text("No search results!") # Inform the user.
-            self.get_book_list(self.booklist) # Do something else to avoid loop. This seems a reasonable task.
+            self.get_book_list(1) # Do something else to avoid loop. This seems a reasonable task.
         else:
             self.fill_booklist(result,False)
         '''# Now search the calibre database.
