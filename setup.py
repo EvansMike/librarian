@@ -30,7 +30,7 @@ from distutils.command.build import build as _build
 #import msgfmt
 import os
 
-
+'''
 class build_trans(cmd.Command):
     description = 'Compile .po files into .mo files'
     def initialize_options(self):
@@ -59,9 +59,10 @@ class build_trans(cmd.Command):
                         if src_mtime > dest_mtime:
                             print ('Compiling %s' % src)
                             msgfmt.make(src, dest)
+'''
 
 class build(_build):
-    sub_commands = _build.sub_commands + [('build_trans', None)]
+    #sub_commands = _build.sub_commands + [('build_trans', None)]
     def run(self):
         _build.run(self)
 
@@ -75,7 +76,7 @@ class install_data(_install_data):
 
 cmdclass = {
     'build': build,
-    'build_trans': build_trans,
+    #'build_trans': build_trans,
     'install_data': install_data,
 }
 from src import version
