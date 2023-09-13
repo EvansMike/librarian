@@ -110,7 +110,7 @@ class Scanner(object):
         if self.db:
             self.cur = self.db.cursor()
         self.scanner = None
-        DEBUG(self.scanner)
+        #DEBUG(self.scanner)
         self.scanner = self.find_hid_scanner()
         DEBUG(self.scanner)
         self.window.show()

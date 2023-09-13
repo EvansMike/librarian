@@ -111,7 +111,7 @@ class Bookmark():
             sp.write(" ▔▔▔▔▔▔▔▔▔▔▔▔ \n")
             if abook.mtype == 'DVD':
                 sp.write(f"\nSometimes watch DVDs too.")
-            sp.write(f"\n\n\n\n\n\n\n\n\n\n{'-' * 25}\n\n\n\n") # chr(10) is \n and \ is not allowed in fstrings!
+            sp.write(f"\n\n\n\n\n\n\n\n\n\n  TEAR HERE\n{'-' * 25}\n\n\n\n\n") # chr(10) is \n and \ is not allowed in fstrings!
             sp.flush()
         conn = cups.Connection()
         settings = self.select_printer()
@@ -129,42 +129,6 @@ class Bookmark():
 
         options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.80x170mm','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeed#NoCut', 'Font':'Courier'}
 
-
-        # Alternate method to print from text string in memory.
-        '''
-        title_str = f"Title: {abook.title}"
-        author_str = f"Author: {abook.authors}"
-        buff = "  MIKE'S LIBRARY BOOKMARK\n\n"\
-                + f"ISBN: {abook.isbn}\n"\
-                + f"{textwrap.fill(author_str, width=26)}\n"\
-                + f"{textwrap.fill(title_str, width=26, )}\n"\
-                + f"Owner: {abook.owner.title()}\n"\
-                + f"Cost: £{abook.purchase_price}\n"
-        if abook.add_date != None:
-            buff + f"Added: {abook.add_date.strftime('%Y-%m-%d')}\n\n"
-        try:
-            buff += f"Borrowed: {borrower['o_date'].strftime('%Y-%m-%d')}\n"\
-                + f"Borrower: {borrower['name']}\n\n"\
-                + textwrap.fill(f"Please return book after reading.",width=26)
-        except: # If not borrowed.
-            buff += f"\n\n"
-        buff += "  ┏┓\n"\
-            + "  ┃┃╱╲ In\n"\
-            + "  ┃╱╱╲╲ this\n"\
-            + "  ╱╱╭╮╲╲  house\n"\
-            + "  ▔▏┗┛▕▔     we\n"\
-            + " ╱▔▔▔▔▔▔▔▔▔▔╲ read\n"\
-            + "╱╱┏┳┓ ╭╮ ┏┳┓╲╲  books!\n"\
-            + "▔▏┗┻┛ ┃┃ ┗┻┛▕▔\n"\
-            + " ▔▔▔▔▔▔▔▔▔▔▔▔ \n"
-        if abook.mtype == 'DVD':
-            buff += f"\nSometimes watch DVDs too."
-        buff += f"{chr(10) * 10}{'-' * 25}\n\n\n\n" # chr(10) is \n and \ is not allowed in fstrings!
-
-        job = conn.createJob(printer, "myjob", options)
-        document = conn.startDocument(printer, job, "bookmark", cups.CUPS_FORMAT_TEXT, True)
-        result = conn.writeRequestData(bytes(buff, 'utf-8'),len(bytes(buff, 'utf-8')))
-        conn.finishDocument(printer)'''
 
         conn.printFile(settings.get_printer(), filename, "The Bookmark", options)
         #os.remove(filename) # No longer needed
