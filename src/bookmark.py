@@ -127,7 +127,7 @@ class Bookmark():
 
         printer_info = conn.getPrinterAttributes(printer.encode())['printer-info']
 
-        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.80x170mm','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeed#NoCut', 'Font':'Courier'}
+        options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.80x190mm','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeed#NoCut', 'Font':'Courier'}
 
 
         conn.printFile(settings.get_printer(), filename, "The Bookmark", options)
