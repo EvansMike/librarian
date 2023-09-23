@@ -27,7 +27,7 @@ Get the code with:
 git clone https://github.com/EvansMike/librarian.git
 ----
 
-Install with: (On a Fedora system) using sudo probably.
+Install with: (On a Fedora system).
 
 [source,bash]
 ----
@@ -36,11 +36,16 @@ or
 pip3 install .
 ----
 
+Or run it from here with
+
+[source,bash]
+python3 -m src.librarian
+
 
 If you want run a Zebra | Wasp style USB scanner, set it up as a keyboard input device.
 Add yourself to the dialout and input groups.
 
-It uses MySQL (or sqlite if I can be bothered).  The database config file is created if none exists.
+It uses MariaDB MySQL at the moment.  The database config file is created if none exists.
 
 Use database.schema.sql, after creating the database,  to populate the database with
 the required tables
@@ -53,9 +58,12 @@ The database name (books in the example above) can be anything as long as the
 config file matches.  If the config file contains a password so take care to 
 make it secure from prying eyes.
 
-Can also use sqlite.  Edit db_conf.cfg to use whatever database you like.
+Can also use sqlite.  But don't because the sqlite code is way out of date.
+Edit db_conf.cfg to use whatever database you like.
 Sqlite is easier to set up but not so useful if you want to access the data from 
-multiple computers.  The current state of the sqlite code needs updating and probably will not work as is.
+multiple computers.
+
+NOTE: The current state of the sqlite code needs updating and probably will not work as is.
 
 
 The sqlite2 database file is created from the database.schema.sql file with:
@@ -64,7 +72,7 @@ The sqlite2 database file is created from the database.schema.sql file with:
 ./mysql2sqlite3 --no-data  -p books | sqlite3 database_schema.db
 ----
 
-Note though that the sqlite code is way behind and out of sync with the MySQL code.
+Note again: though that the sqlite code is way behind and out of sync with the MySQL code.
 Contributions are welcome.
 
 
@@ -73,7 +81,7 @@ I will add a GUI one day.
 On first run a default ~/.db_config.cnf file is
 written in your home directory, note that this is a hidden dot-file.  
 This must edited with the details of your database plus any other preferences listed.
-NOTE:  Passwords are stored as plain text in the config file, don't reuse passwords!  
+NOTE:  Passwords are stored as plain text in the config file, DON'T reuse passwords!
 
 To create the tables you will need the books_schema.sql  file from the sources.
 After creating the database run:
@@ -89,13 +97,17 @@ books, as long as the .db_config.cfg file contains matching details.
 
 == Usage
 
-Start application and press SCAN NEW button on the left had side.
+You will obviously need an internet connection.
+Start the application and press SCAN NEW button on the left had side.
 This pops up a new window, if you have a real scanner scan a book's ISBN barcode.
 The text window should be populated with either the book's details, or some other message.
 To add the book press the ADD button.
 This opens a new dialog with several fields filled in.
+
 Hit the CLOSE button to add the book|DVD to the database.
-I should rename this button.
+A print dialog will popup to print a bookmark.
+I use an Epson receipt scanner to print my bookmarks.
+But any printer should work just fold or cut the page to fit.
 
 Double clicking on a book in the list opens the Edit Book dialog.
 
@@ -104,7 +116,7 @@ All other buttons should be self-explanatory.
 
 == Ideas for Improvemnt
 
-- Adding a dewy-decinal number.
+- Adding a dewy-decimal number.
 - Ideas welcome.
 
 
@@ -121,7 +133,7 @@ I've added a fun option to print bookmarks.
 This is so that I can insert them into books I'm lending out and includes the lent data and a
 reminder to return the book after reading.
 Enable the print option in the ~/librarian.cfg file.
-It currently is specific to an Epson POS thermal printer, patches welcome!
+
 
 
 === Windows Users
