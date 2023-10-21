@@ -436,7 +436,7 @@ class Scanner(object):
         # If a book in already in the DB do this
         if self.abook.id != '':
             DEBUG(self.abook.id)
-            adder = add_edit()
+            adder = add_edit() # Where 'adder' is the book edit dialog
             adder.populate(self.abook.id)
             adder.display()
             
