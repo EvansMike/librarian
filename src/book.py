@@ -68,7 +68,7 @@ class Book(object):
 
     def print_book(self):
         ## Return some book details as a string for printing.  Mostly a debug thing.
-        bookstring = "{}{}{}{}{}".format(self.isbn,"\n",self.authors,"\n",self.title)
+        bookstring = "{}{}{}{}{}{}".format(self.id,"\n",self.isbn,"\n",self.authors,"\n",self.title,"\n")
         return bookstring
 
         

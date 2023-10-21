@@ -337,7 +337,7 @@ class add_edit:
 
   def update_book(self):
     '''
-    Update any changes from GUI
+    Update any changes from GUI, the DB is unchanged
     @return Error value from book.compare(book)
     '''
     self.orig_book = copy.copy(self.mybook) # Make a copy
@@ -371,17 +371,27 @@ class add_edit:
 
 
   def on_button_update_clicked(self, widget):
-    ''' Update the database with new info or add if not already in.'''
+    ''' Update the database with new info or add if not already in.
+    self.mybook gets updated with an id.
+    '''
     if self.update_book() != 0 or self.mybook.updated: # Any changes?
       DEBUG("Something changed so an update is needed.")
-      self.update_db()
+      book_id = self.update_db()
+      DEBUG(book_id)
+
 
       
   def on_button_add_clicked (self, widget):
-    # Insert a new copy of the book into the DB
+    """ Insert a new copy of the book into the DB unless it already exists after update_book()
+    Bug-422: If self.mybook has an id already then update it and don't insert a new copy.
+    """
     db_query = sql()
-    last_id = db_query.insert_book_object(self.mybook)
-    self.mybook.id = last_id 
+    if self.mybook.id != '':
+        self.update_db()
+    else:
+        last_id = db_query.insert_book_object(self.mybook)
+        self.mybook.id = last_id
+    DEBUG(self.mybook.print_book())
     return
 
 
@@ -409,8 +419,11 @@ class add_edit:
             db_query.update_book(book, book.id)
             db_query.insert_unique_author(book.authors)
             self.status.set_text(_(" Book has been updated."))
-    self.mybook = copy.copy(book) # So we can compare again.   
+    self.mybook = copy.copy(book) # So we can compare again.
+    DEBUG(book.print_book())
     del book
+    return self.mybook.id
+
 
 
   def on_button_remove_clicked(self, widget):
