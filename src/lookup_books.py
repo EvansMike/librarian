@@ -7,7 +7,7 @@ import logging
 from datetime import datetime
 logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
 DEBUG = logging.debug
-
+from . import messages
 
 class BookLookup(object):
 
@@ -28,6 +28,9 @@ class BookLookup(object):
         data = {}
         url = f"https://www.googleapis.com/datas/v1/volumes?q=isbn+{isbn}&maxResults=1&fields=items"
         r = self.get_response(url)
+        if r is  None:
+            messages.pop_info('No data were returned from lookup!\n\n')
+            return None
         content = r.json()
         data['publisher'] = '' # These may not exist in the results so set them to empty strings
         data['city'] = ''
@@ -74,6 +77,9 @@ class BookLookup(object):
         #    # Try googleAPIs? BROKEN
         #    data = self.googleapi(ISBN)
         #    return data
+        DEBUG(content)
+        if content is None:
+            return
         try:
             data['publisher'] = '' # These may not exist in the results
             data['city'] = content.get('City','')

@@ -321,7 +321,7 @@ class Scanner(object):
                 self.abook.title = ''
         else:
             data = db_query.get_by_isbn(ean)[0]
-            buff.set_text(f"This item already exists in the database\n{data['title']}, {data['mtype']}")
+            buff.set_text(f"This item already exists in the database\n\n{data['title']}, {data['mtype']}")
             self.text_view.set_buffer(buff)
             #self.abook.title = data['title']
             #self.abook.isbn = data['ean']

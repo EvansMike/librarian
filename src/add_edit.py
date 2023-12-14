@@ -290,6 +290,8 @@ class add_edit:
   def populate(self,book_id):
     db_query = sql()
     row = db_query.get_by_id(book_id)
+    if row is None:
+        return
     # Populate GUI
     if row['isbn'] != None: self.isbn.set_text(row['isbn'])
     if row['author'] != None: self.author.set_text(row['author'])
