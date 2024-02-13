@@ -53,11 +53,7 @@ if py_version == 2:
     import i18n
     _ = i18n.language.gettext
 
-#logger = logging.getLogger("librarian")
-#logging.basicConfig(level=logging.DEBUG, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
-#logging.disable(logging.DEBUG)
-DEBUG = logging.debug
-INFO = logging.info
+
 
 _ = gettext.gettext
 
@@ -101,14 +97,22 @@ parser.add_argument("-n", "--no_ebooks", help="Don't include e-books",  action="
 args = parser.parse_args()
 
 # Set up debugging output level
-logging.basicConfig(level=logging.INFO, format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
+logger = logging.getLogger(__name__)
+logger.setLevel(level=logging.DEBUG)
+sh = logging.StreamHandler()
+sh_formatter = logging.Formatter('%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
+sh.setFormatter(sh_formatter)
+logger.addHandler(sh)
+DEBUG = logger.debug
+INFO = logger.info
+
 if args.verbose:
-    logging.disable(logging.DEBUG)
+    logger.setLevel(level=logging.INFO)
 elif args.debug:
     pass
 else:
-    logging.disable(logging.DEBUG)
-    logging.disable(logging.INFO)
+    logger.disabled = True
+
 
 
 class SplashScreen():
