@@ -19,6 +19,12 @@
 # TODO Needs a live internet connection!  No good for portable apps. without wireless.
 #   Need a db update app.
 #     Biblio lookup returns a list of authors.
+# In Debian the user need to be in the input group in order for the scanner to work.
+# usermod -a -G input username
+# then as the user:
+# newgrp input
+# To avoid logging out and back in.
+
 import evdev
 from evdev import categorize
 import faulthandler
