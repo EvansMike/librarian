@@ -109,7 +109,7 @@ INFO = logger.info
 if args.verbose:
     logger.setLevel(level=logging.INFO)
 elif args.debug:
-    pass
+    logger.setLevel(level=logging.DEBUG)
 else:
     logger.disabled = True
 

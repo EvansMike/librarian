@@ -79,6 +79,7 @@ class BookLookup(object):
         #    return data
         DEBUG(content)
         if content is None:
+            messages.pop_info('No data were returned from lookup!\n\n')
             return
         try:
             data['publisher'] = '' # These may not exist in the results

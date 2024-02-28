@@ -386,7 +386,12 @@ class add_edit:
   def on_button_add_clicked (self, widget):
     """ Insert a new copy of the book into the DB unless it already exists after update_book()
     Bug-422: If self.mybook has an id already then update it and don't insert a new copy.
+    NOPE. ALWAYS insert a new copy when asked.
     """
+    db_query = sql()
+    last_id = db_query.insert_book_object(self.mybook)
+    self.mybook.id = last_id
+    return
     db_query = sql()
     if self.mybook.id != '':
         self.update_db()
