@@ -88,7 +88,10 @@ class BookLookup(object):
             data['edited'] = content.get('Edited','')
             data['isbn'] = ISBN
             data['title'] = content.get('Title','')
-            data['authors'] = ', '.join(content['Authors'])
+            try:
+                data['authors'] = ', '.join(content['Authors'])
+            except:
+                data['authors'] = ''
             data['year'] = content.get('Year',0)
             data['publisher'] = content.get('Publisher','')
             data['abstract']  = isbnlib.desc(str(ISBN)).replace('\n',' ')
