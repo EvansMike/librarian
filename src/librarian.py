@@ -191,14 +191,21 @@ class Librarian:
         column.set_sort_column_id(2)
         self.treeview.append_column(column)
 
-        column = gtk.TreeViewColumn(_('Rating'), gtk.CellRendererText(), text=3)
+        column = gtk.TreeViewColumn(_('Owner'), gtk.CellRendererText(), text=3)
         column.set_clickable(True)
         column.set_resizable(True)
         #column.set_sizing(gtk.TREE_VIEW_COLUMN_AUTOSIZE)
         column.set_sort_column_id(3)
         self.treeview.append_column(column)
-        self.status1.set_text("Version:" + version.__version__)
 
+        column = gtk.TreeViewColumn(_('Added'), gtk.CellRendererText(), text=10)
+        column.set_clickable(True)
+        column.set_resizable(True)
+        column.set_sort_column_id(10)
+        self.treeview.append_column(column)
+
+
+        self.status1.set_text("Version:" + version.__version__)
         self.search_string = builder.get_object("entry_search")
         if py_version == 2:   
             self.booklist.set_sort_column_id(1, gtk.SORT_ASCENDING)
@@ -297,8 +304,8 @@ class Librarian:
         db_query = sql()
         if not append:
             self.booklist.clear()
-        column = self.treeview.get_column(3)
-        column.set_title(_('Owner'))
+        #column = self.treeview.get_column(3)
+        #column.set_title(_('Owner')) # See __init__
         for row in result:
             # Deal with rearranging author names to last, first
             if row['author'] != None:
@@ -319,7 +326,7 @@ class Librarian:
             column.set_min_width(50)
             column.set_sizing(gtk.TreeViewColumnSizing.AUTOSIZE)
             
-            # If a book is borrowed, display who to in the 1st column
+            # If a book is borrowed, display who to in the owner column
             # If you have lent it to someone
             try:
                 if row['borrower'] != None:
@@ -337,11 +344,16 @@ class Librarian:
             ## If you've borrowed it from someone else.display who from in the abtract column
             if row['owner'] != config.librarian_name:
                 abstract = "  " + str(row['owner'])
-
+            else:
+                abstract = ""
+            if row['add_date'] is None:
+               add_date = ''
+            else:
+                add_date = str(row['add_date'].strftime("%Y-%m-%d"))
             self.booklist.append([row['isbn'], author, row['title'],
             abstract,
             row['publisher'], row['city'], str(row['year']),
-            row['id'], None, row['mtype']])
+            row['id'], None, row['mtype'], add_date])
         
 
 
