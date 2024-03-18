@@ -97,7 +97,8 @@ class Bookmark():
                 sp.write(f"Location: {location_str}\n")
             sp.write(f"{textwrap.fill(title_str, width=26, )}\n")
             sp.write(f"Owner: {abook.owner.title()}\n")
-            sp.write(f"Cost: £{abook.purchase_price}\n")
+            if abook.purchase_price != 0.0:
+                sp.write(f"Cost: £{abook.purchase_price}\n")
             if abook.add_date != None:
                 sp.write(f"Added: {abook.add_date.strftime('%Y-%m-%d')}\n\n")
             try:
