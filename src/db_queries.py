@@ -338,6 +338,18 @@ class mysql:
     return  self.cur.fetchall(), numrows
 
 
+  def get_all_dvds(self):
+    '''
+    Get all of the DVDs and return a list.
+    '''
+    command = "SELECT * FROM books \
+    WHERE disposal_date IS NULL\
+    AND mtype = 'DVD' ;"
+    numrows = self.cur.execute(command)
+    DEBUG(numrows)
+    return  self.cur.fetchall(), numrows
+
+
   def get_book_count_by_isbn(self, bar):
     if bar == '': return None
     self.cur.execute("SELECT COUNT(*) as count FROM books WHERE disposal_date IS NULL AND isbn = %s;" , (bar,))
