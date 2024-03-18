@@ -50,11 +50,17 @@ APP = 'librarian'
 gettext.textdomain(APP)
 _ = gettext.gettext
 
-#logger = logging.getLogger("librarian")
-logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
-#logging.disable(logging.INFO)
-DEBUG = logging.debug
-INFO = logging.info
+
+# Set up debugging output level
+logger = logging.getLogger(__name__)
+logger.setLevel(level=logging.DEBUG)
+sh = logging.StreamHandler()
+sh_formatter = logging.Formatter('%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
+sh.setFormatter(sh_formatter)
+logger.addHandler(sh)
+DEBUG = logger.debug
+INFO = logger.info
+
 
 # Get system platform
 plat = sys.platform

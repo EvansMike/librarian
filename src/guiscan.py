@@ -46,10 +46,23 @@ import barcodenumber
 
 _ = gettext.gettext
 
+'''
 logger = logging.getLogger("barscan")
 logging.basicConfig(format='%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s', level=logging.DEBUG)
 DEBUG = logging.debug
 INFO = logging.info
+'''
+
+# Set up debugging output level
+logger = logging.getLogger(__name__)
+logger.setLevel(level=logging.DEBUG)
+sh = logging.StreamHandler()
+sh_formatter = logging.Formatter('%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
+sh.setFormatter(sh_formatter)
+logger.addHandler(sh)
+DEBUG = logger.debug
+INFO = logger.info
+
 
 
 import gi
