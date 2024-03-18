@@ -80,6 +80,11 @@ class Bookmark():
             return
         db_query = sql()
         borrower = db_query.get_book_borrower_by_book_id(abook.id)
+        location = db_query.get_location_by_isbn(abook.isbn)
+        if len(location) != 0:
+            location_str = f"{location[0].get('room')}\n\t{location[0].get('shelf')}"
+        else:
+            location_str = None
         filename = ".bookmark"
         #book_text = "  MIKE'S LIBRARY BOOKMARK\n\n"
         with codecs.open(filename, 'w', encoding='utf-8') as sp:
@@ -88,6 +93,8 @@ class Bookmark():
             author_str = f"Author: {abook.authors}"
             sp.write(f"{textwrap.fill(author_str, width=26)}\n")
             title_str = f"Title: {abook.title}"
+            if location_str != None:
+                sp.write(f"Location: {location_str}\n")
             sp.write(f"{textwrap.fill(title_str, width=26, )}\n")
             sp.write(f"Owner: {abook.owner.title()}\n")
             sp.write(f"Cost: £{abook.purchase_price}\n")

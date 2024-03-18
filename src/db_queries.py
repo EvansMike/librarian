@@ -571,6 +571,9 @@ class mysql:
 
 
   def get_location_by_isbn(self ,isbn):
+    '''
+    Always returns a list.
+    '''
     self.cur.execute("SELECT location FROM books WHERE isbn = %s AND disposal_date IS NULL" , (isbn,))
     locs = self.cur.fetchall()
     locations = []
