@@ -433,7 +433,9 @@ class Scanner(object):
 ################################################################################
     def on_button_edit_clicked(self, widget):
         '''
+        This is now the ACCEPT button.
         Process the book and open the add edit dialog.
+        This should close this dialog too. See Bug-430
         '''
         from .add_edit import add_edit
         buff = self.text_view.get_buffer()
