@@ -207,6 +207,11 @@ class Scanner(object):
         TODO: Need to find better way to enumerate cameras.
         TODO: Need to find how to do this on Windoze, gstreamer for both?
         TODO: If we already have a book display its location.
+        Use a real scanner people!  I need to create an app + API to use a phone
+        as a scanner.
+        I think there is a scanner app that can be pointed to an API which would be
+        a simpler way to go. This would also enable scanning in bookshops perhaps
+        to query if we already have a book. See Bug-335 for this.
         '''
         ## Is there a real scanner attached?
         if self.scanner:
@@ -257,6 +262,8 @@ class Scanner(object):
     def add_book(self, proc, isbn):
         '''
         TODO: This needs refactoring. See Bug-344 for why.
+        # This does not add the book to the DB.
+        # See also Bug-432 and Bug-433.
         '''
         DEBUG(isbn)
         db_query = sql()
@@ -448,11 +455,15 @@ class Scanner(object):
         '''
         This is now the ACCEPT button.
         Process the book and open the add edit dialog.
-        This should close this dialog too. See Bug-430
+        This should close this dialog too. See Bug-430, Bug-433, Bug-432
         '''
         from .add_edit import add_edit
         buff = self.text_view.get_buffer()
         db_query = sql()
+        DEBUG(self.abook.id)
+        DEBUG(self.abook.isbn)
+        #book = db_query.get_by_isbn(self.abook.isbn)
+        #DEBUG(book)
 
         # If a book in already in the DB do this
         if self.abook.id != '':
@@ -472,10 +483,10 @@ class Scanner(object):
                 self.text_view.set_buffer(buff)
                 return
             buff = self.text_view.get_buffer()
-            buff.insert_at_cursor(_( f"\n\nYou added this {str(self.abook.mtype)}.\n"))
+            #buff.insert_at_cursor(_( f"\n\nYou added this {str(self.abook.mtype)}.\n"))
             self.text_view.set_buffer(buff)
             self.make_qr_code()
-            INFO (f"You have added this {str(self.abook.mtype)} to the database.")
+            #INFO (f"You have added this {str(self.abook.mtype)} to the database.")
             # Open add_edit so we can add any more details like location.
             adder = add_edit()
             adder.populate(last_id)
