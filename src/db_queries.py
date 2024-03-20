@@ -377,13 +377,14 @@ class mysql:
   def get_borrowed_books(self):
     '''
     Get a list of books that have been borrowed. plus those lent to me.
-    TODO Lent to me books.
+    DONE Lent to me books
     '''
     owner = config.librarian_name
-    self.cur.execute ("SELECT * from  books, borrows  WHERE  (books.owner!=%s \
-    AND books.borrower_id IS NULL) \
-    OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
-    GROUP BY books.id ORDER BY borrows.borrower;",  (owner,))
+    self.cur.execute ("SELECT * from  books, borrows WHERE disposal_date IS NULL \
+        AND(books.owner!=%s \
+        AND books.borrower_id IS NULL) \
+        OR  (books.id = borrows.book AND  borrows.i_date IS NULL) \
+        GROUP BY books.id ORDER BY borrows.borrower;",  (owner,))
 
     return self.cur.fetchall()
 
@@ -590,9 +591,24 @@ class mysql:
 
   def get_location_by_isbn(self ,isbn):
     '''
+    This is a BAD function. It should never be used. Always use get_location_by_id()
     Always returns a list.
     '''
     self.cur.execute("SELECT location FROM books WHERE isbn = %s AND disposal_date IS NULL" , (isbn,))
+    locs = self.cur.fetchall()
+    locations = []
+    for loc in locs:
+        if loc['location']:
+            self.cur.execute("SELECT * FROM locations WHERE id = %s", (loc['location'],))
+            locations.append(self.cur.fetchone())
+    return locations
+
+
+  def get_location_by_id(self ,lid):
+    '''
+    Always returns a list.
+    '''
+    self.cur.execute("SELECT location FROM books WHERE id = %s AND disposal_date IS NULL" , (lid,))
     locs = self.cur.fetchall()
     locations = []
     for loc in locs:

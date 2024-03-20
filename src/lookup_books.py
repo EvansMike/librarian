@@ -26,7 +26,7 @@ class BookLookup(object):
 
     def googleapi(self, isbn):
         data = {}
-        url = f"https://www.googleapis.com/datas/v1/volumes?q=isbn+{isbn}&maxResults=1&fields=items"
+        url = f"https://www.googleapis.com/books/v1/volumes?q=isbn+{isbn}&maxResults=1&fields=items"
         r = self.get_response(url)
         if r is  None:
             messages.pop_info('No data were returned from lookup!\n\n')

@@ -80,7 +80,7 @@ class Bookmark():
             return
         db_query = sql()
         borrower = db_query.get_book_borrower_by_book_id(abook.id)
-        location = db_query.get_location_by_isbn(abook.isbn)
+        location = db_query.get_location_by_id(abook.id)
         if len(location) != 0:
             location_str = f"{location[0].get('room')}\n\t{location[0].get('shelf')}"
         else:
