@@ -302,6 +302,7 @@ class add_edit:
     if row['city'] != None: self.city.set_text(row['city'])
     if row['year'] != None: self.year.set_text(str(row['year']))
     if row['owner'] != None: self.book_owner.set_text(str(row['owner']))
+    else:self.book_owner.set_text(self.orig_book.owner)
     if row['p_price'] != None: self.purchase_price.set_text(str(row['p_price']))
     self.mtype.set_text(str(row['mtype']))
     copies = db_query.get_book_count_by_isbn(row['isbn'])
@@ -357,7 +358,6 @@ class add_edit:
         self.mybook.purchase_price = Decimal(self.purchase_price.get_text().strip())
     except:
         self.mybook.purchase_price = 0.00
-
     year = None
     year = self.year.get_text()
     if year : self.mybook.year = year
