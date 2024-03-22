@@ -443,8 +443,9 @@ class mysql:
     Get books based on author and title search.
     '''
     numrows = self.cur.execute("SELECT * FROM books \
-        WHERE disposal_date IS NULL AND \
-        title LIKE %s OR author LIKE %s OR mtype LIKE %s", \
+        WHERE (disposal_date IS NULL AND title LIKE %s)\
+        OR (disposal_date IS NULL AND author LIKE %s)\
+        OR (disposal_date IS NULL AND mtype LIKE %s)", \
         [('%%%s%%' % search_string), ('%%%s%%' % search_string), ('%%%s%%' % search_string)])
     if numrows != 0:
         return  self.cur.fetchall()
