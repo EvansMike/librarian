@@ -98,7 +98,7 @@ args = parser.parse_args()
 
 # Set up debugging output level
 logger = logging.getLogger(__name__)
-logger.setLevel(level=logging.DEBUG)
+#logger.setLevel(level=logging.FATAL)
 sh = logging.StreamHandler()
 sh_formatter = logging.Formatter('%(module)s: LINE %(lineno)d: %(levelname)s: %(message)s')
 sh.setFormatter(sh_formatter)
@@ -111,7 +111,8 @@ if args.verbose:
 elif args.debug:
     logger.setLevel(level=logging.DEBUG)
 else:
-    logger.disabled = True
+    logging.disable(logging.CRITICAL)
+    #logger.disabled = True
 
 
 
