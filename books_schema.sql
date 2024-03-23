@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.5.15-MariaDB, for Linux (x86_64)
+-- MariaDB dump 10.19  Distrib 10.11.6-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: books
+-- Host: wyse.local    Database: books
 -- ------------------------------------------------------
--- Server version	10.5.15-MariaDB-log
+-- Server version	10.3.27-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +27,7 @@ CREATE TABLE `authors` (
   `name` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`(50))
-) ENGINE=MyISAM AUTO_INCREMENT=343 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=377 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `book_authors` (
   `author_first` text DEFAULT NULL,
   PRIMARY KEY (`author_id`),
   UNIQUE KEY `book_authors_unique_idx` (`author_last`(10),`author_first`(10))
-) ENGINE=InnoDB AUTO_INCREMENT=3918 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3990 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,16 +67,18 @@ CREATE TABLE `books` (
   `year` int(11) DEFAULT NULL,
   `mtype` text DEFAULT NULL,
   `author_id` int(11) DEFAULT NULL,
-  `add_date` datetime DEFAULT NULL,
+  `add_date` datetime DEFAULT current_timestamp(),
   `sale_status` int(11) DEFAULT NULL,
-  `price` decimal(10,2) DEFAULT NULL,
   `borrower_id` int(11) DEFAULT NULL,
   `owner` varchar(60) DEFAULT NULL,
   `rating` int(11) DEFAULT 0,
   `value` int(11) DEFAULT 0,
   `disposal_date` datetime DEFAULT NULL,
+  `p_price` decimal(10,2) DEFAULT NULL,
+  `sale_price` decimal(10,2) DEFAULT NULL,
+  `added_via` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1260 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1338 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,10 +199,10 @@ DROP TABLE IF EXISTS `invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invoices` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `inv_id` varchar(50) NOT NULL,
   `date_time` datetime DEFAULT NULL,
-  `customer_id` int(10) DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
   `sale_total` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
@@ -274,4 +276,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-02 15:43:41
+-- Dump completed on 2024-03-23 13:35:14
