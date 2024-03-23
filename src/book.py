@@ -65,6 +65,7 @@ class Book(object):
         self.rating = 0 # Stars out of 5?
         self.value = self.values[0]; # Assume lowest value class
         self.updated = False # Book data updated locally.
+        self.added_via = '' # The API:ADDRESS or the app I guess.
 
     def print_book(self):
         ## Return some book details as a string for printing.  Mostly a debug thing.
