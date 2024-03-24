@@ -14,7 +14,8 @@ For command line printing of the last booknmark do:
 lp  -o media=Custom.80x150mm  .spool
 
 '''
-
+import barcode
+from barcode.writer import ImageWriter
 from . import book
 import codecs
 import cups
@@ -157,7 +158,7 @@ class Bookmark():
     def test_print(self):
         '''
         This prints the last bookmark created in this directory.
-        Use for simplifying printer issues.
+        Use for simplifying/debuggig printer issues.
         '''
         filename = ".bookmark"
         conn = cups.Connection()
@@ -166,8 +167,19 @@ class Bookmark():
         #return
         options = {'Resolution':'180x180dpi','TmxMaxBandWidth':'640','PageSize':'Custom.    190x450','TmxFeedPitch':'180.0','TmxPaperSource':'DocFeedNoCut', 'Font':'Courier'}
         conn.printFile(settings.get_printer(), filename, " ", options)
-
-
+        # Add test code for printing a barcode.
+        barcode_class = barcode.get_barcode_class('ISBN')
+        barcode_image = barcode_class('9780751534078', writer=ImageWriter())
+        barcode_image.save("barcode", options={"center_text": False,
+                                                  "module_width":0.2,
+                                                  "module_height":3,
+                                                  "font_size":0,
+                                                  "center_text":True})
+        conn.printFile(settings.get_printer(), 'barcode.png', " ", options)
+        with codecs.open(".footer", 'w', encoding='utf-8') as sp:
+            sp.write(f"\n\n\n\n\n  TEAR HERE\n{'-' * 25}\n") # chr(10) is \n and \ is not allowed in fstrings!
+            sp.flush()
+        conn.printFile(settings.get_printer(), ".footer", " ", options)
 
 
 if __name__ == '__main__':
