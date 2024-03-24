@@ -305,8 +305,9 @@ class add_edit:
     else:self.book_owner.set_text(self.orig_book.owner)
     if row['p_price'] != None: self.purchase_price.set_text(str(row['p_price']))
     self.mtype.set_text(str(row['mtype']))
+    # Query the number of copies we have of this book.
     copies = db_query.get_book_count_by_isbn(row['isbn'])
-    if copies: self.copies.set_text(str(copies)) # We could use this as a results of get_book_count_by_isbn(bar) 
+    if copies: self.copies.set_text(str(copies))
 
     # Populate a book object
     self.orig_book.value = row['value']
